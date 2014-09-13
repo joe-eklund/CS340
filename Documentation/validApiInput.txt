@@ -1,0 +1,160 @@
+user/login
+    VALID INPUT
+        username: SAM
+        password: sam
+
+user/register
+    VALID INPUT -- but only the first time you try it with the name 
+        username: tiger
+        password: shark
+
+/games/list
+    NO Input needed
+
+/games/create
+    VALID INPUT --
+        Set any combination of random tiles, random number, and random ports
+            to true (none may be true)
+        name: FirstGame
+
+/games/join
+    VALID_INPUT
+        color: red
+        id: 1
+
+/game/model
+    NO Input needed
+
+/game/reset
+    NO Input needed
+
+/games/commands -- send
+    VALID INPUT -- execute the other /games/commands/ (fetch or retrieve).
+                   Copy the result.
+                   Execute /game/reset.
+                   Choose /game/commands for send.
+                   Put your copied commands into the template.
+                       DO NOT put single or double quotes around it. 
+
+/games/commands -- fetch or retrieve
+    NO Input needed
+    The result contains more if you have executed some of the subsequent move
+    commands
+
+/games/sendChat
+    VALID INPUT
+        playerIndex: 0
+        Content: Anything (including nothing) inside the quotes around the
+                 value for the content.  You can also use single quotes.
+
+/moves/rollNumber
+    VALID INPUT
+        playerIndex: 1
+        number: 8
+
+/moves/finishTurn
+/moves/buyDevCard
+    VALID INPUT
+        playerIndex: 2
+
+/moves/Year_of_Plenty
+    VALID INPUT
+        playerIndex: 3
+        resource1 : Ore
+        resource2 : Sheep
+***note that the resource names must be capitalized***
+
+/moves/Road_Building
+    VALID INPUT
+        playerIndex: 0
+        spot1
+            x: 0
+            y: 0
+            direction: NE in double quotes
+        spot1
+            x: 1
+            y: -1
+            direction: S in double quotes
+
+/moves/Soldier
+    VALID INPUT
+        playerIndex: 1
+        victimindex: 2
+        location:
+            x: -2
+            y: 0
+
+/moves/Monopoly
+    VALID INPUT
+        resource : Brick
+        playerIndex: 0
+
+/moves/Monument
+    VALID INPUT
+        playerIndex : 1
+
+/moves/buildRoad
+    VALID INPUT
+        playerIndex: 2
+        roadLocation
+            x: -1
+            y: -1
+            direction: "NE"
+        free: false
+/moves/buildSettlement
+/moves/buildCity
+    VALID INPUT
+        playerIndex: 2
+        vertexLocation
+            x: -1
+            y: -1
+            direction: "NE"
+        free: false
+
+/moves/offerTrade
+    VALID INPUT
+        playerIndex: 3
+        offer:
+            brick: 1
+            ore: 0
+            sheep: 0
+            wheat: 0
+            wood: 2
+        receiver: 2
+
+/moves/acceptTrade
+    VALID INPUT
+        playerIndex: 1
+        willAccept: true
+
+/moves/discardCards
+    VALID INPUT
+        playerIndex: 0
+        discardedCards:
+            brick: 0
+            ore: 1
+            sheep: 1
+            wheat: 3
+            wood: 0
+    
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    
+    
+    
+
+
