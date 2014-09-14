@@ -1,8 +1,6 @@
 package proxy;
 
-import java.net.HttpURLConnection;
-
-public abstract class ServerProxy {
+public abstract class StubServerProxy {
 	void loginUser();
 	void registerUser();
 	void listGames();
