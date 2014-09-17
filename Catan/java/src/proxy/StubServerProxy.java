@@ -1,7 +1,9 @@
 package proxy;
 
-public abstract class StubServerProxy {
-	void loginUser();
+import proxy.IServerProxy;
+
+public class StubServerProxy implements IServerProxy {
+	public void loginUser(); 
 	void registerUser();
 	void listGames();
 	void createGame();

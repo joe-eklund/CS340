@@ -2,7 +2,8 @@ package proxy;
 
 import java.net.HttpURLConnection;
 
-public abstract class IServerProxy {
+public interface IServerProxy {
+	//Josh Begin
 	void loginUser();
 	void registerUser();
 	void listGames();
@@ -17,7 +18,10 @@ public abstract class IServerProxy {
 	void changeLogLevel();
 	void sendChat();
 	void acceptTrade();
-	void discardCards;
+	void discardCards();
+	//Josh End
+	
+	// Taylor Begin
 	void rollNumber();
 	void buildRoad();
 	void buildSettlement();
@@ -31,4 +35,5 @@ public abstract class IServerProxy {
 	void playMonopolyCard();
 	void playSoldierCard();
 	void playVictoryPointCard();
+	//Taylor End
 }
