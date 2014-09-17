@@ -1,6 +1,7 @@
 package client.model;
 
 import shared.locations.HexLocation;
+import shared.definitions.ResourceType;
 
 /**
  * 
@@ -9,7 +10,7 @@ import shared.locations.HexLocation;
  */
 public class Hex {
 	private HexLocation location;
-	private Resource resource;
+	private ResourceType ResourceType;
 	private Chit chit;
 	public HexLocation getLocation() {
 		return location;
@@ -17,11 +18,11 @@ public class Hex {
 	public void setLocation(HexLocation location) {
 		this.location = location;
 	}
-	public Resource getResource() {
-		return resource;
+	public ResourceType getResourceType() {
+		return ResourceType;
 	}
-	public void setResource(Resource resource) {
-		this.resource = resource;
+	public void setResourceType(ResourceType ResourceType) {
+		this.ResourceType = ResourceType;
 	}
 	public Chit getChit() {
 		return chit;

@@ -1,7 +1,9 @@
 package client.model;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
+import shared.definitions.*;
 import client.resources.*;
 
 /**
@@ -10,11 +12,12 @@ import client.resources.*;
  *
  */
 public class Bank {
-	private Stack<Resource> bricks;
-	private Stack<Resource> woods;
-	private Stack<Resource> sheeps;
-	private Stack<Resource> ores;
-	private Stack<Resource> wheats;
+	private Stack<ResourceType> bricks;
+	private Stack<ResourceType> woods;
+	private Stack<ResourceType> sheeps;
+	private Stack<ResourceType> ores;
+	private Stack<ResourceType> wheats;
+	private ArrayList<DevCardType> developmentCards;
 	
 	public Bank(){
 		bricks=new Stack();
