@@ -1,3 +1,8 @@
+package client.Poller;
+
+import java.util.Timer;
+import client.model.ClientModel;
+import proxy.AServerProxy;;
 
 public class Poller {
 	private Timer poller;
@@ -7,7 +12,7 @@ public class Poller {
 	 * @param model: catan client side model to be updated every [secondsPollInterval] seconds
 	 * @param secondsPollInterval: invterval in seconds at which server will be polled to update client catan model
 	 */
-	public Poller(AProxyServer proxy, ClientModel model, int secondsPollInterval) {
+	public Poller(AServerProxy proxy, ClientModel model, int secondsPollInterval) {
 		
 	}
 	
@@ -23,7 +28,7 @@ public class Poller {
 	 * 	   1) starts poller
 	 * 
 	 */
-	public startUpdates() {
+	public void startUpdates() {
 		
 	}
 	
@@ -38,7 +43,7 @@ public class Poller {
 	 * 	if poller is already polling:
 	 *     1) stops poller
 	 */
-	public stopUpdates() {
+	public void stopUpdates() {
 		
 	}
 }
