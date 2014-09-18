@@ -7,8 +7,6 @@ import shared.definitions.ResourceType;
 
 public interface IServerProxy {	
 	
-	//Josh Begin
-	
 	/*
 	 * Logs an existing user into the game server
 	 * 
@@ -114,13 +112,13 @@ public interface IServerProxy {
 	 * Fetches the JSON for the model of the current game.
 	 * 
 	 * @pre
-	 * 	1) Requestor has a valid catan.user and catan.game id set in cookie
+	 * 	1) Requester has a valid catan.user and catan.game id set in cookie
 	 * 
 	 * @post
 	 *  if the server catan mode is the same as the client model 
 	 *     1) returns a string of 'true'
 	 *  else 
-	 *     1) returns a String starting with 'OK' followed by string representation of JSON format filtered model (only what client model needs)
+	 *     1) returns a String starting with 'OK' followed by string representation of JSON format of game model
 	 * 
 	 */
 	String getGameModel();
@@ -130,10 +128,10 @@ public interface IServerProxy {
 	 * Resets the game to how it was after all the players joined
 	 * 
 	 * @pre
-	 *  1) Requestor has a valid catan.user and catan.game id set in cookie
+	 *  1) Requester has a valid catan.user and catan.game id set in cookie
 	 * 
 	 * @post
-	 * 	1) Returns String starting with 'OK' followed by string representation of JSON format of filtered model (only what client model needs)
+	 * 	1) Returns String starting with 'OK' followed by string representation of JSON format of game model
 	 * 
 	 */
 	String resetGame();
@@ -143,7 +141,7 @@ public interface IServerProxy {
 	 * Gets a list of all the commands played on a game
 	 * 
 	 * @pre
-	 *  1) Requestor has a valid catan.user and catan.game id set in cookie
+	 *  1) Requester has a valid catan.user and catan.game id set in cookie
 	 *  
 	 * @post
 	 *  2) returns a String starting with 'OK' followed by string representation JSON list of the commands that have been executed in the game
@@ -156,13 +154,13 @@ public interface IServerProxy {
 	 * Applies a list of commands to the current game.
 	 * 
 	 * @pre
-	 *  1) Requestor has a valid catan.user and catan.game id set in cookie
+	 *  1) Requester has a valid catan.user and catan.game id set in cookie
 	 * 
 	 * @post
 	 *  if the content could not be deserialized, or an error in applying the commands:
 	 *     1) returns a string starting with "BAD" and followed by an error message detailing failure
 	 *  if the commands were successfully deserialized:
-	 *     1) returns a string starting with "OK" and followed by string representing JSON format of filtered model (only what client model needs)
+	 *     1) returns a string starting with "OK" and followed by string representing JSON format of game model
 	 * 
 	 */
 	String postGameCommands(String commands);
@@ -254,12 +252,8 @@ public interface IServerProxy {
 	 *  2) Player gives up specified cards
 	 */
 	void discardCards(List<ResourceType> resources, Map<ResourceType, Integer> resourceHand);
-	//Josh End
+
 	
-	
-	
-	
-	// Taylor Begin
 	void rollNumber();
 	void buildRoad();
 	void buildSettlement();
