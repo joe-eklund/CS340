@@ -25,7 +25,7 @@ public interface IServerProxy {
 	 * 
 	 * @return string: see post condition for possible values
 	 */
-	String loginUser(String username, String password);
+	public String loginUser(String username, String password);
 	
 	
 	/**
@@ -48,7 +48,7 @@ public interface IServerProxy {
 	 *  @return string: see post for possible values
 	 * 
 	 */
-	String registerUser(String username, String password);
+	public String registerUser(String username, String password);
 	
 	
 	/**
@@ -79,7 +79,7 @@ public interface IServerProxy {
 	 * @return string: see post for possible values
 	 * 
 	 */
-	String listGames();
+	public String listGames();
 	
 	
 	/**
@@ -106,7 +106,7 @@ public interface IServerProxy {
 	 *  @return string: see post for possible values
 	 * 
 	 */
-	String createGame(String name);
+	public String createGame(String name);
 	
 	
 	/**
@@ -123,7 +123,7 @@ public interface IServerProxy {
 	 * @param color: the available color the player wishes to use
 	 * @param gameID: the ID for the game which the player wishes to join
 	 */
-	void joinGame(String color, int gameID);
+	public void joinGame(String color, int gameID);
 	
 	
 	/**
@@ -141,7 +141,7 @@ public interface IServerProxy {
 	 *  @return string: see post for possible values
 	 * 
 	 */
-	String getGameModel();
+	public String getGameModel();
 	
 	
 	/**
@@ -156,7 +156,7 @@ public interface IServerProxy {
 	 * @return string: see post for possible values
 	 * 
 	 */
-	String resetGame();
+	public String resetGame();
 	
 	
 	/**
@@ -171,7 +171,7 @@ public interface IServerProxy {
 	 * @return string: see post for possible values
 	 * 
 	 */
-	String getGameCommands();
+	public String getGameCommands();
 	
 	
 	/**
@@ -191,7 +191,7 @@ public interface IServerProxy {
 	 *  @return string: see post for possible values
 	 * 
 	 */
-	String postGameCommands(List<String> commands);
+	public String postGameCommands(List<String> commands);
 	
 	
 	/**
@@ -206,7 +206,7 @@ public interface IServerProxy {
 	 *  @return string: see post for possible values
 	 * 
 	 */
-	String listAI();
+	public String listAI();
 	
 	
 	/**
@@ -221,7 +221,7 @@ public interface IServerProxy {
 	 *  2) The AI player uses a color not taken by any other player in the game
 	 *  
 	 */
-	void addAI();
+	public void addAI();
 	
 	
 	/**
@@ -237,7 +237,7 @@ public interface IServerProxy {
 	 *  @param logLevel: desired logging level for server
 	 *  
 	 */
-	void changeLogLevel(String logLevel);
+	public void changeLogLevel(String logLevel);
 	
 	
 	/**
@@ -252,7 +252,7 @@ public interface IServerProxy {
 	 * @param message: message player wishes to post to chat log 
 	 * 
 	 */
-	void sendChat(String message);
+	public void sendChat(String message);
 	
 	
 	/**
@@ -273,7 +273,7 @@ public interface IServerProxy {
 	 * @param willAccept: boolean value of whether or not player accepts proposed trade 
 	 *  
 	 */
-	void acceptTrade(boolean willAccept);
+	public void acceptTrade(boolean willAccept);
 	
 	
 	/**
@@ -291,7 +291,7 @@ public interface IServerProxy {
 	 *  @param resources: list of valid resource types
 	 *  @param resourceHand: contains map of each resource type and the associated number of cards for the type the player is dropping
 	 */
-	void discardCards(List<ResourceType> resources, Map<ResourceType, Integer> resourceHand);
+	public void discardCards(List<ResourceType> resources, Map<ResourceType, Integer> resourceHand);
 
 	/**
 	 * Specifies to the server the number that was rolled by the player
@@ -305,7 +305,7 @@ public interface IServerProxy {
 	 *  
 	 *  @param number: an integer from 2 to 12 that represents the number that was rolled.
 	 */
-	int rollNumber(int number);
+	public int rollNumber(int number);
 	
 	/**
 	 * Builds a road of the same color as the player building the road and at the specified location on the map
@@ -325,7 +325,7 @@ public interface IServerProxy {
 	 * @param free: a boolean that specifies whether or not the road piece has been given to the player for free.
 	 * @param roadLocation: An EdgeLocation that declares where on the map the road will be built. 
 	 */
-	void buildRoad(boolean free, EdgeLocation roadLocation);
+	public void buildRoad(boolean free, EdgeLocation roadLocation);
 	
 	/**
 	 * Builds a settlement of the same color as the player building the road and at the specified location on the map
@@ -344,7 +344,7 @@ public interface IServerProxy {
 	 *  
 	 * @param free: a boolean that specifies whether or not the settlement piece has been given to the player for free.
 	 */
-	void buildSettlement(boolean free);
+	public void buildSettlement(boolean free);
 	
 	/**
 	 * Builds a city of the same color as the player building the road and at the specified location on the map
@@ -361,7 +361,7 @@ public interface IServerProxy {
 	 *  3) The map lists the city location correctly
 	 *  
 	 */
-	void buildCity();
+	public void buildCity();
 	
 	/**
 	 * The player offers a trade of certain resources to a another player in the game in return for different resource.
@@ -377,7 +377,7 @@ public interface IServerProxy {
 	 * @param offer: ResourceHand indicating the cards to be given and received.  Negative numbers mean the players is receiving cards of that resource in the trade.
 	 * @param receiver: playerIndex which specifies the recipient whom the player is trading with 
 	 */
-	void offerTrade(ResourceHand offer, playerIndex receiver);
+	public void offerTrade(ResourceHand offer, playerIndex receiver);
 	
 	/**
 	 * The player offers a trade of certain resources to the bank at a specified ratio depending on the port the player has a settlement on.
@@ -394,7 +394,7 @@ public interface IServerProxy {
 	 * @param inputResource: Resource - The resource the player is giving
 	 * @param outputResource: Resource - The resoure the player is receiving
 	 */
-	void maritimeTrade(int ratio, Resource inputResource, Resource outputResource);
+	public void maritimeTrade(int ratio, Resource inputResource, Resource outputResource);
 	
 	/**
 	 * The player finishes his/her turn.
@@ -406,7 +406,7 @@ public interface IServerProxy {
 	 * @post
 	 *  1) It is the next players turn
 	 */
-	void finishTurn();
+	public void finishTurn();
 	
 	/**
 	 * The player buys a development card from the bank.
@@ -422,7 +422,7 @@ public interface IServerProxy {
 	 *    - If it is a monument card, it goes into the old devcard hand
 	 *    - If it is any other card, it goes into the new devcard hand (unplayable this turn)
 	 */
-	void buyDevCard();
+	public void buyDevCard();
 	
 	/**
 	 * The player can play the "Year of Plenty Card" and gain any two resource from the bank if the preconditions are satisfied.
@@ -439,7 +439,7 @@ public interface IServerProxy {
 	 * @param ResourceOne: The first of the two resources that the player desires to receive from the bank
 	 * @param ResourceTwo: The second of the two resources that the player desires to receive from the bank
 	 */
-	void playYearOfPlentyCard(Resource resourceOne, Resource resourceTwo);
+	public void playYearOfPlentyCard(Resource resourceOne, Resource resourceTwo);
 	
 	/**
 	 * The player can play the "Road Buidling Card" and build two new roads at no charge if the preconditions are satisfied.
@@ -461,7 +461,7 @@ public interface IServerProxy {
 	 *  @param spot1: an EdgeLocation that specifies the location of the first road to be built
 	 *  @param spot2: an EdgeLocation that specifies the location of the second road to be built
 	 */
-	void playRoadBuildingCard(EdgeLocation spot1, EdgeLocation spot2);
+	public void playRoadBuildingCard(EdgeLocation spot1, EdgeLocation spot2);
 	
 	/**
 	 * The player can play the "Monopoly Card" and he/she specified a resource and all other players must give that resource, if available, to the player playing the monopoly card.
@@ -478,7 +478,7 @@ public interface IServerProxy {
 	 *  
 	 * @param resource: The specified Resource that the player wants to receive
 	 */
-	void playMonopolyCard(Resource resource);
+	public void playMonopolyCard(Resource resource);
 
 	/**
 	 * The player can play the "Soldier Card" and he/she now have to move the robber to a new location on the map and steal two resources from a player that has a settlement touching the robbers new location.
@@ -498,7 +498,7 @@ public interface IServerProxy {
 	 * @param location: Hexlocation that specifies the robbers new location on the map
 	 * @param victomIndex: playerIndex of whom is getting robbed
 	 */
-	void playSoldierCard(HexLocation location, playerIndex victimIndex);
+	public void playSoldierCard(HexLocation location, playerIndex victimIndex);
 	
 	/**
 	 * The player can play the "Monument Card" and he/she will gain one victory point
@@ -511,6 +511,6 @@ public interface IServerProxy {
 	 * @post
 	 *  1) The player gains a victory point
 	 */
-	void playMonumentCard();
+	public void playMonumentCard();
 	//Taylor End
 }

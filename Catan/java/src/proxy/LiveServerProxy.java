@@ -1,3 +1,5 @@
-public class LiveServerProxy implements IServerProxy {
+package proxy;
+
+public class LiveServerProxy extends AServerProxy {
 	
 }

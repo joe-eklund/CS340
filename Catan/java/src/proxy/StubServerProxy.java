@@ -2,7 +2,7 @@ package proxy;
 
 import proxy.IServerProxy;
 
-public class StubServerProxy implements IServerProxy {
+public class StubServerProxy extends AServerProxy {
 	public void loginUser(); 
 	void registerUser();
 	void listGames();
@@ -17,7 +17,7 @@ public class StubServerProxy implements IServerProxy {
 	void changeLogLevel();
 	void sendChat();
 	void acceptTrade();
-	void discardCards;
+	void discardCards();
 	void rollNumber();
 	void buildRoad();
 	void buildSettlement();
