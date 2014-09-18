@@ -121,5 +121,4 @@ public class Player {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
-	//Joe was here.
 }

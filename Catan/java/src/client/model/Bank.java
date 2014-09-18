@@ -8,8 +8,9 @@ import client.resources.*;
 
 /**
  * 
- * @author Epper Marshall
- *
+ * @author Epper Marshall, Joe Eklund
+ * The Bank class holds resource cards, development cards, and special cards that are
+ * available to the players. These are cards that no player currently has.
  */
 public class Bank {
 	private Stack<ResourceType> bricks;
@@ -19,6 +20,9 @@ public class Bank {
 	private Stack<ResourceType> wheats;
 	private ArrayList<DevCardType> developmentCards;
 	
+	/**
+	 * Class constructor.
+	 */
 	public Bank(){
 		bricks=new Stack();
 		wheats=new Stack();
