@@ -7,7 +7,7 @@ import shared.definitions.ResourceType;
 
 public interface IServerProxy {	
 	
-	/*
+	/**
 	 * Logs an existing user into the game server
 	 * 
 	 * @pre 
@@ -19,11 +19,15 @@ public interface IServerProxy {
 	 *  else:
 	 *     1) returns a string starting with 'BAD' followed by an error message to be displayed to the user
 	 * 	
+	 * @param username: username for registered user
+	 * @param password: password for registered user associated with specified username
+	 * 
+	 * @return string: see post condition for possible values
 	 */
 	String loginUser(String username, String password);
 	
 	
-	/*
+	/**
 	 *  This call performs the following 2 actions:
 	 *  1)Creates a new user account
 	 *	2) Logs the new user into the game server
@@ -37,11 +41,16 @@ public interface IServerProxy {
 	 * 	if there is an existing user with the specified name: 
 	 * 	   2) returns a string starting with 'BAD' followed by an error message to be displayed to the user 	
 	 * 
+	 *  @param username: the username the player wishes to use when logging into the game
+	 *  @param password: the password the player wishes to use for logging in with the specified username
+	 *  
+	 *  @return string: see post for possible values
+	 * 
 	 */
 	String registerUser(String username, String password);
 	
 	
-	/*
+	/**
 	 * This call returns information about all of the current games
 	 * 
 	 * @pre
@@ -66,11 +75,13 @@ public interface IServerProxy {
 	 * 		where ids are integers and color is one of the following 9 values:
 	 * 			red, green, blue, yellow, puce, brown, white, purple, orange	
 	 * 
+	 * @return string: see post for possible values
+	 * 
 	 */
 	String listGames();
 	
 	
-	/*
+	/**
 	 * Creates an empty game on the server
 	 * 
 	 * @pre
@@ -89,11 +100,15 @@ public interface IServerProxy {
 	 *  		]
 	 *  	}
 	 * 
+	 *  @param name: the name which the created game will have
+	 *  
+	 *  @return string: see post for possible values
+	 * 
 	 */
 	String createGame(String name);
 	
 	
-	/*
+	/**
 	 * Adds a player to the game and sets their game cookie
 	 * 
 	 * @pre
@@ -104,11 +119,13 @@ public interface IServerProxy {
 	 * @post
 	 * 	1)The player is now listed as a player for game associated with gameID and has the specified color
 	 * 
+	 * @param color: the available color the player wishes to use
+	 * @param gameID: the ID for the game which the player wishes to join
 	 */
 	void joinGame(String color, int gameID);
 	
 	
-	/*
+	/**
 	 * Fetches the JSON for the model of the current game.
 	 * 
 	 * @pre
@@ -120,11 +137,13 @@ public interface IServerProxy {
 	 *  else 
 	 *     1) returns a String starting with 'OK' followed by string representation of JSON format of game model
 	 * 
+	 *  @return string: see post for possible values
+	 * 
 	 */
 	String getGameModel();
 	
 	
-	/*
+	/**
 	 * Resets the game to how it was after all the players joined
 	 * 
 	 * @pre
@@ -133,11 +152,13 @@ public interface IServerProxy {
 	 * @post
 	 * 	1) Returns String starting with 'OK' followed by string representation of JSON format of game model
 	 * 
+	 * @return string: see post for possible values
+	 * 
 	 */
 	String resetGame();
 	
 	
-	/*
+	/**
 	 * Gets a list of all the commands played on a game
 	 * 
 	 * @pre
@@ -146,11 +167,13 @@ public interface IServerProxy {
 	 * @post
 	 *  2) returns a String starting with 'OK' followed by string representation JSON list of the commands that have been executed in the game
 	 * 
+	 * @return string: see post for possible values
+	 * 
 	 */
 	String getGameCommands();
 	
 	
-	/*
+	/**
 	 * Applies a list of commands to the current game.
 	 * 
 	 * @pre
@@ -162,11 +185,15 @@ public interface IServerProxy {
 	 *  if the commands were successfully deserialized:
 	 *     1) returns a string starting with "OK" and followed by string representing JSON format of game model
 	 * 
+	 *  @param commands: list of valid game commands ordered chronologically from earliest to most recent
+	 * 
+	 *  @return string: see post for possible values
+	 * 
 	 */
-	String postGameCommands(String commands);
+	String postGameCommands(List<String> commands);
 	
 	
-	/*
+	/**
 	 * Lists the available AI types that may be added to a game
 	 * 
 	 * @pre
@@ -175,11 +202,13 @@ public interface IServerProxy {
 	 * @post
 	 *  1) returns a String starting with 'OK' followed by a string representation of a JSON list of strings 
 	 * 
+	 *  @return string: see post for possible values
+	 * 
 	 */
 	String listAI();
 	
 	
-	/*
+	/**
 	 * Adds an AI to the game
 	 * 
 	 * @pre
@@ -194,7 +223,7 @@ public interface IServerProxy {
 	void addAI();
 	
 	
-	/*
+	/**
 	 * Sets the server’s logging level
 	 * 
 	 * @pre
@@ -203,11 +232,14 @@ public interface IServerProxy {
 	 * 
 	 * @post
 	 *  1) The Server uses that logging level
+	 *  
+	 *  @param logLevel: desired logging level for server
+	 *  
 	 */
 	void changeLogLevel(String logLevel);
 	
 	
-	/*
+	/**
 	 * Sends chat message to game chat log
 	 * 
 	 * @pre
@@ -216,11 +248,13 @@ public interface IServerProxy {
 	 * @post
 	 *  1) chat log contains message
 	 * 
+	 * @param message: message player wishes to post to chat log 
+	 * 
 	 */
 	void sendChat(String message);
 	
 	
-	/*
+	/**
 	 * Accept another player's trade offer
 	 * 
 	 * @pre
@@ -234,12 +268,14 @@ public interface IServerProxy {
 	 *  if willAccept = false:
 	 *     1) no resources are exchanged
 	 *  2) trade offer is removed  
-	 *  3) returns String of 'OK'   
+	 * 
+	 * @param willAccept: boolean value of whether or not player accepts proposed trade 
+	 *  
 	 */
 	void acceptTrade(boolean willAccept);
 	
 	
-	/*
+	/**
 	 * Discards cards from players hand
 	 * 
 	 * @pre
@@ -250,6 +286,9 @@ public interface IServerProxy {
 	 * @post
 	 *  1) Player client now enters 'Robbing' state
 	 *  2) Player gives up specified cards
+	 *  
+	 *  @param resources: list of valid resource types
+	 *  @param resourceHand: contains map of each resource type and the associated number of cards for the type the player is dropping
 	 */
 	void discardCards(List<ResourceType> resources, Map<ResourceType, Integer> resourceHand);
 
