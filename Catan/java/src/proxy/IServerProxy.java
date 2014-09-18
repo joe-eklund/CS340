@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
 
 public interface IServerProxy {	
 	
@@ -292,19 +293,224 @@ public interface IServerProxy {
 	 */
 	void discardCards(List<ResourceType> resources, Map<ResourceType, Integer> resourceHand);
 
+	/**
+	 * Specifies to the server the number that was rolled by the player
+	 * @pre
+	 *  1) The client model's status is "rolling"
+	 *  2) It is the turn of the player trying to roll the dice
+	 *  
+	 * @post
+	 *  1) An integer from 2 to 12 is returned that represents the that was rolled
+	 *  2) The client model's status is now in "discarding" or "robbing" or "playing"
+	 *  
+	 *  @param number: an integer from 2 to 12 that represents the number that was rolled.
+	 */
+	int rollNumber(int number);
 	
-	void rollNumber();
-	void buildRoad();
-	void buildSettlement();
+	/**
+	 * Builds a road of the same color as the player building the road and at the specified location on the map
+	 * 
+	 * @pre
+	 * 	1) It is the players turn
+	 *  2) The client model status is "Playing"
+	 *  3) The road location is open
+	 *  4) The road location is connected to another road
+	 *  5) The road location is not on water
+	 *  6) The player has the necessary resources to build a road (1 wood, 1 brick)
+	 *  
+	 * @post
+	 *  1) You expend the resources to play the road (1 wood, 1 brick)
+	 *  2) The map lists the road correctly
+	 *   
+	 * @param free: a boolean that specifies whether or not the road piece has been given to the player for free.
+	 * @param roadLocation: An EdgeLocation that declares where on the map the road will be built. 
+	 */
+	void buildRoad(boolean free, EdgeLocation roadLocation);
+	
+	/**
+	 * Builds a settlement of the same color as the player building the road and at the specified location on the map
+	 * 
+	 * @pre
+	 *  1) It is the players turn
+	 *  2) The client model status is "Playing"
+	 *  3) The settlement location is open
+	 *  4) The settlement location is not on water
+	 *  5) The settlement location is connected to one of your roads
+	 *  6) The player has the necessary resources to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheep)
+	 *  
+	 * @post
+	 *  1) The player expends the resources necessary to play the settlement (1 wood, 1 brick, 1 wheat, 1 sheep)
+	 *  2) The map lists the settlement location correctly
+	 *  
+	 * @param free: a boolean that specifies whether or not the settlement piece has been given to the player for free.
+	 */
+	void buildSettlement(boolean free);
+	
+	/**
+	 * Builds a city of the same color as the player building the road and at the specified location on the map
+	 * 
+	 * @pre
+	 *  1) It is the players turn
+	 *  2) The client model status is "Playing"
+	 *  3) The city location is where the player currently has a settlement
+	 *  6) The player has the necessary resources to build a city (2 wheat, 3 ore)
+	 *  
+	 * @post
+	 *  1) The player expends the resources necessary to play the settlement (2 wheat, 3 ore)
+	 *  2) The player gets a settlement back
+	 *  3) The map lists the city location correctly
+	 *  
+	 */
 	void buildCity();
-	void offerTrade();
-	void maritimeTrade();
+	
+	/**
+	 * The player offers a trade of certain resources to a another player in the game in return for different resource.
+	 * 
+	 * @pre
+	 *  1) It is the players turn
+	 *  2) The client model status is "Playing"
+	 *  3) The player owns the designated resources that want to be traded
+	 * 
+	 * @post
+	 *  2) The trade is offered to the specified player and stored in the model
+	 * 
+	 * @param offer: ResourceHand indicating the cards to be given and received.  Negative numbers mean the players is receiving cards of that resource in the trade.
+	 * @param receiver: playerIndex which specifies the recipient whom the player is trading with 
+	 */
+	void offerTrade(ResourceHand offer, playerIndex receiver);
+	
+	/**
+	 * The player offers a trade of certain resources to the bank at a specified ratio depending on the port the player has a settlement on.
+	 * 
+	 * @pre
+	 *  1) It is the players turn
+	 *  2) The client model status is "Playing"
+	 *  3) The player owns the designated resources that want to be traded
+	 * 
+	 * @post
+	 *  2) The trade is offered to the specified player and stored in the model
+	 * 
+	 * @param ratio: an integer of value 2, 3, or 4
+	 * @param inputResource: Resource - The resource the player is giving
+	 * @param outputResource: Resource - The resoure the player is receiving
+	 */
+	void maritimeTrade(int ratio, Resource inputResource, Resource outputResource);
+	
+	/**
+	 * The player finishes his/her turn.
+	 * 
+	 * @pre
+	 *  1) It is the players turn
+	 *  2) The client model status is "Playing"
+	 *  
+	 * @post
+	 *  1) It is the next players turn
+	 */
 	void finishTurn();
+	
+	/**
+	 * The player buys a development card from the bank.
+	 * 
+	 * @pre
+	 *  1) It is the players turn
+	 *  2) The client model status is "Playing"
+	 *  3) The player has the necessary resources (1 ore, 1 wheat, 1 sheep)
+	 *  4) There are development cards left in the deck.
+	 *  
+	 * @post
+	 *  1) The player has the new card
+	 *    - If it is a monument card, it goes into the old devcard hand
+	 *    - If it is any other card, it goes into the new devcard hand (unplayable this turn)
+	 */
 	void buyDevCard();
-	void playYearOfPlentyCard();
-	void playRoadBuildingCard();
-	void playMonopolyCard();
-	void playSoldierCard();
-	void playVictoryPointCard();
+	
+	/**
+	 * The player can play the "Year of Plenty Card" and gain any two resource from the bank if the preconditions are satisfied.
+	 * @pre
+	 *  1) The player has the year of plenty card in their "old dev card hand"
+	 *  2) The player hasn't played a devlopment card this turn yet
+	 *  3) It is the players turn
+	 *  4) The client model status is "Playing"
+	 *  5) The two resources the player specifies are in the bank
+	 *  
+	 * @post
+	 *  1) The player gains one each of the two resources specified
+	 *  
+	 * @param ResourceOne: The first of the two resources that the player desires to receive from the bank
+	 * @param ResourceTwo: The second of the two resources that the player desires to receive from the bank
+	 */
+	void playYearOfPlentyCard(Resource resourceOne, Resource resourceTwo);
+	
+	/**
+	 * The player can play the "Road Buidling Card" and build two new roads at no charge if the preconditions are satisfied.
+	 * 
+	 * @pre
+	 *  1) The player has the road building card in their "old dev card hand"
+	 *  2) The player hasn't played a devlopment card this turn yet
+	 *  3) It is the players turn
+	 *  4) The client model status is "Playing"
+	 *  5) The first road location is connected to one of the players existing roads
+	 *  6) The second road location is connected to one of the players existing roads
+	 *  7) Neither location of the two new roads is on water
+	 *  8) The player has to roads
+	 *  
+	 *  @post
+	 *   The player uses two roads
+	 *   The map lists the placement of the roads correctly
+	 *   
+	 *  @param spot1: an EdgeLocation that specifies the location of the first road to be built
+	 *  @param spot2: an EdgeLocation that specifies the location of the second road to be built
+	 */
+	void playRoadBuildingCard(EdgeLocation spot1, EdgeLocation spot2);
+	
+	/**
+	 * The player can play the "Monopoly Card" and he/she specified a resource and all other players must give that resource, if available, to the player playing the monopoly card.
+	 * 
+	 * @pre
+	 *  1) The player has the monopoly card in their "old dev card hand"
+	 *  2) The player hasn't played a devlopment card this turn yet
+	 *  3) It is the players turn
+	 *  4) The client model status is "Playing"
+	 *  
+	 * @post
+	 *  1) All other players lost the resource card type chosen
+	 *  2) The player of the card gets as much of the resource as the other players have to give of that resource
+	 *  
+	 * @param resource: The specified Resource that the player wants to receive
+	 */
+	void playMonopolyCard(Resource resource);
+
+	/**
+	 * The player can play the "Soldier Card" and he/she now have to move the robber to a new location on the map and steal two resources from a player that has a settlement touching the robbers new location.
+	 * 
+	 * @pre
+	 *  1) The player has the soldier plenty card in their "old dev card hand"
+	 *  2) The player hasn't played a devlopment card this turn yet
+	 *  3) It is the players turn
+	 *  4) The client model status is "Playing"
+	 *  5) The robber must move locations so the new location passed in cannot be the robbers current location
+	 *  6) The player to rob has cards
+	 *  
+	 * @post
+	 *  1) The robber is in the new location
+	 *  2) The player to rob gives one random resource card to the player playing the soldier card
+	 *  
+	 * @param location: Hexlocation that specifies the robbers new location on the map
+	 * @param victomIndex: playerIndex of whom is getting robbed
+	 */
+	void playSoldierCard(HexLocation location, playerIndex victimIndex);
+	
+	/**
+	 * The player can play the "Monument Card" and he/she will gain one victory point
+	 * 
+	 * @pre
+	 *  1) The player hasn't played a devlopment card this turn yet
+	 *  2) It is the players turn
+	 *  3) The client model status is "Playing"
+	 *  
+	 * @post
+	 *  1) The player gains a victory point
+	 */
+	void playMonumentCard();
 	//Taylor End
 }
