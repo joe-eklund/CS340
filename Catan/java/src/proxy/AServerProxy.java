@@ -6,10 +6,6 @@ import java.util.Map;
 import shared.definitions.ResourceType;
 
 public class AServerProxy implements IServerProxy {
-	/*attributes
-	 * 
-	 * 
-	 */
 	
 	private int gameVersion;
 	private int catanUserID;
