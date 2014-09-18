@@ -8,6 +8,8 @@
 *.so
 *.metadata/
 .metadata/
+.classpath
+*.classpath
  
 # Packages #
 ############

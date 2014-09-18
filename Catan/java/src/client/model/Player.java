@@ -30,6 +30,7 @@ public class Player {
 	private int wheatRatio;
 	private int woodRatio;
 	private int oreRatio;
+	private int genericRatio;
 	public int getCities() {
 		return cities;
 	}
