@@ -25,6 +25,11 @@ public class Player {
 	private ArrayList<ResourceType> resources;
 	private int soldiers;
 	private int victoryPoints;
+	private int sheepRatio;
+	private int brickRatio;
+	private int wheatRatio;
+	private int woodRatio;
+	private int oreRatio;
 	public int getCities() {
 		return cities;
 	}
