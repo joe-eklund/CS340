@@ -1,5 +1,9 @@
 package client.model;
 
+/**
+ * Tracks whos turn it currently is, and changes the posession of the Longest road and largest army cards each turn if neccessary.
+ * @author Chad
+ */
 public class TurnTracker {
 	private int currentTurn;
 	private String status;

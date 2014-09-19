@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
-/**
+
+/**Player class contains all the information for each individual player in the game.
  * 
  * @author Epper Marshall
  *

@@ -3,10 +3,8 @@ package client.model;
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 
-/**
- * 
+/**Represents a Port on the port, which contains a specific ratio on a specified location on the board. 
  * @author Epper Marshall
- *
  */
 public class Port {
 	private ResourceType type;
