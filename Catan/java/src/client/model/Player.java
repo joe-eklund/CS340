@@ -31,7 +31,27 @@ public class Player {
 	private int wheatRatio;
 	private int woodRatio;
 	private int oreRatio;
-	private int genericRatio;
+	
+	public Player(String color, String name, int playerIndex) {
+		super();
+		this.cities = 4;
+		this.settlements = 5;
+		this.roads = 15;
+		this.color = color;
+		this.discarded = false;
+		this.monuments = 0;
+		this.name = name;
+		this.playerIndex = playerIndex;
+		resources = new ArrayList<ResourceType>();
+		this.playedDevCard = false;
+		this.soldiers = 0;
+		this.victoryPoints = 2;
+		this.sheepRatio = 4;
+		this.brickRatio = 4;
+		this.wheatRatio = 4;
+		this.woodRatio = 4;
+		this.oreRatio = 4;
+	}
 	public int getCities() {
 		return cities;
 	}
@@ -110,6 +130,21 @@ public class Player {
 	public void setResources(ArrayList<ResourceType> resources) {
 		this.resources = resources;
 	}
+	public void getSheep() {
+		resources.add(ResourceType.SHEEP);
+	}
+	public void getWheat() {
+		resources.add(ResourceType.WHEAT);
+	}
+	public void getOre() {
+		resources.add(ResourceType.ORE);
+	}
+	public void getBrick() {
+		resources.add(ResourceType.BRICK);
+	}
+	public void getWood() {
+		resources.add(ResourceType.WOOD);
+	}
 	public int getSoldiers() {
 		return soldiers;
 	}
@@ -121,5 +156,8 @@ public class Player {
 	}
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
+	}
+	public void buildBuilding() {
+		victoryPoints++;
 	}
 }
