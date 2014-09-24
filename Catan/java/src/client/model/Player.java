@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
-/**Player class contains all the information for each individual player in the game.
- * 
+/**
+ * Player class contains all the information for each individual player in the game.
  * @author Epper Marshall
  *
  */
@@ -159,5 +159,78 @@ public class Player {
 	}
 	public void buildBuilding() {
 		victoryPoints++;
+	}
+	public int getSheepRatio() {
+		return sheepRatio;
+	}
+	public void setSheepRatio(int sheepRatio) {
+		this.sheepRatio = sheepRatio;
+	}
+	public int getBrickRatio() {
+		return brickRatio;
+	}
+	public void setBrickRatio(int brickRatio) {
+		this.brickRatio = brickRatio;
+	}
+	public int getWheatRatio() {
+		return wheatRatio;
+	}
+	public void setWheatRatio(int wheatRatio) {
+		this.wheatRatio = wheatRatio;
+	}
+	public int getWoodRatio() {
+		return woodRatio;
+	}
+	public void setWoodRatio(int woodRatio) {
+		this.woodRatio = woodRatio;
+	}
+	public int getOreRatio() {
+		return oreRatio;
+	}
+	public void setOreRatio(int oreRatio) {
+		this.oreRatio = oreRatio;
+	}
+	/**
+	 * Updates all trade ratios from 4 to 3 when build on generic harbor, any ratios at 2 remain at 2.
+	 */
+	public void updateAllRatios()
+	{
+		if(oreRatio==4)
+			oreRatio=3;
+		if(woodRatio==4)
+			woodRatio=3;
+		if(wheatRatio==4)
+			wheatRatio=3;
+		if(brickRatio==4)
+			brickRatio=3;
+		if(sheepRatio==4)
+			sheepRatio=3;
+	}
+	/**
+	 * Checks that player has enough remaining cities
+	 * @return boolean
+	 */
+	public boolean canBuildCity() {
+		if(cities>0)
+			return true;
+		return false;
+	}
+	/**
+	 * Checks that player has enough remaining settlements
+	 * @return boolean
+	 */
+	public boolean canBuildSettlement() {
+		if(settlements>0)
+			return true;
+		return false;
+	}
+	/**
+	 * Checks that player has enough remaining roads
+	 * @return boolean
+	 */
+	public boolean canBuildRoad() {
+		if(roads>0)
+			return true;
+		return false;
 	}
 }

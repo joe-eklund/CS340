@@ -21,7 +21,7 @@ public class Bank {
 	private ArrayList<DevCardType> developmentCards;
 	
 	/**
-	 * Class constructor.
+	 * Class constructor. Initializes each stack with 19 of its respective resource.
 	 */
 	public Bank(){
 		bricks=new Stack();
@@ -29,5 +29,62 @@ public class Bank {
 		ores=new Stack();
 		woods=new Stack();
 		sheeps=new Stack();
+		for(int i=0;i<19;i++){
+			bricks.push(ResourceType.BRICK);
+			wheats.push(ResourceType.WHEAT);
+			ores.push(ResourceType.ORE);
+			woods.push(ResourceType.WOOD);
+			sheeps.push(ResourceType.SHEEP);
+		}
+	}
+	/**
+	 * Checks to see if bank has at least the specified amount of card type.
+	 * @param amt
+	 * @return boolean
+	 */
+	public boolean hasSheep(int amt) {
+		if(sheeps.size()>=amt)
+			return true;
+		return false;
+	}
+	/**
+	 * Checks to see if bank has at least the specified amount of card type.
+	 * @param amt
+	 * @return boolean
+	 */
+	public boolean hasOre(int amt) {
+		if(ores.size()>=amt)
+			return true;
+		return false;
+	}
+	/**
+	 * Checks to see if bank has at least the specified amount of card type.
+	 * @param amt
+	 * @return boolean
+	 */
+	public boolean hasWood(int amt) {
+		if(woods.size()>=amt)
+			return true;
+		return false;
+	}
+	/**
+	 * Checks to see if bank has at least the specified amount of card type.
+	 * @param amt
+	 * @return boolean
+	 */
+	public boolean hasWheat(int amt) {
+		if(wheats.size()>=amt)
+			return true;
+		return false;
+	}
+	/**
+	 * Checks to see if bank has at least the specified amount of card type.
+	 * @param amt
+	 * @return boolean
+	 */
+	public boolean hasBrick(int amt) {
+		if(bricks.size()>=amt)
+			return true;
+		return false;
 	}
 }
