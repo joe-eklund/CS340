@@ -3,14 +3,11 @@ package proxy;
 import java.util.List;
 import java.util.Map;
 
-import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-
 /**
- * An interface for a Server Proxy
+ * An interface for a Server
  *
  */
-public interface IServerProxy {	
+public interface IServer {	
 	
 	/**
 	 * Logs an existing user into the game server
@@ -26,15 +23,15 @@ public interface IServerProxy {
 	 * 	
 	 * @param username: username for registered user
 	 * @param password: password for registered user associated with specified username
-	 * 
-	 * @return string: see post condition for possible values
 	 */
 	public String loginUser(String username, String password);
 	
 	
 	/**
+	 *  Registers a new game user
+	 *  
 	 *  This call performs the following 2 actions:
-	 *  1)Creates a new user account
+	 *  1) Creates a new user account
 	 *	2) Logs the new user into the game server
 	 * 
 	 * @pre
@@ -42,14 +39,12 @@ public interface IServerProxy {
 	 * 
 	 * @post
 	 * 	if there is no existing user with the specified name:
-	 * 	   1) returns a string of 'OK'
+	 * 	   1) returns null
 	 * 	if there is an existing user with the specified name: 
-	 * 	   2) returns a string starting with 'BAD' followed by an error message to be displayed to the user 	
+	 * 	   2) returns a string error message to be displayed to the user 	
 	 * 
 	 *  @param username: the username the player wishes to use when logging into the game
 	 *  @param password: the password the player wishes to use for logging in with the specified username
-	 *  
-	 *  @return string: see post for possible values
 	 * 
 	 */
 	public String registerUser(String username, String password);
@@ -62,7 +57,7 @@ public interface IServerProxy {
 	 * 	None
 	 * 
 	 * @post
-	 * 	1) returns a String starting with 'OK' followed by a string representation of a JSON object of the following format
+	 * 	1) returns a list of GameDescription
 	 * 		<p>[
 	 * 			{
 	 * 				"title": "Game Name",
@@ -80,10 +75,8 @@ public interface IServerProxy {
 	 * 		where ids are integers and color is one of the following 9 values:
 	 * 			red, green, blue, yellow, puce, brown, white, purple, orange	
 	 * 
-	 * @return string: see post for possible values
-	 * 
 	 */
-	public String listGames();
+	public List<GameDescription> listGames();
 	
 	
 	/**
@@ -93,7 +86,8 @@ public interface IServerProxy {
 	 * 	None
 	 * 
 	 * @post
-	 * 	1) returns a String starting with 'OK' followed by string representation of a JSON object of the following format
+	 * 	1) creates an empty game on server
+	 * 	2) returns an empty GameDescription
 	 * 		<p>{
 	 * 			"title": "Game Name",
 	 * 			"id": 0,
@@ -106,11 +100,9 @@ public interface IServerProxy {
 	 *  	}</p>
 	 * 
 	 *  @param name: the name which the created game will have
-	 *  
-	 *  @return string: see post for possible values
 	 * 
 	 */
-	public String createGame(String name);
+	public GameDescription createGame(String name);
 	
 	
 	/**
@@ -138,15 +130,13 @@ public interface IServerProxy {
 	 * 	1) Requester has a valid catan.user and catan.game id set in cookie
 	 * 
 	 * @post
-	 *  if the server catan mode is the same as the client model 
-	 *     1) returns a string of 'true'
+	 *  if the server catan model is the same as the client model 
+	 *     1) returns null
 	 *  else 
-	 *     1) returns a String starting with 'OK' followed by string representation of JSON format of game model
-	 * 
-	 *  @return string: see post for possible values
+	 *     1) returns a the current server game model
 	 * 
 	 */
-	public String getGameModel();
+	public GameModel getGameModel();
 	
 	
 	/**
@@ -156,12 +146,10 @@ public interface IServerProxy {
 	 *  1) Requester has a valid catan.user and catan.game id set in cookie
 	 * 
 	 * @post
-	 * 	1) Returns String starting with 'OK' followed by string representation of JSON format of game model
-	 * 
-	 * @return string: see post for possible values
+	 * 	1) Returns reset game model
 	 * 
 	 */
-	public String resetGame();
+	public GameModel resetGame();
 	
 	
 	/**
@@ -171,12 +159,12 @@ public interface IServerProxy {
 	 *  1) Requester has a valid catan.user and catan.game id set in cookie
 	 *  
 	 * @post
-	 *  2) returns a String starting with 'OK' followed by string representation JSON list of the commands that have been executed in the game
+	 *  2) returns a list of the commands that have been executed in the game
 	 * 
 	 * @return string: see post for possible values
 	 * 
 	 */
-	public String getGameCommands();
+	public List<Log> getGameCommands();
 	
 	
 	/**
@@ -189,14 +177,12 @@ public interface IServerProxy {
 	 *  if the content could not be deserialized, or an error in applying the commands:
 	 *     1) returns a string starting with "BAD" and followed by an error message detailing failure
 	 *  if the commands were successfully deserialized:
-	 *     1) returns a string starting with "OK" and followed by string representing JSON format of game model
+	 *     1) returns a game model
 	 * 
 	 *  @param commands: list of valid game commands ordered chronologically from earliest to most recent
 	 * 
-	 *  @return string: see post for possible values
-	 * 
 	 */
-	public String postGameCommands(List<String> commands);
+	public GameModel postGameCommands(List<Log> commands);
 	
 	
 	/**
@@ -206,12 +192,10 @@ public interface IServerProxy {
 	 *  None
 	 * 
 	 * @post
-	 *  1) returns a String starting with 'OK' followed by a string representation of a JSON list of strings 
-	 * 
-	 *  @return string: see post for possible values
+	 *  1) returns a list of strings 
 	 * 
 	 */
-	public String listAI();
+	public List<String> listAI();
 	
 	
 	/**
@@ -228,8 +212,10 @@ public interface IServerProxy {
 	 *  <li> The AI player is added to the next open spot in the game associated with the poster’s catan.game cookie</li>
 	 *  <li> The AI player uses a color not taken by any other player in the game</li>
 	 * </ul>
+	 * 
+	 * @param aiToAdd string from list<string> provided by listAI() command
 	 */
-	public void addAI();
+	public void addAI(String aiToAdd);
 	
 	
 	/**
@@ -567,5 +553,4 @@ public interface IServerProxy {
 	 *  <ul><li> The player gains a victory point</li><ul>
 	 */
 	public void playMonumentCard();
-	//Taylor End
 }
