@@ -22,8 +22,8 @@ public interface ICommunicator {
 	 * 
 	 * @param commandName ::= valid name server command extension address (as specified in server API)
 	 * @param commandParameters ::= valid object type (i.e. list<string>, string, int, etc) to be converted to JSON for specified commandName (as specified in server API)
-	 * @param serverReturnClass ::=	valid Class Definition Type (i.e. String.class could be passed for this parameter); 
+	 * @param responseCastClass ::=	valid Class Definition Type (i.e. String.class could be passed for this parameter); 
 	 * 								this is used to ensure correct translation typing (and ultimately recasting) of server response json object
 	 */
-	public ICommandResponse executeCommand(String commandName, Object commandParameters, Class<?> serverReturnClass);
+	public ICommandResponse executeCommand(String commandName, Object commandParameters, Class<?> responseCastClass);
 }

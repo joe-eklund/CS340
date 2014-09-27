@@ -1,5 +1,10 @@
 package proxy;
 
+/**
+ * a class representing the parameters returned from the ClientCommunicator after executing a call to the server via http
+ * @author joshuabgrigg
+ *
+ */
 public class CommandResponse implements ICommandResponse {
 	private String cookieResponseHeader; //http response header value for "Set-cookie"; can be NULL
 	private int responseCode;	//http response code; cannot be NULL
@@ -22,7 +27,7 @@ public class CommandResponse implements ICommandResponse {
 		return responseCode;
 	}
 	
-	public Object getResponseObjectFromJSON() {
+	public Object getResponseObject() {
 		return responseObjectFromJSON;
 	}
 	
