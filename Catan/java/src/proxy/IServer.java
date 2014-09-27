@@ -2,20 +2,7 @@ package proxy;
 
 import java.io.UnsupportedEncodingException;
 
-import shared.ServerMethodResponses.AddAIResponse;
-import shared.ServerMethodResponses.ChangeLogLevelResponse;
-import shared.ServerMethodResponses.CreateGameResponse;
-import shared.ServerMethodResponses.GetGameCommandsResponse;
-import shared.ServerMethodResponses.GetGameModelResponse;
-import shared.ServerMethodResponses.ILoginUserResponse;
-import shared.ServerMethodResponses.IRegisterUserResponse;
-import shared.ServerMethodResponses.JoinGameResponse;
-import shared.ServerMethodResponses.ListAIResponse;
-import shared.ServerMethodResponses.ListGamesResponse;
-import shared.ServerMethodResponses.LoginUserResponse;
-import shared.ServerMethodResponses.PostGameCommandsResponse;
-import shared.ServerMethodResponses.RegisterUserResponse;
-import shared.ServerMethodResponses.ResetGameResponse;
+import shared.ServerMethodResponses.*;
 import shared.definitions.CatanColor;
 import shared.definitions.DiceRoll;
 import shared.definitions.Log;
