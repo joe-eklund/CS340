@@ -1,7 +1,27 @@
 package proxy;
 
-import java.util.List;
-import java.util.Map;
+import shared.ServerMethodResponses.AddAIResponse;
+import shared.ServerMethodResponses.ChangeLogLevelResponse;
+import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.GetGameCommandsResponse;
+import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.JoinGameResponse;
+import shared.ServerMethodResponses.ListAIResponse;
+import shared.ServerMethodResponses.ListGamesResponse;
+import shared.ServerMethodResponses.LoginUserResponse;
+import shared.ServerMethodResponses.PostGameCommandsResponse;
+import shared.ServerMethodResponses.RegisterUserResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
+import shared.definitions.CatanColor;
+import shared.definitions.DiceRoll;
+import shared.definitions.Log;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceHand;
+import shared.definitions.ResourceType;
+import shared.definitions.ServerLogLevel;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 /**
  * An interface for a Server
@@ -16,38 +36,83 @@ public interface IServer {
 	 * 	None
 	 * 
 	 * @post 
-	 * 	if the passed in (username, password) pair is valid: 
-	 *	   1) returns a string of 'OK'
+	 * 	if the passed in (username, password) pair is valid:
+	 *  <ol>
+	 * 	  <li>The Player is logged in on the server (a catan.user cookie is set for the player)</li>
+	 * 	  <li>Returns LoginUserResponse Object with the following field settings (See RegisteredUserResponse class for more info): 
+	 *	    <ol>	 
+	 *		  <li>successful = true</li>
+	 *	      <li>message = null</li>
+	 *	      <li>cookie = the player's catan.user cookie</li>
+	 *	      <li>name = player's username</li>
+	 *        <li>userID = players userID (not to be confused with their gameID when they join a game)</li>
+	 *      </ol>
+	 *    </li>
+	 *  </ol>
 	 *  else:
-	 *     1) returns a string starting with 'BAD' followed by an error message to be displayed to the user
+	 *  <ol>
+	 * 	  <li>Returns LoginUserResponse Object with the following field settings (See RegisteredUserResponse class for more info): 
+	 *	  	 <ol>
+	 *		   <li>successful = false</li>
+	 *	       <li>message = error message to be displayed to user</li>
+	 *	       <li>cookie = null</li>
+	 *	       <li>name = null</li>
+	 *         <li>userID = null (0)</li>
+	 *       </ol>
+	 *    </li>
+	 *  </ol>
 	 * 	
 	 * @param username: username for registered user
-	 * @param password: password for registered user associated with specified username
+	 * @param password: password for registered user
 	 */
-	public String loginUser(String username, String password);
+	public LoginUserResponse loginUser(String username, String password);
 	
 	
 	/**
 	 *  Registers a new game user
 	 *  
 	 *  This call performs the following 2 actions:
-	 *  1) Creates a new user account
-	 *	2) Logs the new user into the game server
+	 *  <ol>
+	 *    <li>Creates a new user account</li>
+	 *	  <li>Logs the new user into the game server</li>
+	 *  </ol>
 	 * 
 	 * @pre
 	 * 	None
 	 * 
-	 * @post
+	 * @post 
 	 * 	if there is no existing user with the specified name:
-	 * 	   1) returns null
-	 * 	if there is an existing user with the specified name: 
-	 * 	   2) returns a string error message to be displayed to the user 	
+	 *  <ol>
+	 * 	  <li>An account is established for the player with the provided username and password</li>
+	 * 	  <li>The Player is logged in on the server (a catan.user cookie is set for the player)</li>
+	 * 	  <li>Returns RegisterUserResponse Object with the following field settings (See RegisteredUserResponse class for more info): 
+	 *	  	 <ol>
+	 *		   <li>successful = true</li>
+	 *	       <li>message = null</li>
+	 *	       <li>cookie = the player's catan.user cookie</li>
+	 *	       <li>name = player's username</li>
+	 *         <li>userID = players userID (not to be confused with their gameID when they join a game)</li>
+	 *	     </ol>
+	 *    </li>
+	 *  </ol>
+	 *  else:
+	 *  <ol>
+	 * 	  <li>Returns RegisterUserResponse Object with the following field settings (See RegisteredUserResponse class for more info): 
+	 *	  	 <ol>
+	 *		   <li>successful = false</li>
+	 *	       <li>message = error message to be displayed to user</li>
+	 *	       <li>cookie = null</li>
+	 *	       <li>name = null</li>
+	 *         <li>userID = null (0)</li>
+	 *       </ol>
+	 *     </li>
+	 *  </ol>	
 	 * 
 	 *  @param username: the username the player wishes to use when logging into the game
 	 *  @param password: the password the player wishes to use for logging in with the specified username
 	 * 
 	 */
-	public String registerUser(String username, String password);
+	public RegisterUserResponse registerUser(String username, String password);
 	
 	
 	/**
@@ -57,26 +122,17 @@ public interface IServer {
 	 * 	None
 	 * 
 	 * @post
-	 * 	1) returns a list of GameDescription
-	 * 		<p>[
-	 * 			{
-	 * 				"title": "Game Name",
-	 * 				"id": 0,
-	 * 				"players": [
-	 * 					{
-	 * 						"color": orange,
-	 * 						"name" : "playerName",
-	 * 						"id": 0
-	 * 					},...
-	 *  			]
-	 *  		},...
-	 * 		]</p>
-	 * 
-	 * 		where ids are integers and color is one of the following 9 values:
-	 * 			red, green, blue, yellow, puce, brown, white, purple, orange	
+	 * <ol>
+	 *   <li>returns a ListGamesResponse Object with the following field settings (See ListGamesResponse class for more details):
+	 * 	   <ol>
+	 * 		 <li>successful = true</li>
+	 * 	     <li>gameDescriptions = a list containing one game description for each current game on the Catan server</li>
+	 *     </ol>
+	 *   </li>
+	 * </ol>
 	 * 
 	 */
-	public List<GameDescription> listGames();
+	public ListGamesResponse listGames();
 	
 	
 	/**
@@ -86,41 +142,45 @@ public interface IServer {
 	 * 	None
 	 * 
 	 * @post
-	 * 	1) creates an empty game on server
-	 * 	2) returns an empty GameDescription
-	 * 		<p>{
-	 * 			"title": "Game Name",
-	 * 			"id": 0,
-	 * 			"players": [
-	 * 				{},
-	 * 				{},
-	 * 				{},
-	 * 				{}
-	 *  		]
-	 *  	}</p>
+	 * <ol>
+	 *   <li>creates an empty game on server</li>
+	 * 	 <li>returns a CreateGameResponse Object with the following field settings (See CreateGameResponse class for more details):
+	 * 	   <ol>
+	 * 		 <li>successful = true</li>
+	 * 	     <li>gameDescription = a game description for the just created game ("title" field is set to provided name parameter and "id"
+	 * 							field is set to the server assigned id for the game)</li>
+	 * 	   </ol>
+	 *   </li>
+	 * </ol>
 	 * 
 	 *  @param name: the name which the created game will have
 	 * 
 	 */
-	public GameDescription createGame(String name);
+	public CreateGameResponse createGame(String name);
 	
 	
 	/**
 	 * Adds a player to the game and sets their game cookie
 	 * 
 	 * @pre
-	 * <ul>
-	 * 	<li>Player has a valid catan.user cookie set</li>
+	 * <ol>
+	 *  <li>Player has a valid catan.user cookie set</li>
 	 * 	<li>Player is already part of game or there is space for the player to join game</li>
 	 *  <li>The color submitted is a valid color (red, green, blue, yellow, puce, brown, white, purple, orange) and is available in the game</li>
-	 * </ul>
+	 * </ol>
 	 * @post
-	 * 	<ul><li>The player is now listed as a player for game associated with gameID and has the specified color</li></ul>
+	 * 	<oL>
+	 * 	  <li>The player is now listed as a player for game associated with gameID and has the specified color</li>
+	 *    <li>returns a JoinGameResponse Object with the following field settings (See JoinGameResponse class for more details):
+	 *      <ol>
+	 *      </ol>
+	 *    </li>
+	 *  </ol>
 	 * 
 	 * @param color: the available color the player wishes to use
 	 * @param gameID: the ID for the game which the player wishes to join
 	 */
-	public void joinGame(String color, int gameID);
+	public JoinGameResponse joinGame(CatanColor color, int gameID);
 	
 	
 	/**
@@ -136,7 +196,7 @@ public interface IServer {
 	 *     1) returns a the current server game model
 	 * 
 	 */
-	public GameModel getGameModel();
+	public GetGameModelResponse getGameModel(int version);
 	
 	
 	/**
@@ -149,7 +209,7 @@ public interface IServer {
 	 * 	1) Returns reset game model
 	 * 
 	 */
-	public GameModel resetGame();
+	public ResetGameResponse resetGame();
 	
 	
 	/**
@@ -164,7 +224,7 @@ public interface IServer {
 	 * @return string: see post for possible values
 	 * 
 	 */
-	public List<Log> getGameCommands();
+	public GetGameCommandsResponse getGameCommands();
 	
 	
 	/**
@@ -182,7 +242,7 @@ public interface IServer {
 	 *  @param commands: list of valid game commands ordered chronologically from earliest to most recent
 	 * 
 	 */
-	public GameModel postGameCommands(List<Log> commands);
+	public PostGameCommandsResponse postGameCommands(Log commands);
 	
 	
 	/**
@@ -195,7 +255,7 @@ public interface IServer {
 	 *  1) returns a list of strings 
 	 * 
 	 */
-	public List<String> listAI();
+	public ListAIResponse listAI();
 	
 	
 	/**
@@ -215,7 +275,7 @@ public interface IServer {
 	 * 
 	 * @param aiToAdd string from list<string> provided by listAI() command
 	 */
-	public void addAI(String aiToAdd);
+	public AddAIResponse addAI(String aiToAdd);
 	
 	
 	/**
@@ -231,7 +291,7 @@ public interface IServer {
 	 *  @param logLevel: desired logging level for server
 	 *  
 	 */
-	public void changeLogLevel(String logLevel);
+	public ChangeLogLevelResponse changeLogLevel(ServerLogLevel logLevel);
 	
 	
 	/**
@@ -289,7 +349,7 @@ public interface IServer {
 	 *  @param resources: list of valid resource types
 	 *  @param resourceHand: contains map of each resource type and the associated number of cards for the type the player is dropping
 	 */
-	public void discardCards(List<ResourceType> resources, Map<ResourceType, Integer> resourceHand);
+	public void discardCards(ResourceHand resourceHand);
 
 	/**
 	 * Specifies to the server the number that was rolled by the player
@@ -307,7 +367,7 @@ public interface IServer {
 	 *  
 	 *  @param number: an integer from 2 to 12 that represents the number that was rolled.
 	 */
-	public void rollNumber(int number);
+	public void rollNumber(DiceRoll number);
 	
 	/**
 	 * Builds a road of the same color as the player building the road and at the specified location on the map
@@ -353,7 +413,7 @@ public interface IServer {
 	 * </ul>
 	 * @param free: a boolean that specifies whether or not the settlement piece has been given to the player for free.
 	 */
-	public void buildSettlement(boolean free);
+	public void buildSettlement(boolean free, VertexLocation location);
 	
 	/**
 	 * Builds a city of the same color as the player building the road and at the specified location on the map
@@ -373,7 +433,7 @@ public interface IServer {
 	 *  <li> The map lists the city location correctly</li>
 	 * </ul>
 	 */
-	public void buildCity();
+	public void buildCity(VertexLocation location);
 	
 	/**
 	 * The player offers a trade of certain resources to a another player in the game in return for different resource.
@@ -393,7 +453,7 @@ public interface IServer {
 	 * @param offer: ResourceHand indicating the cards to be given and received.  Negative numbers mean the players is receiving cards of that resource in the trade.
 	 * @param receiver: playerIndex which specifies the recipient whom the player is trading with 
 	 */
-	public void offerTrade(ResourceHand offer, playerIndex receiver);
+	public void offerTrade(ResourceHand offer, PlayerIndex receiver);
 	
 	/**
 	 * The player offers a trade of certain resources to the bank at a specified ratio depending on the port the player has a settlement on.
@@ -413,7 +473,7 @@ public interface IServer {
 	 * @param inputResource: Resource - The resource the player is giving
 	 * @param outputResource: Resource - The resoure the player is receiving
 	 */
-	public void maritimeTrade(int ratio, Resource inputResource, Resource outputResource);
+	public void maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource);
 	
 	/**
 	 * The player finishes his/her turn.
@@ -469,7 +529,7 @@ public interface IServer {
 	 * @param ResourceOne: The first of the two resources that the player desires to receive from the bank
 	 * @param ResourceTwo: The second of the two resources that the player desires to receive from the bank
 	 */
-	public void playYearOfPlentyCard(Resource resourceOne, Resource resourceTwo);
+	public void playYearOfPlentyCard(ResourceType resourceOne, ResourceType resourceTwo);
 	
 	/**
 	 * The player can play the "Road Buidling Card" and build two new roads at no charge if the preconditions are satisfied.
@@ -514,7 +574,7 @@ public interface IServer {
 	 * </ul>
 	 * @param resource: The specified Resource that the player wants to receive
 	 */
-	public void playMonopolyCard(Resource resource);
+	public void playMonopolyCard(ResourceType resource);
 
 	/**
 	 * The player can play the "Soldier Card" and he/she now have to move the robber to a new location on the map and steal two resources from a player that has a settlement touching the robbers new location.
@@ -538,7 +598,7 @@ public interface IServer {
 	 * @param location: Hexlocation that specifies the robbers new location on the map
 	 * @param victomIndex: playerIndex of whom is getting robbed
 	 */
-	public void playSoldierCard(HexLocation location, playerIndex victimIndex);
+	public void playSoldierCard(HexLocation location, PlayerIndex victimIndex);
 	
 	/**
 	 * The player can play the "Monument Card" and he/she will gain one victory point
