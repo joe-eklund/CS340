@@ -2,6 +2,8 @@ package shared.definitions;
 
 import java.util.List;
 
+import client.model.*;
+
 public abstract class GameModel {
 	private Bank bank;
 	private Chat chat;
