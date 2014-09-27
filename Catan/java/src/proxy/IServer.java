@@ -1,10 +1,14 @@
 package proxy;
 
+import java.io.UnsupportedEncodingException;
+
 import shared.ServerMethodResponses.AddAIResponse;
 import shared.ServerMethodResponses.ChangeLogLevelResponse;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameCommandsResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.ILoginUserResponse;
+import shared.ServerMethodResponses.IRegisterUserResponse;
 import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListAIResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
@@ -64,8 +68,9 @@ public interface IServer {
 	 * 	
 	 * @param username: username for registered user
 	 * @param password: password for registered user
+	 * @throws UnsupportedEncodingException 
 	 */
-	public LoginUserResponse loginUser(String username, String password);
+	public ILoginUserResponse loginUser(String username, String password) throws UnsupportedEncodingException;
 	
 	
 	/**
@@ -110,9 +115,10 @@ public interface IServer {
 	 * 
 	 *  @param username: the username the player wishes to use when logging into the game
 	 *  @param password: the password the player wishes to use for logging in with the specified username
+	 * @throws UnsupportedEncodingException 
 	 * 
 	 */
-	public RegisterUserResponse registerUser(String username, String password);
+	public IRegisterUserResponse registerUser(String username, String password) throws UnsupportedEncodingException;
 	
 	
 	/**

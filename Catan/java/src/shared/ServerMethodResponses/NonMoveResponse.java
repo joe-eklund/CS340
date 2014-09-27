@@ -1,6 +1,6 @@
 package shared.ServerMethodResponses;
 
-public abstract class NonMoveResponse {
+public abstract class NonMoveResponse implements INonMoveResponse {
 	boolean successful;
 
 	public NonMoveResponse(boolean successful) {

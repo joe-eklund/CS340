@@ -1,17 +1,10 @@
 package proxy;
 
-import shared.ServerMethodResponses.AddAIResponse;
-import shared.ServerMethodResponses.ChangeLogLevelResponse;
-import shared.ServerMethodResponses.CreateGameResponse;
-import shared.ServerMethodResponses.GetGameCommandsResponse;
-import shared.ServerMethodResponses.GetGameModelResponse;
-import shared.ServerMethodResponses.JoinGameResponse;
-import shared.ServerMethodResponses.ListAIResponse;
-import shared.ServerMethodResponses.ListGamesResponse;
-import shared.ServerMethodResponses.LoginUserResponse;
-import shared.ServerMethodResponses.PostGameCommandsResponse;
-import shared.ServerMethodResponses.RegisterUserResponse;
-import shared.ServerMethodResponses.ResetGameResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
+import shared.ServerMethodRequests.*;
+import shared.ServerMethodResponses.*;
 import shared.definitions.CatanColor;
 import shared.definitions.DiceRoll;
 import shared.definitions.Log;
@@ -25,25 +18,33 @@ import shared.locations.VertexLocation;
 
 public class ProxyServer implements IServer{
 	private ICommunicator clientCommunicator;
+	private ITranslator cookieTranslator;
+	private String cookieEncoding;
 	
-	public ProxyServer(ICommunicator clientCommunicator) {
+	public ProxyServer(ICommunicator clientCommunicator, ITranslator cookieTranslator, String cookieEncoding) {
 		this.clientCommunicator = clientCommunicator;
+		this.cookieTranslator = cookieTranslator;
+		this.cookieEncoding = cookieEncoding;
 	}
 
 	@Override
-	public LoginUserResponse loginUser(String username, String password) {
-		// create loginUserParam object based on username and password
-		// call clientCommunicator.executeCommand("loginUser", loginUserParam);
-		// return (loginUserResult.message != null) ? loginUserResult : null
-		return null;
+	public ILoginUserResponse loginUser(String username, String password) throws UnsupportedEncodingException {
+		LoginRequest loginRequest = new LoginRequest(username, password);
+		ICommandResponse loginResponse = this.clientCommunicator.executeCommand("user/login", loginRequest, null);
+		String cookie = loginResponse.getCookieResponseHeader();
+		String cookieJSON = URLDecoder.decode(cookie, this.cookieEncoding);
+		PlayerCookie playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON/*,PlayerCookie.class*/);
+		return new LoginUserResponse(loginResponse.getResponseCode() == 200, loginResponse.getResponseMessage(), playerCookie.getName(), cookie, playerCookie.getPlayerID());
 	}
 
 	@Override
-	public RegisterUserResponse registerUser(String username, String password) {
-		// create registerUserParam object based on username and password
-		// call clientCommunicator.executeCommand("registerUser", registerUserParam);
-		// return (registerUserResult.message != null) ? registerUserResult : null
-		return null;
+	public IRegisterUserResponse registerUser(String username, String password) throws UnsupportedEncodingException {
+		RegisterRequest loginRequest = new RegisterRequest(username, password);
+		ICommandResponse loginResponse = this.clientCommunicator.executeCommand("user/login", loginRequest, null);
+		String cookie = loginResponse.getCookieResponseHeader();
+		String cookieJSON = URLDecoder.decode(cookie, this.cookieEncoding);
+		PlayerCookie playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON/*,PlayerCookie.class*/);
+		return new RegisterUserResponse(loginResponse.getResponseCode() == 200, loginResponse.getResponseMessage(), playerCookie.getName(), cookie, playerCookie.getPlayerID());
 	}
 	
 	@Override

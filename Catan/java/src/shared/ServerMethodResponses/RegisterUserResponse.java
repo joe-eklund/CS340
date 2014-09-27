@@ -1,6 +1,6 @@
 package shared.ServerMethodResponses;
 
-public class RegisterUserResponse extends UserResponse {
+public class RegisterUserResponse extends UserResponse implements IRegisterUserResponse {
 
 	public RegisterUserResponse(boolean successful, String message,
 			String name, String cookie, int userID) {
