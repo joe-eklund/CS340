@@ -1,12 +1,14 @@
 package proxy;
 
+import client.model.ClientModel;
+
 import com.google.gson.*;
 /**
  * 
  * @author Epper Marshall
  * This is used to translate a Java Object into json or to convert a String back into an Object.
  */
-public class TranslatorJSON {
+public class TranslatorJSON implements ITranslator{
 	private Gson gson;
 	public TranslatorJSON(){
 		gson = new GsonBuilder().create();
@@ -16,7 +18,7 @@ public class TranslatorJSON {
 	 * @param obj
 	 * @return Json String
 	 */
-	public String translateToJSON(Object obj){
+	public String translateTo(Object obj){
 		String json = gson.toJson(obj);
 		return json;
 	}
@@ -25,8 +27,8 @@ public class TranslatorJSON {
 	 * @param message
 	 * @return Java Object
 	 */
-	public Object translateFromJSON(String message){
-		Object obj = gson.fromJson(message, Object.class);
+	public Object translateFrom(String message, Class<?> responseCastClass){
+		Object obj = gson.fromJson(message, responseCastClass);
 		return obj;
 	}
 }
