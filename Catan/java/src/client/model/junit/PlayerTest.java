@@ -1,9 +1,7 @@
 package client.model.junit;
 
+import org.junit.*;
 import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import shared.definitions.ResourceType;
 import client.model.Player;
 
@@ -36,14 +34,12 @@ public class PlayerTest {
 	@Test
 	public void testGetResources() {
 		Player test=new Player("green", "George", 2);
-		assertEquals("Player should have 0 resources", 0, test.getResources().size());
-		test.getBrick();
-		test.getBrick();
-		test.getWood();
-		assertEquals("Player should have 3 resouces", 3, test.getResources().size());
-		assertEquals("Player should have 2 brick", ResourceType.BRICK, test.getResources().get(0));
-		assertEquals("Player should have 2 brick", ResourceType.BRICK, test.getResources().get(1));
-		assertEquals("Player should have 1 wood", ResourceType.WOOD, test.getResources().get(2));
+		assertEquals("Player should have 0 resources", 0, test.getResources().totalResourcesCount());
+		test.setBrick(2);
+		test.setWood(1);
+		assertEquals("Player should have 3 resouces", 3, test.getResources().totalResourcesCount());
+		assertEquals("Player should have 2 brick", 2, test.getResources().bricks);
+		assertEquals("Player should have 1 wood", 1, test.getResources().woods);
 	}
 
 	@Test
@@ -54,5 +50,14 @@ public class PlayerTest {
 		test.buildBuilding();
 		assertEquals("Player should have 4 points", 4, test.getVictoryPoints());
 	}
+	
+	public static void main(String[] args) 
+	{
+		String[] testClasses = new String[] 
+		{
+				"client.PlayerTest"
+		};
 
+		org.junit.runner.JUnitCore.main(testClasses);
+	}
 }

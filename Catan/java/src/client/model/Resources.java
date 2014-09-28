@@ -51,4 +51,8 @@ public class Resources {
 	public void setWoods(int woods) {
 		this.woods = woods;
 	}
+	
+	public int totalResourcesCount() {
+		return bricks + ores + sheeps + wheats + woods;
+	}
 }
