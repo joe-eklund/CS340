@@ -1,6 +1,6 @@
 package shared.ServerMethodRequests;
 
-public abstract class UserRequest {
+public class UserRequest {
 	private String username;
 	private String password;
 	

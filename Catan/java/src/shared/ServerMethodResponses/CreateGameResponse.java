@@ -2,7 +2,7 @@ package shared.ServerMethodResponses;
 
 import shared.definitions.GameDescription;
 
-public class CreateGameResponse extends NonMoveResponse{
+public class CreateGameResponse extends NonMoveResponse implements ICreateGameResponse{
 	private GameDescription gameDescription;
 
 	public CreateGameResponse(boolean successful,

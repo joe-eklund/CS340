@@ -1,5 +1,7 @@
 package shared.ServerMethodResponses;
 
+import client.model.Log;
+
 public class GetGameCommandsResponse extends NonMoveResponse {
 	private Log commands;
 

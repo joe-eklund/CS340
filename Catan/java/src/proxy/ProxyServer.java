@@ -1,20 +1,15 @@
 package proxy;
 
+import java.awt.List;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import shared.ServerMethodRequests.*;
 import shared.ServerMethodResponses.*;
-import shared.definitions.CatanColor;
-import shared.definitions.DiceRoll;
-import shared.definitions.Log;
-import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceHand;
-import shared.definitions.ResourceType;
-import shared.definitions.ServerLogLevel;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.definitions.*;
+import shared.locations.*;
 
 public class ProxyServer implements IServer{
 	private ICommunicator clientCommunicator;
@@ -29,40 +24,53 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public ILoginUserResponse loginUser(String username, String password) throws UnsupportedEncodingException {
-		LoginRequest loginRequest = new LoginRequest(username, password);
-		ICommandResponse loginResponse = this.clientCommunicator.executeCommand("user/login", loginRequest, null);
-		String cookie = loginResponse.getCookieResponseHeader();
+		UserRequest loginRequest = new UserRequest(username, password);
+		ICommandResponse loginResponse = this.clientCommunicator.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "user/login", loginRequest, null);
+		String cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
+		cookie = cookie.replaceFirst("catan.user=", "");
+		cookie = cookie.substring(0, cookie.lastIndexOf(";Path=/;"));
 		String cookieJSON = URLDecoder.decode(cookie, this.cookieEncoding);
-		PlayerCookie playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON/*,PlayerCookie.class*/);
+		PlayerCookie playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
 		return new LoginUserResponse(loginResponse.getResponseCode() == 200, loginResponse.getResponseMessage(), playerCookie.getName(), cookie, playerCookie.getPlayerID());
 	}
 
 	@Override
 	public IRegisterUserResponse registerUser(String username, String password) throws UnsupportedEncodingException {
-		RegisterRequest loginRequest = new RegisterRequest(username, password);
-		ICommandResponse loginResponse = this.clientCommunicator.executeCommand("user/login", loginRequest, null);
-		String cookie = loginResponse.getCookieResponseHeader();
+		UserRequest loginRequest = new UserRequest(username, password);
+		ICommandResponse loginResponse = this.clientCommunicator.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(),"user/login", loginRequest, null);
+		String cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
+		cookie = cookie.replaceFirst("catan.user=", "");
+		cookie = cookie.substring(0, cookie.lastIndexOf(";Path=/;"));
 		String cookieJSON = URLDecoder.decode(cookie, this.cookieEncoding);
-		PlayerCookie playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON/*,PlayerCookie.class*/);
+		PlayerCookie playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
 		return new RegisterUserResponse(loginResponse.getResponseCode() == 200, loginResponse.getResponseMessage(), playerCookie.getName(), cookie, playerCookie.getPlayerID());
 	}
 	
 	@Override
-	public ListGamesResponse listGames() {
-		// TODO Auto-generated method stub
-		return null;
+	public IListGamesResponse listGames() {
+		Class<?> arrayGameDescriptionType = GameDescription[].class;
+		ICommandResponse listGamesResponse = this.clientCommunicator.executeCommand(RequestType.GET, new ArrayList<Pair<String,String>>(), "/games/list", null, arrayGameDescriptionType);
+		return new ListGamesResponse(listGamesResponse.getResponseCode() == 200, Arrays.asList((GameDescription[])listGamesResponse.getResponseObject()));
 	}
 
 	@Override
-	public CreateGameResponse createGame(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public ICreateGameResponse createGame(String name) {
+		CreateGameRequest createGameRequest = new CreateGameRequest(name);
+		ICommandResponse createGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "/games/create", createGameRequest, GameDescription.class);
+		return new CreateGameResponse(createGameResponse.getResponseCode() == 200, (GameDescription)createGameResponse.getResponseObject());
 	}
 
 	@Override
-	public JoinGameResponse joinGame(CatanColor color, int gameID) {
-		// TODO Auto-generated method stub
-		return null;
+	public IJoinGameResponse joinGame(CatanColor color, int gameID, String cookie) {
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		JoinGameRequest joinGameRequest = new JoinGameRequest(gameID, color);
+		ICommandResponse joinGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/games/join", joinGameRequest, null);
+		String gameCookieExtension = joinGameResponse.getResponseHeaders().get("Set-cookie").get(0);
+		gameCookieExtension = gameCookieExtension.replaceFirst("catan.game=", "");
+		gameCookieExtension = gameCookieExtension.substring(0, gameCookieExtension.lastIndexOf(";Path=/;"));
+		cookie = cookie + ";" + gameCookieExtension;
+		return new JoinGameResponse(joinGameResponse.getResponseCode() == 200);
 	}
 
 	@Override

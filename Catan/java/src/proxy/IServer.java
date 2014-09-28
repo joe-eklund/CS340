@@ -125,7 +125,7 @@ public interface IServer {
 	 * </ol>
 	 * 
 	 */
-	public ListGamesResponse listGames();
+	public IListGamesResponse listGames();
 	
 	
 	/**
@@ -149,7 +149,10 @@ public interface IServer {
 	 *  @param name: the name which the created game will have
 	 * 
 	 */
-	public CreateGameResponse createGame(String name);
+	/*
+	 * need to verify if name parameter is needed... Specs are worthless
+	 */
+	public ICreateGameResponse createGame(String name);
 	
 	
 	/**
@@ -173,7 +176,7 @@ public interface IServer {
 	 * @param color: the available color the player wishes to use
 	 * @param gameID: the ID for the game which the player wishes to join
 	 */
-	public JoinGameResponse joinGame(CatanColor color, int gameID);
+	public IJoinGameResponse joinGame(CatanColor color, int gameID, String cookie);
 	
 	
 	/**
