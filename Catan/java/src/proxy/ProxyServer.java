@@ -1,15 +1,41 @@
 package proxy;
 
-import java.awt.List;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import shared.ServerMethodRequests.*;
-import shared.ServerMethodResponses.*;
-import shared.definitions.*;
-import shared.locations.*;
+import shared.ServerMethodRequests.CreateGameRequest;
+import shared.ServerMethodRequests.JoinGameRequest;
+import shared.ServerMethodRequests.UserRequest;
+import shared.ServerMethodResponses.AddAIResponse;
+import shared.ServerMethodResponses.ChangeLogLevelResponse;
+import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.GetGameCommandsResponse;
+import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.ICreateGameResponse;
+import shared.ServerMethodResponses.IJoinGameResponse;
+import shared.ServerMethodResponses.IListGamesResponse;
+import shared.ServerMethodResponses.ILoginUserResponse;
+import shared.ServerMethodResponses.IRegisterUserResponse;
+import shared.ServerMethodResponses.JoinGameResponse;
+import shared.ServerMethodResponses.ListAIResponse;
+import shared.ServerMethodResponses.ListGamesResponse;
+import shared.ServerMethodResponses.LoginUserResponse;
+import shared.ServerMethodResponses.PostGameCommandsResponse;
+import shared.ServerMethodResponses.RegisterUserResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
+import shared.definitions.CatanColor;
+import shared.definitions.DiceRoll;
+import shared.definitions.GameDescription;
+import shared.definitions.Log;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceHand;
+import shared.definitions.ResourceType;
+import shared.definitions.ServerLogLevel;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 
 public class ProxyServer implements IServer{
 	private ICommunicator clientCommunicator;
