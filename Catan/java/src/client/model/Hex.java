@@ -11,13 +11,15 @@ import shared.definitions.ResourceType;
  */
 public class Hex {
 	private HexLocation location;
-	private ResourceType ResourceType;
-	private Chit chit;
+	private String resourceType;
+	private int chit;
 	
 	/**
 	 * Class constructor.
 	 */
-	public Hex(){
+	public Hex(int x, int y, String resource, int chit){
+		location = new HexLocation(x, y);
+		resourceType = resource;
 		
 	}
 	
@@ -38,26 +40,35 @@ public class Hex {
 	}
 	
 	/**
+	 * Sets the hex location.
+	 * @param x: The x coordinate of the hex location to set.
+	 * @param y: The Y coordinate of the hex location to set.
+	 */
+	public void setLocation(int x, int y) {
+		location = new HexLocation(x, y);
+	}
+	
+	/**
 	 * Gets the resource type.
 	 * @return	The current resource type.
 	 */
-	public ResourceType getResourceType() {
-		return ResourceType;
+	public String getResourceType() {
+		return resourceType;
 	}
 	
 	/**
 	 * Sets the resource type.
 	 * @param ResourceType	The resource type to set.
 	 */
-	public void setResourceType(ResourceType ResourceType) {
-		this.ResourceType = ResourceType;
+	public void setResourceType(String resource) {
+		resourceType = resource;
 	}
 	
 	/**
 	 * Gets the chit.
 	 * @return	The current chit.
 	 */
-	public Chit getChit() {
+	public int getChit() {
 		return chit;
 	}
 	
@@ -65,7 +76,7 @@ public class Hex {
 	 * Sets the chit.
 	 * @param chit	The inputed chit to set.
 	 */
-	public void setChit(Chit chit) {
+	public void setChit(int chit) {
 		this.chit = chit;
 	}
 }

@@ -13,15 +13,15 @@ public class Chat {
 	 * Class constructor.
 	 */
 	public Chat(){
-		
+		messages = new ArrayList<Message>();
 	}
 	
 	/**
 	 * Adds a message to the list of messages.
 	 * @param messageToAdd	The inputed message to add.
 	 */
-	public void addMessage(Message messageToAdd){
-		
+	public void addMessage(String message, String source){
+		messages.add(new Message(message, source));
 	}
 	
 	/**

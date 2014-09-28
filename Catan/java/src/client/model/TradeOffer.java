@@ -6,8 +6,24 @@ package client.model;
 public class TradeOffer {
 	
 	private int sender;
-	private int reciever;
-	private Object offer;
+	private int receiver;
+	private Resources offer;
+	
+	public TradeOffer(int sender, int receiver, int brick, int ore, int sheep, int wheat, int wood) {
+		this.sender = sender;
+		this.receiver = receiver;
+		offer.bricks = brick;
+		offer.ores = ore;
+		offer.sheeps = sheep;
+		offer.wheats = wheat;
+		offer.woods = wood;
+	}
+	
+	public TradeOffer(int sender, int receiver, Resources offer) {
+		this.sender = sender;
+		this.receiver = receiver;
+		this.offer = offer;
+	}
 	
 	public int getSender() {
 		return sender;
@@ -15,16 +31,25 @@ public class TradeOffer {
 	public void setSender(int sender) {
 		this.sender = sender;
 	}
-	public int getReciever() {
-		return reciever;
+	public int getReceiver() {
+		return receiver;
 	}
 	public void setReciever(int reciever) {
-		this.reciever = reciever;
+		this.receiver = reciever;
 	}
-	public Object getOffer() {
+	public Resources getOffer() {
 		return offer;
 	}
-	public void setOffer(Object offer) {
+	
+	public void setOffer(int brick, int ore, int sheep, int wheat, int wood) {
+		offer.bricks = brick;
+		offer.ores = ore;
+		offer.sheeps = sheep;
+		offer.wheats = wheat;
+		offer.woods = wood;
+	}
+	
+	public void setOffer(Resources offer) {
 		this.offer = offer;
 	}
 }

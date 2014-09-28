@@ -13,39 +13,35 @@ import client.resources.*;
  * available to the players. These are cards that no player currently has.
  */
 public class Bank {
-	private Stack<ResourceType> bricks;
-	private Stack<ResourceType> woods;
-	private Stack<ResourceType> sheeps;
-	private Stack<ResourceType> ores;
-	private Stack<ResourceType> wheats;
+	private Resources resources;
 	private ArrayList<DevCardType> developmentCards;
 	
 	/**
 	 * Class constructor. Initializes each stack with 19 of its respective resource.
 	 */
 	public Bank(){
-		bricks=new Stack();
-		wheats=new Stack();
-		ores=new Stack();
-		woods=new Stack();
-		sheeps=new Stack();
-		for(int i=0;i<19;i++){
-			bricks.push(ResourceType.BRICK);
-			wheats.push(ResourceType.WHEAT);
-			ores.push(ResourceType.ORE);
-			woods.push(ResourceType.WOOD);
-			sheeps.push(ResourceType.SHEEP);
-		}
+		resources = new Resources();
 	}
+	
+	/**
+	 * Class constructor. Initializes each stack with 19 of its respective resource.
+	 * @param bricks: the amount of brick cards the bank has.
+	 * @param wheats: the amount of wheat cards the bank has.
+	 * @param ores: the amount of ores cards the bank has.
+	 * @param woods: the amount of woods cards the bank has.
+	 * @param sheeps: the amount of sheeps cards the bank has.
+	 */
+	public Bank(int bricks, int wheats, int ores, int woods, int sheeps) {
+		resources = new Resources(bricks, wheats, ores, woods, sheeps);
+	}
+	
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
 	 * @param amt
 	 * @return boolean
 	 */
 	public boolean hasSheep(int amt) {
-		if(sheeps.size()>=amt)
-			return true;
-		return false;
+		return (resources.sheeps >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -53,9 +49,7 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasOre(int amt) {
-		if(ores.size()>=amt)
-			return true;
-		return false;
+		return (resources.ores >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -63,9 +57,7 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasWood(int amt) {
-		if(woods.size()>=amt)
-			return true;
-		return false;
+		return (resources.woods >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -73,9 +65,7 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasWheat(int amt) {
-		if(wheats.size()>=amt)
-			return true;
-		return false;
+		return (resources.wheats >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -83,8 +73,46 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasBrick(int amt) {
-		if(bricks.size()>=amt)
-			return true;
-		return false;
+		return (resources.bricks >= amt) ? true : false;
+	}
+
+	public int getBricks() {
+		return resources.bricks;
+	}
+
+	public void setBricks(int bricks) {
+		resources.bricks = bricks;
+	}
+
+	public int getOres() {
+		return resources.ores;
+	}
+
+	public void setOres(int ores) {
+		resources.ores = ores;
+	}
+
+	public int getSheeps() {
+		return resources.sheeps;
+	}
+
+	public void setSheeps(int sheeps) {
+		resources.sheeps = sheeps;
+	}
+
+	public int getWheats() {
+		return resources.wheats;
+	}
+
+	public void setWheats(int wheats) {
+		resources.wheats = wheats;
+	}
+
+	public int getWoods() {
+		return resources.woods;
+	}
+
+	public void setWoods(int woods) {
+		resources.woods = woods;
 	}
 }

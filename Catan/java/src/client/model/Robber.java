@@ -1,22 +1,28 @@
 package client.model;
 
+import shared.locations.RobberLocation;
+
 /**Robber is a game piece contained in the game. Affects players on each turn. 
  * @author Chad
  */
 public class Robber {
-	private int previousLocation;
-	private int currentLocation;
+	private RobberLocation previousLocation;
+	private RobberLocation currentLocation;
 	
-	public int getPreviousLocation() {
+	public Robber(int x, int y) {
+		currentLocation = new RobberLocation(x, y);
+	}
+	
+	public RobberLocation getPreviousLocation() {
 		return previousLocation;
 	}
-	public void setPreviousLocation(int previousLocation) {
+	public void setPreviousLocation(RobberLocation previousLocation) {
 		this.previousLocation = previousLocation;
 	}
-	public int getCurrentLocation() {
+	public RobberLocation getCurrentLocation() {
 		return currentLocation;
 	}
-	public void setCurrentLocation(int currentLocation) {
+	public void setCurrentLocation(RobberLocation currentLocation) {
 		this.currentLocation = currentLocation;
 	}
 }

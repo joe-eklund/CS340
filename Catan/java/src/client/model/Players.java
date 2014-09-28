@@ -8,6 +8,10 @@ import java.util.ArrayList;
  */
 public class Players {
 	private ArrayList<Player> players;
+	
+	public Players() {
+		
+	}
 	/**
 	 * Returns set of all players
 	 * @return ArrayList<Player>
