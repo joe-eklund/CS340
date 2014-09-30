@@ -70,4 +70,8 @@ public class DevCards {
 	public void setYearOfPlenty(int yearOfPlenty) {
 		this.yearOfPlenty = yearOfPlenty;
 	}
+	
+	public int getTotalDevCardCount() {
+		return monopoly + monument + roadBuilding + soldier + yearOfPlenty;
+	}
 }

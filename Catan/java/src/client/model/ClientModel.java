@@ -1,6 +1,7 @@
 package client.model;
 
 import shared.definitions.GameModel;
+import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -53,12 +54,33 @@ public class ClientModel {
 		return false;
 	}
 	
-	public boolean canDiscardCards() {
+	public boolean canDiscardCards(int playerIndex, ResourceHand resourceHand) {
+		//TODO do we check if the oldDev card hand has 7 cards or the newDev card hand?
+		//TODO does it have to be the players turn to discard?  The spec doesn't list that as a precondition
 		
+		//Checks that the game status is "Discarding", that the player has over 7 Dev cards, and that the 
+		//player has the cards chosen to discard.
+		if (gameModel.getTurnTracker().getStatus().equals("Discarding") && 
+			gameModel.getPlayers().get(playerIndex).getNewDevCards().getTotalDevCardCount() > 7 &&
+			playerHasResourceInHand(playerIndex, resourceHand)) {
+			
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
-	public boolean canRollNumber() {
-		
+	//TODO check to see if "Rolling" status has a capital R or not
+	public boolean canRollNumber(int playerIndex) {
+		//checks to see if the game status is "Rolling" and that it is actually the players turn to roll
+		if (gameModel.getTurnTracker().getStatus().equals("Rolling") && 
+			gameModel.getTurnTracker().getCurrentTurn() == playerIndex) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public boolean buildRoad() {
@@ -73,21 +95,35 @@ public class ClientModel {
 		
 	}
 	
-	public boolean canOfferTrade() {
-		
+	public boolean canOfferTrade(int senderIndex, ResourceHand resourceHand) {
+		return playerHasResourceInHand(senderIndex, resourceHand);
 	}
 	
-	public boolean canMaritimeTrade() {
-		
+	public boolean canMaritimeTrade(int playerIndex, int ratio, ResourceType inputResource) {
+		//TODO do I need to check to make sure ratio is 2, 3, or 4?
+		//Checks to see if the player has enough of the specified resource to trade
+		if (gameModel.getPlayers().get(playerIndex).hasResource(inputResource, ratio)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
+	//DONE
 	public boolean canFinishPlaying() {
-		
+		if (gameModel.getTurnTracker().getStatus().equals("Playing")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public boolean canBuyDevCard(int playerIndex) {
-		Player player = gameModel.getPlayers.get(playerIndex);
+		Player player = gameModel.getPlayers().get(playerIndex);
 		
+		//TODO check that there are dev cards left in the deck (where the heck is the deck!?)
 		if (player.getOre() > 0 && player.getWheat() > 0 && player.getSheep() > 0) {
 			
 		}
@@ -169,6 +205,44 @@ public class ClientModel {
 		else {
 			return false;
 		}
+	}
+	
+	private boolean playerHasResourceInHand(int playerIndex, ResourceHand resourceHand) {
+		
+		//Each if statement checks to see if the value in resourceHand is not negative, if it is positive
+		//then the player needs to have that much resource in order for the method to return true, so the if statement
+		//also checks to see if the player has enough of the specified resource
+		if (resourceHand.getBrick() > 0 && 
+			!gameModel.getPlayers().get(playerIndex).hasResource(ResourceType.BRICK, resourceHand.getBrick())) {
+			
+			return false;
+		}
+		
+		if (resourceHand.getOre() > 0 && 
+			!gameModel.getPlayers().get(playerIndex).hasResource(ResourceType.ORE, resourceHand.getOre())) {
+			
+			return false;
+		}
+		
+		if (resourceHand.getSheep() > 0 && 
+			!gameModel.getPlayers().get(playerIndex).hasResource(ResourceType.SHEEP, resourceHand.getSheep())) {
+			
+			return false;
+		}
+		
+		if (resourceHand.getWheat() > 0 && 
+			!gameModel.getPlayers().get(playerIndex).hasResource(ResourceType.WHEAT, resourceHand.getWheat())) {
+			
+			return false;
+		}
+		
+		if (resourceHand.getWood() > 0 && 
+			!gameModel.getPlayers().get(playerIndex).hasResource(ResourceType.WOOD, resourceHand.getWood())) {
+			
+			return false;
+		}
+		
+		return true;
 	}
 }
 

@@ -248,4 +248,33 @@ public class Player {
 			return true;
 		return false;
 	}
+	
+	public boolean hasResource(ResourceType resource, int amount) {
+		boolean hasResource = false;
+		
+		switch (resource) {
+		case BRICK: 
+			if (getBrick() > amount)
+				hasResource = true;
+			break;
+		case ORE: 
+			if (getOre() > amount)
+				hasResource = true;
+			break;
+		case SHEEP: 
+			if (getSheep() > amount)
+				hasResource = true;
+			break;
+		case WHEAT: 
+			if (getWheat() > amount)
+				hasResource = true;
+			break;
+		case WOOD: 
+			if (getWood() > amount)
+				hasResource = true;
+			break;
+		}
+		
+		return hasResource;
+	}
 }
