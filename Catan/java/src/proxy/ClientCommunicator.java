@@ -11,16 +11,21 @@ public class ClientCommunicator implements ICommunicator {
 	
 	String Host = new String();
 	int Port = 0;
+	TranslatorJSON jsonTrans = new TranslatorJSON();
 	
-	/**
+	/**Starts the request from the server given the information from the proxy. Starts by packaging up the info and having the translator change it to json. Then takes the json object with the request type and sends it to the server. 
 	 * 
 	 * @param commandName
 	 * @param commandParameters
-	 * @return
+	 * @return ICommandResponse from the server
 	 */
 	@Override
 	public ICommandResponse executeCommand(RequestType requestType, List<Pair<String,String>> headers, String commandName, Object commandParameters, Class<?> responseCastClass) {
-		return null;
+		
+		String translatedJson = jsonTrans.translateTo(commandParameters);
+		doGet(); //will take the translated json object and the parameters and send a request to the server. 
+		ICommandResponse response= actionMethod(); //
+		return response;
 	}
 	
 	/**
@@ -64,12 +69,9 @@ public class ClientCommunicator implements ICommunicator {
 			connection.setDoOutput(true); 
 			connection.addRequestProperty("Accept", "text/html"); 
 			connection.connect(); 
-	
-//			XStream xs = new XStream(new DomDriver());
-//			xs.toXML(postData, connection.getOutputStream());
 			
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) { 
-		         //response = (Object)xs.fromXML(connection.getInputStream());
+				//get response here. 
 			}
 			else { 
 				System.out.print("Failure");
