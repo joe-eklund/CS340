@@ -89,6 +89,5 @@ public class HexLocation
 				return null;
 		}
 	}
-	
 }
 

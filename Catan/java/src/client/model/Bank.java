@@ -115,4 +115,33 @@ public class Bank {
 	public void setWoods(int woods) {
 		resources.woods = woods;
 	}
+	
+	public boolean hasResource(ResourceType resource) {
+		boolean hasResource = false;
+		
+		switch (resource) {
+		case BRICK: 
+			if (getBricks() > 0)
+				hasResource = true;
+			break;
+		case ORE: 
+			if (getOres() > 0)
+				hasResource = true;
+			break;
+		case SHEEP: 
+			if (getSheeps() > 0)
+				hasResource = true;
+			break;
+		case WHEAT: 
+			if (getWheats() > 0)
+				hasResource = true;
+			break;
+		case WOOD: 
+			if (getWoods() > 0)
+				hasResource = true;
+			break;
+		}
+		
+		return hasResource;
+	}
 }
