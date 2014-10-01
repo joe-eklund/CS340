@@ -37,17 +37,18 @@
 	<!-- ******* -->
     
 	<target name="test" description="Runs the junit tests">
-		<junit printsummary="yes" haltonfailure="yes">
+		<junit printsummary="yes">
 			<classpath>
-      			<pathelement location="${project.class.path}"/>
-     			<pathelement location="${build.tests}"/>
-      			<pathelement path="${java.class.path}"/>
-    		</classpath>
-			<test name="bin.proxy.junit" haltonfailure="no" outfile="result">
-				<formatter type="plain"/>
-				<formatter type="xml"/>
-			</test>
-		</junit>
+			  <!---<pathelement location="bin" />    --->
+			  <pathelement location="junit-4.11.jar"/>
+			</classpath>    
+			<batchtest>
+			   <fileset dir="${bin.proxy.junit}">
+				    <include name="**/*Test*" />
+			   </fileset>
+			</batchtest>
+			<formatter type="brief" usefile="false"/>
+  		</junit>
 	</target>
  
 	<target name="server" description="Runs the demo server">
