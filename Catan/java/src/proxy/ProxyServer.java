@@ -17,6 +17,16 @@ public class ProxyServer implements IServer{
 	private ITranslator cookieTranslator;
 	private String cookieEncoding;
 	
+	/**
+	 * **Private Instance Constructor**
+	 * 
+	 * @pre
+	 * 	none
+	 * 
+	 * @param clientCommunicator
+	 * @param cookieTranslator
+	 * @param cookieEncoding
+	 */
 	private ProxyServer(ICommunicator clientCommunicator, ITranslator cookieTranslator, String cookieEncoding) {
 		this.clientCommunicator = clientCommunicator;
 		this.cookieTranslator = cookieTranslator;
