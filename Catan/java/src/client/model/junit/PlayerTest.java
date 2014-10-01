@@ -1,15 +1,22 @@
 package client.model.junit;
 
 import org.junit.*;
+
+import proxy.ITranslator;
+import proxy.TranslatorJSON;
 import static org.junit.Assert.*;
 import shared.definitions.ResourceType;
 import client.model.Player;
 
 public class PlayerTest {
-
+	private Player test; 
+	
+	@Before 
+	public void setUp() { 
+		test = new Player("green", "George", 2); 
+	}
 	@Test
 	public void testGetColor() {
-		Player test=new Player("green", "George", 2);
 		assertEquals("Color should be green", "green", test.getColor());
 		test.setColor("red");
 		assertEquals("Color should be red", "red", test.getColor());
@@ -17,7 +24,6 @@ public class PlayerTest {
 
 	@Test
 	public void testGetName() {
-		Player test=new Player("green", "George", 2);
 		assertEquals("Name should be George", "George", test.getName());
 		test.setName("Henry");
 		assertEquals("Name should be Henry", "Henry", test.getName());
@@ -25,7 +31,6 @@ public class PlayerTest {
 
 	@Test
 	public void testGetPlayerIndex() {
-		Player test=new Player("green", "George", 2);
 		assertEquals("Player index should be 2", 2, test.getPlayerIndex());
 		test.setPlayerIndex(0);
 		assertEquals("Player index should be 0", 0, test.getPlayerIndex());
@@ -33,7 +38,6 @@ public class PlayerTest {
 
 	@Test
 	public void testGetResources() {
-		Player test=new Player("green", "George", 2);
 		assertEquals("Player should have 0 resources", 0, test.getResources().totalResourcesCount());
 		test.setBrick(2);
 		test.setWood(1);
@@ -44,15 +48,13 @@ public class PlayerTest {
 
 	@Test
 	public void testGetVictoryPoints() {
-		Player test=new Player("green", "George", 2);
+		assertEquals("Player should have 0 points", 0, test.getVictoryPoints());
+		test.buildBuilding();
+		test.buildBuilding();
 		assertEquals("Player should have 2 points", 2, test.getVictoryPoints());
-		test.buildBuilding();
-		test.buildBuilding();
-		assertEquals("Player should have 4 points", 4, test.getVictoryPoints());
 	}
 	@Test
 	public void testBuilding() {
-		Player test=new Player("green", "George", 2);
 		assertEquals("Player shouldn't be able to build a road", false, test.canBuildRoad());
 		test.setBrick(1);
 		test.setWood(1);
