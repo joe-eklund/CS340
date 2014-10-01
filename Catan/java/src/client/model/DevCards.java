@@ -8,19 +8,11 @@ public class DevCards {
 	public int yearOfPlenty;
 	
 	public DevCards() {
-		monopoly = 0;
-		monument = 0;
-		roadBuilding = 0;
-		soldier = 0;
-		yearOfPlenty = 0;
-	}
-	
-	public DevCards(int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty) {
-		this.monopoly = monopoly;
-		this.monument = monument;
-		this.roadBuilding = roadBuilding;
-		this.soldier = soldier;
-		this.yearOfPlenty = yearOfPlenty;
+		monopoly = 2;
+		monument = 5;
+		roadBuilding = 2;
+		soldier = 14;
+		yearOfPlenty = 2;
 	}
 	
 	public void updateCards(int monopoly, int monument, int roadBuilding, int soldier, int yearOfPlenty) {

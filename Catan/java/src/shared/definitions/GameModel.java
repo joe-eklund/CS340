@@ -14,6 +14,7 @@ public class GameModel {
 	private TurnTracker turnTracker;
 	private int version;
 	private int winner;
+	private DevCards deck;
 	
 	public GameModel(Bank bank, Chat chat, Log log, Map map,
 			List<Player> players, TradeOffer tradeOffer,
@@ -27,6 +28,7 @@ public class GameModel {
 		this.turnTracker = turnTracker;
 		this.version = version;
 		this.winner = winner;
+		this.deck = new DevCards();
 	}
 	
 	public Bank getBank() {
@@ -82,5 +84,13 @@ public class GameModel {
 	}
 	public void setWinner(int winner) {
 		this.winner = winner;
+	}
+
+	public DevCards getDeck() {
+		return deck;
+	}
+
+	public void setDeck(DevCards deck) {
+		this.deck = deck;
 	}
 }
