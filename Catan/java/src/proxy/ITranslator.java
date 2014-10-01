@@ -6,7 +6,7 @@ import com.google.gson.*;
  * 
  * @author Epper Marshall
  * This interface is used to set the type of communication the http body will contain (json, xml). Based on 
- * what the language is it will convert the Java Object into the correct String type.
+ * what the translator used is, it will convert the Java Object into the correct String type.
  */
 public interface ITranslator {
 	/**

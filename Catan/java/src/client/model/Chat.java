@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * The chat class holds the list of messages that have been sent by each player.
  */
 public class Chat {
-	private ArrayList<Message> messages;
+	private ArrayList<Message> lines;
 	
 	/**
 	 * Class constructor.
 	 */
 	public Chat(){
-		messages = new ArrayList<Message>();
+		lines = new ArrayList<Message>();
 	}
 	
 	/**
@@ -21,7 +21,7 @@ public class Chat {
 	 * @param messageToAdd	The inputed message to add.
 	 */
 	public void addMessage(String message, String source){
-		messages.add(new Message(message, source));
+		lines.add(new Message(message, source));
 	}
 	
 	/**
@@ -29,7 +29,7 @@ public class Chat {
 	 * @return	The list of messages.
 	 */
 	public ArrayList<Message> getMessages() {
-		return messages;
+		return lines;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class Chat {
 	 * @param messages	The inputed list of messages to set.
 	 */
 	public void setMessages(ArrayList<Message> messages) {
-		this.messages = messages;
+		this.lines = messages;
 	}
 	
 	

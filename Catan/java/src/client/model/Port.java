@@ -7,23 +7,23 @@ import shared.locations.HexLocation;
  * @author Epper Marshall
  */
 public class Port {
-	private String resourceType;
+	private String resource;
 	private HexLocation location;
 	private String direction;
 	private int ratio;
 	
 	public Port(String resourceType, int x, int y, String direction, int ratio) {
-		this.resourceType = resourceType;
+		this.resource = resourceType;
 		this.location = new HexLocation(x, y);
 		this.direction = direction;
 		this.ratio = ratio;
 	}
 	
 	public String getResourceType() {
-		return resourceType;
+		return resource;
 	}
 	public void setResourceType(String resourceType) {
-		this.resourceType = resourceType;
+		this.resource = resourceType;
 	}
 	public HexLocation getLocation() {
 		return location;

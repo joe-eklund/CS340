@@ -26,11 +26,6 @@ public class Player {
 	private Resources resources;
 	private int soldiers;
 	private int victoryPoints;
-//	private int sheepRatio;
-//	private int brickRatio;
-//	private int wheatRatio;
-//	private int woodRatio;
-//	private int oreRatio;
 	
 	public Player(String color, String name, int playerIndex) {
 		super();
@@ -45,12 +40,7 @@ public class Player {
 		resources = new Resources();
 		this.playedDevCard = false;
 		this.soldiers = 0;
-		this.victoryPoints = 2;
-//		this.sheepRatio = 4;
-//		this.brickRatio = 4;
-//		this.wheatRatio = 4;
-//		this.woodRatio = 4;
-//		this.oreRatio = 4;
+		this.victoryPoints = 0;
 	}
 	public int getCities() {
 		return cities;
@@ -131,34 +121,34 @@ public class Player {
 		this.resources = resources;
 	}
 	public int getSheep() {
-		return resources.sheeps;
+		return resources.sheep;
 	}
-	public void setSheep(int sheeps) {
-		resources.sheeps = sheeps;
+	public void setSheep(int sheep) {
+		resources.sheep = sheep;
 	}
 	public int getWheat() {
-		return resources.wheats;
+		return resources.wheat;
 	}
-	public void setWheat(int wheats) {
-		resources.wheats = wheats;
+	public void setWheat(int wheat) {
+		resources.wheat = wheat;
 	}
 	public int getOre() {
-		return resources.ores;
+		return resources.ore;
 	}
-	public void setOre(int ores) {
-		resources.ores = ores;
+	public void setOre(int ore) {
+		resources.ore = ore;
 	}
 	public int getBrick() {
-		return resources.bricks;
+		return resources.brick;
 	}
-	public void setBrick(int bricks) {
-		resources.bricks = bricks;
+	public void setBrick(int brick) {
+		resources.brick = brick;
 	}
 	public int getWood() {
-		return resources.woods;
+		return resources.wood;
 	}
-	public void setWood(int woods) {
-		resources.woods = woods;
+	public void setWood(int wood) {
+		resources.wood = wood;
 	}
 	public int getSoldiers() {
 		return soldiers;
@@ -172,83 +162,46 @@ public class Player {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
+	/**
+	 * Increases victory points when a player builds a building.
+	 */
 	public void buildBuilding() {
 		victoryPoints++;
 	}
-//	public int getSheepRatio() {
-//		return sheepRatio;
-//	}
-//	public void setSheepRatio(int sheepRatio) {
-//		this.sheepRatio = sheepRatio;
-//	}
-//	public int getBrickRatio() {
-//		return brickRatio;
-//	}
-//	public void setBrickRatio(int brickRatio) {
-//		this.brickRatio = brickRatio;
-//	}
-//	public int getWheatRatio() {
-//		return wheatRatio;
-//	}
-//	public void setWheatRatio(int wheatRatio) {
-//		this.wheatRatio = wheatRatio;
-//	}
-//	public int getWoodRatio() {
-//		return woodRatio;
-//	}
-//	public void setWoodRatio(int woodRatio) {
-//		this.woodRatio = woodRatio;
-//	}
-//	public int getOreRatio() {
-//		return oreRatio;
-//	}
-//	public void setOreRatio(int oreRatio) {
-//		this.oreRatio = oreRatio;
-//	}
-//	/**
-//	 * Updates all trade ratios from 4 to 3 when build on generic harbor, any ratios at 2 remain at 2.
-//	 */
-//	public void updateAllRatios()
-//	{
-//		if(oreRatio==4)
-//			oreRatio=3;
-//		if(woodRatio==4)
-//			woodRatio=3;
-//		if(wheatRatio==4)
-//			wheatRatio=3;
-//		if(brickRatio==4)
-//			brickRatio=3;
-//		if(sheepRatio==4)
-//			sheepRatio=3;
-//	}
 	/**
-	 * Checks that player has enough remaining cities
+	 * Checks that player has enough remaining cities and resources to build a city.
 	 * @return boolean
 	 */
 	public boolean canBuildCity() {
-		if(cities>0)
+		if(cities>0&&resources.getOre()>2&&resources.getWheat()>1)
 			return true;
 		return false;
 	}
 	/**
-	 * Checks that player has enough remaining settlements
+	 * Checks that player has enough remaining settlements and resources to build a settlement.
 	 * @return boolean
 	 */
 	public boolean canBuildSettlement() {
-		if(settlements>0)
+		if(settlements>0&&resources.getBrick()>0&&resources.getWood()>0&&
+				resources.getSheep()>0&&resources.getWheat()>0)
 			return true;
 		return false;
 	}
 	/**
-	 * Checks that player has enough remaining roads
+	 * Checks that player has enough remaining roads and resources to build a road.
 	 * @return boolean
 	 */
 	public boolean canBuildRoad() {
-		if(roads>0)
+		if(roads>0&&resources.getBrick()>0&&resources.getWood()>0)
 			return true;
 		return false;
 	}
-	
+	/**
+	 * Checks to see if a player has a specific number of a specific type of resource.
+	 * @param resource
+	 * @param amount
+	 * @return hasResource
+	 */
 	public boolean hasResource(ResourceType resource, int amount) {
 		boolean hasResource = false;
 		

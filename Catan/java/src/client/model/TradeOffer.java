@@ -12,11 +12,11 @@ public class TradeOffer {
 	public TradeOffer(int sender, int receiver, int brick, int ore, int sheep, int wheat, int wood) {
 		this.sender = sender;
 		this.receiver = receiver;
-		offer.bricks = brick;
-		offer.ores = ore;
-		offer.sheeps = sheep;
-		offer.wheats = wheat;
-		offer.woods = wood;
+		offer.brick = brick;
+		offer.ore = ore;
+		offer.sheep = sheep;
+		offer.wheat = wheat;
+		offer.wood = wood;
 	}
 	
 	public TradeOffer(int sender, int receiver, Resources offer) {
@@ -42,11 +42,11 @@ public class TradeOffer {
 	}
 	
 	public void setOffer(int brick, int ore, int sheep, int wheat, int wood) {
-		offer.bricks = brick;
-		offer.ores = ore;
-		offer.sheeps = sheep;
-		offer.wheats = wheat;
-		offer.woods = wood;
+		offer.brick = brick;
+		offer.ore = ore;
+		offer.sheep = sheep;
+		offer.wheat = wheat;
+		offer.wood = wood;
 	}
 	
 	public void setOffer(Resources offer) {

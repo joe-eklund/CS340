@@ -11,20 +11,20 @@ import shared.locations.HexLocation;
  */
 public class Road {
 	
-	private int ownerIndex;
+	private int owner;
 	private EdgeLocation location;
 	
 	public Road(int ownerIndex, int x, int y, String direction) throws ClientModelException {
-		this.ownerIndex = ownerIndex;
+		this.owner = ownerIndex;
 		this.location = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
 	}
 	
 	public int getOwnerIndex() {
-		return ownerIndex;
+		return owner;
 	}
 
 	public void setOwnerIndex(int ownerIndex) {
-		this.ownerIndex = ownerIndex;
+		this.owner = ownerIndex;
 	}
 
 	public EdgeLocation getLocation() {

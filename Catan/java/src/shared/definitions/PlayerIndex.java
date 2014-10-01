@@ -12,6 +12,9 @@ public class PlayerIndex {
 	}
 
 	public void setPlayerGameIndex(int playerGameIndex) {
-		this.playerGameIndex = playerGameIndex;
+		if(playerGameIndex>3)
+			this.playerGameIndex=playerGameIndex%4;
+		else
+			this.playerGameIndex = playerGameIndex;
 	}
 }

@@ -7,14 +7,16 @@ import java.util.ArrayList;
  * @author Joe Eklund
  * The Log class represents a log of commands that have happened.
  */
+
+//TODO: 
 public class Log {
-	private ArrayList<Message> logMessages;
+	private ArrayList<Message> lines;
 
 	/**
 	 * Class constructor.
 	 */
 	public Log(){
-		
+		lines=new ArrayList();
 	}
 	
 	/**
@@ -30,7 +32,7 @@ public class Log {
 	 * @return	the log message list.
 	 */
 	public ArrayList<Message> getLogMessages() {
-		return logMessages;
+		return lines;
 	}
 
 	/**
@@ -38,7 +40,7 @@ public class Log {
 	 * @param logMessages	The inputed log message list to set.
 	 */
 	public void setLogMessages(ArrayList<Message> logMessages) {
-		this.logMessages = logMessages;
+		this.lines = logMessages;
 	}
 
 }

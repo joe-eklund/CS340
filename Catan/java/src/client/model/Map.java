@@ -21,7 +21,7 @@ public class Map {
 	 * Class constructor.
 	 */
 	public Map(){
-		
+		radius=3;
 	}
 	
 	/**
