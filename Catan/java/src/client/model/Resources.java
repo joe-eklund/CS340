@@ -8,11 +8,11 @@ public class Resources {
 	public int woods;
 	
 	public Resources() {
-		bricks=0;
-		wheats=0;
-		ores=0;
-		woods=0;
-		sheeps=0;
+		bricks=19;
+		wheats=19;
+		ores=19;
+		woods=19;
+		sheeps=19;
 	}
 	public Resources(int bricks, int wheats, int ores, int woods, int sheeps) {
 		this.bricks = bricks;

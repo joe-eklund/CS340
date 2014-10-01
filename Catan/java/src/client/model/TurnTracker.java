@@ -10,6 +10,10 @@ public class TurnTracker {
 	private int longestRoad;
 	private int largestArmy;
 	
+	public TurnTracker() {
+		currentTurn = 0;
+	}
+	
 	public int getCurrentTurn() {
 		return currentTurn;
 	}

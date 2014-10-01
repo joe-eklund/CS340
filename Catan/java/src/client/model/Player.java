@@ -226,7 +226,7 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean canBuildCity() {
-		if(cities>0)
+		if(cities>0&&resources.getOres()>2&&resources.getWheats()>1)
 			return true;
 		return false;
 	}
@@ -235,7 +235,8 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean canBuildSettlement() {
-		if(settlements>0)
+		if(settlements>0&&resources.getBricks()>0&&resources.getWoods()>0&&
+				resources.getSheeps()>0&&resources.getWheats()>0)
 			return true;
 		return false;
 	}
@@ -244,7 +245,7 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean canBuildRoad() {
-		if(roads>0)
+		if(roads>0&&resources.getBricks()>0&&resources.getWoods()>0)
 			return true;
 		return false;
 	}

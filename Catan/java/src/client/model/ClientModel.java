@@ -29,10 +29,6 @@ public class ClientModel {
 		return gameModel;
 	}
 	
-	public boolean canSendChat() {
-		
-	}
-	
 	public boolean canAcceptTrade() {
 		TradeOffer offer = gameModel.getTradeOffer();
 		
@@ -83,7 +79,7 @@ public class ClientModel {
 		}
 	}
 	
-	public boolean buildRoad() {
+	public boolean canBuildRoad() {
 		
 	}
 	
@@ -125,7 +121,7 @@ public class ClientModel {
 		
 		//TODO check that there are dev cards left in the deck (where the heck is the deck!?)
 		if (player.getOre() > 0 && player.getWheat() > 0 && player.getSheep() > 0) {
-			
+			return true;
 		}
 		else {
 			return false;
