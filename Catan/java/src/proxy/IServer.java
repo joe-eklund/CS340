@@ -1,29 +1,8 @@
 package proxy;
 
-import java.io.UnsupportedEncodingException;
-
-import shared.ServerMethodResponses.AddAIResponse;
-import shared.ServerMethodResponses.ChangeLogLevelResponse;
-import shared.ServerMethodResponses.GetGameCommandsResponse;
-import shared.ServerMethodResponses.GetGameModelResponse;
-import shared.ServerMethodResponses.ICreateGameResponse;
-import shared.ServerMethodResponses.IJoinGameResponse;
-import shared.ServerMethodResponses.IListGamesResponse;
-import shared.ServerMethodResponses.ILoginUserResponse;
-import shared.ServerMethodResponses.IRegisterUserResponse;
-import shared.ServerMethodResponses.ListAIResponse;
-import shared.ServerMethodResponses.MoveResponse;
-import shared.ServerMethodResponses.PostGameCommandsResponse;
-import shared.ServerMethodResponses.ResetGameResponse;
-import shared.ServerMethodResponses.SaveGameResponse;
-import shared.definitions.CatanColor;
-import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceHand;
-import shared.definitions.ResourceType;
-import shared.definitions.ServerLogLevel;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.ServerMethodResponses.*;
+import shared.definitions.*;
+import shared.locations.*;
 import client.model.Log;
 
 /**
@@ -46,7 +25,7 @@ public interface IServer {
 	 *	    <ol>	 
 	 *		  <li>successful = true</li>
 	 *	      <li>message = null</li>
-	 *	      <li>cookie = the player's catan.user cookie</li>
+	 *	      <li>cookie = the player's catan cookie</li>
 	 *	      <li>name = player's username</li>
 	 *        <li>userID = players userID (not to be confused with their gameID when they join a game)</li>
 	 *      </ol>
@@ -67,9 +46,8 @@ public interface IServer {
 	 * 	
 	 * @param username: username for registered user
 	 * @param password: password for registered user
-	 * @throws UnsupportedEncodingException 
 	 */
-	public ILoginUserResponse loginUser(String username, String password) throws UnsupportedEncodingException;
+	public LoginUserResponse loginUser(String username, String password);
 	
 	
 	/**
@@ -93,7 +71,7 @@ public interface IServer {
 	 *	  	 <ol>
 	 *		   <li>successful = true</li>
 	 *	       <li>message = null</li>
-	 *	       <li>cookie = the player's catan.user cookie</li>
+	 *	       <li>cookie = the player's catan cookie</li>
 	 *	       <li>name = player's username</li>
 	 *         <li>userID = players userID (not to be confused with their gameID when they join a game)</li>
 	 *	     </ol>
@@ -114,10 +92,9 @@ public interface IServer {
 	 * 
 	 *  @param username: the username the player wishes to use when logging into the game
 	 *  @param password: the password the player wishes to use for logging in with the specified username
-	 * @throws UnsupportedEncodingException 
 	 * 
 	 */
-	public IRegisterUserResponse registerUser(String username, String password) throws UnsupportedEncodingException;
+	public RegisterUserResponse registerUser(String username, String password);
 	
 	
 	/**
@@ -136,8 +113,9 @@ public interface IServer {
 	 *   </li>
 	 * </ol>
 	 * 
+	 * @param cookie : catan cookie as set by server
 	 */
-	public IListGamesResponse listGames();
+	public ListGamesResponse listGames(String cookie);
 	
 	
 	/**
@@ -158,16 +136,31 @@ public interface IServer {
 	 *   </li>
 	 * </ol>
 	 * 
-	 *  @param name: the name which the created game will have
+	 *  @param randomTiles : create game with randomized game tiles
+	 *  @param randomNumbers : create game with randomized numbers ("chits")
+	 *  @param randomPorts : create game with randomized ports
+	 *  @param name : the name which the created game will have
+	 *  @param cookie : catan cookie as set by server
+	 */
+	public ICreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name, String cookie);
+	
+	
+	/**
 	 * 
+	 * @param gameID
+	 * @param name
+	 * @param cookie
+	 * @return
 	 */
-	/*
-	 * need to verify if name parameter is needed... Specs are worthless
+	public SaveGameResponse saveGame(int gameID, String name, String cookie);
+	
+	/**
+	 * 
+	 * @param name
+	 * @param cookie
+	 * @return
 	 */
-	public ICreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
-	
-	
-	public SaveGameResponse saveGame(int gameID, String name);
+	public LoadGameResponse loadGame(String name, String cookie);
 	
 	/**
 	 * Adds a player to the game and sets their game cookie
@@ -189,8 +182,9 @@ public interface IServer {
 	 * 
 	 * @param color: the available color the player wishes to use
 	 * @param gameID: the ID for the game which the player wishes to join
+	 * @param cookie: catan cookie as set by server
 	 */
-	public IJoinGameResponse joinGame(CatanColor color, int gameID);
+	public JoinGameResponse joinGame(CatanColor color, int gameID, String cookie);
 	
 	
 	/**
@@ -205,8 +199,10 @@ public interface IServer {
 	 *  else 
 	 *     1) returns a the current server game model
 	 * 
+	 *  @param version : current game version number for client game model
+	 *  @param cookie : catan cookie as set by server
 	 */
-	public GetGameModelResponse getGameModel(int version);
+	public GetGameModelResponse getGameModel(int version, String cookie);
 	
 	
 	/**
@@ -218,8 +214,10 @@ public interface IServer {
 	 * @post
 	 * 	1) Returns reset game model
 	 * 
+	 * @param cookie: catan cookie as set by server
+	 * 
 	 */
-	public ResetGameResponse resetGame();
+	public ResetGameResponse resetGame(String cookie);
 	
 	
 	/**
@@ -233,8 +231,9 @@ public interface IServer {
 	 * 
 	 * @return string: see post for possible values
 	 * 
+	 * @param cookie : catan cookie as set by server
 	 */
-	public GetGameCommandsResponse getGameCommands();
+	public GetGameCommandsResponse getGameCommands(String cookie);
 	
 	
 	/**
@@ -250,9 +249,9 @@ public interface IServer {
 	 *     1) returns a game model
 	 * 
 	 *  @param commands: list of valid game commands ordered chronologically from earliest to most recent
-	 * 
+	 *  @param cookie: catan cookie as set by server
 	 */
-	public PostGameCommandsResponse postGameCommands(Log commands);
+	public PostGameCommandsResponse postGameCommands(Log commands, String cookie);
 	
 	
 	/**
@@ -264,8 +263,10 @@ public interface IServer {
 	 * @post
 	 *  1) returns a list of strings 
 	 * 
+	 * @param cookie: catan cookie as set by server
+	 * 
 	 */
-	public ListAIResponse listAI();
+	public ListAIResponse listAI(String cookie);
 	
 	
 	/**
@@ -284,8 +285,10 @@ public interface IServer {
 	 * </ul>
 	 * 
 	 * @param aiToAdd string from list<string> provided by listAI() command
+	 * @param cookie: catan cookie as set by server
+	 * 
 	 */
-	public AddAIResponse addAI(String aiToAdd);
+	public AddAIResponse addAI(String aiToAdd, String cookie);
 	
 	
 	/**
@@ -299,9 +302,10 @@ public interface IServer {
 	 *  1) The Server uses that logging level
 	 *  
 	 *  @param logLevel: desired logging level for server
+	 *  @param cookie: catan cookie as set by server
 	 *  
 	 */
-	public ChangeLogLevelResponse changeLogLevel(ServerLogLevel logLevel);
+	public ChangeLogLevelResponse changeLogLevel(ServerLogLevel logLevel, String cookie);
 	
 	
 	/**
@@ -313,10 +317,12 @@ public interface IServer {
 	 * @post
 	 *  1) chat log contains message
 	 * 
-	 * @param message: message player wishes to post to chat log 
+	 * @param playerIndex: player index in current game
+	 * @param message: message player wishes to post to chat log
+	 * @param cookie: catan cookie as set by server 
 	 * 
 	 */
-	public MoveResponse sendChat(int playerIndex, String message);
+	public MoveResponse sendChat(int playerIndex, String message, String cookie);
 	
 	
 	/**
@@ -334,10 +340,12 @@ public interface IServer {
 	 *     1) no resources are exchanged
 	 *  2) trade offer is removed  
 	 * 
-	 * @param willAccept: boolean value of whether or not player accepts proposed trade 
+	 * @param playerIndex: player index in current game
+	 * @param willAccept: boolean value of whether or not player accepts proposed trade
+	 * @param cookie: catan cookie as set by server 
 	 *  
 	 */
-	public MoveResponse acceptTrade(boolean willAccept, int playerIndex);
+	public MoveResponse acceptTrade(int playerIndex, boolean willAccept, String cookie);
 	
 	
 	/**
@@ -356,10 +364,12 @@ public interface IServer {
 	 *  <li> Player gives up specified cards</li>
 	 * </ul>
 	 *  
+	 *  @param playerIndex: player index in current game
 	 *  @param resources: list of valid resource types
 	 *  @param resourceHand: contains map of each resource type and the associated number of cards for the type the player is dropping
+	 *  @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse discardCards(ResourceHand resourceHand, int playerIndex);
+	public MoveResponse discardCards(int playerIndex, ResourceHand resourceHand, String cookie);
 
 	/**
 	 * Specifies to the server the number that was rolled by the player
@@ -374,10 +384,11 @@ public interface IServer {
 	 *  <li> An integer from 2 to 12 is returned that represents the that was rolled</li>
 	 *  <li> The client model's status is now in "discarding" or "robbing" or "playing"</li>
 	 * </ul>
-	 *  
+	 *  @param playerIndex: player index in current game
 	 *  @param number: an integer from 2 to 12 that represents the number that was rolled.
+	 *  @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse rollNumber(int number, int playerIndex);
+	public MoveResponse rollNumber(int playerIndex, int number, String cookie);
 	
 	/**
 	 * Builds a road of the same color as the player building the road and at the specified location on the map
@@ -398,10 +409,12 @@ public interface IServer {
 	 *  <li> The map lists the road correctly</li>
 	 * </ul>
 	 * 
-	 * @param free: a boolean that specifies whether or not the road piece has been given to the player for free.
+	 * @param playerIndex: player index in current game
 	 * @param roadLocation: An EdgeLocation that declares where on the map the road will be built. 
+	 * @param free: a boolean that specifies whether or not the road piece has been given to the player for free.
+	 * @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free);
+	public MoveResponse buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free, String cookie);
 	
 	/**
 	 * Builds a settlement of the same color as the player building the road and at the specified location on the map
@@ -421,9 +434,13 @@ public interface IServer {
 	 *  <li> The player expends the resources necessary to play the settlement (1 wood, 1 brick, 1 wheat, 1 sheep)</li>
 	 *  <li> The map lists the settlement location correctly</li>
 	 * </ul>
+	 * 
+	 * @param playerIndex: player index in current game
 	 * @param free: a boolean that specifies whether or not the settlement piece has been given to the player for free.
+	 * @param cookie: catan cookie as set by server
+	 * 
 	 */
-	public MoveResponse buildSettlement(int playerIndex, VertexLocation location, boolean free);
+	public MoveResponse buildSettlement(int playerIndex, VertexLocation location, boolean free, String cookie);
 	
 	/**
 	 * Builds a city of the same color as the player building the road and at the specified location on the map
@@ -442,8 +459,13 @@ public interface IServer {
 	 *  <li> The player gets a settlement back</li>
 	 *  <li> The map lists the city location correctly</li>
 	 * </ul>
+	 * 
+	 *  @param playerIndex: player index in current game
+	 *  @param location: location of where city will be built
+	 *  @param cookie: catan cookie as set by server
+	 *  
 	 */
-	public MoveResponse buildCity(int playerIndex, VertexLocation location);
+	public MoveResponse buildCity(int playerIndex, VertexLocation location, String cookie);
 	
 	/**
 	 * The player offers a trade of certain resources to a another player in the game in return for different resource.
@@ -460,10 +482,13 @@ public interface IServer {
 	 *  <li> The trade is offered to the specified player and stored in the model</li>
 	 * </ul>
 	 * 
+	 * @param playerIndex: player index in current game
 	 * @param offer: ResourceHand indicating the cards to be given and received.  Negative numbers mean the players is receiving cards of that resource in the trade.
-	 * @param receiver: playerIndex which specifies the recipient whom the player is trading with 
+	 * @param receiver: playerIndex which specifies the recipient whom the player is trading with
+	 * @param cookie: catan cookie as set by server 
+	 * 
 	 */
-	public MoveResponse offerTrade(int playerIndex, ResourceHand offer, int receiver);
+	public MoveResponse offerTrade(int playerIndex, ResourceHand offer, int receiver, String cookie);
 	
 	/**
 	 * The player offers a trade of certain resources to the bank at a specified ratio depending on the port the player has a settlement on.
@@ -479,11 +504,14 @@ public interface IServer {
 	 * <ul>
 	 *  <li> The trade is offered to the specified player and stored in the model</li>
 	 * </ul
+	 * 
+	 * @param playerIndex: player index in current game
 	 * @param ratio: an integer of value 2, 3, or 4
 	 * @param inputResource: Resource - The resource the player is giving
 	 * @param outputResource: Resource - The resoure the player is receiving
+	 * @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse maritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource);
+	public MoveResponse maritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource, String cookie);
 	
 	/**
 	 * The player finishes his/her turn.
@@ -498,8 +526,11 @@ public interface IServer {
 	 *  <ul> 
 	 *   <li>It is the next players turn</li>
 	 *  </ul>
+	 *  
+	 *  @param playerIndex: player index in current game
+	 *  @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse finishTurn(int playerIndex);;
+	public MoveResponse finishTurn(int playerIndex, String cookie);;
 	
 	/**
 	 * The player buys a development card from the bank.
@@ -519,8 +550,11 @@ public interface IServer {
 	 *      <li>If it is any other card, it goes into the new devcard hand (unplayable this turn)</li>
 	 *    </ul>
 	 *  </ul>
+	 *  
+	 *  @param playerIndex: player index in current game
+	 *  @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse buyDevCard(int playerIndex);
+	public MoveResponse buyDevCard(int playerIndex, String cookie);
 	
 	/**
 	 * The player can play the "Year of Plenty Card" and gain any two resource from the bank if the preconditions are satisfied.
@@ -536,10 +570,14 @@ public interface IServer {
 	 * <ul>
 	 *  <li>The player gains one each of the two resources specified</li>
 	 * </ul>
+	 * 
+	 * @param playerIndex: player index in current game
 	 * @param ResourceOne: The first of the two resources that the player desires to receive from the bank
 	 * @param ResourceTwo: The second of the two resources that the player desires to receive from the bank
+	 * @param cookie: catan cookie as set by server
+	 * 
 	 */
-	public MoveResponse playYearOfPlentyCard(int playerIndex, ResourceType resource1, ResourceType resource2);
+	public MoveResponse playYearOfPlentyCard(int playerIndex, ResourceType resource1, ResourceType resource2, String cookie);
 	
 	/**
 	 * The player can play the "Road Buidling Card" and build two new roads at no charge if the preconditions are satisfied.
@@ -561,10 +599,13 @@ public interface IServer {
 	 *    <li>The player uses two roads</li>
 	 *   <li>The map lists the placement of the roads correctly</li>
 	 *  </ul>
+	 *  
+	 *  @param playerIndex: player index in current game
 	 *  @param spot1: an EdgeLocation that specifies the location of the first road to be built
 	 *  @param spot2: an EdgeLocation that specifies the location of the second road to be built
+	 *  @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse playRoadBuildingCard(int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
+	public MoveResponse playRoadBuildingCard(int playerIndex, EdgeLocation spot1, EdgeLocation spot2, String cookie);
 	
 	/**
 	 * The player can play the "Monopoly Card" and he/she specified a resource and all other players must give that resource, if available, to the player playing the monopoly card.
@@ -582,9 +623,13 @@ public interface IServer {
 	 *  <li> All other players lost the resource card type chosen</li>
 	 *  <li> The player of the card gets as much of the resource as the other players have to give of that resource</li>
 	 * </ul>
+	 * 
+	 * @param playerIndex: player index in current game
 	 * @param resource: The specified Resource that the player wants to receive
+	 * @param cookie: catan cookie as set by server
+	 * 
 	 */
-	public MoveResponse playMonopolyCard(int playerIndex, ResourceType resource);
+	public MoveResponse playMonopolyCard(int playerIndex, ResourceType resource, String cookie);
 
 	/**
 	 * The player can play the "Soldier Card" and he/she now have to move the robber to a new location on the map and steal two resources from a player that has a settlement touching the robbers new location.
@@ -605,10 +650,13 @@ public interface IServer {
 	 *  <li> The player to rob gives one random resource card to the player playing the soldier card</li>
 	 * </ul>
 	 *  
+	 * @param playerIndex: player index in current game 
 	 * @param location: Hexlocation that specifies the robbers new location on the map
 	 * @param victomIndex: playerIndex of whom is getting robbed
+	 * @param cookie: catan cookie as set by server
+	 * 
 	 */
-	public MoveResponse playSoldierCard(int playerIndex, PlayerIndex victimIndex, HexLocation location);
+	public MoveResponse playSoldierCard(int playerIndex, PlayerIndex victimIndex, HexLocation location, String cookie);
 	
 	/**
 	 * The player can play the "Monument Card" and he/she will gain one victory point
@@ -621,6 +669,9 @@ public interface IServer {
 	 *  </ul>
 	 * @post
 	 *  <ul><li> The player gains a victory point</li><ul>
+	 *  
+	 *  @param playerIndex: player index in current game
+	 *  @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse playMonumentCard(int playerIndex);
+	public MoveResponse playMonumentCard(int playerIndex, String cookie);
 }

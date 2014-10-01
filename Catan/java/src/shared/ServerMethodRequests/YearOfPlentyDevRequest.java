@@ -8,7 +8,7 @@ public class YearOfPlentyDevRequest {
 	private String resource2;
 
 	public YearOfPlentyDevRequest(int playerIndex, String resource1, String resource2) {
-		this.type = "Year_Of_Plenty";
+		this.type = "Year_of_Plenty";
 		this.playerIndex = playerIndex;
 		this.resource1 = resource1;
 		this.resource2 = resource2;

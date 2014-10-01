@@ -2,9 +2,19 @@ package shared.ServerMethodResponses;
 
 public class JoinGameResponse extends ServerResponse implements IJoinGameResponse{
 
-	public JoinGameResponse(boolean successful) {
+	private String cookie;
+
+	public JoinGameResponse(boolean successful, String cookie) {
 		super(successful);
-		// TODO Auto-generated constructor stub
+		this.cookie = cookie;
+	}
+
+	public String getCookie() {
+		return cookie;
+	}
+
+	public void setCookie(String cookie) {
+		this.cookie = cookie;
 	}
 
 }
