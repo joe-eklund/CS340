@@ -23,6 +23,9 @@ public class ProxyServer implements IServer{
 	 * @pre
 	 * 	none
 	 * 
+	 * @post
+	 * 	initialized ProxyServer singleton instance
+	 * 
 	 * @param clientCommunicator
 	 * @param cookieTranslator
 	 * @param cookieEncoding
