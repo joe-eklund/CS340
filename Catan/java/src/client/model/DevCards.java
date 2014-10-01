@@ -1,5 +1,9 @@
 package client.model;
-
+/**
+ * 
+ * Contains information relevant to the Development Card Deck and player Development Cards.
+ *
+ */
 public class DevCards {
 	public int monopoly;
 	public int monument;

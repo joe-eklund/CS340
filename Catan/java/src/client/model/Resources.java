@@ -1,5 +1,9 @@
 package client.model;
-
+/**
+ * 
+ * Keeps track of the number of each resource a player has.
+ *
+ */
 public class Resources {
 	public int brick;
 	public int ore;

@@ -26,11 +26,6 @@ public class Player {
 	private Resources resources;
 	private int soldiers;
 	private int victoryPoints;
-//	private int sheepRatio;
-//	private int brickRatio;
-//	private int wheatRatio;
-//	private int woodRatio;
-//	private int oreRatio;
 	
 	public Player(String color, String name, int playerIndex) {
 		super();
@@ -45,12 +40,7 @@ public class Player {
 		resources = new Resources();
 		this.playedDevCard = false;
 		this.soldiers = 0;
-		this.victoryPoints = 2;
-//		this.sheepRatio = 4;
-//		this.brickRatio = 4;
-//		this.wheatRatio = 4;
-//		this.woodRatio = 4;
-//		this.oreRatio = 4;
+		this.victoryPoints = 0;
 	}
 	public int getCities() {
 		return cities;
@@ -172,57 +162,14 @@ public class Player {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
+	/**
+	 * Increases victory points when a player builds a building.
+	 */
 	public void buildBuilding() {
 		victoryPoints++;
 	}
-//	public int getSheepRatio() {
-//		return sheepRatio;
-//	}
-//	public void setSheepRatio(int sheepRatio) {
-//		this.sheepRatio = sheepRatio;
-//	}
-//	public int getBrickRatio() {
-//		return brickRatio;
-//	}
-//	public void setBrickRatio(int brickRatio) {
-//		this.brickRatio = brickRatio;
-//	}
-//	public int getWheatRatio() {
-//		return wheatRatio;
-//	}
-//	public void setWheatRatio(int wheatRatio) {
-//		this.wheatRatio = wheatRatio;
-//	}
-//	public int getWoodRatio() {
-//		return woodRatio;
-//	}
-//	public void setWoodRatio(int woodRatio) {
-//		this.woodRatio = woodRatio;
-//	}
-//	public int getOreRatio() {
-//		return oreRatio;
-//	}
-//	public void setOreRatio(int oreRatio) {
-//		this.oreRatio = oreRatio;
-//	}
-//	/**
-//	 * Updates all trade ratios from 4 to 3 when build on generic harbor, any ratios at 2 remain at 2.
-//	 */
-//	public void updateAllRatios()
-//	{
-//		if(oreRatio==4)
-//			oreRatio=3;
-//		if(woodRatio==4)
-//			woodRatio=3;
-//		if(wheatRatio==4)
-//			wheatRatio=3;
-//		if(brickRatio==4)
-//			brickRatio=3;
-//		if(sheepRatio==4)
-//			sheepRatio=3;
-//	}
 	/**
-	 * Checks that player has enough remaining cities
+	 * Checks that player has enough remaining cities and resources to build a city.
 	 * @return boolean
 	 */
 	public boolean canBuildCity() {
@@ -231,7 +178,7 @@ public class Player {
 		return false;
 	}
 	/**
-	 * Checks that player has enough remaining settlements
+	 * Checks that player has enough remaining settlements and resources to build a settlement.
 	 * @return boolean
 	 */
 	public boolean canBuildSettlement() {
@@ -241,7 +188,7 @@ public class Player {
 		return false;
 	}
 	/**
-	 * Checks that player has enough remaining roads
+	 * Checks that player has enough remaining roads and resources to build a road.
 	 * @return boolean
 	 */
 	public boolean canBuildRoad() {
@@ -249,7 +196,12 @@ public class Player {
 			return true;
 		return false;
 	}
-	
+	/**
+	 * Checks to see if a player has a specific number of a specific type of resource.
+	 * @param resource
+	 * @param amount
+	 * @return hasResource
+	 */
 	public boolean hasResource(ResourceType resource, int amount) {
 		boolean hasResource = false;
 		

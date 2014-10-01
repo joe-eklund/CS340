@@ -7,11 +7,11 @@ import shared.definitions.ResourceType;
  * 
  * @author Epper Marshall
  *	The hex class represents a hex on the map. It has a location, resource type, 
- *	and a chit.
+ *	and an int.
  */
 public class Hex {
 	private HexLocation location;
-	private String resourceType;
+	private String resource;
 	private int chit;
 	
 	/**
@@ -19,7 +19,7 @@ public class Hex {
 	 */
 	public Hex(int x, int y, String resource, int chit){
 		location = new HexLocation(x, y);
-		resourceType = resource;
+		resource = resource;
 		
 	}
 	
@@ -53,7 +53,7 @@ public class Hex {
 	 * @return	The current resource type.
 	 */
 	public String getResourceType() {
-		return resourceType;
+		return resource;
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class Hex {
 	 * @param ResourceType	The resource type to set.
 	 */
 	public void setResourceType(String resource) {
-		resourceType = resource;
+		resource = resource;
 	}
 	
 	/**

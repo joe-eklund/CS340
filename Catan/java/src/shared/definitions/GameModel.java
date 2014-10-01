@@ -3,7 +3,10 @@ package shared.definitions;
 import java.util.List;
 
 import client.model.*;
-
+/**
+ * 
+ * The GameModel contains all the information relevant to a specific version of the Catan game. This is what is passed between the client and the server.
+ */
 public class GameModel {
 	private Chat chat;
 	private Bank bank;

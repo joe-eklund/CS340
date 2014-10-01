@@ -9,7 +9,7 @@ import client.resources.*;
 /**
  * 
  * @author Epper Marshall, Joe Eklund
- * The Bank class holds resource cards, development cards, and special cards that are
+ * The Bank class holds resource cards that are
  * available to the players. These are cards that no player currently has.
  */
 public class Bank {
@@ -32,7 +32,7 @@ public class Bank {
 	
 
 	/**
-	 * Class constructor. Initializes each stack with 19 of its respective resource.
+	 * Class constructor. Initializes each stack with the params sent in of its respective resource.
 	 * @param bricks: the amount of brick cards the bank has.
 	 * @param wheats: the amount of wheat cards the bank has.
 	 * @param ores: the amount of ores cards the bank has.
