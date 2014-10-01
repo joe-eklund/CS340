@@ -20,6 +20,13 @@ public class Robber {
 	public int getY() {
 		return y;
 	}
+	public HexLocation getLocation() {
+		return new HexLocation(x,y);
+	}
+	public void setLocation(HexLocation hex) {
+		x=hex.getX();
+		y=hex.getY();
+	}
 	public void setLocation(int x,int y) {
 		this.x = x;
 		this.y = y;

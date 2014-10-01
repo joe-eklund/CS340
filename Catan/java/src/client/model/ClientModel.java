@@ -38,11 +38,11 @@ public class ClientModel {
 			
 			//For the trade, need to check offer, any positive (I think positive, may be negative) 
 			//values are what the receiver needs to have in order to accept the trade 
-			if (receiver.getBrick() > offer.getOffer().bricks &&
-				receiver.getOre() > offer.getOffer().ores &&
-				receiver.getSheep() > offer.getOffer().sheeps &&
-				receiver.getWheat() > offer.getOffer().wheats &&
-				receiver.getWood() > offer.getOffer().woods) {
+			if (receiver.getBrick() > offer.getOffer().getBrick() &&
+				receiver.getOre() > offer.getOffer().getOre() &&
+				receiver.getSheep() > offer.getOffer().getSheep() &&
+				receiver.getWheat() > offer.getOffer().getWheat() &&
+				receiver.getWood() > offer.getOffer().getWood()) {
 				return true;
 			}
 		}
@@ -161,7 +161,7 @@ public class ClientModel {
 		//If the robber is not already in the designated HexLocation, and if the victim has cards to steal.
 		if (generalDevCardPreconditions(playerIndex) && 
 			gameModel.getPlayers().get(playerIndex).getOldDevCards().soldier > 0 &&
-			!gameModel.getMap().getRobber().getCurrentLocation().equals(hexLoc) && 
+			!gameModel.getMap().getRobber().getLocation().equals(hexLoc) && 
 			gameModel.getPlayers().get(victimIndex).getResources().totalResourcesCount() > 0) {
 			
 			return true;
