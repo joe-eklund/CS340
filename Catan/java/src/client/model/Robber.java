@@ -7,7 +7,24 @@ import shared.locations.RobberLocation;
  * @author Chad
  */
 public class Robber {
-	private HexLocation previousLocation;
+	private int x;
+	private int y;
+	
+	public Robber(int x,int y) {
+		this.x = x;
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setLocation(int x,int y) {
+		this.x = x;
+		this.y = y;
+	}
+	/*private HexLocation previousLocation;
 	private HexLocation currentLocation;
 	
 	public Robber(int x, int y) {
@@ -25,5 +42,5 @@ public class Robber {
 	}
 	public void setCurrentLocation(HexLocation currentLocation) {
 		this.currentLocation = currentLocation;
-	}
+	}*/
 }

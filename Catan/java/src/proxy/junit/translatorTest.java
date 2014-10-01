@@ -20,7 +20,7 @@ import proxy.TranslatorJSON;
 import shared.definitions.GameModel;
 import shared.definitions.PlayerIndex;
 
-public class translatorTest {
+public class TranslatorTest {
 	
 	@Test
 	public void testTranslateToJSON() {
@@ -34,8 +34,7 @@ public class translatorTest {
 		
 		GameModel game=new GameModel(new Bank(),new Chat(),new Log(),new Map(),players,null,new TurnTracker(),0,-1);
 		String translation=trans.translateTo(game);
-		/*assertEquals("Name should be George", "George", test.getName());
-		test.setName("Henry");
-		assertEquals("Name should be Henry", "Henry", test.getName());*/
+		//System.out.println(translation);
+		assertEquals("JSON should match",translation,"{\"chat\":{\"lines\":[]},\"bank\":{\"resources\":{\"bricks\":19,\"ores\":19,\"sheeps\":19,\"wheats\":19,\"woods\":19}},\"log\":{\"lines\":[]},\"map\":{\"radius\":0},\"players\":[{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Blue\",\"discarded\":false,\"monuments\":0,\"name\":\"Ender\",\"playerIndex\":0,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"bricks\":19,\"ores\":19,\"sheeps\":19,\"wheats\":19,\"woods\":19},\"soldiers\":0,\"victoryPoints\":2},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Orange\",\"discarded\":false,\"monuments\":0,\"name\":\"Ralph\",\"playerIndex\":1,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"bricks\":19,\"ores\":19,\"sheeps\":19,\"wheats\":19,\"woods\":19},\"soldiers\":0,\"victoryPoints\":2},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Red\",\"discarded\":false,\"monuments\":0,\"name\":\"Santa\",\"playerIndex\":2,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"bricks\":19,\"ores\":19,\"sheeps\":19,\"wheats\":19,\"woods\":19},\"soldiers\":0,\"victoryPoints\":2},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Brown\",\"discarded\":false,\"monuments\":0,\"name\":\"Frodo\",\"playerIndex\":3,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"bricks\":19,\"ores\":19,\"sheeps\":19,\"wheats\":19,\"woods\":19},\"soldiers\":0,\"victoryPoints\":2}],\"turnTracker\":{\"currentTurn\":0,\"longestRoad\":0,\"largestArmy\":0},\"version\":0,\"winner\":-1}");
 	}
 }

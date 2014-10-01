@@ -4,20 +4,20 @@ import java.util.List;
 
 import client.model.*;
 
-public abstract class GameModel {
-	private Bank bank;
+public class GameModel {
 	private Chat chat;
+	private Bank bank;
 	private Log log;
 	private Map map;
 	private List<Player> players;
 	private TradeOffer tradeOffer;
 	private TurnTracker turnTracker;
 	private int version;
-	private PlayerIndex winner;
+	private int winner;
 	
 	public GameModel(Bank bank, Chat chat, Log log, Map map,
 			List<Player> players, TradeOffer tradeOffer,
-			TurnTracker turnTracker, int version, PlayerIndex winner) {
+			TurnTracker turnTracker, int version, int winner) {
 		this.bank = bank;
 		this.chat = chat;
 		this.log = log;
@@ -53,7 +53,7 @@ public abstract class GameModel {
 	public int getVersion() {
 		return version;
 	}
-	public PlayerIndex getWinner() {
+	public int getWinner() {
 		return winner;
 	}
 	public void setBank(Bank bank) {
@@ -80,7 +80,7 @@ public abstract class GameModel {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	public void setWinner(PlayerIndex winner) {
+	public void setWinner(int winner) {
 		this.winner = winner;
 	}
 }
