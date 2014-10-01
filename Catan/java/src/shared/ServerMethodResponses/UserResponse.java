@@ -1,6 +1,6 @@
 package shared.ServerMethodResponses;
 
-public abstract class UserResponse extends NonMoveResponse {
+public abstract class UserResponse extends ServerResponse {
 	private String message;
 	private String name;
 	private String cookie;

@@ -1,6 +1,6 @@
 package shared.ServerMethodResponses;
 
-public class JoinGameResponse extends NonMoveResponse implements IJoinGameResponse{
+public class JoinGameResponse extends ServerResponse implements IJoinGameResponse{
 
 	public JoinGameResponse(boolean successful) {
 		super(successful);

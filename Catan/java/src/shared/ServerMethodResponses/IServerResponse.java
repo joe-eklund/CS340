@@ -1,5 +1,5 @@
 package shared.ServerMethodResponses;
 
-public interface INonMoveResponse {
+public interface IServerResponse {
 	public boolean isSuccessful();
 }

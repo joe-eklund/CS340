@@ -1,20 +1,39 @@
 package shared.ServerMethodRequests;
 
-import shared.definitions.ResourceType;
 
 public class MonopolyDevRequest {
-	private ResourceType monopolizedResource;
+	private String type;
+	private int playerIndex;
+	private String resource;
 
-	public MonopolyDevRequest(ResourceType monopolizedResource) {
-		this.monopolizedResource = monopolizedResource;
+	public MonopolyDevRequest(int playerIndex, String resource) {
+		this.type = "Monopoly";
+		this.playerIndex = playerIndex;
+		this.resource = resource;
 	}
 
-	public ResourceType getMonopolizedResource() {
-		return monopolizedResource;
+	public String getType() {
+		return type;
 	}
 
-	public void setMonopolizedResource(ResourceType monopolizedResource) {
-		this.monopolizedResource = monopolizedResource;
+	public int getPlayerIndex() {
+		return playerIndex;
+	}
+
+	public String getResource() {
+		return resource;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setPlayerIndex(int playerIndex) {
+		this.playerIndex = playerIndex;
+	}
+
+	public void setResource(String resource) {
+		this.resource = resource;
 	}
 	
 }

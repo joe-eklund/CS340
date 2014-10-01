@@ -1,10 +1,10 @@
 package shared.ServerMethodResponses;
 
-public class AddAIResponse extends ServerResponse {
+public class LoadGameResponse extends ServerResponse {
 
-	public AddAIResponse(boolean successful) {
+	public LoadGameResponse(boolean successful) {
 		super(successful);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 }

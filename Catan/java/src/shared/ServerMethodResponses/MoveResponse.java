@@ -2,10 +2,10 @@ package shared.ServerMethodResponses;
 
 import shared.definitions.GameModel;
 
-public class GameModelResponse extends ServerResponse {
+public class MoveResponse extends ServerResponse{
 	private GameModel gameModel;
-
-	public GameModelResponse(boolean successful, GameModel gameModel) {
+	
+	public MoveResponse(boolean successful, GameModel gameModel) {
 		super(successful);
 		this.gameModel = gameModel;
 	}
@@ -17,5 +17,5 @@ public class GameModelResponse extends ServerResponse {
 	public void setGameModel(GameModel gameModel) {
 		this.gameModel = gameModel;
 	}
-	
+
 }

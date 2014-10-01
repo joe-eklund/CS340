@@ -4,7 +4,7 @@ import java.util.List;
 
 import shared.definitions.GameDescription;
 
-public class ListGamesResponse extends NonMoveResponse implements IListGamesResponse {
+public class ListGamesResponse extends ServerResponse implements IListGamesResponse {
 	private List<GameDescription> gameDescriptions;
 
 	public ListGamesResponse(boolean successful,

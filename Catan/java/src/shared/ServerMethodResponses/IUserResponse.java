@@ -1,6 +1,6 @@
 package shared.ServerMethodResponses;
 
-public interface IUserResponse extends INonMoveResponse{
+public interface IUserResponse extends IServerResponse{
 	public String getMessage();
 	
 	public String getName();

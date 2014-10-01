@@ -1,20 +1,18 @@
 package shared.ServerMethodRequests;
 
-import shared.definitions.ServerLogLevel;
 
 public class ChangeLogLevelRequest {
-	private ServerLogLevel serverLogLevel;
+	private String logLevel;
 
-	public ChangeLogLevelRequest(ServerLogLevel serverLogLevel) {
-		super();
-		this.serverLogLevel = serverLogLevel;
+	public ChangeLogLevelRequest(String logLevel) {
+		logLevel = logLevel.toLowerCase();
 	}
 
-	public ServerLogLevel getServerLogLevel() {
-		return serverLogLevel;
+	public String getlogLevel() {
+		return logLevel;
 	}
 
-	public void setServerLogLevel(ServerLogLevel serverLogLevel) {
-		this.serverLogLevel = serverLogLevel;
+	public void setlogLevel(String logLevel) {
+		this.logLevel = logLevel;
 	}
 }

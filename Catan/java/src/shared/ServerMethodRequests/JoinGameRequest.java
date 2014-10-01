@@ -1,27 +1,26 @@
 package shared.ServerMethodRequests;
 
-import shared.definitions.CatanColor;
 
 public class JoinGameRequest {
-	private int gameID;
-	private CatanColor color;
+	private int id;
+	private String color;
 	
-	public JoinGameRequest(int gameID, CatanColor color) {
-		this.gameID = gameID;
-		this.color = color;
+	public JoinGameRequest(int gameID, String color) {
+		this.id = gameID;
+		this.color = color.toLowerCase();
 	}
 	
-	public int getGameID() {
-		return gameID;
+	public int getID() {
+		return id;
 	}
-	public CatanColor getColor() {
+	public String getColor() {
 		return color;
 	}
 	public void setGameID(int gameID) {
-		this.gameID = gameID;
+		this.id = gameID;
 	}
-	public void setColor(CatanColor color) {
-		this.color = color;
+	public void setColor(String color) {
+		this.color = color.toLowerCase();
 	}
 	
 }

@@ -1,5 +1,5 @@
 package shared.ServerMethodResponses;
 
-public interface IJoinGameResponse extends INonMoveResponse {
+public interface IJoinGameResponse extends IServerResponse {
 
 }

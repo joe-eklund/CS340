@@ -3,29 +3,49 @@ package shared.ServerMethodRequests;
 import shared.locations.VertexLocation;
 
 public class BuildSettlementRequest {
+	private String type;
+	private int playerIndex;
+	private VertexLocation vertexLocation;
 	private boolean free;
-	private VertexLocation settlementLocation;
-	
-	public BuildSettlementRequest(boolean free,
-			VertexLocation settlementLocation) {
+
+	public BuildSettlementRequest(int playerIndex,
+			VertexLocation vertexLocation, boolean free) {
+		this.type = "buildSettlement";
+		this.playerIndex = playerIndex;
+		this.vertexLocation = vertexLocation;
 		this.free = free;
-		this.settlementLocation = settlementLocation;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public int getPlayerIndex() {
+		return playerIndex;
+	}
+
+	public VertexLocation getVertexLocation() {
+		return vertexLocation;
 	}
 
 	public boolean isFree() {
 		return free;
 	}
 
-	public VertexLocation getSettlementLocation() {
-		return settlementLocation;
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setPlayerIndex(int playerIndex) {
+		this.playerIndex = playerIndex;
+	}
+
+	public void setVertexLocation(VertexLocation vertexLocation) {
+		this.vertexLocation = vertexLocation;
 	}
 
 	public void setFree(boolean free) {
 		this.free = free;
-	}
-
-	public void setSettlementLocation(VertexLocation settlementLocation) {
-		this.settlementLocation = settlementLocation;
 	}
 	
 }

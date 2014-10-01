@@ -2,10 +2,21 @@ package proxy;
 
 import java.io.UnsupportedEncodingException;
 
-import client.model.Log;
-import shared.ServerMethodResponses.*;
+import shared.ServerMethodResponses.AddAIResponse;
+import shared.ServerMethodResponses.ChangeLogLevelResponse;
+import shared.ServerMethodResponses.GetGameCommandsResponse;
+import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.ICreateGameResponse;
+import shared.ServerMethodResponses.IJoinGameResponse;
+import shared.ServerMethodResponses.IListGamesResponse;
+import shared.ServerMethodResponses.ILoginUserResponse;
+import shared.ServerMethodResponses.IRegisterUserResponse;
+import shared.ServerMethodResponses.ListAIResponse;
+import shared.ServerMethodResponses.MoveResponse;
+import shared.ServerMethodResponses.PostGameCommandsResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
+import shared.ServerMethodResponses.SaveGameResponse;
 import shared.definitions.CatanColor;
-import shared.definitions.DiceRoll;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
@@ -13,6 +24,7 @@ import shared.definitions.ServerLogLevel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.model.Log;
 
 /**
  * An interface for a Server
@@ -152,8 +164,10 @@ public interface IServer {
 	/*
 	 * need to verify if name parameter is needed... Specs are worthless
 	 */
-	public ICreateGameResponse createGame(String name);
+	public ICreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
 	
+	
+	public SaveGameResponse saveGame(int gameID, String name);
 	
 	/**
 	 * Adds a player to the game and sets their game cookie
@@ -302,7 +316,7 @@ public interface IServer {
 	 * @param message: message player wishes to post to chat log 
 	 * 
 	 */
-	public void sendChat(String message);
+	public MoveResponse sendChat(int playerIndex, String message);
 	
 	
 	/**
@@ -323,7 +337,7 @@ public interface IServer {
 	 * @param willAccept: boolean value of whether or not player accepts proposed trade 
 	 *  
 	 */
-	public void acceptTrade(boolean willAccept, int playerIndex);
+	public MoveResponse acceptTrade(boolean willAccept, int playerIndex);
 	
 	
 	/**
@@ -345,7 +359,7 @@ public interface IServer {
 	 *  @param resources: list of valid resource types
 	 *  @param resourceHand: contains map of each resource type and the associated number of cards for the type the player is dropping
 	 */
-	public void discardCards(ResourceHand resourceHand, int playerIndex);
+	public MoveResponse discardCards(ResourceHand resourceHand, int playerIndex);
 
 	/**
 	 * Specifies to the server the number that was rolled by the player
@@ -363,7 +377,7 @@ public interface IServer {
 	 *  
 	 *  @param number: an integer from 2 to 12 that represents the number that was rolled.
 	 */
-	public void rollNumber(DiceRoll number, int playerIndex);
+	public MoveResponse rollNumber(int number, int playerIndex);
 	
 	/**
 	 * Builds a road of the same color as the player building the road and at the specified location on the map
@@ -387,7 +401,7 @@ public interface IServer {
 	 * @param free: a boolean that specifies whether or not the road piece has been given to the player for free.
 	 * @param roadLocation: An EdgeLocation that declares where on the map the road will be built. 
 	 */
-	public void buildRoad(boolean free, EdgeLocation roadLocation);
+	public MoveResponse buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free);
 	
 	/**
 	 * Builds a settlement of the same color as the player building the road and at the specified location on the map
@@ -409,7 +423,7 @@ public interface IServer {
 	 * </ul>
 	 * @param free: a boolean that specifies whether or not the settlement piece has been given to the player for free.
 	 */
-	public void buildSettlement(boolean free, VertexLocation location);
+	public MoveResponse buildSettlement(int playerIndex, VertexLocation location, boolean free);
 	
 	/**
 	 * Builds a city of the same color as the player building the road and at the specified location on the map
@@ -429,7 +443,7 @@ public interface IServer {
 	 *  <li> The map lists the city location correctly</li>
 	 * </ul>
 	 */
-	public void buildCity(VertexLocation location);
+	public MoveResponse buildCity(int playerIndex, VertexLocation location);
 	
 	/**
 	 * The player offers a trade of certain resources to a another player in the game in return for different resource.
@@ -449,7 +463,7 @@ public interface IServer {
 	 * @param offer: ResourceHand indicating the cards to be given and received.  Negative numbers mean the players is receiving cards of that resource in the trade.
 	 * @param receiver: playerIndex which specifies the recipient whom the player is trading with 
 	 */
-	public void offerTrade(ResourceHand offer, PlayerIndex receiver);
+	public MoveResponse offerTrade(int playerIndex, ResourceHand offer, int receiver);
 	
 	/**
 	 * The player offers a trade of certain resources to the bank at a specified ratio depending on the port the player has a settlement on.
@@ -469,7 +483,7 @@ public interface IServer {
 	 * @param inputResource: Resource - The resource the player is giving
 	 * @param outputResource: Resource - The resoure the player is receiving
 	 */
-	public void maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource);
+	public MoveResponse maritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource);
 	
 	/**
 	 * The player finishes his/her turn.
@@ -485,7 +499,7 @@ public interface IServer {
 	 *   <li>It is the next players turn</li>
 	 *  </ul>
 	 */
-	public void finishTurn();
+	public MoveResponse finishTurn(int playerIndex);;
 	
 	/**
 	 * The player buys a development card from the bank.
@@ -506,7 +520,7 @@ public interface IServer {
 	 *    </ul>
 	 *  </ul>
 	 */
-	public void buyDevCard();
+	public MoveResponse buyDevCard(int playerIndex);
 	
 	/**
 	 * The player can play the "Year of Plenty Card" and gain any two resource from the bank if the preconditions are satisfied.
@@ -525,7 +539,7 @@ public interface IServer {
 	 * @param ResourceOne: The first of the two resources that the player desires to receive from the bank
 	 * @param ResourceTwo: The second of the two resources that the player desires to receive from the bank
 	 */
-	public void playYearOfPlentyCard(ResourceType resourceOne, ResourceType resourceTwo);
+	public MoveResponse playYearOfPlentyCard(int playerIndex, ResourceType resource1, ResourceType resource2);
 	
 	/**
 	 * The player can play the "Road Buidling Card" and build two new roads at no charge if the preconditions are satisfied.
@@ -550,7 +564,7 @@ public interface IServer {
 	 *  @param spot1: an EdgeLocation that specifies the location of the first road to be built
 	 *  @param spot2: an EdgeLocation that specifies the location of the second road to be built
 	 */
-	public void playRoadBuildingCard(EdgeLocation spot1, EdgeLocation spot2);
+	public MoveResponse playRoadBuildingCard(int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 	
 	/**
 	 * The player can play the "Monopoly Card" and he/she specified a resource and all other players must give that resource, if available, to the player playing the monopoly card.
@@ -570,7 +584,7 @@ public interface IServer {
 	 * </ul>
 	 * @param resource: The specified Resource that the player wants to receive
 	 */
-	public void playMonopolyCard(ResourceType resource);
+	public MoveResponse playMonopolyCard(int playerIndex, ResourceType resource);
 
 	/**
 	 * The player can play the "Soldier Card" and he/she now have to move the robber to a new location on the map and steal two resources from a player that has a settlement touching the robbers new location.
@@ -594,7 +608,7 @@ public interface IServer {
 	 * @param location: Hexlocation that specifies the robbers new location on the map
 	 * @param victomIndex: playerIndex of whom is getting robbed
 	 */
-	public void playSoldierCard(HexLocation location, PlayerIndex victimIndex);
+	public MoveResponse playSoldierCard(int playerIndex, PlayerIndex victimIndex, HexLocation location);
 	
 	/**
 	 * The player can play the "Monument Card" and he/she will gain one victory point
@@ -608,5 +622,5 @@ public interface IServer {
 	 * @post
 	 *  <ul><li> The player gains a victory point</li><ul>
 	 */
-	public void playMonumentCard();
+	public MoveResponse playMonumentCard(int playerIndex);
 }

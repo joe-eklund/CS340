@@ -2,7 +2,7 @@ package shared.ServerMethodResponses;
 
 import java.util.List;
 
-public class ListAIResponse extends NonMoveResponse {
+public class ListAIResponse extends ServerResponse {
 	private List<String> aiTypes;
 
 	public ListAIResponse(boolean successful, List<String> aiTypes) {

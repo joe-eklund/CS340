@@ -1,9 +1,9 @@
 package shared.ServerMethodResponses;
 
-public abstract class NonMoveResponse implements INonMoveResponse {
+public abstract class ServerResponse implements IServerResponse {
 	boolean successful;
 
-	public NonMoveResponse(boolean successful) {
+	public ServerResponse(boolean successful) {
 		this.successful = successful;
 	}
 

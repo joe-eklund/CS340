@@ -2,7 +2,7 @@ package shared.ServerMethodResponses;
 
 import client.model.Log;
 
-public class GetGameCommandsResponse extends NonMoveResponse {
+public class GetGameCommandsResponse extends ServerResponse {
 	private Log commands;
 
 	public GetGameCommandsResponse(boolean successful, Log commands) {
