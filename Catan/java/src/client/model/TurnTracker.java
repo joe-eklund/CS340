@@ -11,6 +11,7 @@ public class TurnTracker {
 	private int largestArmy;
 	
 	public TurnTracker() {
+		status = "Playing";
 		currentTurn = 0;
 	}
 	
