@@ -5,42 +5,17 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import shared.ServerMethodRequests.CreateGameRequest;
-import shared.ServerMethodRequests.JoinGameRequest;
-import shared.ServerMethodRequests.UserRequest;
-import shared.ServerMethodResponses.AddAIResponse;
-import shared.ServerMethodResponses.ChangeLogLevelResponse;
-import shared.ServerMethodResponses.CreateGameResponse;
-import shared.ServerMethodResponses.GetGameCommandsResponse;
-import shared.ServerMethodResponses.GetGameModelResponse;
-import shared.ServerMethodResponses.ICreateGameResponse;
-import shared.ServerMethodResponses.IJoinGameResponse;
-import shared.ServerMethodResponses.IListGamesResponse;
-import shared.ServerMethodResponses.ILoginUserResponse;
-import shared.ServerMethodResponses.IRegisterUserResponse;
-import shared.ServerMethodResponses.JoinGameResponse;
-import shared.ServerMethodResponses.ListAIResponse;
-import shared.ServerMethodResponses.ListGamesResponse;
-import shared.ServerMethodResponses.LoginUserResponse;
-import shared.ServerMethodResponses.PostGameCommandsResponse;
-import shared.ServerMethodResponses.RegisterUserResponse;
-import shared.ServerMethodResponses.ResetGameResponse;
-import shared.definitions.CatanColor;
-import shared.definitions.DiceRoll;
-import shared.definitions.GameDescription;
-import shared.definitions.Log;
-import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceHand;
-import shared.definitions.ResourceType;
-import shared.definitions.ServerLogLevel;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import client.model.Log;
+import shared.ServerMethodRequests.*;
+import shared.ServerMethodResponses.*;
+import shared.definitions.*;
+import shared.locations.*;
 
 public class ProxyServer implements IServer{
 	private ICommunicator clientCommunicator;
 	private ITranslator cookieTranslator;
 	private String cookieEncoding;
+	private String cookie;
 	
 	public ProxyServer(ICommunicator clientCommunicator, ITranslator cookieTranslator, String cookieEncoding) {
 		this.clientCommunicator = clientCommunicator;
@@ -52,7 +27,7 @@ public class ProxyServer implements IServer{
 	public ILoginUserResponse loginUser(String username, String password) throws UnsupportedEncodingException {
 		UserRequest loginRequest = new UserRequest(username, password);
 		ICommandResponse loginResponse = this.clientCommunicator.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "user/login", loginRequest, null);
-		String cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
+		cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
 		cookie = cookie.replaceFirst("catan.user=", "");
 		cookie = cookie.substring(0, cookie.lastIndexOf(";Path=/;"));
 		String cookieJSON = URLDecoder.decode(cookie, this.cookieEncoding);
@@ -64,7 +39,7 @@ public class ProxyServer implements IServer{
 	public IRegisterUserResponse registerUser(String username, String password) throws UnsupportedEncodingException {
 		UserRequest loginRequest = new UserRequest(username, password);
 		ICommandResponse loginResponse = this.clientCommunicator.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(),"user/login", loginRequest, null);
-		String cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
+		cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
 		cookie = cookie.replaceFirst("catan.user=", "");
 		cookie = cookie.substring(0, cookie.lastIndexOf(";Path=/;"));
 		String cookieJSON = URLDecoder.decode(cookie, this.cookieEncoding);
@@ -74,20 +49,23 @@ public class ProxyServer implements IServer{
 	
 	@Override
 	public IListGamesResponse listGames() {
-		Class<?> arrayGameDescriptionType = GameDescription[].class;
-		ICommandResponse listGamesResponse = this.clientCommunicator.executeCommand(RequestType.GET, new ArrayList<Pair<String,String>>(), "/games/list", null, arrayGameDescriptionType);
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse listGamesResponse = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "/games/list", null, GameDescription[].class);
 		return new ListGamesResponse(listGamesResponse.getResponseCode() == 200, Arrays.asList((GameDescription[])listGamesResponse.getResponseObject()));
 	}
 
 	@Override
 	public ICreateGameResponse createGame(String name) {
 		CreateGameRequest createGameRequest = new CreateGameRequest(name);
-		ICommandResponse createGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "/games/create", createGameRequest, GameDescription.class);
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse createGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/games/create", createGameRequest, GameDescription.class);
 		return new CreateGameResponse(createGameResponse.getResponseCode() == 200, (GameDescription)createGameResponse.getResponseObject());
 	}
 
 	@Override
-	public IJoinGameResponse joinGame(CatanColor color, int gameID, String cookie) {
+	public IJoinGameResponse joinGame(CatanColor color, int gameID) {
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
 		JoinGameRequest joinGameRequest = new JoinGameRequest(gameID, color);
@@ -101,68 +79,102 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public GetGameModelResponse getGameModel(int version) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse getGameModelResponse = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/model?version=" + Integer.toString(version), null, GameModel.class);
+		boolean needToUpdate = true;
+		if(getGameModelResponse.getResponseObject() == null) {
+			needToUpdate = false;
+		}
+		return new GetGameModelResponse(getGameModelResponse.getResponseCode() == 200, (GameModel)getGameModelResponse.getResponseObject(), needToUpdate);
 	}
 
 	@Override
 	public ResetGameResponse resetGame() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse resetGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/reset", null, GameModel.class);
+		return new ResetGameResponse(resetGameResponse.getResponseCode() == 200, (GameModel) resetGameResponse.getResponseObject());
 	}
 
 	@Override
 	public GetGameCommandsResponse getGameCommands() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/commands", null, Log.class);
+		return new GetGameCommandsResponse(response.getResponseCode() == 200, (Log)response.getResponseObject());
 	}
 
 	@Override
 	public PostGameCommandsResponse postGameCommands(Log commands) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/commands", commands, Log.class);
+		PostGameCommandsResponse result;
+		if(response.getResponseCode() == 200) {
+			result = new PostGameCommandsResponse(true, (GameModel)response.getResponseObject(), null);
+		}
+		else {
+			result = new PostGameCommandsResponse(false, null, response.getResponseMessage());
+		}
+		return result;
 	}
 
 	@Override
 	public ListAIResponse listAI() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "/game/listAI", null, String[].class);
+		return new ListAIResponse(response.getResponseCode() == 200, Arrays.asList((String[])response.getResponseObject()));
 	}
 
 	@Override
 	public AddAIResponse addAI(String aiToAdd) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/game/addAI", aiToAdd, null);
+		return new AddAIResponse(response.getResponseCode() == 200);
 	}
 
 	@Override
 	public ChangeLogLevelResponse changeLogLevel(ServerLogLevel logLevel) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/util/changeLogLevel", logLevel.toString(), null);
+		return new ChangeLogLevelResponse(response.getResponseCode() == 200);
 	}
 
 	@Override
 	public void sendChat(String message) {
-		// TODO Auto-generated method stub
-		
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/games/sendChat", message, null);
 	}
 
 	@Override
-	public void acceptTrade(boolean willAccept) {
-		// TODO Auto-generated method stub
-		
+	public void acceptTrade(boolean willAccept, int playerIndex) {
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		AcceptTradeRequest requestParams = new AcceptTradeRequest(willAccept, playerIndex);
+		this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/acceptTrade", requestParams, null);
 	}
 
 	@Override
-	public void discardCards(ResourceHand resourceHand) {
+	public void discardCards(ResourceHand resourceHand, int playerIndex) {
 		// TODO Auto-generated method stub
-		
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		DiscardCardsRequest requestParams = new DiscardCardsRequest(resourceHand, playerIndex);
+		this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/discardCards", requestParams, null);
 	}
 
 	@Override
-	public void rollNumber(DiceRoll number) {
+	public void rollNumber(DiceRoll number, int playerIndex) {
 		// TODO Auto-generated method stub
-		
+		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
+		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
+		RollNumberRequest requestParams = new RollNumberRequest(number.getRollValue(), playerIndex);
+		this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/rollNumber", requestParams, null);
 	}
 
 	@Override

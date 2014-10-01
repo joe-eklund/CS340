@@ -2,10 +2,10 @@ package proxy;
 
 import java.io.UnsupportedEncodingException;
 
+import client.model.Log;
 import shared.ServerMethodResponses.*;
 import shared.definitions.CatanColor;
 import shared.definitions.DiceRoll;
-import shared.definitions.Log;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
@@ -176,7 +176,7 @@ public interface IServer {
 	 * @param color: the available color the player wishes to use
 	 * @param gameID: the ID for the game which the player wishes to join
 	 */
-	public IJoinGameResponse joinGame(CatanColor color, int gameID, String cookie);
+	public IJoinGameResponse joinGame(CatanColor color, int gameID);
 	
 	
 	/**
@@ -323,7 +323,7 @@ public interface IServer {
 	 * @param willAccept: boolean value of whether or not player accepts proposed trade 
 	 *  
 	 */
-	public void acceptTrade(boolean willAccept);
+	public void acceptTrade(boolean willAccept, int playerIndex);
 	
 	
 	/**
@@ -345,7 +345,7 @@ public interface IServer {
 	 *  @param resources: list of valid resource types
 	 *  @param resourceHand: contains map of each resource type and the associated number of cards for the type the player is dropping
 	 */
-	public void discardCards(ResourceHand resourceHand);
+	public void discardCards(ResourceHand resourceHand, int playerIndex);
 
 	/**
 	 * Specifies to the server the number that was rolled by the player
@@ -363,7 +363,7 @@ public interface IServer {
 	 *  
 	 *  @param number: an integer from 2 to 12 that represents the number that was rolled.
 	 */
-	public void rollNumber(DiceRoll number);
+	public void rollNumber(DiceRoll number, int playerIndex);
 	
 	/**
 	 * Builds a road of the same color as the player building the road and at the specified location on the map
