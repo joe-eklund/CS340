@@ -35,7 +35,21 @@
 
 	<!-- TARGETS -->
 	<!-- ******* -->
-     
+    
+	<target name="test" description="Runs the junit tests">
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+      			<pathelement location="${project.class.path}"/>
+     			<pathelement location="${build.tests}"/>
+      			<pathelement path="${java.class.path}"/>
+    		</classpath>
+			<test name="bin.proxy.junit" haltonfailure="no" outfile="result">
+				<formatter type="plain"/>
+				<formatter type="xml"/>
+			</test>
+		</junit>
+	</target>
+ 
 	<target name="server" description="Runs the demo server">
 		<java jar="${jar.file}" fork="true">
 			<arg value="${port.arg}"/>
@@ -55,6 +69,7 @@
 			<packageset dir="${java.src.dir}">
 				<include name="client/**"/>
 				<include name="shared/**"/>
+				<include name="proxy/**"/>
 			</packageset>
 		</javadoc>
    </target>
