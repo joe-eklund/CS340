@@ -13,16 +13,24 @@ import client.resources.*;
  * available to the players. These are cards that no player currently has.
  */
 public class Bank {
-	private Resources resources;
-	private ArrayList<DevCardType> developmentCards;
+	public int brick;
+	public int ore;
+	public int sheep;
+	public int wheat;
+	public int wood;
 	
 	/**
 	 * Class constructor. Initializes each stack with 19 of its respective resource.
 	 */
 	public Bank(){
-		resources = new Resources();
+		brick=19;
+		wheat=19;
+		ore=19;
+		wood=19;
+		sheep=19;
 	}
 	
+
 	/**
 	 * Class constructor. Initializes each stack with 19 of its respective resource.
 	 * @param bricks: the amount of brick cards the bank has.
@@ -31,9 +39,14 @@ public class Bank {
 	 * @param woods: the amount of woods cards the bank has.
 	 * @param sheeps: the amount of sheeps cards the bank has.
 	 */
-	public Bank(int bricks, int wheats, int ores, int woods, int sheeps) {
-		resources = new Resources(bricks, wheats, ores, woods, sheeps);
+	public Bank(int brick, int wheat, int ore, int wood, int sheep) {
+		this.brick = brick;
+		this.wheat = wheat;
+		this.ore = ore;
+		this.wood = wood;
+		this.sheep = sheep;
 	}
+	
 	
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -41,7 +54,7 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasSheep(int amt) {
-		return (resources.sheeps >= amt) ? true : false;
+		return (sheep >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -49,7 +62,7 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasOre(int amt) {
-		return (resources.ores >= amt) ? true : false;
+		return (ore >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -57,7 +70,7 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasWood(int amt) {
-		return (resources.woods >= amt) ? true : false;
+		return (wood >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -65,7 +78,7 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasWheat(int amt) {
-		return (resources.wheats >= amt) ? true : false;
+		return (wheat >= amt) ? true : false;
 	}
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
@@ -73,47 +86,47 @@ public class Bank {
 	 * @return boolean
 	 */
 	public boolean hasBrick(int amt) {
-		return (resources.bricks >= amt) ? true : false;
+		return (brick >= amt) ? true : false;
 	}
 
-	public int getBricks() {
-		return resources.bricks;
+	public int getBrick() {
+		return brick;
 	}
 
-	public void setBricks(int bricks) {
-		resources.bricks = bricks;
+	public void setBrick(int brick) {
+		this.brick = brick;
 	}
 
-	public int getOres() {
-		return resources.ores;
+	public int getOre() {
+		return ore;
 	}
 
-	public void setOres(int ores) {
-		resources.ores = ores;
+	public void setOre(int ore) {
+		this.ore = ore;
 	}
 
-	public int getSheeps() {
-		return resources.sheeps;
+	public int getSheep() {
+		return sheep;
 	}
 
-	public void setSheeps(int sheeps) {
-		resources.sheeps = sheeps;
+	public void setSheep(int sheep) {
+		this.sheep = sheep;
 	}
 
-	public int getWheats() {
-		return resources.wheats;
+	public int getWheat() {
+		return wheat;
 	}
 
-	public void setWheats(int wheats) {
-		resources.wheats = wheats;
+	public void setWheat(int wheat) {
+		this.wheat = wheat;
 	}
 
-	public int getWoods() {
-		return resources.woods;
+	public int getWood() {
+		return wood;
 	}
 
-	public void setWoods(int woods) {
-		resources.woods = woods;
+	public void setWood(int wood) {
+		this.wood = wood;
 	}
 	
 	public boolean hasResource(ResourceType resource) {
@@ -121,23 +134,23 @@ public class Bank {
 		
 		switch (resource) {
 		case BRICK: 
-			if (getBricks() > 0)
+			if (getBrick() > 0)
 				hasResource = true;
 			break;
 		case ORE: 
-			if (getOres() > 0)
+			if (getOre() > 0)
 				hasResource = true;
 			break;
 		case SHEEP: 
-			if (getSheeps() > 0)
+			if (getSheep() > 0)
 				hasResource = true;
 			break;
 		case WHEAT: 
-			if (getWheats() > 0)
+			if (getWheat() > 0)
 				hasResource = true;
 			break;
 		case WOOD: 
-			if (getWoods() > 0)
+			if (getWood() > 0)
 				hasResource = true;
 			break;
 		}

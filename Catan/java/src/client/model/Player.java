@@ -131,34 +131,34 @@ public class Player {
 		this.resources = resources;
 	}
 	public int getSheep() {
-		return resources.sheeps;
+		return resources.sheep;
 	}
-	public void setSheep(int sheeps) {
-		resources.sheeps = sheeps;
+	public void setSheep(int sheep) {
+		resources.sheep = sheep;
 	}
 	public int getWheat() {
-		return resources.wheats;
+		return resources.wheat;
 	}
-	public void setWheat(int wheats) {
-		resources.wheats = wheats;
+	public void setWheat(int wheat) {
+		resources.wheat = wheat;
 	}
 	public int getOre() {
-		return resources.ores;
+		return resources.ore;
 	}
-	public void setOre(int ores) {
-		resources.ores = ores;
+	public void setOre(int ore) {
+		resources.ore = ore;
 	}
 	public int getBrick() {
-		return resources.bricks;
+		return resources.brick;
 	}
-	public void setBrick(int bricks) {
-		resources.bricks = bricks;
+	public void setBrick(int brick) {
+		resources.brick = brick;
 	}
 	public int getWood() {
-		return resources.woods;
+		return resources.wood;
 	}
-	public void setWood(int woods) {
-		resources.woods = woods;
+	public void setWood(int wood) {
+		resources.wood = wood;
 	}
 	public int getSoldiers() {
 		return soldiers;
@@ -226,7 +226,7 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean canBuildCity() {
-		if(cities>0&&resources.getOres()>2&&resources.getWheats()>1)
+		if(cities>0&&resources.getOre()>2&&resources.getWheat()>1)
 			return true;
 		return false;
 	}
@@ -235,8 +235,8 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean canBuildSettlement() {
-		if(settlements>0&&resources.getBricks()>0&&resources.getWoods()>0&&
-				resources.getSheeps()>0&&resources.getWheats()>0)
+		if(settlements>0&&resources.getBrick()>0&&resources.getWood()>0&&
+				resources.getSheep()>0&&resources.getWheat()>0)
 			return true;
 		return false;
 	}
@@ -245,7 +245,7 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean canBuildRoad() {
-		if(roads>0&&resources.getBricks()>0&&resources.getWoods()>0)
+		if(roads>0&&resources.getBrick()>0&&resources.getWood()>0)
 			return true;
 		return false;
 	}
