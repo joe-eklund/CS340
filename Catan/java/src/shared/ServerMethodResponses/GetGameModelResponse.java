@@ -1,11 +1,11 @@
 package shared.ServerMethodResponses;
 
-import shared.definitions.GameModel;
+import shared.definitions.ServerModel;
 
 public class GetGameModelResponse extends GameModelResponse {
 	private boolean needToUpdate;
 
-	public GetGameModelResponse(boolean successful, GameModel gameModel,
+	public GetGameModelResponse(boolean successful, ServerModel gameModel,
 			boolean needToUpdate) {
 		super(successful, gameModel);
 		this.needToUpdate = needToUpdate;

@@ -153,20 +153,20 @@ public class ProxyServer implements IServer{
 	public GetGameModelResponse getGameModel(int version, String cookie) {
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse getGameModelResponse = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/model?version=" + Integer.toString(version), null, GameModel.class);
+		ICommandResponse getServerModelResponse = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/model?version=" + Integer.toString(version), null, ServerModel.class);
 		boolean needToUpdate = true;
-		if(getGameModelResponse.getResponseObject() == null) {
+		if(getServerModelResponse.getResponseObject() == null) {
 			needToUpdate = false;
 		}
-		return new GetGameModelResponse(getGameModelResponse.getResponseCode() == 200, (GameModel)getGameModelResponse.getResponseObject(), needToUpdate);
+		return new GetGameModelResponse(getServerModelResponse.getResponseCode() == 200, (ServerModel)getServerModelResponse.getResponseObject(), needToUpdate);
 	}
 
 	@Override
 	public ResetGameResponse resetGame(String cookie) {
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse resetGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/reset", null, GameModel.class);
-		return new ResetGameResponse(resetGameResponse.getResponseCode() == 200, (GameModel) resetGameResponse.getResponseObject());
+		ICommandResponse resetGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/reset", null, ServerModel.class);
+		return new ResetGameResponse(resetGameResponse.getResponseCode() == 200, (ServerModel) resetGameResponse.getResponseObject());
 	}
 
 	@Override
@@ -184,7 +184,7 @@ public class ProxyServer implements IServer{
 		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/commands", commands, Log.class);
 		PostGameCommandsResponse result;
 		if(response.getResponseCode() == 200) {
-			result = new PostGameCommandsResponse(true, (GameModel)response.getResponseObject(), null);
+			result = new PostGameCommandsResponse(true, (ServerModel)response.getResponseObject(), null);
 		}
 		else {
 			result = new PostGameCommandsResponse(false, null, response.getResponseMessage());
@@ -222,8 +222,8 @@ public class ProxyServer implements IServer{
 		SendChatRequest request = new SendChatRequest(playerIndex, message);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/games/sendChat", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/games/sendChat", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -231,8 +231,8 @@ public class ProxyServer implements IServer{
 		AcceptTradeRequest request = new AcceptTradeRequest(playerIndex, willAccept);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/acceptTrade", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/acceptTrade", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -240,8 +240,8 @@ public class ProxyServer implements IServer{
 		DiscardCardsRequest request = new DiscardCardsRequest(resourceHand, playerIndex);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/discardCards", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/discardCards", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -249,8 +249,8 @@ public class ProxyServer implements IServer{
 		RollNumberRequest request = new RollNumberRequest(number, playerIndex);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/rollNumber", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/rollNumber", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -258,8 +258,8 @@ public class ProxyServer implements IServer{
 		BuildRoadRequest request = new BuildRoadRequest(playerIndex, roadLocation, free);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildRoad", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildRoad", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -267,8 +267,8 @@ public class ProxyServer implements IServer{
 		BuildSettlementRequest request = new BuildSettlementRequest(playerIndex, vertexLocation, free);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildSettlement", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildSettlement", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -276,8 +276,8 @@ public class ProxyServer implements IServer{
 		BuildCityRequest request = new BuildCityRequest(playerIndex, vertexLocation);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildSettlement", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildSettlement", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -285,8 +285,8 @@ public class ProxyServer implements IServer{
 		OfferTradeRequest request = new OfferTradeRequest(playerIndex, offer, receiver);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/offerTrade", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/offerTrade", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -294,8 +294,8 @@ public class ProxyServer implements IServer{
 		MaritimeTradeRequest request = new MaritimeTradeRequest(playerIndex, ratio, inputResource.name(), outputResource.name());
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/maritimeTrade", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/maritimeTrade", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -303,8 +303,8 @@ public class ProxyServer implements IServer{
 		FinishTurnRequest request = new FinishTurnRequest(playerIndex);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/finishTurn", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/finishTurn", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -312,8 +312,8 @@ public class ProxyServer implements IServer{
 		BuyDevCardRequest request = new BuyDevCardRequest(playerIndex);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buyDevCard", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buyDevCard", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -322,8 +322,8 @@ public class ProxyServer implements IServer{
 		YearOfPlentyDevRequest request = new YearOfPlentyDevRequest(playerIndex, resource1.name(), resource2.name());
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Year_of_Plenty", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Year_of_Plenty", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -331,8 +331,8 @@ public class ProxyServer implements IServer{
 		RoadBuildingDevRequest request = new RoadBuildingDevRequest(playerIndex, spot1, spot2);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Road_Building", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Road_Building", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -340,8 +340,8 @@ public class ProxyServer implements IServer{
 		MonopolyDevRequest request = new MonopolyDevRequest(playerIndex, resource.name());
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/offerTrade", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/offerTrade", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -349,8 +349,8 @@ public class ProxyServer implements IServer{
 		SoldierDevRequest request = new SoldierDevRequest(playerIndex, victimIndex, location);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Monopoly", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Monopoly", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 	@Override
@@ -358,8 +358,8 @@ public class ProxyServer implements IServer{
 		MonumentDevRequest request = new MonumentDevRequest(playerIndex);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>("Cookie", cookie));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Monument", request, GameModel.class);
-		return new MoveResponse(response.getResponseCode() == 200, (GameModel) response.getResponseObject());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Monument", request, ServerModel.class);
+		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
 }

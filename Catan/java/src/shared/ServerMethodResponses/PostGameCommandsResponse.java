@@ -1,11 +1,11 @@
 package shared.ServerMethodResponses;
 
-import shared.definitions.GameModel;
+import shared.definitions.ServerModel;
 
 public class PostGameCommandsResponse extends GameModelResponse {
 	private String errorMessage;
 	
-	public PostGameCommandsResponse(boolean successful, GameModel gameModel,
+	public PostGameCommandsResponse(boolean successful, ServerModel gameModel,
 			String errorMessage) {
 		super(successful, gameModel);
 		this.errorMessage = errorMessage;
