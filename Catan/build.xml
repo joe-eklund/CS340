@@ -39,7 +39,7 @@
 	<target name="test" description="Runs the junit tests">
 		<junit printsummary="yes">
 			<classpath>
-			  <!---<pathelement location="bin" />    --->
+			  <!-- <pathelement location="bin" /> -->
 			  <pathelement location="junit-4.11.jar"/>
 			</classpath>    
 			<batchtest>
