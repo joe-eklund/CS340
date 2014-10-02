@@ -1,4 +1,4 @@
-package client.Poller;
+package client.poller;
 
 import java.util.Timer;
 import java.util.TimerTask;
