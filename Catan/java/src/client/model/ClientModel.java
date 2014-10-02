@@ -2,13 +2,16 @@ package client.model;
 
 import java.util.ArrayList;
 
+import client.model.interfaces.IHex;
 import shared.definitions.GameModel;
+import shared.definitions.HexType;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.definitions.ServerModel;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import java.util.Map;
 
 /**
  * 
@@ -106,17 +109,28 @@ public class ClientModel {
 			}
 		}
 		
+		Map<HexLocation, IHex> board = gameModel.getBoard();
+		
+		HexLocation neighborLoc = normEdgeLocation.getHexLoc().getNeighborLoc(normEdgeLocation.getDir());
+		
+		//if hex is water and the neighbor in the direction of the edge location is water this location is invalid
+		if (!board.containsKey(neighborLoc) || 
+			(board.get(normEdgeLocation.getHexLoc()).getType() == HexType.WATER && 
+			board.get(neighborLoc).getType() == HexType.WATER)) {
+			
+			return false;
+		}
+	
 		switch(normEdgeLocation.getDir()) {
 		case NorthEast:
-			checkNorthEastEdge(normEdgeLocation);
+			return checkNorthEastEdge(normEdgeLocation, roads, playerIndex);
 		case North:
-			checkNorthEdge(normEdgeLocation);
+			return checkNorthEdge(normEdgeLocation, roads, playerIndex);
 		case NorthWest:
-			
+			return checkNorthWestEdge(normEdgeLocation, roads, playerIndex);
+		default:
+			return false;
 		}
-		
-	public boolean buildRoad() {
-		return false;
 	}
 	
 	private boolean checkNorthEastEdge(EdgeLocation normEdgeLocation, ArrayList<Road> roads, int playerIndex) {

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class GameModel {
 	ServerModel serverModel;
-	Map<HexLocation, IHex> map;
+	Map<HexLocation, IHex> board;
 
 	public GameModel(ServerModel serverModel) {
 		this.serverModel = serverModel;
@@ -26,82 +26,82 @@ public class GameModel {
 		
 		for (Hex hex : hexes) {
 			hex.setType(HexType.LAND);
-			map.put(hex.getLocation(), hex);
+			board.put(hex.getLocation(), hex);
 		}
 		
 		Hex oceanHex;
 		
 		oceanHex = new Hex(new HexLocation(0, -3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(1, -3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(2, -3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(3, -3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(3, -2));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(3, -1));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(3, 0));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(2, 1));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(1, 2));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(0, 3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(-1, 3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(-2, 3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 
 		oceanHex = new Hex(new HexLocation(-3, 3));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 
 		oceanHex = new Hex(new HexLocation(-3, 2));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(-3, 1));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(-3, 0));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(-2, -1));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 		oceanHex = new Hex(new HexLocation(-1, -2));
 		oceanHex.setType(HexType.WATER);
-		map.put(oceanHex.getLocation(), oceanHex);
+		board.put(oceanHex.getLocation(), oceanHex);
 		
 	}
 	
@@ -117,5 +117,19 @@ public class GameModel {
 	 */
 	public void setServerModel(ServerModel serverModel) {
 		this.serverModel = serverModel;
+	}
+
+	/**
+	 * @return the board
+	 */
+	public Map<HexLocation, IHex> getBoard() {
+		return board;
+	}
+
+	/**
+	 * @param board the board to set
+	 */
+	public void setBoard(Map<HexLocation, IHex> board) {
+		this.board = board;
 	}
 }
