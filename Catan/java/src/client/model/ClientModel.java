@@ -65,7 +65,6 @@ public class ClientModel {
 	
 	public boolean canDiscardCards(int playerIndex, ResourceHand resourceHand) {
 		//TODO do we check if the oldDev card hand has 7 cards or the newDev card hand?
-		//TODO does it have to be the players turn to discard?  The spec doesn't list that as a precondition
 		
 		//Checks that the game status is "Discarding", that the player has over 7 Dev cards, and that the 
 		//player has the cards chosen to discard.
@@ -80,7 +79,6 @@ public class ClientModel {
 		}
 	}
 	
-	//TODO check to see if "Rolling" status has a capital R or not
 	public boolean canRollNumber(int playerIndex) {
 		//checks to see if the game status is "Rolling" and that it is actually the players turn to roll
 		if (serverModel.getTurnTracker().getStatus().equals("Rolling") && 
@@ -93,6 +91,11 @@ public class ClientModel {
 	}
 	
 	public boolean canBuildRoad(int playerIndex, EdgeLocation edgeLocation) {
+		return checkBuildRoad(playerIndex, edgeLocation, serverModel.getMap().getRoads());
+	}
+	
+	
+	private boolean checkBuildRoad(int playerIndex, EdgeLocation edgeLocation, ArrayList<Road> roads){
 		
 		if (playerIndex != serverModel.getTurnTracker().getCurrentTurn()) {
 			return false;
@@ -104,7 +107,7 @@ public class ClientModel {
 			return false;
 		}
 		
-		ArrayList<Road> roads = serverModel.getMap().getRoads();
+		roads = serverModel.getMap().getRoads();
 		
 		EdgeLocation normEdgeLocation = edgeLocation.getNormalizedLocation();
 		
@@ -358,7 +361,6 @@ public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlem
 	}
 	
 	public boolean canMaritimeTrade(int playerIndex, int ratio, ResourceType inputResource) {
-		//TODO do I need to check to make sure ratio is 2, 3, or 4?
 		//Checks to see if the player has enough of the specified resource to trade
 		if (serverModel.getPlayers().get(playerIndex).hasResource(inputResource, ratio)) {
 			return true;
@@ -369,7 +371,7 @@ public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlem
 	}
 	
 	//DONE
-	public boolean canFinishPlaying() {
+	public boolean canFinishTurn() {
 		if (serverModel.getTurnTracker().getStatus().equals("Playing")) {
 			return true;
 		}
@@ -381,8 +383,7 @@ public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlem
 	public boolean canBuyDevCard(int playerIndex) {
 		Player player = serverModel.getPlayers().get(playerIndex);
 		
-		//TODO check that there are dev cards left in the deck (where the heck is the deck!?)
-		if (player.getOre() > 0 && player.getWheat() > 0 && player.getSheep() > 0) {
+		if (player.getOre() > 0 && player.getWheat() > 0 && player.getSheep() > 0 && serverModel.getDeck().getTotalDevCardCount() > 0) {
 			return true;
 		}
 		else {
@@ -405,13 +406,19 @@ public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlem
 	}
 	
 	public boolean canPlayRoadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
-		//TODO not all preconditions are checked here
 		if (generalDevCardPreconditions(playerIndex) &&
 			serverModel.getPlayers().get(playerIndex).getOldDevCards().getRoadBuilding() > 0 &&
 			serverModel.getPlayers().get(playerIndex).getRoads() >= 2) {
 			
+			ArrayList<Road> roads = new ArrayList<Road>(serverModel.getMap().getRoads());
+			roads.add(new Road(playerIndex, spot2));
 			
-			return true;
+			if (checkBuildRoad(playerIndex, spot1, serverModel.getMap().getRoads()) && checkBuildRoad(playerIndex, spot2, roads)) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 		else {
 			return false;

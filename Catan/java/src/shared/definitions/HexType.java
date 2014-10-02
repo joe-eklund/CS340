@@ -3,6 +3,6 @@ package shared.definitions;
 public enum HexType
 {
 	
-	LAND, WATER
+	WOOD, BRICK, SHEEP, WHEAT, ORE, DESERT, WATER
 }
 

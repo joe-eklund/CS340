@@ -207,23 +207,23 @@ public class Player {
 		
 		switch (resource) {
 		case BRICK: 
-			if (getBrick() > amount)
+			if (getBrick() >= amount)
 				hasResource = true;
 			break;
 		case ORE: 
-			if (getOre() > amount)
+			if (getOre() >= amount)
 				hasResource = true;
 			break;
 		case SHEEP: 
-			if (getSheep() > amount)
+			if (getSheep() >= amount)
 				hasResource = true;
 			break;
 		case WHEAT: 
-			if (getWheat() > amount)
+			if (getWheat() >= amount)
 				hasResource = true;
 			break;
 		case WOOD: 
-			if (getWood() > amount)
+			if (getWood() >= amount)
 				hasResource = true;
 			break;
 		}

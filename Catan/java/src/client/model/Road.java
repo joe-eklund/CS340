@@ -19,6 +19,11 @@ public class Road {
 		this.location = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
 	}
 	
+	public Road(int ownerIndex, EdgeLocation location) {
+		this.owner = ownerIndex;
+		this.location = location;
+	}
+	
 	public int getOwnerIndex() {
 		return owner;
 	}
