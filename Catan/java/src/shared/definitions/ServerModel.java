@@ -25,7 +25,6 @@ public class ServerModel {
 		this.players = players;
 		this.tradeOffer = tradeOffer;
 		this.turnTracker = turnTracker;
-		this.version = version;
 		this.winner = winner;
 		this.deck = new DevCards();
 	}

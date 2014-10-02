@@ -11,6 +11,9 @@ import shared.definitions.ServerModel;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+
 import java.util.Map;
 
 /**
@@ -27,10 +30,12 @@ public class ClientModel {
 	
 	public ClientModel(ServerModel serverModel) {
 		this.serverModel = serverModel;
+		gameModel = new GameModel(serverModel);
 	}
 	
 	public void updateServerModel(ServerModel newServerModel) {
 		this.serverModel = newServerModel;
+		gameModel = new GameModel(newServerModel);
 	}
 	
 	public ServerModel getServerModel() {
@@ -202,11 +207,149 @@ public class ClientModel {
 		return false;
 	}
 	
-	public boolean canBuildSettlement() {
+	public boolean canBuildSettlement(int playerIndex, VertexLocation location) {
+		VertexLocation normVerLoc = location.getNormalizedLocation();
+		
+		if (playerIndex != serverModel.getTurnTracker().getCurrentTurn()) {
+			return false;
+		}
+		
+		Player player = serverModel.getPlayers().get(playerIndex);
+		if (player.getBrick() < 1 || 
+			player.getWood() < 1 ||
+			player.getWheat() < 1 ||
+			player.getSheep() < 1 ||
+			player.getSettlements() < 1) {
+			
+			return false;
+		}
+		
+		
+		ArrayList<Settlement> settlements = serverModel.getMap().getSettlements();
+		
+		for (Settlement settlement : settlements) {
+			if (settlement.getLocation().getNormalizedLocation().equals(normVerLoc)) {
+				return false;
+			}
+		}
+		
+		Map<HexLocation, IHex> board = gameModel.getBoard();
+		
+		EdgeDirection edgeDir;
+		if (normVerLoc.getDir() == VertexDirection.NorthEast) {
+			edgeDir = EdgeDirection.NorthEast;
+		}
+		else {
+			edgeDir = EdgeDirection.NorthWest;
+		}
+		
+		HexLocation sideNeighborLoc = normVerLoc.getHexLoc().getNeighborLoc(edgeDir);
+		HexLocation northNeighborLoc = normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.North);
+		
+		//if hex is water and the neighbor in the direction of the vertex location is water this location is invalid
+		if (!board.containsKey(northNeighborLoc) || !board.containsKey(sideNeighborLoc) || 
+			(board.get(northNeighborLoc).getType() == HexType.WATER && 
+			board.get(sideNeighborLoc).getType() == HexType.WATER)) {
+			
+			return false;
+		}
+	
+		switch(normVerLoc.getDir()) {
+		case NorthEast:
+			return checkNorthEastVertex(normVerLoc, settlements, player);
+		case NorthWest:
+			return checkNorthWestVertex(normVerLoc, settlements, player);
+		default:
+			return false;
+		}
+	}
+	
+	public boolean checkNorthEastVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
+		
+		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), VertexDirection.NorthWest);
+		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.NorthWest);
+		VertexLocation vertex3 = new VertexLocation(normVerLoc.getHexLoc(), VertexDirection.NorthWest);
+		
+		for (Settlement settlement : settlements) {
+			
+			if (settlement.getLocation().getNormalizedLocation().equals(vertex1) ||
+				settlement.getLocation().getNormalizedLocation().equals(vertex2) ||
+				settlement.getLocation().getNormalizedLocation().equals(vertex3)) {
+				
+				return false;
+			}
+		}
+		
+		EdgeLocation edge1 = new EdgeLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), EdgeDirection.NorthWest);
+		EdgeLocation edge2= new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.North);
+		EdgeLocation edge3 = new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.NorthEast);
+		
+		ArrayList<Road> roads = serverModel.getMap().getRoads();
+		
+		for (Road road : roads) {
+			if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+				(road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+				(road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwnerIndex())) {
+				
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
-	public boolean canBuildCity() {
+public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
+		
+		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.NorthEast);
+		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast);
+		VertexLocation vertex3 = new VertexLocation(normVerLoc.getHexLoc(), VertexDirection.NorthEast);
+		
+		for (Settlement settlement : settlements) {
+			
+			if (settlement.getLocation().getNormalizedLocation().equals(vertex1) ||
+				settlement.getLocation().getNormalizedLocation().equals(vertex2) ||
+				settlement.getLocation().getNormalizedLocation().equals(vertex3)) {
+				
+				return false;
+			}
+		}
+		
+		EdgeLocation edge1 = new EdgeLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.NorthEast);
+		EdgeLocation edge2= new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.North);
+		EdgeLocation edge3 = new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.NorthWest);
+		
+		ArrayList<Road> roads = serverModel.getMap().getRoads();
+		
+		for (Road road : roads) {
+			if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+				(road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+				(road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwnerIndex())) {
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean canBuildCity(int playerIndex, VertexLocation location) {
+		VertexLocation normVerLoc = location.getNormalizedLocation();
+		
+		Player player = serverModel.getPlayers().get(playerIndex);
+		if (player.getWheat() < 2 || player.getOre() < 3 || player.getCities() < 1) {
+			return false;
+		}
+		
+		ArrayList<Settlement> settlements = serverModel.getMap().getSettlements();
+		
+		for (Settlement settlement : settlements) {
+			if (player.getPlayerIndex() == settlement.getOwnerIndex() &&
+				settlement.getLocation().getNormalizedLocation().equals(normVerLoc)) {
+				
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
