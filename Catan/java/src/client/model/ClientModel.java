@@ -19,7 +19,7 @@ import shared.locations.HexLocation;
  */
 public class ClientModel {
 	
-	private 
+	private GameModel gameModel;
 	private ServerModel serverModel;
 	
 	public ClientModel(ServerModel serverModel) {
@@ -101,17 +101,18 @@ public class ClientModel {
 		EdgeLocation normEdgeLocation = edgeLocation.getNormalizedLocation();
 		
 		for (Road road : roads) {
-			if (road.getLocation().equals(normEdgeLocation)) {
+			if (road.getLocation().getNormalizedLocation().equals(normEdgeLocation)) {
 				return false;
 			}
 		}
 		
-		switch(edgeLocation.getDir()) {
+		switch(normEdgeLocation.getDir()) {
 		case NorthEast:
 			checkNorthEastEdge(normEdgeLocation);
 		case North:
 			checkNorthEdge(normEdgeLocation);
 		case NorthWest:
+			
 		}
 		
 	public boolean buildRoad() {

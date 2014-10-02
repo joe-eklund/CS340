@@ -94,5 +94,9 @@ public class ServerModel {
 		this.deck = deck;
 	}
 	
+	public int getVersion() {
+		return log.getLogMessages().size();
+	}
+	
 	
 }
