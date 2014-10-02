@@ -13,7 +13,7 @@ public interface ICommunicator {
 	 * 
 	 * @pre
 	 *  1) requestType is a valid http request type (so far only "GET" or "POST")
-	 *  2) headers is a list of Pair<Key, Value> where Key represents the header title and Value the header value
+	 *  2) headers is a list (length 0+) of Pair<Key, Value> where Key represents the header title and Value the header value
 	 * 	3) commandName is a valid name server command extension address (as specified in server API)
 	 *  4) commandParameters is a valid object type (i.e. list<string>, string, int, etc) for commandName (as specified in server API)
 	 *  5) serverReturnClass is a valid Class Definition Type (i.e. String.class could be passed for this parameter); this is used to ensure correct typing (and ultimately recasting) of server response json object
@@ -34,5 +34,5 @@ public interface ICommunicator {
 	 * @param responseCastClass ::=	valid Class Definition Type (i.e. String.class could be passed for this parameter); 
 	 * 								this is used to ensure correct translation typing (and ultimately recasting) of server response json object
 	 */
-	public ICommandResponse executeCommand(RequestType requestType, List<Pair<String,String>> headers, String commandName, Object commandParameters, Class<?> responseCastClass);
+	public CommandResponse executeCommand(RequestType requestType, List<Pair<String,String>> headers, String commandName, Object commandParameters, Class<?> responseCastClass);
 }
