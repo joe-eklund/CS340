@@ -12,7 +12,6 @@ public class ServerModel {
 	private List<Player> players;
 	private TradeOffer tradeOffer;
 	private TurnTracker turnTracker;
-	private int version;
 	private int winner;
 	private DevCards deck;
 	
@@ -52,9 +51,7 @@ public class ServerModel {
 	public TurnTracker getTurnTracker() {
 		return turnTracker;
 	}
-	public int getVersion() {
-		return version;
-	}
+	
 	public int getWinner() {
 		return winner;
 	}
@@ -78,9 +75,6 @@ public class ServerModel {
 	}
 	public void setTurnTracker(TurnTracker turnTracker) {
 		this.turnTracker = turnTracker;
-	}
-	public void setVersion(int version) {
-		this.version = version;
 	}
 	public void setWinner(int winner) {
 		this.winner = winner;
