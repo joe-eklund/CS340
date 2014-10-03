@@ -27,19 +27,19 @@ public class ClientModelUnitTest {
 	@Test
 	public void testCanAcceptTrade(){
 		//Trade offer should be null
-		assertEquals("Client Model should not have a trade offer and fail", 
-				false, clientModel.canAcceptTrade());
+		assertEquals("Client Model should not have a trade offer and fail", false,
+				clientModel.canAcceptTrade());
 		
 		//Create invalid trade offer from player 0 to player 1 for 1 wood
 		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,0,0,0,0,1));
-		assertEquals("Client Model should not have a valid trade offer and fail",
-				false, clientModel.canAcceptTrade());
+		assertEquals("Client Model should not have a valid trade offer and fail", false,
+				clientModel.canAcceptTrade());
 		
 		//Create valid trade offer from player 0 to player 1 for 1 brick
 		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(2,2,2,2,2));
 		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,1,0,0,0,0));
-		assertEquals("Client Model should have a valid trade offer and pass",
-				true, clientModel.canAcceptTrade());
+		assertEquals("Client Model should have a valid trade offer and pass", true, 
+				clientModel.canAcceptTrade());
 	}
 	
 	@Test
@@ -70,13 +70,13 @@ public class ClientModelUnitTest {
 		//Try where you are not next to a road
 		testEdge.setHexLoc(new HexLocation(0,1));
 		testEdge.setDir(EdgeDirection.NorthWest);
-		assertEquals("Trying to build on an invalid edge where you have no neighboring roads", false,
+		assertEquals("Trying to build on an invalid edge where you have no neighboring roads should fail", false,
 				clientModel.canBuildRoad(0, testEdge));
 		
 		//Try next to a road that you don't own
 		testEdge.setHexLoc(new HexLocation(1,-1));
 		testEdge.setDir(EdgeDirection.SouthEast);
-		assertEquals("Trying to build on an invalid edge where there is a road you don't own", false,
+		assertEquals("Trying to build on an invalid edge where there is a road you don't own should fail", false,
 				clientModel.canBuildRoad(0, testEdge));
 		
 		//Try water edge
@@ -125,19 +125,44 @@ public class ClientModelUnitTest {
 		
 		//Test trade offer without having enough resources
 		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,0,0,0,0));
-		assertEquals("Trying to offer an invalid trade and should fail", false,
+		assertEquals("Trying to offer an invalid trade don't have enough resources and should fail", false,
 				clientModel.canOfferTrade(0, new ResourceHand(1,0,0,0,0)));
 		
+		//Test trade offer of all 0's resource hand but have resources
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
+		assertEquals("Trying to offer an invalid trade with resource hand of 0's should fail", false,
+				clientModel.canOfferTrade(0, new ResourceHand(0,0,0,0,0)));
+		
+		//Test trade offer of all -'s resource hand but have resources
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
+		assertEquals("Trying to offer an invalid trade with resource hand of -'s should fail", false,
+				clientModel.canOfferTrade(0, new ResourceHand(-1,-2,-3,-4,-5)));
 	}
 	
 	@Test
 	public void testCanMaritimeTrade(){
+		//Test valid maritime trade
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
+		assertEquals("Trying valid maritime trade and should pass", true,
+				clientModel.canMaritimeTrade(0, 2, ResourceType.BRICK));
 		
+		//Test invalid maritime trade with not having enough resources
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,0,0,0,0));
+		assertEquals("Trying valid maritime trade and should pass", false,
+				clientModel.canMaritimeTrade(0, 2, ResourceType.ORE));
 	}
 	
 	@Test
 	public void testFinishTurn(){
+		//Test valid can finish turn by having Playing status
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Trying valid can finish turn with Playing status and should pass",true,
+				clientModel.canFinishTurn());
 		
+		//Test invalid can finish turn by having Rolling status
+		clientModel.getServerModel().getTurnTracker().setStatus("Rolling");
+		assertEquals("Trying invalid can finish turn with Rolling status and should fail",false,
+				clientModel.canFinishTurn());
 	}
 	
 	@Test

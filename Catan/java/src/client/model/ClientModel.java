@@ -356,6 +356,13 @@ public class ClientModel {
 	}
 	
 	public boolean canOfferTrade(int senderIndex, ResourceHand resourceHand) {
+		if((resourceHand.getBrick() == 0 && resourceHand.getOre() == 0 && resourceHand.getSheep() == 0 &&
+				resourceHand.getWheat() == 0 && resourceHand.getWood() == 0) || 
+				resourceHand.getBrick() < 0 || resourceHand.getOre() < 0 || 
+				resourceHand.getSheep() < 0 || resourceHand.getWheat() < 0 ||
+				resourceHand.getWood() < 0){
+			return false;
+		}
 		return playerHasResourceInHand(senderIndex, resourceHand);
 	}
 	
