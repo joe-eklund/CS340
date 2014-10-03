@@ -11,21 +11,21 @@ import client.exceptions.ClientModelException;
  * @author Chad
  */
 public class Settlement {
-	private int ownerIndex;
+	private int owner;
 	private VertexLocation verLocation;
 	private Location location;
 	
 	public Settlement(int ownerIndex, int x, int y, String direction) throws ClientModelException {
-		this.ownerIndex = ownerIndex;
+		this.owner = ownerIndex;
 		this.verLocation = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
 	}
 	
 	public int getOwnerIndex() {
-		return ownerIndex;
+		return owner;
 	}
 
 	public void setOwnerIndex(int ownerIndex) {
-		this.ownerIndex = ownerIndex;
+		this.owner = ownerIndex;
 	}
 
 	public VertexLocation getLocation() {

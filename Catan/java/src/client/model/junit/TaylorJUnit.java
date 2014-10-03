@@ -6,6 +6,7 @@ import org.junit.*;
 
 import proxy.*;
 import shared.definitions.*;
+import shared.locations.HexLocation;
 import client.model.*;
 
 public class TaylorJUnit{
@@ -107,11 +108,19 @@ public class TaylorJUnit{
 	public void testCanPlaySoldier(){
 		//Status should be playing, not rolling
 		DevCards cards = new DevCards();
-		cards.updateCards(1, 0, 0, 0, 0);
-		clientModel.getServerModel().getTurnTracker().setStatus("rolling");
+		cards.updateCards(0, 0, 0, 1, 0);
+		HexLocation robberLoc = new HexLocation(0,0);
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
 		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
 		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getMap().getRobber().setLocation(robberLoc);
+		
+		
+		//All preconditions are set so test should be successful
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
+				clientModel.canPlaySoldier(0, new HexLocation(1,1), 1));
 		
 		assertEquals("Client Model's status should be Rolling and fail", false, 
 				clientModel.canPlayMonopoly(0));
@@ -132,11 +141,6 @@ public class TaylorJUnit{
 		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
 		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
 		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
-				clientModel.canPlayMonopoly(0));
-		
-		//All preconditions are set so test should be successful
-		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
-		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
 				clientModel.canPlayMonopoly(0));
 	}
 	
