@@ -1,4 +1,4 @@
-package proxy.junit;
+package junit;
 
 import static org.junit.Assert.*;
 

@@ -1,15 +1,19 @@
-package client.model.junit;
+package junit;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
 
 import org.junit.*;
 
 import proxy.*;
 import shared.definitions.*;
-import shared.locations.*;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import client.model.*;
 
-public class ClientModelUnitTest {
+public class TaylorJUnit{
 	private ClientModel clientModel;
 	
 	@Before 
@@ -19,180 +23,345 @@ public class ClientModelUnitTest {
 		clientModel = new ClientModel((ServerModel)translator.translateFrom(gameJSON, ServerModel.class));
 	}
 	
-	@Test
-	public void testUpdateServerModel(){
-		
-	}
+//	@Test
+//	public void testUpdateServerModel(){
+//		
+//	}
 	
-	@Test
-	public void testCanAcceptTrade(){
-		//Trade offer should be null
-		assertEquals("Client Model should not have a trade offer and fail", false,
-				clientModel.canAcceptTrade());
-		
-		//Create invalid trade offer from player 0 to player 1 for 1 wood
-		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,0,0,0,0,1));
-		assertEquals("Client Model should not have a valid trade offer and fail", false,
-				clientModel.canAcceptTrade());
-		
-		//Create valid trade offer from player 0 to player 1 for 1 brick
-		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(2,2,2,2,2));
-		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,1,0,0,0,0));
-		assertEquals("Client Model should have a valid trade offer and pass", true, 
-				clientModel.canAcceptTrade());
-	}
+//	@Test
+//	public void testCanAcceptTrade(){
+//		//Trade offer should be null
+//		assertEquals("Client Model should not have a trade offer and fail", 
+//				false, clientModel.canAcceptTrade());
+//		
+//		//Create invalid trade offer from player 0 to player 1 for 1 wood
+//		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,0,0,0,0,1));
+//		assertEquals("Client Model should not have a valid trade offer and fail",
+//				false, clientModel.canAcceptTrade());
+//		
+//		//Create valid trade offer from player 0 to player 1 for 1 brick
+//		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,1,0,0,0,0));
+//		assertEquals("Client Model should have a valid trade offer and pass",
+//				true, clientModel.canAcceptTrade());
+//	}
 	
-	@Test
-	public void testCanDiscardCards(){
-		//Status should be rolling, not discarding
-		assertEquals("Client Model's status should be Rolling and fail", false, 
-				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
-		
-		//Change status to discarding, still fail because bad resource hand
-		clientModel.getServerModel().getTurnTracker().setStatus("Discarding");
-		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
-				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
-		
-		//Set resources and pass in a good resource hand
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(2,2,2,2,2));
-		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
-				clientModel.canDiscardCards(0, new ResourceHand(1,1,1,1,1)));
-	}
-	
-	@Test
-	public void testCanBuildRoad(){
-		//Try bad turn
-		clientModel.getServerModel().getTurnTracker().setCurrentTurn(1);
-		EdgeLocation testEdge = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.SouthEast);
-		assertEquals("Client Model turn should be 0 annd fail", false, 
-				clientModel.canBuildRoad(0, testEdge));
-		
-		//Try where you are not next to a road
-		testEdge.setHexLoc(new HexLocation(0,1));
-		testEdge.setDir(EdgeDirection.NorthWest);
-		assertEquals("Trying to build on an invalid edge where you have no neighboring roads should fail", false,
-				clientModel.canBuildRoad(0, testEdge));
-		
-		//Try next to a road that you don't own
-		testEdge.setHexLoc(new HexLocation(1,-1));
-		testEdge.setDir(EdgeDirection.SouthEast);
-		assertEquals("Trying to build on an invalid edge where there is a road you don't own should fail", false,
-				clientModel.canBuildRoad(0, testEdge));
-		
-		//Try water edge
-		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(2,2,2,2,2));
-		clientModel.getServerModel().getPlayers().get(0).setRoads(15);
-		testEdge.setHexLoc(new HexLocation(0,-3));
-		assertEquals("Trying to build on water edge and should fail", false,
-				clientModel.canBuildRoad(0, testEdge));
-		
-		//Try valid edge
-		testEdge.setHexLoc(new HexLocation(0,1));
-		testEdge.setDir(EdgeDirection.SouthEast);
-		assertEquals("Trying to build on valid edge and should pass", true,
-				clientModel.canBuildRoad(0, testEdge));
-	}
-	
-	@Test
-	public void testCanBuildSettlement(){
-		
-	}
-	
-	@Test
-	public void testCanBuildCity(){
-		//Try building a valid city
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
-		clientModel.getServerModel().getPlayers().get(0).setCities(2);
-		assertEquals("Trying to build on a valid vertex and should pass", true,
-				clientModel.canBuildCity(0, new VertexLocation(new HexLocation(0,1), VertexDirection.SouthEast)));
-		
-		//Try building where there is no settlement
-		assertEquals("Trying to build on an invalid vertex and should fail", false,
-				clientModel.canBuildCity(0, new VertexLocation(new HexLocation(1,1), VertexDirection.NorthEast)));
-		
-		//Try building where there is a settlement but you don't own it
-		assertEquals("Trying to build on an invalid vertex and should fail", false,
-				clientModel.canBuildCity(0, new VertexLocation(new HexLocation(1,-2), VertexDirection.SouthEast)));
-	}
-	
-	@Test
-	public void testCanOfferTrade(){
-		//Test valid trade offer
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
-		assertEquals("Trying to offer a valid trade and should pass", true,
-				clientModel.canOfferTrade(0, new ResourceHand(1,1,1,1,1)));
-		
-		//Test trade offer without having enough resources
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,0,0,0,0));
-		assertEquals("Trying to offer an invalid trade don't have enough resources and should fail", false,
-				clientModel.canOfferTrade(0, new ResourceHand(1,0,0,0,0)));
-		
-		//Test trade offer of all 0's resource hand but have resources
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
-		assertEquals("Trying to offer an invalid trade with resource hand of 0's should fail", false,
-				clientModel.canOfferTrade(0, new ResourceHand(0,0,0,0,0)));
-		
-		//Test trade offer of all -'s resource hand but have resources
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
-		assertEquals("Trying to offer an invalid trade with resource hand of -'s should fail", false,
-				clientModel.canOfferTrade(0, new ResourceHand(-1,-2,-3,-4,-5)));
-	}
-	
-	@Test
-	public void testCanMaritimeTrade(){
-		//Test valid maritime trade
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
-		assertEquals("Trying valid maritime trade and should pass", true,
-				clientModel.canMaritimeTrade(0, 2, ResourceType.BRICK));
-		
-		//Test invalid maritime trade with not having enough resources
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,0,0,0,0));
-		assertEquals("Trying valid maritime trade and should pass", false,
-				clientModel.canMaritimeTrade(0, 2, ResourceType.ORE));
-	}
-	
-	@Test
-	public void testFinishTurn(){
-		//Test valid can finish turn by having Playing status
-		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
-		assertEquals("Trying valid can finish turn with Playing status and should pass",true,
-				clientModel.canFinishTurn());
-		
-		//Test invalid can finish turn by having Rolling status
-		clientModel.getServerModel().getTurnTracker().setStatus("Rolling");
-		assertEquals("Trying invalid can finish turn with Rolling status and should fail",false,
-				clientModel.canFinishTurn());
-	}
+//	@Test
+//	public void testCanDiscardCards(){
+//		//Status should be rolling, not discarding
+//		assertEquals("Client Model's status should be Rolling and fail", false, 
+//				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
+//		
+//		//Change status to discarding, still fail because bad resource hand
+//		clientModel.getServerModel().getTurnTracker().setStatus("Discarding");
+//		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
+//				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
+//		
+//		//Set resources and pass in a good resource hand
+//		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(3,3,2,2,2));
+//		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
+//				clientModel.canDiscardCards(0, new ResourceHand(1,1,1,1,1)));
+//		
+//	}
+//	
+//	@Test
+//	public void testCanBuildRoad(){
+//		
+//	}
+//	
+//	@Test
+//	public void testCanBuildSettlement(){
+//		
+//	}
+//	
+//	@Test
+//	public void testCanBuildCity(){
+//		
+//	}
+//	
+//	@Test
+//	public void testCanOfferTrade(){
+//		
+//	}
+//	
+//	@Test
+//	public void testCanMaritimeTrade(){
+//		
+//	}
+//	
+//	@Test
+//	public void testFinishTurn(){
+//		
+//	}
 	
 	@Test
 	public void testCanBuyDevCard(){
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,1,1,0,1));
+		DevCards cards = new DevCards();
+		cards.updateCards(1, 1, 1, 1, 1);
+		clientModel.getServerModel().setDeck(cards);
 		
+		//All preconditions are set so test should be successful
+		assertEquals("All preconditions are set, should get success", true,
+				clientModel.canBuyDevCard(0));
+		
+		//Player doesn't have enough resources to buy dev card
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,0,0,0,0));
+		assertEquals("Player doesn't have enough resources to buy dev card", false, 
+				clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+		
+		//Bank doesn't have any dev cards left
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,1,1,0,1));
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().setDeck(cards);
+		assertEquals("Bank doesn't have any dev cards left", false, 
+				clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
 	}
 	
 	@Test
 	public void testCanPlayYearOfPlenty(){
-		
+		//Status should be playing, not rolling
+				DevCards cards = new DevCards();
+				cards.updateCards(0, 0, 0, 0, 1);
+				clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+				clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+				clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+				clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+				
+				//All preconditions are set so test should be successful
+				assertEquals("All preconditions are set, should get success", true,
+						clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+				
+				clientModel.getServerModel().getTurnTracker().setStatus("Rolling");
+				assertEquals("Client Model's status should be Rolling and fail", false, 
+						clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+				
+				//Change status to Playing, still fail because not the player 1's turn
+				clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+				assertEquals("Not player 1's turn, should fail", false,
+						clientModel.canPlayYearOfPlenty(1, ResourceType.BRICK, ResourceType.WHEAT));
+				
+				//Now checking player 0, whose turn it is, but still fail because player 0 does not have a year of plenty card
+				cards.updateCards(0, 0, 0, 0, 0);
+				clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+				assertEquals("Client Model's status should be Playing and ResourceHand all 0s and fail", false,
+						clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+				
+				//Player 0 now has year of plenty card but still fail because player 0 flag for already played devCard is set.
+				cards.updateCards(1, 0, 0, 0, 0);
+				clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+				clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+				assertEquals("Player already played a dev card this turn, fail", false,
+						clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+				
+				//Bank is out of brick and wheat resource 
+				int brick = clientModel.getServerModel().getBank().brick;
+				int wheat = clientModel.getServerModel().getBank().wheat;
+				clientModel.getServerModel().getBank().brick = 0;
+				clientModel.getServerModel().getBank().wheat = 0;
+				assertEquals("Bank is out of brick and wheat resource, shoulf fail", false,
+						clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+				
+				clientModel.getServerModel().getBank().brick = brick;
+				clientModel.getServerModel().getBank().wheat = wheat;
 	}
 	
 	@Test
 	public void testCanPlayRoadBuilding(){
 		
+		EdgeLocation spot1 = new EdgeLocation(new HexLocation(-1,2), EdgeDirection.SouthEast);
+		EdgeLocation spot2 = new EdgeLocation(new HexLocation(-1,2), EdgeDirection.South);
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		clientModel.getServerModel().getPlayers().get(0).setRoads(2);
+		DevCards cards = new DevCards();
+		cards.updateCards(0, 0, 1, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		
+		
+		//All preconditions are set so test should be successful
+		//This also tests whether the second road can be placed according to where the first spot is specified.
+		assertEquals("All preconditions for canPlaySoldier are set so test should be successful", true,
+				clientModel.canPlayRoadBuilding(0, spot1, spot2));
+		
+		//Checks when one spot is valid and the other is not
+		spot1 = new EdgeLocation(new HexLocation(0,0), EdgeDirection.SouthEast);
+		spot2 = new EdgeLocation(new HexLocation(0,1), EdgeDirection.SouthWest);
+		assertEquals("Checks when one spot is valid and the other is not, willfail", false, 
+				clientModel.canPlayRoadBuilding(0, spot1, spot2));
+		
+		//Checks when one spot is on water
+		spot1 = new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast);
+		spot2 = new EdgeLocation(new HexLocation(0,1), EdgeDirection.SouthWest);
+		assertEquals("Checks when one spot is on water, willfail", false, 
+				clientModel.canPlayRoadBuilding(0, spot1, spot2));
+		
+		//Checks if the player has less than two roads available.
+		clientModel.getServerModel().getPlayers().get(0).setRoads(0);
+		assertEquals("Checks when one spot is on water, willfail", false, 
+				clientModel.canPlayRoadBuilding(0, spot1, spot2));
+		
+		//Status is not playing
+		clientModel.getServerModel().getPlayers().get(0).setRoads(2);
+		spot1 = new EdgeLocation(new HexLocation(-1,2), EdgeDirection.SouthEast);
+		spot2 = new EdgeLocation(new HexLocation(-1,2), EdgeDirection.South);
+		clientModel.getServerModel().getTurnTracker().setStatus("Rolling");
+		assertEquals("Status is not playing, willfail", false, 
+				clientModel.canPlayRoadBuilding(0, spot1, spot2));
+		
+		//Change status to discarding, still fail because not the player 2's turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Change status to discarding, still fail because not the player 2's turn", false,
+				clientModel.canPlayRoadBuilding(2, spot1, spot2));
+		
+		//Player does not have a RoadBuilding card
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(1).setBrick(1);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		assertEquals("Player does not have a roadbuilding card to play, will fail", false,
+				clientModel.canPlayRoadBuilding(0, spot1, spot2));
+		
+		cards.updateCards(0, 0, 0, 1, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+		assertEquals("Player has already played a dev card this turn, will fail", false,
+				clientModel.canPlayRoadBuilding(0, spot1, spot2));
 	}
 	
 	@Test
 	public void testCanPlaySoldier(){
+		DevCards cards = new DevCards();
+		cards.updateCards(0, 0, 0, 1, 0);
+		HexLocation robberLoc = new HexLocation(0,0);
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getMap().getRobber().setLocation(robberLoc);
+		clientModel.getServerModel().getPlayers().get(1).setBrick(1);
 		
+		
+		//All preconditions are set so test should be successful
+		assertEquals("All preconditions for canPlaySoldier are set so test should be successful", true,
+				clientModel.canPlaySoldier(0, new HexLocation(1,1), 1));
+		
+		//Status is not playing
+		clientModel.getServerModel().getTurnTracker().setStatus("Rolling");
+		assertEquals("Status is not playing, willfail", false, 
+				clientModel.canPlaySoldier(0, new HexLocation(1,1), 1));
+		
+		//Change status to discarding, still fail because not the player 2's turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Change status to discarding, still fail because not the player 2's turn", false,
+				clientModel.canPlaySoldier(2, new HexLocation(1,1), 1));
+		
+		//Player does not have a soldier card
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(1).setBrick(1);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		assertEquals("Player does not have a soilder card to play, will fail", false,
+				clientModel.canPlaySoldier(0, new HexLocation(1,1), 1));
+
+		//Player has already played a dev card
+		cards.updateCards(0, 0, 0, 1, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+		assertEquals("Player has already played a dev card this turn, will fail", false,
+				clientModel.canPlaySoldier(0, new HexLocation(1,1), 1));
+		
+		//Robber can't stay in the same place
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		assertEquals("When playing soldier card, trying to place robber in location, will fail", false,
+				clientModel.canPlaySoldier(0, new HexLocation(0,0), 1));
+		
+		//Victim doesn't have resource to steal
+		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(0,0,0,0,0));
+		assertEquals("Victim doesn't have resource to steal, will fail", false,
+				clientModel.canPlaySoldier(0, new HexLocation(1,1), 1));
 	}
 	
 	@Test
 	public void testCanPlayMonopoly(){
+		//Status should be playing, not rolling
+		DevCards cards = new DevCards();
+		cards.updateCards(1, 0, 0, 0, 0);
+		clientModel.getServerModel().getTurnTracker().setStatus("rolling");
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
 		
+		assertEquals("Client Model's status should be Rolling and fail", false, 
+				clientModel.canPlayMonopoly(0));
+		
+		//Change status to Playing, still fail because not the player 1's turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Change status to Playing, still fail because not the player 1's turn", false,
+				clientModel.canPlayMonopoly(1));
+		
+		//Now checking player 0, whose turn it is, but still fail because player 0 does not have a monopoly card
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		assertEquals("Now checking player 0, whose turn it is, but still fail because player 0 does not have a monopoly card", false,
+				clientModel.canPlayMonopoly(0));
+		
+		//Player 0 now has monopoly card but still fail because player 0 flag for already played devCard is set.
+		cards.updateCards(1, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+		assertEquals("Player 0 now has monopoly card but still fail because player 0 flag for already played devCard is set.", false,
+				clientModel.canPlayMonopoly(0));
+		
+		//All preconditions are set so test should be successful
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		assertEquals("All preconditions are set so test should be successful", true,
+				clientModel.canPlayMonopoly(0));
 	}
 	
 	@Test
 	public void testCanPlayMonument(){
+		//Status should be playing, not rolling
+		DevCards cards = new DevCards();
+		cards.updateCards(0, 1, 0, 0, 0);
+		clientModel.getServerModel().getTurnTracker().setStatus("rolling");
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
 		
+		assertEquals("Client Model's status should be Rolling and fail", false, 
+				clientModel.canPlayMonument(0));
+		
+		//Change status to discarding, still fail because not the player 1's turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Change status to discarding, still fail because not the player 1's turn", false,
+				clientModel.canPlayMonument(1));
+		
+		//Now checking player 0, whose turn it is, but still fail because player 0 does not have a monument card
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		assertEquals("Now checking player 0, whose turn it is, but still fail because player 0 does not have a monument card", false,
+				clientModel.canPlayMonument(0));
+		
+		//Player 0 now has monument card but still fail because player 0 flag for already played devCard is set.
+		cards.updateCards(0, 1, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+		assertEquals("Player 0 now has monument card but still fail because player 0 flag for already played devCard is set.", false,
+				clientModel.canPlayMonument(0));
+		
+		//All preconditions are set so test should be successful
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		assertEquals("All preconditions are set so test should be successful", true,
+				clientModel.canPlayMonument(0));
+	}
+	
+	public static void main(String[] args) 
+	{
+		String[] testClasses = new String[] 
+		{
+				"client.TaylorJUnit"
+		};
+
+		org.junit.runner.JUnitCore.main(testClasses);
 	}
 	
 	final String gameJSON = "{\n" + 
@@ -836,3 +1005,5 @@ public class ClientModelUnitTest {
 			"  \"version\": 0\n" + 
 			"}";
 }
+
+

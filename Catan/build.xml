@@ -23,7 +23,6 @@
     <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
     <!-- Jar file path/name from here -->
     <property name="jar.file" value="server.jar"/>
-	<property name="junit.file" value="junit-4.11.jar"/>
    
 	<!-- CLASSPATHS -->
 	<!-- ********** -->
@@ -37,11 +36,25 @@
 	<!-- TARGETS -->
 	<!-- ******* -->
 
-	<target name="test">
-		<junit haltonfailure="true" printsummary="true">
-			<test name="bin.proxy.junit.TranslatorTest"/>
+	<target name="test" description="run the tests " >
+		<junit printsummary="yes" fork="yes" haltonfailure="yes">
+		<formatter type="plain"/>
+		<batchtest fork="true">
+			<fileset dir="${java/src/proxy/junit}">
+				<include name="**/*Test*.java"/>
+			</fileset>
+		</batchtest>
+		<classpath refid="${project.classpath}" />
 		</junit>
 	</target>
+	
+	<!--<target name="test">
+		<junit haltonfailure="true" >
+			<test name="bin.proxy.junit.TranslatorTest"/>
+			<formatter type="plain" usefile="false" /> 		
+		</junit>
+		
+	</target>-->
 	
 	<!---
 	<target name="test" description="Runs the junit tests">

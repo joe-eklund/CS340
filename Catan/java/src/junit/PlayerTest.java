@@ -1,4 +1,4 @@
-package client.model.junit;
+package junit;
 
 import org.junit.*;
 
