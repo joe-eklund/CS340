@@ -124,6 +124,7 @@ public class ServerProxyTest {
 	}
 	
 	/*
+	 * 
 	@Test
 	public void testJoinGame() {
 		//join game that is already full
