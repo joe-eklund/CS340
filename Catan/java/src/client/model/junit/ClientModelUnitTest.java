@@ -35,6 +35,7 @@ public class ClientModelUnitTest {
 				false, clientModel.canAcceptTrade());
 		
 		//Create valid trade offer from player 0 to player 1 for 1 brick
+		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(2,2,2,2,2));
 		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,1,0,0,0,0));
 		assertEquals("Client Model should have a valid trade offer and pass",
 				true, clientModel.canAcceptTrade());
@@ -52,10 +53,9 @@ public class ClientModelUnitTest {
 				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
 		
 		//Set resources and pass in a good resource hand
-		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(3,3,2,2,2));
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(2,2,2,2,2));
 		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
 				clientModel.canDiscardCards(0, new ResourceHand(1,1,1,1,1)));
-		
 	}
 	
 	@Test

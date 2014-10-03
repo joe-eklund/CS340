@@ -1,6 +1,7 @@
 package shared.definitions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import client.model.*;
@@ -22,8 +23,8 @@ public class GameModel {
 	}
 	
 	private void initializeMap() {
+		board = new HashMap<HexLocation, IHex>();
 		ArrayList<Hex> hexes = serverModel.getMap().getHexes();
-		
 		for (Hex hex : hexes) {
 			hex.setType(HexType.LAND);
 			board.put(hex.getLocation(), hex);
