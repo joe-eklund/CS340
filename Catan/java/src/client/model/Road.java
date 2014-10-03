@@ -14,7 +14,7 @@ public class Road {
 	
 	private int owner;
 	private EdgeLocation edgeLocation;
-	private Location location;
+	public Location location;
 	
 	public Road(int ownerIndex, int x, int y, String direction) throws ClientModelException {
 		this.owner = ownerIndex;

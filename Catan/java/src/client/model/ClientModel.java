@@ -89,24 +89,24 @@ public class ClientModel {
 		}
 	}
 	
-	public boolean canBuildRoad(int playerIndex, EdgeLocation edgeLocation) {
-		return checkBuildRoad(playerIndex, edgeLocation, serverModel.getMap().getRoads());
+	public boolean canBuildRoad(int playerIndex, EdgeLocation edgeLocation, boolean free) {
+		return checkBuildRoad(playerIndex, edgeLocation, serverModel.getMap().getRoads(), free);
 	}
 	
 	
-	private boolean checkBuildRoad(int playerIndex, EdgeLocation edgeLocation, ArrayList<Road> roads){
+	private boolean checkBuildRoad(int playerIndex, EdgeLocation edgeLocation, ArrayList<Road> roads, boolean free){
 		
 		if (playerIndex != serverModel.getTurnTracker().getCurrentTurn()) {
 			return false;
 		}
 		
-		if (serverModel.getPlayers().get(playerIndex).getBrick() <= 0 || 
-			serverModel.getPlayers().get(playerIndex).getWood() <= 0 || 
-			serverModel.getPlayers().get(playerIndex).getRoads() <= 0) {
-			return false;
+		if (!free) {
+			if (serverModel.getPlayers().get(playerIndex).getBrick() <= 0 || 
+				serverModel.getPlayers().get(playerIndex).getWood() <= 0 || 
+				serverModel.getPlayers().get(playerIndex).getRoads() <= 0) {
+				return false;
+			}
 		}
-		
-		roads = serverModel.getMap().getRoads();
 		
 		EdgeLocation normEdgeLocation = edgeLocation.getNormalizedLocation();
 		
@@ -124,7 +124,6 @@ public class ClientModel {
 		if (!board.containsKey(neighborLoc) || 
 			(board.get(normEdgeLocation.getHexLoc()).getType() == HexType.WATER && 
 			board.get(neighborLoc).getType() == HexType.WATER)) {
-			
 			return false;
 		}
 	
@@ -417,9 +416,9 @@ public class ClientModel {
 			serverModel.getPlayers().get(playerIndex).getRoads() >= 2) {
 			
 			ArrayList<Road> roads = new ArrayList<Road>(serverModel.getMap().getRoads());
-			roads.add(new Road(playerIndex, spot2));
+			roads.add(new Road(playerIndex, spot1));
 			
-			if (checkBuildRoad(playerIndex, spot1, serverModel.getMap().getRoads()) && checkBuildRoad(playerIndex, spot2, roads)) {
+			if (checkBuildRoad(playerIndex, spot1, serverModel.getMap().getRoads(), true) && checkBuildRoad(playerIndex, spot2, roads, true)) {
 				return true;
 			}
 			else {
