@@ -1,14 +1,15 @@
 package shared.definitions;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class GameDescription {
 	private String title;
 	private int id;
-	private List<PlayerDescription> playerDescriptions;
+	private PlayerDescription[] playerDescriptions;
 	
 	public GameDescription(String title, int id,
-			List<PlayerDescription> playerDescriptions) {
+			PlayerDescription[] playerDescriptions) {
 		this.title = title;
 		this.id = id;
 		this.playerDescriptions = playerDescriptions;
@@ -22,7 +23,7 @@ public class GameDescription {
 		return id;
 	}
 	
-	public List<PlayerDescription> getPlayerDescriptions() {
+	public PlayerDescription[] getPlayerDescriptions() {
 		return playerDescriptions;
 	}
 	
@@ -34,9 +35,46 @@ public class GameDescription {
 		this.id = id;
 	}
 	
-	public void setPlayerDescriptions(List<PlayerDescription> playerDescriptions) {
+	public void setPlayerDescriptions(PlayerDescription[] playerDescriptions) {
 		this.playerDescriptions = playerDescriptions;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "GameDescription [title=" + title + ", id=" + id
+				+ ", playerDescriptions=" + Arrays.toString(playerDescriptions)
+				+ "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + Arrays.hashCode(playerDescriptions);
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GameDescription other = (GameDescription) obj;
+		if (id != other.id)
+			return false;
+		if (!Arrays.equals(playerDescriptions, other.playerDescriptions))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
 	
 }

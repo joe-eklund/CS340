@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import client.model.Log;
 import shared.ServerMethodRequests.*;
@@ -78,7 +79,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		UserRequest loginRequest = new UserRequest(username, password);
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "user/login", loginRequest, null);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/user/login", loginRequest, null);
 		boolean successful = false;
 		String cookie = "";
 		String playerName = "";
@@ -87,7 +88,8 @@ public class ProxyServer implements IServer{
 			successful = true;
 			cookie = response.getResponseHeaders().get("Set-cookie").get(0);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			subCookie = subCookie.substring(0, subCookie.lastIndexOf(";Path=/;"));
+			int index = subCookie.lastIndexOf(";Path=/");
+			subCookie = subCookie.substring(0, index);
 			PlayerCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
@@ -106,7 +108,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		UserRequest loginRequest = new UserRequest(username, password);
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders,"user/login", loginRequest, null);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders,"/user/register", loginRequest, null);
 		boolean successful = false;
 		String cookie = "";
 		String playerName = "";
@@ -115,7 +117,8 @@ public class ProxyServer implements IServer{
 			successful = true;
 			cookie = response.getResponseHeaders().get("Set-cookie").get(0);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			subCookie = subCookie.substring(0, subCookie.lastIndexOf(";Path=/;"));
+			int index = subCookie.lastIndexOf(";Path=/");
+			subCookie = subCookie.substring(0, index);
 			PlayerCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
@@ -161,7 +164,7 @@ public class ProxyServer implements IServer{
 			String gameCookieExtension = response.getResponseHeaders().get("Set-cookie").get(0);
 			gameCookieExtension = gameCookieExtension.replaceFirst("catan.game=", "");
 			gameCookieExtension = gameCookieExtension.substring(0, gameCookieExtension.lastIndexOf(";Path=/;"));
-			cookie = cookie + ";" + gameCookieExtension;
+			cookie = cookie + "; " + gameCookieExtension;
 			resultCookie = cookie;
 		}
 		return new JoinGameResponse(successful, resultCookie);
@@ -190,7 +193,7 @@ public class ProxyServer implements IServer{
 	public GetGameModelResponse getGameModel(int version, String cookie) {
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
-		ICommandResponse getServerModelResponse = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/model?version=" + Integer.toString(version), null, ServerModel.class);
+		ICommandResponse getServerModelResponse = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "/game/model?version=" + Integer.toString(version), null, ServerModel.class);
 		boolean needToUpdate = true;
 		if(getServerModelResponse.getResponseObject() == null) {
 			needToUpdate = false;
@@ -203,7 +206,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse resetGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/reset", null, ServerModel.class);
+		ICommandResponse resetGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/game/reset", null, ServerModel.class);
 		return new ResetGameResponse(resetGameResponse.getResponseCode() == 200, (ServerModel) resetGameResponse.getResponseObject());
 	}
 
@@ -212,7 +215,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/commands", null, Log.class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "/game/commands", null, Log.class);
 		return new GetGameCommandsResponse(response.getResponseCode() == 200, (Log)response.getResponseObject());
 	}
 
@@ -238,7 +241,9 @@ public class ProxyServer implements IServer{
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "/game/listAI", null, String[].class);
-		return new ListAIResponse(response.getResponseCode() == 200, Arrays.asList((String[])response.getResponseObject()));
+		String[] strArray = (String[]) response.getResponseObject();
+		List<String> list = Arrays.asList((String[])response.getResponseObject());
+		return new ListAIResponse(response.getResponseCode() == 200, list);
 	}
 
 	@Override
@@ -326,7 +331,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildSettlement", request, ServerModel.class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/buildCity", request, ServerModel.class);
 		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
@@ -397,7 +402,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/offerTrade", request, ServerModel.class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Monopoly", request, ServerModel.class);
 		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 
@@ -407,7 +412,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Monopoly", request, ServerModel.class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/moves/Soldier", request, ServerModel.class);
 		return new MoveResponse(response.getResponseCode() == 200, (ServerModel) response.getResponseObject());
 	}
 

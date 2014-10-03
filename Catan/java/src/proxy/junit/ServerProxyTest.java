@@ -15,25 +15,27 @@ import client.model.Map;
 import client.model.Player;
 import client.model.TradeOffer;
 import client.model.TurnTracker;
+import proxy.ICommunicator;
 import proxy.IServer;
 import proxy.ITranslator;
 import proxy.MockCommunicator;
 import proxy.ProxyServer;
 import proxy.TranslatorJSON;
-import shared.ServerMethodResponses.UserResponse;
+import shared.ServerMethodResponses.*;
+import shared.definitions.CatanColor;
+import shared.definitions.GameDescription;
 import shared.definitions.GameModel;
+import shared.definitions.PlayerDescription;
 import shared.definitions.PlayerIndex;
 /**
  * 
- * @author Epper Marshall
- * Tests the translation of a GameModel to JSON and from JSON to a GameModel.
  */
 public class ServerProxyTest {
 	private IServer proxy; 
 	
 	@Before 
 	public void setUp() { 
-		ITranslator translator = new TranslatorJSON();
+		TranslatorJSON translator = new TranslatorJSON();
 		ICommunicator mockCommunicator = new MockCommunicator(translator);
 		ProxyServer.setSingleton(mockCommunicator, translator, "UTF-8");
 		proxy = ProxyServer.getSingleton();
@@ -43,51 +45,85 @@ public class ServerProxyTest {
 	public void testLoginUser() {
 		String user;
 		String pass;
+		UserResponse response;
 		
 		//invalid login attempt
 		String message = "Login failed - bad password or username";
-		String cookie = "";
-		user = "Brooke";
+		String cookie = "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;";
+		user = "Sam";
 		pass = "badpassword";
-		UserResponse response = proxy.loginUser(user, pass);
-		assertEquals("Login response code for unsuccessful login attempt should be false",response.isSuccessful(),false);
-		assertEquals("Login response message for unsuccessful login attempt should be \"" + message + "\"", response.getMessage(), message); 
+		response = proxy.loginUser(user, pass);
+		assertEquals("Login response code for unsuccessful login attempt", false, response.isSuccessful());
+		assertEquals("Login response message for unsuccessful login attempt", message, response.getMessage()); 
 		
 		//valid login attempt
-		user = "Brooke";
-		pass = "brooke";
-		assertEquals("Login response code for successful login attempt should be true",response.isSuccessful(),true);
-		assertEquals("Login response cookie for successful login attempt for Brooke should be \"" + cookie + "\"", response.getCookie(), cookie);
+		user = "Sam";
+		pass = "sam";
+		response = proxy.loginUser(user, pass);
+		assertEquals("Login response code for successful login attempt",true, response.isSuccessful());
+		assertEquals("Login response cookie for successful login attempt for Sam", cookie, response.getCookie());
 	}
 	
 	@Test
 	public void testRegisterUser() {
-		//register with username with less than 3 characters
-		
-		//register with username with more than 7 characters
-		
-		//register with username containing invalid character
+		String user;
+		String pass;
+		UserResponse response;
 		
 		//register with name already in use
-		
-		//register with valid username and password of less than 5 characters
-		
-		//register with valid username and password of illegal characters
+		String message = "Registration failed - username is already in use";
+		String cookie = "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;";
+		user = "Sam";
+		pass = "sam";
+		response = proxy.registerUser(user, pass);
+		assertEquals("Register response code for register duplicate username attempt", false, response.isSuccessful());
+		assertEquals("Register response message for unsuccessful login attempt", message, response.getMessage());
 		
 		//register with unique name and valid password
+		user = "Brooke";
+		pass = "brooke";
+		response = proxy.registerUser(user, pass);
+		assertEquals("Register response code for successful register attempt",true, response.isSuccessful());
+		assertEquals("Register response cookie for successful register attempt", cookie, response.getCookie());
 	}
 	
 	@Test
 	public void testListGames() {
 		//test list games
+		PlayerDescription[] players1 = new PlayerDescription[4];
+		players1[0] = new PlayerDescription(CatanColor.BLUE, 0, "Bill");
+		players1[1] = new PlayerDescription(CatanColor.BROWN, 1, "Fred");
+		players1[2] = new PlayerDescription(CatanColor.GREEN, 2, "Sam");
+		players1[3] = new PlayerDescription(CatanColor.ORANGE, 3, "May");
+		GameDescription game1 = new GameDescription("Game1", 0, players1);
+		
+		PlayerDescription[] players2 = new PlayerDescription[4];
+		players2[0] = new PlayerDescription(CatanColor.BLUE, 0, "Will");
+		players2[1] = new PlayerDescription(CatanColor.BROWN, 1, "Freddy");
+		players2[2] = new PlayerDescription(CatanColor.GREEN, 2, "Sarah");
+		players2[3] = new PlayerDescription(CatanColor.ORANGE, 3, "June");
+		GameDescription game2 = new GameDescription("Game2", 0, players2);
+		
+		List<GameDescription> gamesList = new ArrayList<GameDescription>();
+		gamesList.add(game1);
+		gamesList.add(game2);
+		
+		ListGamesResponse response = proxy.listGames(null);
+		assertEquals("Response code for successful listGames attempt",true, response.isSuccessful());
+		assertEquals("Response object for successful listGames attempt", gamesList, response.getGameDescriptions());
 	}
 	
 	@Test
 	public void testCreateGame() {
 		//test create game
-		
+		String name = "New Game";
+		GameDescription newGame = new GameDescription(name, 0, new PlayerDescription[4]);
+		CreateGameResponse response = proxy.createGame(false, false, false, name, null);
+		assertEquals("Response code for successful createGames attempt",true, response.isSuccessful());
+		assertEquals("Response object for successful createGames attempt", newGame, response.getGameDescription());
 	}
 	
+	/*
 	@Test
 	public void testJoinGame() {
 		//join game that is already full
@@ -146,6 +182,16 @@ public class ServerProxyTest {
 	@Test
 	public void testListAI() {
 		//valid
+		ArrayList<String> mockAIs = new ArrayList<String>() {{
+			add("Bill");
+			add("Fred");
+			add("Tom");
+			add("Jim");
+		}};
+		
+		ListAIResponse response = proxy.listAI(null);
+		assertEquals("Response code for successful listAIs attempt",true, response.isSuccessful());
+		assertEquals("List AIs available to add to game", mockAIs, response.getAiTypes());
 	}
 	
 	@Test
@@ -285,4 +331,5 @@ public class ServerProxyTest {
 		assertEquals("Map should have a radius of 3",game.getMap().getRadius(),3);
 		
 	}
+	*/
 }
