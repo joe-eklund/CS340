@@ -112,27 +112,26 @@ public class ClientCommunicator implements ICommunicator {
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 			writer.write(jsonObject); 
 			
+			writer.close();
+
 //	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 //			String inputLine;
 //			while ((inputLine = in.readLine()) != null) {
 //				System.out.println(inputLine);
 //			}
-//			in.close();
+//			in.close();	
 			
-//			InputStream responseJson = connection.getInputStream();
 			
-//			responseMessage = connection.getResponseMessage();
+			
+			InputStream responseJson = connection.getInputStream();
+			responseMessage = connection.getResponseMessage();
 			responseCode = connection.getResponseCode();
 			responseHeaders = connection.getHeaderFields();
 			
-//			Object javaObject = jsonTrans.translateTo(responseJson.toString());
+			Object javaObject = jsonTrans.translateTo(responseJson.toString());
+			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
+			responseJson.close();
 			
-//			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
-			
-			writer.close();
-//			responseJson.close();
-			
-			System.out.print("Yo dog");
 		}
 		catch (IOException e) { // IO ERROR
 			System.err.print("Unable to doPost");

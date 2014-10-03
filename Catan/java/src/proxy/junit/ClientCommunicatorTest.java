@@ -27,10 +27,11 @@ public class ClientCommunicatorTest {
 
 	ClientCommunicator CCTestor;
 	TranslatorJSON jsonTrans;
-	String mockCommandName = "user/login";
+	
 	List<Pair<String,String>> headers;
-	RequestType mockRequest;
 	User mockUser;
+	String mockCommandName;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -39,9 +40,6 @@ public class ClientCommunicatorTest {
 		jsonTrans = new TranslatorJSON();
 		CCTestor = new ClientCommunicator("localhost", 8081, jsonTrans);
 		headers = new ArrayList<Pair<String,String>>();
-		Pair mockPair = new Pair("SAM", "sam");
-		headers.add(mockPair);
-		mockUser = new User("Brooke", "brooke");
 	}
 
 	/**
@@ -55,10 +53,109 @@ public class ClientCommunicatorTest {
 	 * Test method for {@link proxy.ClientCommunicator#executeCommand(proxy.RequestType, java.util.List, java.lang.String, java.lang.Object, java.lang.Class)}.
 	 */
 	@Test
-	public void connectToServerTest() {
+	public void connectUserLoginTest() {
+		Pair mockPair = new Pair("SAM", "sam");
+		headers.add(mockPair);
+		mockUser = new User("Brooke", "brooke");
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, null, "user/login", mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testRegisterUser() {
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "user/register", mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testGetGamesList() {
+		mockCommandName = "games/list";
 		mockRequest = RequestType.POST;
 		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
-		//assertNotNull(mockResponse.getResponseCode() == 200);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testCreateGame() {
+		mockCommandName = "games/create";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testJoinGame() {
+		mockCommandName = "games/join";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testGetGameModel() {
+		mockCommandName = "game/model?version=x";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testGameReset() {
+		mockCommandName = "games/reset";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testGetGameCommands() {
+		mockCommandName = "games/commands";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testPostGameCommands() {
+		mockCommandName = "games/commands";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testGetGameListAI() {
+		mockCommandName = "games/listAI";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testAddAI() { 
+		mockCommandName = "games/addAI";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
+		System.out.print(mockResponse);
+	}
+	
+	@Test
+	public void testUtilChangeLogLevel() {
+		mockCommandName = "util/changeLogLevel";
+		mockRequest = RequestType.POST;
+		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
