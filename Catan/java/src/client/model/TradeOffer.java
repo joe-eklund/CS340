@@ -12,6 +12,7 @@ public class TradeOffer {
 	public TradeOffer(int sender, int receiver, int brick, int ore, int sheep, int wheat, int wood) {
 		this.sender = sender;
 		this.receiver = receiver;
+		offer = new Resources();
 		offer.brick = brick;
 		offer.ore = ore;
 		offer.sheep = sheep;

@@ -38,6 +38,18 @@ public enum EdgeDirection
 			return EdgeDirection.South;
 		case "SouthWest":
 			return EdgeDirection.SouthWest;
+		case "NW":
+			return EdgeDirection.NorthWest;
+		case "N":
+			return EdgeDirection.North;
+		case "NE":
+			return EdgeDirection.NorthEast;
+		case "SE":
+			return EdgeDirection.SouthEast;
+		case "S":
+			return EdgeDirection.South;
+		case "SW":
+			return EdgeDirection.SouthWest;
 		default:
 			throw new ClientModelException("Invalid direction string given to static method EdgeDirection determineDirectionin EdgeDirection class");
 		}

@@ -17,12 +17,12 @@ import client.model.TradeOffer;
 import client.model.TurnTracker;
 import proxy.ITranslator;
 import proxy.TranslatorJSON;
-import shared.definitions.GameModel;
+import shared.definitions.ServerModel;
 import shared.definitions.PlayerIndex;
 /**
  * 
  * @author Epper Marshall
- * Tests the translation of a GameModel to JSON and from JSON to a GameModel.
+ * Tests the translation of a ServerModel to JSON and from JSON to a ServerModel.
  */
 public class TranslatorTest {
 	private ITranslator trans; 
@@ -40,10 +40,10 @@ public class TranslatorTest {
 		players.add(new Player("Red", "Santa", 2));
 		players.add(new Player("Brown", "Frodo", 3));
 		
-		GameModel game=new GameModel(new Bank(),new Chat(),new Log(),new Map(),players,null,new TurnTracker(),0,-1);
-		String translation=trans.translateTo(game);
-		//System.out.println(translation);
-		assertEquals("JSON should match",translation,"{\"chat\":{\"lines\":[]},\"bank\":{\"brick\":19,\"ore\":19,\"sheep\":19,\"wheat\":19,\"wood\":19},\"log\":{\"lines\":[]},\"map\":{\"radius\":3},\"players\":[{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Blue\",\"discarded\":false,\"monuments\":0,\"name\":\"Ender\",\"playerIndex\":0,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Orange\",\"discarded\":false,\"monuments\":0,\"name\":\"Ralph\",\"playerIndex\":1,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Red\",\"discarded\":false,\"monuments\":0,\"name\":\"Santa\",\"playerIndex\":2,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Brown\",\"discarded\":false,\"monuments\":0,\"name\":\"Frodo\",\"playerIndex\":3,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0}],\"turnTracker\":{\"currentTurn\":0,\"status\":\"Playing\",\"longestRoad\":-1,\"largestArmy\":-1},\"version\":0,\"winner\":-1,\"deck\":{\"monopoly\":2,\"monument\":5,\"roadBuilding\":2,\"soldier\":14,\"yearOfPlenty\":2}}");
+		ServerModel Server=new ServerModel(new Bank(),new Chat(),new Log(),new Map(),players,null,new TurnTracker(),0,-1);
+		String translation=trans.translateTo(Server);
+		System.out.println(translation);
+		assertEquals("JSON should match",translation,"{\"chat\":{\"lines\":[]},\"bank\":{\"brick\":19,\"ore\":19,\"sheep\":19,\"wheat\":19,\"wood\":19},\"log\":{\"lines\":[]},\"map\":{\"radius\":3},\"players\":[{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Blue\",\"discarded\":false,\"monuments\":0,\"name\":\"Ender\",\"playerIndex\":0,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Orange\",\"discarded\":false,\"monuments\":0,\"name\":\"Ralph\",\"playerIndex\":1,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Red\",\"discarded\":false,\"monuments\":0,\"name\":\"Santa\",\"playerIndex\":2,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Brown\",\"discarded\":false,\"monuments\":0,\"name\":\"Frodo\",\"playerIndex\":3,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0}],\"turnTracker\":{\"currentTurn\":0,\"status\":\"Playing\",\"longestRoad\":-1,\"largestArmy\":-1},\"winner\":-1,\"deck\":{\"monopoly\":2,\"monument\":5,\"roadBuilding\":2,\"soldier\":14,\"yearOfPlenty\":2}}");
 	}
 	@Test
 	public void testTranslateFrom() {		
@@ -55,17 +55,17 @@ public class TranslatorTest {
 				+ "{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Red\",\"discarded\":false,\"monuments\":0,\"name\":\"Henry\",\"playerIndex\":2,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":2},"
 				+ "{\"cities\":4,\"settlements\":5,\"roads\":10,\"color\":\"Brown\",\"discarded\":false,\"monuments\":0,\"name\":\"Frodo\",\"playerIndex\":3,\"playedDevCard\":true,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":2}],"
 				+ "\"turnTracker\":{\"currentTurn\":0,\"status\":\"Playing\",\"longestRoad\":-1,\"largestArmy\":-1},"
-				+ "\"version\":0,\"winner\":-1,"
+				+ "\"winner\":-1,"
 				+ "\"deck\":{\"monopoly\":2,\"monument\":5,\"roadBuilding\":2,\"soldier\":14,\"yearOfPlenty\":2}}";
-		GameModel game = (GameModel) trans.translateFrom(message, GameModel.class);
+		ServerModel Server = (ServerModel) trans.translateFrom(message, ServerModel.class);
 		
-		assertEquals("Bank bricks should match(10)",game.getBank().getBrick(),10);
-		assertEquals("Bank sheeps should match(9)",game.getBank().getSheep(),9);
-		assertEquals("Player at (0) should be named Ender",game.getPlayers().get(0).getName(),"Ender");
-		assertEquals("Player at (2) should be named Henry",game.getPlayers().get(2).getName(),"Henry");
-		assertEquals("Player at (3) should have 10 roads",game.getPlayers().get(3).getRoads(),10);
-		assertEquals("Player at (3) should have played dev card",game.getPlayers().get(3).hasPlayedDevCard(),true);
-		assertEquals("Map should have a radius of 3",game.getMap().getRadius(),3);
+		assertEquals("Bank bricks should match(10)",Server.getBank().getBrick(),10);
+		assertEquals("Bank sheeps should match(9)",Server.getBank().getSheep(),9);
+		assertEquals("Player at (0) should be named Ender",Server.getPlayers().get(0).getName(),"Ender");
+		assertEquals("Player at (2) should be named Henry",Server.getPlayers().get(2).getName(),"Henry");
+		assertEquals("Player at (3) should have 10 roads",Server.getPlayers().get(3).getRoads(),10);
+		assertEquals("Player at (3) should have played dev card",Server.getPlayers().get(3).hasPlayedDevCard(),true);
+		assertEquals("Map should have a radius of 3",Server.getMap().getRadius(),3);
 		
 		String swagger="{\r\n" + 
 				"  \"deck\": {\r\n" + 
@@ -707,10 +707,10 @@ public class TranslatorTest {
 				"  \"winner\": -1,\r\n" + 
 				"  \"version\": 0\r\n" + 
 				"}";
-		game = (GameModel) trans.translateFrom(swagger, GameModel.class);
-		assertEquals("Player at (1) should be named Brooke",game.getPlayers().get(1).getName(),"Brooke");
-		assertEquals("Player at (3) should be named Mark",game.getPlayers().get(3).getName(),"Mark");
-		assertEquals("Status should be Rolling",game.getTurnTracker().getStatus(),"Rolling");
-		assertEquals("Bank should have 20 sheep",game.getBank().getSheep(),20);
+		Server = (ServerModel) trans.translateFrom(swagger, ServerModel.class);
+		assertEquals("Player at (1) should be named Brooke",Server.getPlayers().get(1).getName(),"Brooke");
+		assertEquals("Player at (3) should be named Mark",Server.getPlayers().get(3).getName(),"Mark");
+		assertEquals("Status should be Rolling",Server.getTurnTracker().getStatus(),"Rolling");
+		assertEquals("Bank should have 20 sheep",Server.getBank().getSheep(),20);
 	}
 }

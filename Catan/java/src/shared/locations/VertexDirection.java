@@ -37,6 +37,18 @@ public enum VertexDirection
 			return VertexDirection.East;
 		case "SouthWest":
 			return VertexDirection.SouthWest;
+		case "NW":
+			return VertexDirection.NorthWest;
+		case "W":
+			return VertexDirection.West;
+		case "NE":
+			return VertexDirection.NorthEast;
+		case "SE":
+			return VertexDirection.SouthEast;
+		case "E":
+			return VertexDirection.East;
+		case "SW":
+			return VertexDirection.SouthWest;
 		default:
 			throw new ClientModelException("Invalid direction string given to static method VertexDirection determineDirection in VertexDirection class");
 		}

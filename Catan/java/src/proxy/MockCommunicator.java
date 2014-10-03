@@ -1,8 +1,17 @@
 package proxy;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import shared.ServerMethodRequests.*;
+import shared.ServerMethodResponses.*;
+import shared.definitions.CatanColor;
+import shared.definitions.GameDescription;
+import shared.definitions.PlayerDescription;
 import shared.definitions.ServerModel;
+import client.model.Log;
 
 /**This class will contain some hard code data for the use of testing.
  * 
@@ -11,8 +20,15 @@ import shared.definitions.ServerModel;
  */
 public class MockCommunicator implements ICommunicator {
 	
-	ServerModel mockServerModel;
-	TranslatorJSON jsonTrans;
+	private ServerModel mockServerModel;
+	private ITranslator jsonTrans;
+	private String samLoginCookie = "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;";
+	private String samJoinReturnCookie = "catan.game=0";
+	private String samFakeCookieAfterJoin = samLoginCookie + " " + samJoinReturnCookie;
+	private Map<String, List<String>> successLoginHeaders;
+	private Map<String, List<String>> successJoinHeaders;
+	private Map<String, List<String>> failHeaders;
+	private String mockAIs[] = new String[] {"Bill","Fred","Tom","Jim"};
 	
 	/**
 	 * @param host
@@ -23,6 +39,10 @@ public class MockCommunicator implements ICommunicator {
 		super();
 		this.jsonTrans = jsonTrans;
 		mockServerModel = (ServerModel)jsonTrans.translateFrom(mockData, ServerModel.class);
+		successLoginHeaders = new HashMap<String, List<String>>();
+		List<String> value = new ArrayList<String>();
+		value.add(samLoginCookie);
+		successLoginHeaders.put("Set-cookie", value);
 	}
 
 	/**Starts the request from the server given the information from the proxy. Starts by packaging up the info and having the translator change it to json. Then takes the json object with the request type and sends it to the server. 
@@ -34,7 +54,14 @@ public class MockCommunicator implements ICommunicator {
 	 */
 	@Override
 	public CommandResponse executeCommand(RequestType requestType, List<Pair<String,String>> headers, String commandName, Object commandParameters, Class<?> responseCastClass){
-
+		CommandResponse result;
+		if(requestType.name().toLowerCase().equals("get")) {
+			result = doGet(commandName, headers, commandParameters, responseCastClass);
+		}
+		else {
+			result = doPost(commandName, headers, commandParameters, responseCastClass);
+		}
+		return result;
 	}
 	
 	
@@ -44,9 +71,40 @@ public class MockCommunicator implements ICommunicator {
 	 * @param urlPath
 	 * @throws ClientException
 	 */
-	private CommandResponse doGet(HttpURLConnection connection) //throws ClientException may need to add this in later
+	private CommandResponse doGet(String commandName, List<Pair<String,String>> headers, Object commandParameters, Class<?> responseCastClass) //throws ClientException may need to add this in later
 	{
-		
+		CommandResponse result = null;
+		switch(commandName) {
+		case "/game/listAI":
+			result = new CommandResponse(null, 200, this.mockAIs, null);
+			break;
+		case "/game/commands":
+			break;
+		case "/game/model?version=0":
+			break;
+		case "/games/list":
+			PlayerDescription[] players1 = new PlayerDescription[4];
+			players1[0] = new PlayerDescription(CatanColor.BLUE, 0, "Bill");
+			players1[1] = new PlayerDescription(CatanColor.BROWN, 1, "Fred");
+			players1[2] = new PlayerDescription(CatanColor.GREEN, 2, "Sam");
+			players1[3] = new PlayerDescription(CatanColor.ORANGE, 3, "May");
+			GameDescription game1 = new GameDescription("Game1", 0, players1);
+			
+			PlayerDescription[] players2 = new PlayerDescription[4];
+			players2[0] = new PlayerDescription(CatanColor.BLUE, 0, "Will");
+			players2[1] = new PlayerDescription(CatanColor.BROWN, 1, "Freddy");
+			players2[2] = new PlayerDescription(CatanColor.GREEN, 2, "Sarah");
+			players2[3] = new PlayerDescription(CatanColor.ORANGE, 3, "June");
+			GameDescription game2 = new GameDescription("Game2", 0, players2);
+			
+			GameDescription[] gamesList = new GameDescription[] {game1, game2};
+			
+			result = new CommandResponse(null, 200, gamesList, null);
+			break;
+		default:
+			result = new CommandResponse(failHeaders, 400, "default case", "Error: Unhandled Get Case Reached!");
+		}
+		return result;
 	}
 	
 	
@@ -56,8 +114,99 @@ public class MockCommunicator implements ICommunicator {
 	 * @param postData
 	 * @throws ClientException
 	 */
-	private CommandResponse doPost(String jsonObject, HttpURLConnection connection){
-		
+	private CommandResponse doPost(String commandName, List<Pair<String,String>> headers, Object commandParameters, Class<?> responseCastClass){
+		CommandResponse result = null;
+		switch(commandName) {
+		case "/user/login":
+			UserRequest loginRequest = (UserRequest) commandParameters;
+			if(loginRequest.getUsername().equals("Sam") && loginRequest.getPassword().equals("sam")) {
+				result = new CommandResponse(successLoginHeaders, 200, null, null);
+			}
+			else {
+				result = new CommandResponse(failHeaders, 400, null, "Login failed - bad password or username");
+			}
+			break;
+		case "/user/register":
+			UserRequest registerRequest = (UserRequest) commandParameters;
+			if(registerRequest.getUsername().equals("Sam")) {
+				result = new CommandResponse(failHeaders, 400, null, "Registration failed - username is already in use");
+			}
+			else {
+				result = new CommandResponse(successLoginHeaders, 200, null, null);
+			}
+			break;
+		case "/games/create":
+			CreateGameRequest createGameRequest = (CreateGameRequest) commandParameters;
+			GameDescription newGame = new GameDescription(createGameRequest.getName(), 0, new PlayerDescription[4]);
+			result = new CommandResponse(null, 200, newGame, null);
+			break;
+		case "/games/join":
+			JoinGameRequest joinGameRequest = (JoinGameRequest) commandParameters;
+			break;
+		case "/game/reset":
+			ResetGameRequest resetGameRequest = (ResetGameRequest) commandParameters; 
+			break;
+		case "/game/commands":
+			Log postCommandsRequest = (Log) commandParameters;
+			break;
+		case "/game/addAI":
+			String addAIRequest = (String) commandParameters;
+			break;
+		case "/util/changeLogLevel":
+			ChangeLogLevelRequest logRequest = (ChangeLogLevelRequest) commandParameters;
+			break;
+		case "/games/sendChat":
+			SendChatRequest chatRequest = (SendChatRequest) commandParameters;
+			break;
+		case "/moves/acceptTrade":
+			AcceptTradeRequest acceptTradeRequest = (AcceptTradeRequest) commandParameters;
+			break;
+		case "/moves/discardCards":
+			DiscardCardsRequest discardRequest = (DiscardCardsRequest) commandParameters;
+			break;
+		case "/moves/rollNumber":
+			RollNumberRequest rollRequest = (RollNumberRequest) commandParameters;
+			break;
+		case "/moves/buildRoad":
+			BuildRoadRequest buildRoadRequest = (BuildRoadRequest) commandParameters;
+			break;
+		case "/moves/buildSettlement":
+			BuildSettlementRequest buildSettlementRequest = (BuildSettlementRequest) commandParameters;
+			break;
+		case "/moves/buildCity":
+			BuildCityRequest buildCityRequest = (BuildCityRequest) commandParameters;
+			break;
+		case "/moves/offerTrade":
+			OfferTradeRequest offerTradeRequest = (OfferTradeRequest) commandParameters;
+			break;
+		case "/moves/maritimeTrade":
+			MaritimeTradeRequest maritimeRequest = (MaritimeTradeRequest) commandParameters;
+			break;
+		case "/moves/finishTurn":
+			FinishTurnRequest finishRequest = (FinishTurnRequest) commandParameters;
+			break;
+		case "/moves/buyDevCard":
+			BuyDevCardRequest buyDevRequest = (BuyDevCardRequest) commandParameters;
+			break;
+		case "/moves/Year_of_Plenty":
+			YearOfPlentyDevRequest yearPlentyRequest = (YearOfPlentyDevRequest) commandParameters;
+			break;
+		case "/moves/Road_Building":
+			RoadBuildingDevRequest roadBuildRequest = (RoadBuildingDevRequest) commandParameters;
+			break;
+		case "/moves/Monopoly":
+			MonopolyDevRequest monopolyRequest = (MonopolyDevRequest) commandParameters;
+			break;
+		case "/moves/Soldier":
+			SoldierDevRequest soldierRequest = (SoldierDevRequest) commandParameters;
+			break;
+		case "/moves/Monument":
+			MonumentDevRequest monumentRequest = (MonumentDevRequest) commandParameters;
+			break;
+		default:
+			result = new CommandResponse(failHeaders, 400, "default case", "Error: Unhandled Post Case Reached!");
+		}
+		return result;
 	}
 		//Mock Hard coded data: The following data is used for JUnit testing. It contains mock data for testing various commands and the communication between the translator and the server.
 	
