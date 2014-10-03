@@ -26,20 +26,35 @@ public class ClientModelUnitTest {
 	@Test
 	public void testCanAcceptTrade(){
 		//Trade offer should be null
-		assertEquals("Client Model should not have a trade offer and fail canAcceptTrade", 
+		assertEquals("Client Model should not have a trade offer and fail", 
 				false, clientModel.canAcceptTrade());
+		
 		//Create invalid trade offer from player 0 to player 1 for 1 wood
 		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,0,0,0,0,1));
-		assertEquals("Client Model should not have a valid trade offer and fail canAcceptTrade",
+		assertEquals("Client Model should not have a valid trade offer and fail",
 				false, clientModel.canAcceptTrade());
+		
 		//Create valid trade offer from player 0 to player 1 for 1 brick
 		clientModel.getServerModel().setTradeOffer(new TradeOffer(0,1,1,0,0,0,0));
-		assertEquals("Client Model should have a trade offer and pass canAcceptTrade",
+		assertEquals("Client Model should have a valid trade offer and pass",
 				true, clientModel.canAcceptTrade());
 	}
 	
 	@Test
 	public void testCanDiscardCards(){
+		//Status should be rolling, not discarding
+		assertEquals("Client Model's status should be Rolling and fail", false, 
+				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
+		
+		//Change status to discarding, still fail because bad resource hand
+		clientModel.getServerModel().getTurnTracker().setStatus("Discarding");
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
+				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
+		
+		//Set resources and pass in a good resource hand
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(3,3,2,2,2));
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
+				clientModel.canDiscardCards(0, new ResourceHand(1,1,1,1,1)));
 		
 	}
 	
