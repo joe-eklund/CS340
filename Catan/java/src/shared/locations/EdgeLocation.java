@@ -20,7 +20,7 @@ public class EdgeLocation
 		return hexLoc;
 	}
 	
-	private void setHexLoc(HexLocation hexLoc)
+	public void setHexLoc(HexLocation hexLoc)
 	{
 		if(hexLoc == null)
 		{
@@ -34,7 +34,7 @@ public class EdgeLocation
 		return dir;
 	}
 	
-	private void setDir(EdgeDirection dir)
+	public void setDir(EdgeDirection dir)
 	{
 		this.dir = dir;
 	}

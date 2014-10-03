@@ -6,6 +6,7 @@ import org.junit.*;
 
 import proxy.*;
 import shared.definitions.*;
+import shared.locations.*;
 import client.model.*;
 
 public class ClientModelUnitTest {
@@ -60,7 +61,37 @@ public class ClientModelUnitTest {
 	
 	@Test
 	public void testCanBuildRoad(){
+		//Try bad turn
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(1);
+		EdgeLocation testEdge = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.SouthEast);
+		assertEquals("Client Model turn should be 0 annd fail", false, 
+				clientModel.canBuildRoad(0, testEdge));
 		
+		//Try where you are not next to a road
+		testEdge.setHexLoc(new HexLocation(0,1));
+		testEdge.setDir(EdgeDirection.NorthWest);
+		assertEquals("Trying to build on an invalid edge where you have no neighboring roads", false,
+				clientModel.canBuildRoad(0, testEdge));
+		
+		//Try next to a road that you don't own
+		testEdge.setHexLoc(new HexLocation(1,-1));
+		testEdge.setDir(EdgeDirection.SouthEast);
+		assertEquals("Trying to build on an invalid edge where there is a road you don't own", false,
+				clientModel.canBuildRoad(0, testEdge));
+		
+		//Try water edge
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(2,2,2,2,2));
+		clientModel.getServerModel().getPlayers().get(0).setRoads(15);
+		testEdge.setHexLoc(new HexLocation(0,-3));
+		assertEquals("Trying to build on water edge and should fail", false,
+				clientModel.canBuildRoad(0, testEdge));
+		
+		//Try valid edge
+		testEdge.setHexLoc(new HexLocation(0,1));
+		testEdge.setDir(EdgeDirection.SouthEast);
+		assertEquals("Trying to build on valid edge and should pass", true,
+				clientModel.canBuildRoad(0, testEdge));
 	}
 	
 	@Test
@@ -70,11 +101,32 @@ public class ClientModelUnitTest {
 	
 	@Test
 	public void testCanBuildCity(){
+		//Try building a valid city
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
+		clientModel.getServerModel().getPlayers().get(0).setCities(2);
+		assertEquals("Trying to build on a valid vertex and should pass", true,
+				clientModel.canBuildCity(0, new VertexLocation(new HexLocation(0,1), VertexDirection.SouthEast)));
 		
+		//Try building where there is no settlement
+		assertEquals("Trying to build on an invalid vertex and should fail", false,
+				clientModel.canBuildCity(0, new VertexLocation(new HexLocation(1,1), VertexDirection.NorthEast)));
+		
+		//Try building where there is a settlement but you don't own it
+		assertEquals("Trying to build on an invalid vertex and should fail", false,
+				clientModel.canBuildCity(0, new VertexLocation(new HexLocation(1,-2), VertexDirection.SouthEast)));
 	}
 	
 	@Test
 	public void testCanOfferTrade(){
+		//Test valid trade offer
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(5,5,5,5,5));
+		assertEquals("Trying to offer a valid trade and should pass", true,
+				clientModel.canOfferTrade(0, new ResourceHand(1,1,1,1,1)));
+		
+		//Test trade offer without having enough resources
+		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,0,0,0,0));
+		assertEquals("Trying to offer an invalid trade and should fail", false,
+				clientModel.canOfferTrade(0, new ResourceHand(1,0,0,0,0)));
 		
 	}
 	
