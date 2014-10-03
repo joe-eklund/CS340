@@ -15,7 +15,6 @@ public class Road {
 	private int owner;
 	private EdgeLocation edgeLocation;
 	private Location location;
-	private String direction;
 	
 	public Road(int ownerIndex, int x, int y, String direction) throws ClientModelException {
 		this.owner = ownerIndex;
@@ -62,20 +61,6 @@ public class Road {
 	}
 
 	/**
-	 * @return the direction
-	 */
-	public String getDirection() {
-		return direction;
-	}
-
-	/**
-	 * @param direction the direction to set
-	 */
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
-
-	/**
 	 * @param location the location to set
 	 */
 	public void setLocation(Location location) {
@@ -83,6 +68,6 @@ public class Road {
 	}
 	
 	public void initializeLocation() throws ClientModelException{
-		setLocation(location.getX(), location.getY(), direction);
+		setLocation(location.getX(), location.getY(), location.getDirection());
 	}
 }
