@@ -26,10 +26,20 @@ public class GameModel {
 		board = new HashMap<HexLocation, IHex>();
 		ArrayList<Hex> hexes = serverModel.getMap().getHexes();
 		ArrayList<Road> roads = serverModel.getMap().getRoads();
+		ArrayList<Settlement> settlements = serverModel.getMap().getSettlements();
 		
 		for (Road road : roads) {
 			try {
 				road.initializeLocation();
+			}
+			catch(Exception e) {
+				System.err.print(e);
+			}
+		}
+		
+		for (Settlement settlement : settlements) {
+			try {
+				settlement.initializeLocation();
 			}
 			catch(Exception e) {
 				System.err.print(e);
