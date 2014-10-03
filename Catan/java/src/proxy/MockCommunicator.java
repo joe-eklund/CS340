@@ -12,6 +12,7 @@ import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerModel;
 import client.model.Log;
+import proxy.junit.TestingConstants;
 
 /**This class will contain some hard code data for the use of testing.
  * 
@@ -22,13 +23,10 @@ public class MockCommunicator implements ICommunicator {
 	
 	private ServerModel mockServerModel;
 	private ITranslator jsonTrans;
-	private String samLoginCookie = "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D;Path=/;";
-	private String samJoinReturnCookie = "catan.game=0";
-	private String samFakeCookieAfterJoin = samLoginCookie + " " + samJoinReturnCookie;
-	private Map<String, List<String>> successLoginHeaders;
+	//private String samJoinReturnCookie = "catan.game=0";
+	//private String samFakeCookieAfterJoin = samLoginCookie + " " + samJoinReturnCookie;
 	private Map<String, List<String>> successJoinHeaders;
 	private Map<String, List<String>> failHeaders;
-	private String mockAIs[] = new String[] {"Bill","Fred","Tom","Jim"};
 	
 	/**
 	 * @param host
@@ -39,10 +37,6 @@ public class MockCommunicator implements ICommunicator {
 		super();
 		this.jsonTrans = jsonTrans;
 		mockServerModel = (ServerModel)jsonTrans.translateFrom(mockData, ServerModel.class);
-		successLoginHeaders = new HashMap<String, List<String>>();
-		List<String> value = new ArrayList<String>();
-		value.add(samLoginCookie);
-		successLoginHeaders.put("Set-cookie", value);
 	}
 
 	/**Starts the request from the server given the information from the proxy. Starts by packaging up the info and having the translator change it to json. Then takes the json object with the request type and sends it to the server. 
@@ -76,30 +70,14 @@ public class MockCommunicator implements ICommunicator {
 		CommandResponse result = null;
 		switch(commandName) {
 		case "/game/listAI":
-			result = new CommandResponse(null, 200, this.mockAIs, null);
+			result = new CommandResponse(null, 200, TestingConstants.MOCK_AIS, null);
 			break;
 		case "/game/commands":
 			break;
 		case "/game/model?version=0":
 			break;
 		case "/games/list":
-			PlayerDescription[] players1 = new PlayerDescription[4];
-			players1[0] = new PlayerDescription(CatanColor.BLUE, 0, "Bill");
-			players1[1] = new PlayerDescription(CatanColor.BROWN, 1, "Fred");
-			players1[2] = new PlayerDescription(CatanColor.GREEN, 2, "Sam");
-			players1[3] = new PlayerDescription(CatanColor.ORANGE, 3, "May");
-			GameDescription game1 = new GameDescription("Game1", 0, players1);
-			
-			PlayerDescription[] players2 = new PlayerDescription[4];
-			players2[0] = new PlayerDescription(CatanColor.BLUE, 0, "Will");
-			players2[1] = new PlayerDescription(CatanColor.BROWN, 1, "Freddy");
-			players2[2] = new PlayerDescription(CatanColor.GREEN, 2, "Sarah");
-			players2[3] = new PlayerDescription(CatanColor.ORANGE, 3, "June");
-			GameDescription game2 = new GameDescription("Game2", 0, players2);
-			
-			GameDescription[] gamesList = new GameDescription[] {game1, game2};
-			
-			result = new CommandResponse(null, 200, gamesList, null);
+			result = new CommandResponse(null, 200, TestingConstants.GAMES_ARRAY, null);
 			break;
 		default:
 			result = new CommandResponse(failHeaders, 400, "default case", "Error: Unhandled Get Case Reached!");
@@ -119,20 +97,21 @@ public class MockCommunicator implements ICommunicator {
 		switch(commandName) {
 		case "/user/login":
 			UserRequest loginRequest = (UserRequest) commandParameters;
-			if(loginRequest.getUsername().equals("Sam") && loginRequest.getPassword().equals("sam")) {
-				result = new CommandResponse(successLoginHeaders, 200, null, null);
+			if(loginRequest.getUsername().equals(TestingConstants.VALID_USERNAME) && loginRequest.getPassword().equals(TestingConstants.VALID_PASSWORD)) {
+				
+				result = new CommandResponse(TestingConstants.SUCCESSFUL_LOGIN_HEADERS, 200, null, null);
 			}
 			else {
-				result = new CommandResponse(failHeaders, 400, null, "Login failed - bad password or username");
+				result = new CommandResponse(null, 400, null, TestingConstants.LOGIN_FAIL_MESSAGE);
 			}
 			break;
 		case "/user/register":
 			UserRequest registerRequest = (UserRequest) commandParameters;
-			if(registerRequest.getUsername().equals("Sam")) {
-				result = new CommandResponse(failHeaders, 400, null, "Registration failed - username is already in use");
+			if(registerRequest.getUsername().equals(TestingConstants.VALID_USERNAME)) {
+				result = new CommandResponse(null, 400, null, TestingConstants.REGISTER_FAIL_MESSAGE);
 			}
 			else {
-				result = new CommandResponse(successLoginHeaders, 200, null, null);
+				result = new CommandResponse(TestingConstants.SUCCESSFUL_LOGIN_HEADERS, 200, null, null);
 			}
 			break;
 		case "/games/create":
