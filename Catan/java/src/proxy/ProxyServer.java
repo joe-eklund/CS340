@@ -78,18 +78,27 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		UserRequest loginRequest = new UserRequest(username, password);
-		ICommandResponse loginResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "user/login", loginRequest, null);
-		String cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
-		String subCookie = cookie.replaceFirst("catan.user=", "");
-		subCookie = subCookie.substring(0, subCookie.lastIndexOf(";Path=/;"));
-		PlayerCookie playerCookie = null;
-		try {
-			String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
-			playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "user/login", loginRequest, null);
+		boolean successful = false;
+		String cookie = "";
+		String playerName = "";
+		int playerID = -1;
+		if(response.getResponseCode() == 200) {
+			successful = true;
+			cookie = response.getResponseHeaders().get("Set-cookie").get(0);
+			String subCookie = cookie.replaceFirst("catan.user=", "");
+			subCookie = subCookie.substring(0, subCookie.lastIndexOf(";Path=/;"));
+			PlayerCookie playerCookie = null;
+			try {
+				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
+				playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
+				playerID = playerCookie.getPlayerID();
+				playerName = playerCookie.getName();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
-		return new LoginUserResponse(loginResponse.getResponseCode() == 200, loginResponse.getResponseMessage(), playerCookie.getName(), cookie, playerCookie.getPlayerID());
+		return new LoginUserResponse(successful, response.getResponseMessage(), playerName, cookie, playerID);
 	}
 
 	@Override
@@ -97,17 +106,27 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		UserRequest loginRequest = new UserRequest(username, password);
-		ICommandResponse loginResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders,"user/login", loginRequest, null);
-		String cookie = loginResponse.getResponseHeaders().get("Set-cookie").get(0);
-		String subCookie = cookie.replaceFirst("catan.user=", "");
-		subCookie = subCookie.substring(0, subCookie.lastIndexOf(";Path=/;"));
-		PlayerCookie playerCookie = null;
-		try {
-			String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
-			playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}		return new RegisterUserResponse(loginResponse.getResponseCode() == 200, loginResponse.getResponseMessage(), playerCookie.getName(), cookie, playerCookie.getPlayerID());
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders,"user/login", loginRequest, null);
+		boolean successful = false;
+		String cookie = "";
+		String playerName = "";
+		int playerID = -1;
+		if(response.getResponseCode() == 200) {
+			successful = true;
+			cookie = response.getResponseHeaders().get("Set-cookie").get(0);
+			String subCookie = cookie.replaceFirst("catan.user=", "");
+			subCookie = subCookie.substring(0, subCookie.lastIndexOf(";Path=/;"));
+			PlayerCookie playerCookie = null;
+			try {
+				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
+				playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
+				playerID = playerCookie.getPlayerID();
+				playerName = playerCookie.getName();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}		
+		return new RegisterUserResponse(successful, response.getResponseMessage(), playerName, cookie, playerID);
 	}
 	
 	@Override
@@ -134,12 +153,18 @@ public class ProxyServer implements IServer{
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		JoinGameRequest joinGameRequest = new JoinGameRequest(gameID, color.name().toString());
-		ICommandResponse joinGameResponse = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/games/join", joinGameRequest, null);
-		String gameCookieExtension = joinGameResponse.getResponseHeaders().get("Set-cookie").get(0);
-		gameCookieExtension = gameCookieExtension.replaceFirst("catan.game=", "");
-		gameCookieExtension = gameCookieExtension.substring(0, gameCookieExtension.lastIndexOf(";Path=/;"));
-		cookie = cookie + ";" + gameCookieExtension;
-		return new JoinGameResponse(joinGameResponse.getResponseCode() == 200, cookie);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/games/join", joinGameRequest, null);
+		boolean successful = false;
+		String resultCookie = "";
+		if(response.getResponseCode() == 200) {
+			successful = true;
+			String gameCookieExtension = response.getResponseHeaders().get("Set-cookie").get(0);
+			gameCookieExtension = gameCookieExtension.replaceFirst("catan.game=", "");
+			gameCookieExtension = gameCookieExtension.substring(0, gameCookieExtension.lastIndexOf(";Path=/;"));
+			cookie = cookie + ";" + gameCookieExtension;
+			resultCookie = cookie;
+		}
+		return new JoinGameResponse(successful, resultCookie);
 	}
 	
 	@Override
