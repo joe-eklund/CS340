@@ -1,5 +1,6 @@
 package client.model;
 
+import shared.definitions.Location;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.locations.VertexDirection;
@@ -10,32 +11,37 @@ import client.exceptions.ClientModelException;
  * @author Chad
  */
 public class Settlement {
-	private int ownerIndex;
-	private VertexLocation location;
+	private int owner;
+	private VertexLocation verLocation;
+	private Location location;
 	
 	public Settlement(int ownerIndex, int x, int y, String direction) throws ClientModelException {
-		this.ownerIndex = ownerIndex;
-		this.location = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
+		this.owner = ownerIndex;
+		this.verLocation = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
 	}
 	
 	public int getOwnerIndex() {
-		return ownerIndex;
+		return owner;
 	}
 
 	public void setOwnerIndex(int ownerIndex) {
-		this.ownerIndex = ownerIndex;
+		this.owner = ownerIndex;
 	}
 
 	public VertexLocation getLocation() {
-		return location;
+		return verLocation;
 	}
 
 	public void setLocation(VertexLocation location) {
-		this.location = location;
+		this.verLocation = location;
 	}
 	
 	public void setLocation(int x, int y, String direction) throws ClientModelException{
-		this.location = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
+		this.verLocation = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
+	}
+	
+	public void initializeLocation() throws ClientModelException{
+		setLocation(location.getX(), location.getY(), location.getDirection());
 	}
 	
 }

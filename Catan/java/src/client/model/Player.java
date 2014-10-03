@@ -162,6 +162,16 @@ public class Player {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
+	
+	/**
+	 * Gets the current total number of resources a player has.
+	 * @return	The total number of resources the player has.
+	 */
+	public int getResourceCount(){
+		return resources.getBrick() + resources.getOre() + resources.getSheep() + 
+				resources.getWheat() + resources.getWood();
+	}
+	
 	/**
 	 * Increases victory points when a player builds a building.
 	 */

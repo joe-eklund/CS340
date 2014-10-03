@@ -43,7 +43,7 @@
 			  <pathelement location="junit-4.11.jar"/>
 			</classpath>    
 			<batchtest>
-			   <fileset dir="${bin.proxy.junit}">
+			   <fileset dir="${bin}">
 				    <include name="**/*Test*" />
 			   </fileset>
 			</batchtest>

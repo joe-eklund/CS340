@@ -64,12 +64,11 @@ public class ClientModel {
 	}
 	
 	public boolean canDiscardCards(int playerIndex, ResourceHand resourceHand) {
-		//TODO do we check if the oldDev card hand has 7 cards or the newDev card hand?
-		
-		//Checks that the game status is "Discarding", that the player has over 7 Dev cards, and that the 
+	
+		//Checks that the game status is "Discarding", that the player has over 7 Resource cards, and that the 
 		//player has the cards chosen to discard.
 		if (serverModel.getTurnTracker().getStatus().equals("Discarding") && 
-			serverModel.getPlayers().get(playerIndex).getNewDevCards().getTotalDevCardCount() > 7 &&
+			serverModel.getPlayers().get(playerIndex).getResourceCount() > 7 &&
 			playerHasResourceInHand(playerIndex, resourceHand)) {
 			
 			return true;
@@ -301,7 +300,7 @@ public class ClientModel {
 		return false;
 	}
 	
-public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
+	public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
 		
 		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.NorthEast);
 		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast);

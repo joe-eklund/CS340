@@ -42,3 +42,5 @@ Thumbs.db
 Catan/.classpath
 
 Catan/.classpath
+
+Catan/java/src/proxy/junit/ServerProxyTest.java
