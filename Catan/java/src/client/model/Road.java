@@ -1,6 +1,7 @@
 package client.model;
 
 import client.exceptions.ClientModelException;
+import shared.definitions.Location;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -12,16 +13,18 @@ import shared.locations.HexLocation;
 public class Road {
 	
 	private int owner;
-	private EdgeLocation location;
+	private EdgeLocation edgeLocation;
+	private Location location;
+	private String direction;
 	
 	public Road(int ownerIndex, int x, int y, String direction) throws ClientModelException {
 		this.owner = ownerIndex;
-		this.location = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
+		this.edgeLocation = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
 	}
 	
-	public Road(int ownerIndex, EdgeLocation location) {
+	public Road(int ownerIndex, EdgeLocation edgeLocation) {
 		this.owner = ownerIndex;
-		this.location = location;
+		this.edgeLocation = edgeLocation;
 	}
 	
 	public int getOwnerIndex() {
@@ -33,14 +36,53 @@ public class Road {
 	}
 
 	public EdgeLocation getLocation() {
-		return location;
+		return edgeLocation;
 	}
 
-	public void setLocation(EdgeLocation location) {
-		this.location = location;
+	public void setLocation(EdgeLocation edgeLocation) {
+		this.edgeLocation = edgeLocation;
 	}
 	
 	public void setLocation(int x, int y, String direction) throws ClientModelException{
-		this.location = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
+		this.edgeLocation = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public int getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+
+	/**
+	 * @return the direction
+	 */
+	public String getDirection() {
+		return direction;
+	}
+
+	/**
+	 * @param direction the direction to set
+	 */
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
+	public void initializeLocation() throws ClientModelException{
+		setLocation(location.getX(), location.getY(), direction);
 	}
 }

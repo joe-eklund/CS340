@@ -102,33 +102,116 @@ public class TaylorJUnit{
 //	public void testCanPlayRoadBuilding(){
 //		
 //	}
-//	
-//	@Test
-//	public void testCanPlaySoldier(){
-//		
-//	}
-//	
-//	@Test
-//	public void testCanPlayMonopoly(){
-//		
-//	}
+	
+	@Test
+	public void testCanPlaySoldier(){
+		//Status should be playing, not rolling
+		DevCards cards = new DevCards();
+		cards.updateCards(1, 0, 0, 0, 0);
+		clientModel.getServerModel().getTurnTracker().setStatus("rolling");
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		
+		assertEquals("Client Model's status should be Rolling and fail", false, 
+				clientModel.canPlayMonopoly(0));
+		
+		//Change status to discarding, still fail because not the player 1's turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Client Model's status should Playing and fail", false,
+				clientModel.canPlayMonopoly(1));
+		
+		//Now checking player 0, whose turn it is, but still fail because player 0 does not have a monopoly card
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		assertEquals("Client Model's status should be Playing and ResourceHand all 0s and fail", false,
+				clientModel.canPlayMonopoly(0));
+		
+		//Player 0 now has monopoly card but still fail because player 0 flag for already played devCard is set.
+		cards.updateCards(1, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
+				clientModel.canPlayMonopoly(0));
+		
+		//All preconditions are set so test should be successful
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
+				clientModel.canPlayMonopoly(0));
+	}
+	
+	@Test
+	public void testCanPlayMonopoly(){
+		//Status should be playing, not rolling
+		DevCards cards = new DevCards();
+		cards.updateCards(1, 0, 0, 0, 0);
+		clientModel.getServerModel().getTurnTracker().setStatus("rolling");
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		
+		assertEquals("Client Model's status should be Rolling and fail", false, 
+				clientModel.canPlayMonopoly(0));
+		
+		//Change status to discarding, still fail because not the player 1's turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Client Model's status should Playing and fail", false,
+				clientModel.canPlayMonopoly(1));
+		
+		//Now checking player 0, whose turn it is, but still fail because player 0 does not have a monopoly card
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		assertEquals("Client Model's status should be Playing and ResourceHand all 0s and fail", false,
+				clientModel.canPlayMonopoly(0));
+		
+		//Player 0 now has monopoly card but still fail because player 0 flag for already played devCard is set.
+		cards.updateCards(1, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
+				clientModel.canPlayMonopoly(0));
+		
+		//All preconditions are set so test should be successful
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
+				clientModel.canPlayMonopoly(0));
+	}
 	
 	@Test
 	public void testCanPlayMonument(){
 		//Status should be playing, not rolling
+		DevCards cards = new DevCards();
+		cards.updateCards(0, 1, 0, 0, 0);
 		clientModel.getServerModel().getTurnTracker().setStatus("rolling");
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		
 		assertEquals("Client Model's status should be Rolling and fail", false, 
 				clientModel.canPlayMonument(0));
 		
-//		//Change status to discarding, still fail because bad resource hand
-//		clientModel.getServerModel().getTurnTracker().setStatus("Discarding");
-//		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
-//				clientModel.canDiscardCards(0, new ResourceHand(0,0,0,0,0)));
-//		
-//		//Set resources and pass in a good resource hand
-//		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(3,3,2,2,2));
-//		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
-//				clientModel.canDiscardCards(0, new ResourceHand(1,1,1,1,1)));
+		//Change status to discarding, still fail because not the player 1's turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Client Model's status should Playing and fail", false,
+				clientModel.canPlayMonument(1));
+		
+		//Now checking player 0, whose turn it is, but still fail because player 0 does not have a monument card
+		cards.updateCards(0, 0, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		assertEquals("Client Model's status should be Playing and ResourceHand all 0s and fail", false,
+				clientModel.canPlayMonument(0));
+		
+		//Player 0 now has monument card but still fail because player 0 flag for already played devCard is set.
+		cards.updateCards(0, 1, 0, 0, 0);
+		clientModel.getServerModel().getPlayers().get(0).setOldDevCards(cards);
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(true);
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 0s and fail", false,
+				clientModel.canPlayMonument(0));
+		
+		//All preconditions are set so test should be successful
+		clientModel.getServerModel().getPlayers().get(0).setPlayedDevCard(false);
+		assertEquals("Client Model's status should be Discarding and ResourceHand all 1's and pass", true,
+				clientModel.canPlayMonument(0));
 	}
 	
 	public static void main(String[] args) 

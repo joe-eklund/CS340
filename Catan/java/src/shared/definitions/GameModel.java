@@ -25,6 +25,17 @@ public class GameModel {
 	private void initializeMap() {
 		board = new HashMap<HexLocation, IHex>();
 		ArrayList<Hex> hexes = serverModel.getMap().getHexes();
+		ArrayList<Road> roads = serverModel.getMap().getRoads();
+		
+		for (Road road : roads) {
+			try {
+				road.initializeLocation();
+			}
+			catch(Exception e) {
+				System.err.print(e);
+			}
+		}
+		
 		for (Hex hex : hexes) {
 			hex.setType(HexType.LAND);
 			board.put(hex.getLocation(), hex);
