@@ -21,7 +21,19 @@ public class ClientModelUnitTest {
 	
 	@Test
 	public void testUpdateServerModel(){
-		
+		ITranslator translator = new TranslatorJSON();
+		clientModel = new ClientModel((ServerModel)translator.translateFrom(gameJSON, ServerModel.class));
+		DevCards deck = new DevCards();
+		assertEquals("Server Model should have deck with 2 year of plenty", 2,
+				clientModel.getServerModel().getDeck().getYearOfPlenty());
+		assertEquals("Server Model should have deck with 2 monopoly", 2, 
+				clientModel.getServerModel().getDeck().getMonopoly());
+		assertEquals("Server Model should have deck with 14 soldier", 14,
+				clientModel.getServerModel().getDeck().getSoldier());
+		assertEquals("Server Model should have deck with 2 roadBuilding", 2,
+				clientModel.getServerModel().getDeck().getRoadBuilding());
+		assertEquals("Server Model should have deck with 5 monument", 5,
+				clientModel.getServerModel().getDeck().getMonument());
 	}
 	
 	@Test
