@@ -87,9 +87,9 @@ public class ProxyServer implements IServer{
 		if(response.getResponseCode() == 200) {
 			successful = true;
 			cookie = response.getResponseHeaders().get("Set-cookie").get(0);
+			int index = cookie.lastIndexOf(";Path=/");
+			cookie = cookie.substring(0, index);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			int index = subCookie.lastIndexOf(";Path=/");
-			subCookie = subCookie.substring(0, index);
 			PlayerCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
@@ -116,9 +116,9 @@ public class ProxyServer implements IServer{
 		if(response.getResponseCode() == 200) {
 			successful = true;
 			cookie = response.getResponseHeaders().get("Set-cookie").get(0);
+			int index = cookie.lastIndexOf(";Path=/");
+			cookie = cookie.substring(0, index);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			int index = subCookie.lastIndexOf(";Path=/");
-			subCookie = subCookie.substring(0, index);
 			PlayerCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
@@ -162,9 +162,9 @@ public class ProxyServer implements IServer{
 		if(response.getResponseCode() == 200) {
 			successful = true;
 			String gameCookieExtension = response.getResponseHeaders().get("Set-cookie").get(0);
-			gameCookieExtension = gameCookieExtension.replaceFirst("catan.game=", "");
-			gameCookieExtension = gameCookieExtension.substring(0, gameCookieExtension.lastIndexOf(";Path=/;"));
-			cookie = cookie + "; " + gameCookieExtension;
+			int index = gameCookieExtension.lastIndexOf(";Path=/;");
+			gameCookieExtension = gameCookieExtension.substring(0, index);
+			cookie = cookie + "; " + gameCookieExtension;
 			resultCookie = cookie;
 		}
 		return new JoinGameResponse(successful, resultCookie);
