@@ -1,7 +1,9 @@
 package proxy;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -35,7 +37,7 @@ public class ClientCommunicator implements ICommunicator {
 		String translatedJson = jsonTrans.translateTo(commandParameters);
 		
 		try {
-			URL url = new URL("http://" + Host + ':' + Port + commandName);
+			URL url = new URL("http://" + Host + ':' + Port + "/" + commandName);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			for(Pair header : headers){
 				connection.setRequestProperty((String)header.getKey(), (String)header.getValue());
@@ -50,6 +52,7 @@ public class ClientCommunicator implements ICommunicator {
 		}
 		catch (IOException e) { // IO ERROR
 			System.out.print("Unable to establish URL connection!");
+			e.printStackTrace();
 		}
 		return serverResponse;
 	}
@@ -105,21 +108,31 @@ public class ClientCommunicator implements ICommunicator {
 			connection.setDoInput(true); 
 			connection.setDoOutput(true); 
 			connection.connect(); 
-			
+						
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 			writer.write(jsonObject); 
 			
-			InputStream responseJson = connection.getInputStream();
-			responseMessage = connection.getResponseMessage();
+//	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//			String inputLine;
+//			while ((inputLine = in.readLine()) != null) {
+//				System.out.println(inputLine);
+//			}
+//			in.close();
+			
+//			InputStream responseJson = connection.getInputStream();
+			
+//			responseMessage = connection.getResponseMessage();
 			responseCode = connection.getResponseCode();
 			responseHeaders = connection.getHeaderFields();
 			
-			Object javaObject = jsonTrans.translateTo(responseJson.toString());
+//			Object javaObject = jsonTrans.translateTo(responseJson.toString());
 			
-			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
+//			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
 			
 			writer.close();
-			responseJson.close();
+//			responseJson.close();
+			
+			System.out.print("Yo dog");
 		}
 		catch (IOException e) { // IO ERROR
 			System.err.print("Unable to doPost");
