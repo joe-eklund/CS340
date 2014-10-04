@@ -12,7 +12,7 @@ public class CommandResponse implements ICommandResponse {
 	private Map<String, List<String>> responseHeaders; //http response header value for "Set-cookie"; can be NULL
 	private int responseCode;	//http response code; cannot be NULL
 	private Object responseObjectFromJSON;	//object translated from http response JSON using GSON; can be NULL
-	private String responseMessage;  //response message if “Content­Type:text/plain” response header
+	private String responseMessage;  //response message
 	
 	public CommandResponse(Map<String, List<String>> responseHeaders, int responseCode,
 			Object responseObjectFromJSON, String responseMessage) {

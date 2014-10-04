@@ -32,21 +32,15 @@
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
+	
+	<path id="java.compiled">
+			<fileset dir="${java.build}">
+				<include name="**/*.class" />
+			</fileset>
+	</path>
 
 	<!-- TARGETS -->
 	<!-- ******* -->
-
-	<target name="test" description="run the tests " >
-		<junit printsummary="yes" fork="yes" haltonfailure="yes">
-		<formatter type="plain"/>
-		<batchtest fork="true">
-			<fileset dir="${java/src/proxy/junit}">
-				<include name="**/*Test*.java"/>
-			</fileset>
-		</batchtest>
-		<classpath refid="${project.classpath}" />
-		</junit>
-	</target>
 	
 	<!--<target name="test">
 		<junit haltonfailure="true" >
@@ -181,6 +175,17 @@
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
+	
+	<target name="test" depends="package">
+		<junit showoutput="true" printsummary="yes" fork="yes">
+			<classpath>
+				 <path refid="java.lib.classpath" />
+				 <path refid="java.compiled" />
+			</classpath>
+			<formatter type="plain" usefile="false" />
+			<test name="AllTests" />
+		</junit>
+	</target>
   
 </project>
 
