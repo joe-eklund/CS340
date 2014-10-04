@@ -78,7 +78,12 @@ public class MockCommunicator implements ICommunicator {
 	private CommandResponse doGet(String commandName, List<Pair<String,String>> headers, Object commandParameters, Class<?> responseCastClass) //throws ClientException may need to add this in later
 	{
 		CommandResponse result = null;
+		int clientVersion = 0;
 		if(commandName.contains("game/model")) {
+			int modelIndex = commandName.indexOf("=") + 1;
+			if(modelIndex > -1) {
+				clientVersion = Integer.parseInt(commandName.substring(modelIndex));
+			}
 			commandName = "/game/model";
 		}
 		switch(commandName) {
@@ -90,7 +95,12 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/game/model":
 			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue())) {
-				result = new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+				if(clientVersion < TestingConstants.getServerModel().getVersion()) {
+					result = new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+				}
+				else {
+					result = new CommandResponse(null, 200, null, null);
+				}
 			}
 			else {
 				result = new CommandResponse(null, 404, null, null);

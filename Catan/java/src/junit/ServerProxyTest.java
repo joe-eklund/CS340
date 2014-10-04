@@ -102,9 +102,10 @@ public class ServerProxyTest {
 		//invalid cookie
 		GetGameModelResponse response = proxy.getGameModel(TestingConstants.CLIENT_GAME_VERSION, TestingConstants.INVALID_LOGIN_COOKIE);
 		assertEquals("Response code for unsuccessful getGameModel attempt (invalid cookie)", false, response.isSuccessful());
+		int version = 0;
 		
 		//valid
-		response = proxy.getGameModel(TestingConstants.CLIENT_GAME_VERSION, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		response = proxy.getGameModel(version, TestingConstants.VALID_JOINED_GAME_COOKIE);
 		assertEquals("Response code for successful getGameModel attempt", true, response.isSuccessful());
 		assertEquals("Game version for successful getGameModel attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}

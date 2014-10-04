@@ -1,6 +1,6 @@
 package client.presenter;
 
-public interface IPresenter {
+public interface IPresenter extends Runnable {
 	
 	/**
 	 * Updates the client game model to same version as server game model (named "run" b/c Presenter class extends TimerTask and run is able to be polled using Timer

@@ -1,12 +1,10 @@
 package client.presenter;
 
-import java.util.TimerTask;
-
 import proxy.IServer;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import client.model.ClientModel;
 
-public class Presenter extends TimerTask implements IPresenter {
+public class Presenter implements IPresenter {
 	private ClientModel clientModel;
 	private IServer proxy;
 	private int version;
@@ -44,7 +42,7 @@ public class Presenter extends TimerTask implements IPresenter {
 			}
 		}
 		else {
-			System.err.println("Error: Unable to update game model!");
+			System.err.println("Error: Unable to process update game model request!");
 		}
 		pollCycleCount++;
 	}
