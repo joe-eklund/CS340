@@ -20,4 +20,8 @@ public interface IPresenter {
 	 * @post
 	 */
 	public void run();
+	
+	public int getVersion();
+	
+	public int getPollCycleCount();
 }

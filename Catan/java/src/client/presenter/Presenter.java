@@ -11,6 +11,7 @@ public class Presenter extends TimerTask implements IPresenter {
 	private IServer proxy;
 	private int version;
 	private String cookie;
+	private int pollCycleCount;
 	
 	/**
 	 * @pre
@@ -28,8 +29,9 @@ public class Presenter extends TimerTask implements IPresenter {
 		super();
 		this.clientModel = clientModel;
 		this.proxy = proxy;
-		this.version = clientModel.getServerModel().getVersion();
+		this.version = 0;
 		this.cookie = cookie;	// no cookie = empty string
+		pollCycleCount = 0;
 	}
 
 	@Override
@@ -44,6 +46,15 @@ public class Presenter extends TimerTask implements IPresenter {
 		else {
 			System.err.println("Error: Unable to update game model!");
 		}
+		pollCycleCount++;
+	}
+	
+	public int getVersion() {
+		return version;
+	}
+	
+	public int getPollCycleCount() {
+		return pollCycleCount;
 	}
 
 }

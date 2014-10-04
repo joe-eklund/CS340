@@ -1,19 +1,33 @@
 package proxy;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import shared.ServerMethodRequests.*;
-import shared.ServerMethodResponses.*;
-import shared.definitions.CatanColor;
+import junit.TestingConstants;
+import shared.ServerMethodRequests.AcceptTradeRequest;
+import shared.ServerMethodRequests.BuildCityRequest;
+import shared.ServerMethodRequests.BuildRoadRequest;
+import shared.ServerMethodRequests.BuildSettlementRequest;
+import shared.ServerMethodRequests.BuyDevCardRequest;
+import shared.ServerMethodRequests.ChangeLogLevelRequest;
+import shared.ServerMethodRequests.CreateGameRequest;
+import shared.ServerMethodRequests.DiscardCardsRequest;
+import shared.ServerMethodRequests.FinishTurnRequest;
+import shared.ServerMethodRequests.JoinGameRequest;
+import shared.ServerMethodRequests.MaritimeTradeRequest;
+import shared.ServerMethodRequests.MonopolyDevRequest;
+import shared.ServerMethodRequests.MonumentDevRequest;
+import shared.ServerMethodRequests.OfferTradeRequest;
+import shared.ServerMethodRequests.RoadBuildingDevRequest;
+import shared.ServerMethodRequests.RollNumberRequest;
+import shared.ServerMethodRequests.SendChatRequest;
+import shared.ServerMethodRequests.SoldierDevRequest;
+import shared.ServerMethodRequests.UserRequest;
+import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerLogLevel;
-import shared.definitions.ServerModel;
 import client.model.Log;
-import junit.TestingConstants;
 
 /**This class will contain some hard code data for the use of testing.
  * 
@@ -64,6 +78,9 @@ public class MockCommunicator implements ICommunicator {
 	private CommandResponse doGet(String commandName, List<Pair<String,String>> headers, Object commandParameters, Class<?> responseCastClass) //throws ClientException may need to add this in later
 	{
 		CommandResponse result = null;
+		if(commandName.contains("game/model")) {
+			commandName = "/game/model";
+		}
 		switch(commandName) {
 		case "/game/listAI":
 			result = new CommandResponse(null, 200, TestingConstants.MOCK_AIS, null);
@@ -71,7 +88,7 @@ public class MockCommunicator implements ICommunicator {
 		case "/game/commands":
 			result = new CommandResponse(null, 200, TestingConstants.getCommandsLog(), null);
 			break;
-		case "/game/model?version=0":
+		case "/game/model":
 			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue())) {
 				result = new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
 			}
