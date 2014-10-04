@@ -21,7 +21,7 @@ public class AllTests {
 	  public static void main(String[] args) {
 		  List<Class> myClasses=new ArrayList();
 		  myClasses.add(ClientModelUnitTest.class);
-		  myClasses.add(MockCommunicatorTest.class);
+		  //myClasses.add(MockCommunicatorTest.class);
 		  myClasses.add(PlayerTest.class);
 		  myClasses.add(ServerProxyTest.class);
 		  myClasses.add(TaylorJUnit.class);

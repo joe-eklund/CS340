@@ -32,6 +32,8 @@ public class ClientCommunicatorTest {
 	User mockUser;
 	String mockCommandName;
 	
+	RequestType mockRequest;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
