@@ -111,27 +111,31 @@ public class ClientCommunicator implements ICommunicator {
 						
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 			writer.write(jsonObject); 
-			
+			writer.flush();
 			writer.close();
 
-//	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//			String inputLine;
-//			while ((inputLine = in.readLine()) != null) {
-//				System.out.println(inputLine);
-//			}
-//			in.close();	
-			
-			
-			
-			InputStream responseJson = connection.getInputStream();
-			responseMessage = connection.getResponseMessage();
 			responseCode = connection.getResponseCode();
+			
+	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String inputLine;
+			StringBuffer responseJson = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				System.out.println(inputLine);
+				responseJson.append(inputLine);
+			}
+			in.close();	
+			
+//			System.out.print(connection.getHeaderField("set-cookie")); //grab the info
+//			String cookie = connection.getHeaderField("set-cookie");
+			
 			responseHeaders = connection.getHeaderFields();
+//			List<String> bob = (List<String>) responseHeaders.get("Set-cookie");
+//			System.out.print(bob.get(0));
 			
-			Object javaObject = jsonTrans.translateTo(responseJson.toString());
+			responseMessage = connection.getResponseMessage();
+			
+			Object javaObject = jsonTrans.translateTo(responseJson.toString()); //send over the buffered reader result ,"result1"
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
-			responseJson.close();
-			
 		}
 		catch (IOException e) { // IO ERROR
 			System.err.print("Unable to doPost");

@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import client.model.Message;
 import proxy.ClientCommunicator;
 import proxy.CommandResponse;
 import proxy.Pair;
@@ -31,8 +32,6 @@ public class ClientCommunicatorTest {
 	List<Pair<String,String>> headers;
 	User mockUser;
 	String mockCommandName;
-	
-	RequestType mockRequest;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -56,110 +55,209 @@ public class ClientCommunicatorTest {
 	 */
 	@Test
 	public void connectUserLoginTest() {
-		Pair mockPair = new Pair("SAM", "sam");
+		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		mockUser = new User("Brooke", "brooke");
-		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, null, "user/login", mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "user/login", mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
-		System.out.print(mockResponse);
 	}
 	
 	@Test
 	public void testRegisterUser() {
+		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Bob%22%2C%22password%22%3A%22bob%22%2C%22playerID%22%3A0%7D");
+		headers.add(mockPair);
+		mockUser = new User("Bob", "bob");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "user/register", mockUser, RequestType.class);
-		assertTrue(mockResponse.getResponseCode() == 200);
+//		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
 	@Test
 	public void testGetGamesList() {
+		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		headers.add(mockPair);
+		mockUser = new User("Brooke", "brooke");
 		mockCommandName = "games/list";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.GET, headers, "games/list", mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
-		System.out.print(mockResponse);
+//		System.out.print(mockResponse.);
 	}
 	
-	@Test
+//	@Test
 	public void testCreateGame() {
 		mockCommandName = "games/create";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
-	@Test
+//	@Test
 	public void testJoinGame() {
 		mockCommandName = "games/join";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
-	@Test
+//	@Test
 	public void testGetGameModel() {
 		mockCommandName = "game/model?version=x";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
-	@Test
+//	@Test
 	public void testGameReset() {
 		mockCommandName = "games/reset";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
-	@Test
+//	@Test
 	public void testGetGameCommands() {
 		mockCommandName = "games/commands";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
-	@Test
+//	@Test
 	public void testPostGameCommands() {
 		mockCommandName = "games/commands";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
-	@Test
+//	@Test
 	public void testGetGameListAI() {
 		mockCommandName = "games/listAI";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 		System.out.print(mockResponse);
 	}
 	
-	@Test
+//	@Test
 	public void testAddAI() { 
 		mockCommandName = "games/addAI";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+//		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
+//		assertTrue(mockResponse.getResponseCode() == 200);
+//		System.out.print(mockResponse);
+	}
+	
+//	@Test
+	public void testUtilChangeLogLevel() {
+		mockCommandName = "util/changeLogLevel";
+//		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, mockCommandName, mockUser, RequestType.class);
+//		assertTrue(mockResponse.getResponseCode() == 200);
+//		System.out.print(mockResponse);
+	}
+	
+	////Move Command Tests*****************
+	
+	@Test
+	public void testSendChat() {
+		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		headers.add(mockPair);
+		Message mockMessage = new Message();
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/rollNumber", mockUser, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
-		System.out.print(mockResponse);
 	}
 	
 	@Test
-	public void testUtilChangeLogLevel() {
-		mockCommandName = "util/changeLogLevel";
-		mockRequest = RequestType.POST;
-		CommandResponse mockResponse = CCTestor.executeCommand(mockRequest, headers, mockCommandName, mockUser, RequestType.class);
+	public void testRollNumber(){
+		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		headers.add(mockPair);
+		String mockData = "{\r\n" + 
+				"  \"type\": \"rollNumber\",\r\n" + 
+				"  \"playerIndex\": \"22\",\r\n" + 
+				"  \"number\": \"5\"\r\n" + 
+				"}";
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/rollNumber", mockData, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
-		System.out.print(mockResponse);
 	}
+	
+	@Test
+	public void testRobPlayer(){
+		
+	}
+	
+	@Test
+	public void testFinishTurn(){
+		
+	}
+	
+	@Test
+	public void testBuyDevCard(){
+		
+	}
+	
+	@Test
+	public void testYearOfPlenty(){
+		
+	}
+	
+	@Test
+	public void testRoadBuilding(){
+		
+	}
+	
+	@Test
+	public void testSoldier(){
+		
+	}
+	
+	@Test
+	public void testMonopoly(){
+		
+	}
+	
+	@Test
+	public void testMonument() {
+		
+	}
+	
+	@Test
+	public void testBuildRoad(){
+	
+	}
+	
+	@Test
+	public void testBuildSettlement(){
+		
+	}
+	
+	@Test
+	public void testBuildCity(){
+		
+	}
+	
+	@Test
+	public void testOfferTrade(){
+		
+	}
+	
+	@Test
+	public void testAcceptTrade(){
+		
+	}
+	
+	@Test
+	public void testMaritimeTrade(){
+	
+	}
+	
+	@Test
+	public void testDiscardCards(){
+		
+	}
+	
+	
+	
+	
+	
 	
 	final String mockData2 = "{\"chat\":{\"lines\":[]},"
 			+ "\"bank\":{\"brick\":10,\"ore\":19,\"sheep\":9,\"wheat\":19,\"wood\":19},"
