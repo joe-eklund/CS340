@@ -434,7 +434,7 @@ public class ClientModel {
 		//Checks status, players turn, has player already played dev card, if the player has a soldier card,
 		//If the robber is not already in the designated HexLocation, and if the victim has cards to steal.
 		if (generalDevCardPreconditions(playerIndex) && 
-			serverModel.getPlayers().get(playerIndex).getOldDevCards().soldier > 0 &&
+			serverModel.getPlayers().get(playerIndex).getOldDevCards().getSoldier() > 0 &&
 			!serverModel.getMap().getRobber().getLocation().equals(hexLoc) && 
 			serverModel.getPlayers().get(victimIndex).getResources().totalResourcesCount() > 0) {
 			
@@ -448,7 +448,7 @@ public class ClientModel {
 	public boolean canPlayMonopoly(int playerIndex) {
 		//Checks status, players turn, has player already played dev card, and if the player has a monopoly card
 		if (generalDevCardPreconditions(playerIndex) && 
-			serverModel.getPlayers().get(playerIndex).getOldDevCards().monopoly > 0) {
+			serverModel.getPlayers().get(playerIndex).getOldDevCards().getMonopoly() > 0) {
 			return true;
 		}
 		else {
@@ -458,7 +458,7 @@ public class ClientModel {
 	
 	public boolean canPlayMonument(int playerIndex) {
 		//Checks status, players turn, has player already played dev card, and if the player has a monument card
-		if (generalDevCardPreconditions(playerIndex) && serverModel.getPlayers().get(playerIndex).getOldDevCards().monument > 0) {	
+		if (generalDevCardPreconditions(playerIndex) && serverModel.getPlayers().get(playerIndex).getOldDevCards().getMonument() > 0) {	
 			return true;
 		}
 		else {
