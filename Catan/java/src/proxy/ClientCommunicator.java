@@ -40,7 +40,7 @@ public class ClientCommunicator implements ICommunicator {
 			URL url = new URL("http://" + Host + ':' + Port + "/" + commandName);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			for(Pair header : headers){
-				connection.setRequestProperty((String)header.getKey(), (String)header.getValue());
+				connection.addRequestProperty((String)header.getKey(), (String)header.getValue());
 			}
 			if(requestType.name().equals("GET")) {
 				
@@ -72,17 +72,24 @@ public class ClientCommunicator implements ICommunicator {
 		try { 
 			connection.setRequestMethod("GET");
 			connection.connect(); 
-						
-			InputStream responseJson = connection.getInputStream();
-			responseMessage = connection.getResponseMessage();
+	
 			responseCode = connection.getResponseCode();
+						
+	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String inputLine;
+			StringBuffer responseJson = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				System.out.println(inputLine);
+				responseJson.append(inputLine);
+			}
+			in.close();	
+			
+			responseMessage = connection.getResponseMessage();
 			responseHeaders = connection.getHeaderFields();
 			
 			Object javaObject = jsonTrans.translateTo(responseJson.toString());
 			
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
-			
-			responseJson.close();
 		}
 		catch (IOException e) { // IO ERROR
 			System.err.print("Unable to doGet");
@@ -125,13 +132,7 @@ public class ClientCommunicator implements ICommunicator {
 			}
 			in.close();	
 			
-//			System.out.print(connection.getHeaderField("set-cookie")); //grab the info
-//			String cookie = connection.getHeaderField("set-cookie");
-			
-			responseHeaders = connection.getHeaderFields();
-//			List<String> bob = (List<String>) responseHeaders.get("Set-cookie");
-//			System.out.print(bob.get(0));
-			
+			responseHeaders = connection.getHeaderFields();			
 			responseMessage = connection.getResponseMessage();
 			
 			Object javaObject = jsonTrans.translateTo(responseJson.toString()); //send over the buffered reader result ,"result1"
