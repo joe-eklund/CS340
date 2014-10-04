@@ -2,7 +2,6 @@ package proxy;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -91,7 +90,7 @@ public class ClientCommunicator implements ICommunicator {
 		try {
 			URL url = new URL("http://" + Host + ':' + Port + "/" + commandName);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			for(Pair header : headers){
+			for(Pair<?, ?> header : headers){
 				connection.addRequestProperty((String)header.getKey(), (String)header.getValue());
 			}
 			if(requestType.name().equals("GET")) {
@@ -121,7 +120,7 @@ public class ClientCommunicator implements ICommunicator {
 		CommandResponse result = null;
 		int responseCode;
 		String responseMessage = "";
-		Map responseHeaders;
+		Map<String, List<String>> responseHeaders;
 		try { 
 			connection.setRequestMethod("GET");
 			connection.connect(); 
@@ -162,7 +161,7 @@ public class ClientCommunicator implements ICommunicator {
 		CommandResponse result = null;
 		int responseCode;
 		String responseMessage = "";
-		Map responseHeaders;
+		Map<String, List<String>> responseHeaders;
 		try { 
 			connection.setRequestMethod("POST");
 			connection.setDoInput(true); 
@@ -193,6 +192,7 @@ public class ClientCommunicator implements ICommunicator {
 		}
 		catch (IOException e) { // IO ERROR
 			System.err.print("Unable to doPost\n");
+			e.printStackTrace();
 		}
 		return result;
 	}

@@ -29,9 +29,7 @@ import shared.definitions.ServerLogLevel;
 import client.model.Log;
 
 /**This class will contain some hard code data for the use of testing.
- * 
  * @author Chad
- *
  */
 public class MockCommunicator implements ICommunicator {
 	

@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import client.model.Message;
 import proxy.ClientCommunicator;
 import proxy.CommandResponse;
 import proxy.Pair;
@@ -19,8 +18,11 @@ import proxy.TranslatorJSON;
 import shared.ServerMethodRequests.*;
 import shared.definitions.ResourceHand;
 import shared.definitions.User;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /**
  * @author Chad
@@ -57,7 +59,7 @@ public class ClientCommunicatorTest {
 	 */
 //	@Test
 	public void connectUserLoginTest() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		mockUser = new User("Brooke", "brooke");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "user/login", mockUser, RequestType.class);
@@ -66,7 +68,7 @@ public class ClientCommunicatorTest {
 	
 //	@Test
 	public void testRegisterUser() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Bob%22%2C%22password%22%3A%22bob%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Bob%22%2C%22password%22%3A%22bob%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		Random r = new Random();
 		StringBuilder builder = new StringBuilder();
@@ -82,7 +84,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testGetGamesList() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		mockUser = new User("Brooke", "brooke");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.GET, headers, "games/list", mockUser, RequestType.class);
@@ -91,7 +93,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testCreateGame() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		CreateGameRequest data = new CreateGameRequest(true,true,true, "GAME OF DOOM!!");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "games/create", data, RequestType.class);
@@ -100,7 +102,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testJoinGame() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		JoinGameRequest data = new JoinGameRequest(4, "green");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "games/join", data, RequestType.class);
@@ -109,7 +111,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testGetGameModel() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		mockUser = new User("Brooke", "brooke");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.GET, headers, "games/model", mockUser, RequestType.class);
@@ -118,7 +120,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testGameReset() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		ResetGameRequest data = new ResetGameRequest();
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "games/reset", data, RequestType.class);
@@ -127,7 +129,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testGetGameCommands() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		mockUser = new User("Brooke", "brooke");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.GET, headers, "games/commands", mockUser, RequestType.class);
@@ -141,7 +143,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testGetGameListAI() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		mockUser = new User("Brooke", "brooke");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.GET, headers, "games/listAI", mockUser, RequestType.class);
@@ -150,7 +152,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testAddAI() { 
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		AddAIRequest data = new AddAIRequest("Squall");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "games/commands", data, RequestType.class);
@@ -159,7 +161,7 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testUtilChangeLogLevel() {
-		Pair mockPair = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
 		ChangeLogLevelRequest data = new ChangeLogLevelRequest("SEVERE");
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "games/listAI", data, RequestType.class);
@@ -170,8 +172,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testSendChat() {
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		SendChatRequest mockChatRequest = new SendChatRequest(1, "Sup duuuuuuuude!!!!");
@@ -181,8 +183,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testRollNumber(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		RollNumberRequest data = new RollNumberRequest(5, 1);
@@ -192,8 +194,8 @@ public class ClientCommunicatorTest {
 	
 	@Test 
 	public void testRobPlayer(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		SoldierDevRequest data = new SoldierDevRequest(1,11, new HexLocation(5,5));
@@ -203,8 +205,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testFinishTurn(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		FinishTurnRequest data = new FinishTurnRequest(1);
@@ -214,8 +216,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testBuyDevCard(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		BuyDevCardRequest data = new BuyDevCardRequest(1);
@@ -225,8 +227,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testYearOfPlenty(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		YearOfPlentyDevRequest data = new YearOfPlentyDevRequest(1, "sheep", "wood");
@@ -236,8 +238,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testRoadBuilding(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		RoadBuildingDevRequest data = new RoadBuildingDevRequest(1, null, null);
@@ -247,8 +249,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testSoldier(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		SoldierDevRequest data = new SoldierDevRequest(1,11, new HexLocation(5,5));
@@ -258,8 +260,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testMonopoly(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		MonopolyDevRequest data = new MonopolyDevRequest(1, "sheep");
@@ -269,8 +271,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testMonument() {
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		MonumentDevRequest data = new MonumentDevRequest(1);
@@ -280,63 +282,66 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testBuildRoad(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
-		BuildRoadRequest data = new BuildRoadRequest(1 ,EdgeLocation, 9);
+		BuildRoadRequest data = new BuildRoadRequest(1, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.SouthEast), true);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildRoad", data, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
 	@Test
 	public void testBuildSettlement(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
-		BuildSettlementRequest data = new BuildSettlementRequest(1 ,EdgeLocation, 9);
+		VertexLocation vertex = new VertexLocation(new HexLocation(1,1),VertexDirection.NorthWest);
+		BuildSettlementRequest data = new BuildSettlementRequest(1 ,vertex, true);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildSettlement", data, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
 	@Test
 	public void testBuildCity(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
-		BuildCityRequest data = new BuildCityRequest(1 ,EdgeLocation, 9);
+		VertexLocation vertex = new VertexLocation(new HexLocation(1,1),VertexDirection.NorthWest);
+
+		BuildCityRequest data = new BuildCityRequest(1, vertex);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildCity", data, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
 	@Test
 	public void testOfferTrade(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
-		OfferTradeRequest data = new OfferTradeRequest(1, new ResourceHand(0,0,-1,0,1), 11);
+		OfferTradeRequest data = new OfferTradeRequest(11, new ResourceHand(0,0,0,0,0), 1);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/offerTrade", data, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
 	@Test
 	public void testAcceptTrade(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
-		AcceptTradeRequest data = new AcceptTradeRequest(1, false);
+		AcceptTradeRequest data = new AcceptTradeRequest(1, true);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/acceptTrade", data, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
 	@Test
 	public void testMaritimeTrade(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		MaritimeTradeRequest data = new MaritimeTradeRequest(1,2,"sheep", "wood");
@@ -346,8 +351,8 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testDiscardCards(){
-		Pair user = new Pair("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair game = new Pair("Cookie", "catan.game=2");
+		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
+		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
 		DiscardCardsRequest data = new DiscardCardsRequest(new ResourceHand(0,-1,-1,0,0),1);
