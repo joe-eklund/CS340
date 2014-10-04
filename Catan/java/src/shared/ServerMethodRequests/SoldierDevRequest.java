@@ -1,16 +1,15 @@
 package shared.ServerMethodRequests;
 
-import shared.definitions.PlayerIndex;
 import shared.locations.HexLocation;
 
 public class SoldierDevRequest {
 	private String type;
 	private int playerIndex;
 	private HexLocation location;
-	private PlayerIndex victimIndex;
+	private int victimIndex;
 	
 
-	public SoldierDevRequest(int playerIndex, PlayerIndex victimIndex,
+	public SoldierDevRequest(int playerIndex, int victimIndex,
 			HexLocation location) {
 		this.type = "Soldier";
 		this.playerIndex = playerIndex;
@@ -34,7 +33,7 @@ public class SoldierDevRequest {
 	}
 
 
-	public PlayerIndex getVictimIndex() {
+	public int getVictimIndex() {
 		return victimIndex;
 	}
 
@@ -54,7 +53,7 @@ public class SoldierDevRequest {
 	}
 
 
-	public void setVictimIndex(PlayerIndex victimIndex) {
+	public void setVictimIndex(int victimIndex) {
 		this.victimIndex = victimIndex;
 	}
 	

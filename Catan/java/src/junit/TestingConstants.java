@@ -10,7 +10,14 @@ import proxy.TranslatorJSON;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
+import shared.definitions.ResourceHand;
+import shared.definitions.ResourceType;
 import shared.definitions.ServerModel;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import client.model.Log;
 
 public final class TestingConstants {
@@ -76,6 +83,22 @@ public final class TestingConstants {
 	
 	public static final int CLIENT_GAME_VERSION = 0;
 	
+	public static final String INVALID_COMMANDS_MESSAGE = "Error: invalid command log syntax";
+	
+	public static final String INVALID_AI = "invalid AI";
+	public static final int PLAYER_INDEX = 27;
+	public static final String CHAT_CONTENT = "Hello World!";
+	
+	public static final ResourceHand RESOURCE_HAND = new ResourceHand(3, 1, 0, 0, -2);
+	public static final int ROLL_NUMBER = 5;
+	public static final int ANOTHER_PLAYER_INDEX = 17;
+	public static final HexLocation HEX_LOCATION = new HexLocation(1, 3);
+	public static final EdgeLocation EDGE_LOCATION = new EdgeLocation(HEX_LOCATION, EdgeDirection.SouthEast);
+	public static final EdgeLocation ANOTHER_EDGE = new EdgeLocation(new HexLocation(4, 7), EdgeDirection.NorthEast);
+	public static final VertexLocation VERTEX_LOCATION = new VertexLocation(new HexLocation(1, 3), VertexDirection.West);
+	public static final int MARITIME_RATIO = 3;
+	public static final ResourceType RESOURCE_TYPE = ResourceType.ORE;
+	public static final ResourceType OTHER_RESOURCE_TYPE = ResourceType.WOOD;
 	
 	public static Log getCommandsLog() {
 		ITranslator translator = new TranslatorJSON();

@@ -1,32 +1,30 @@
 package junit;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import client.model.Bank;
-import client.model.Chat;
-import client.model.Log;
-import client.model.Map;
-import client.model.Player;
-import client.model.TradeOffer;
-import client.model.TurnTracker;
 import proxy.ICommunicator;
 import proxy.IServer;
-import proxy.ITranslator;
 import proxy.MockCommunicator;
 import proxy.ProxyServer;
 import proxy.TranslatorJSON;
-import shared.ServerMethodResponses.*;
+import shared.ServerMethodResponses.AddAIResponse;
+import shared.ServerMethodResponses.ChangeLogLevelResponse;
+import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.GetGameCommandsResponse;
+import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.JoinGameResponse;
+import shared.ServerMethodResponses.ListAIResponse;
+import shared.ServerMethodResponses.ListGamesResponse;
+import shared.ServerMethodResponses.MoveResponse;
+import shared.ServerMethodResponses.PostGameCommandsResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
+import shared.ServerMethodResponses.UserResponse;
 import shared.definitions.CatanColor;
-import shared.definitions.GameDescription;
-import shared.definitions.GameModel;
-import shared.definitions.PlayerDescription;
-import shared.definitions.PlayerIndex;
+import shared.definitions.ServerLogLevel;
+import client.model.Log;
 /**
  * 
  */
@@ -98,20 +96,7 @@ public class ServerProxyTest {
 		assertEquals("Response code for successful joinGame attempt",true, response.isSuccessful());
 		assertEquals("Response object for successful joinGame attempt", TestingConstants.VALID_JOINED_GAME_COOKIE, response.getCookie());
 	}
-	
-	/*
-	@Test
-	public void testSaveGame() {
 		
-	}
-	
-	@Test
-	public void testLoadGame() {
-		
-	}
-	*/
-	
-	
 	@Test
 	public void testGetGameModel() {
 		//invalid cookie
@@ -138,166 +123,173 @@ public class ServerProxyTest {
 		//valid
 		GetGameCommandsResponse response = proxy.getGameCommands(TestingConstants.VALID_JOINED_GAME_COOKIE);
 		assertEquals("Response code for successful getGameCommands attempt", true, response.isSuccessful());
-		assertEquals("Game version for successful getGameCommands attempt", TestingConstants.getCommandsLog().getLogMessages().size(), response.getCommands());
+		assertEquals("Command log is valid for successful getGameCommands attempt", TestingConstants.getCommandsLog().getLogMessages(), response.getCommands().getLogMessages());
 	}
 	
-	/*
 	@Test
 	public void testPostGameCommands() {
 		//invalid command format
-		
-		//invalid cookie
+		PostGameCommandsResponse response;
+		response = proxy.postGameCommands(new Log(), TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful postGameCommands attempt", false, response.isSuccessful());
+		assertEquals("Game version for successful postGameCommands attempt", TestingConstants.INVALID_COMMANDS_MESSAGE, response.getErrorMessage());
 		
 		//valid command format
-		
+		response = proxy.postGameCommands(TestingConstants.getCommandsLog(), TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful postGameCommands attempt", true, response.isSuccessful());
+		assertEquals("Game version for successful postGameCommands attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
-	*/
+	
 	@Test
 	public void testListAI() {
 		//valid
-		
 		ListAIResponse response = proxy.listAI(null);
 		assertEquals("Response code for successful listAIs attempt",true, response.isSuccessful());
 		assertEquals("List AIs available to add to game", TestingConstants.MOCK_AIS_LIST, response.getAiTypes());
 	}
 	
-	/*
 	@Test
 	public void testAddAI() {
-		//invalid cookie
-		
-		//no space to add ai
+		//invalid
+		AddAIResponse response = proxy.addAI(TestingConstants.INVALID_AI, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for unsuccessful addAIs attempt",false, response.isSuccessful());
 		
 		//valid
+		response = proxy.addAI(TestingConstants.MOCK_AIS_LIST.get(0), TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful addAIs attempt",true, response.isSuccessful());
 	}
 	
 	@Test
 	public void testChangeLogLevel() {
-		//valid (change log level to sever)
-		
+		//valid
+		ChangeLogLevelResponse response = proxy.changeLogLevel(ServerLogLevel.SEVERE, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful change server log to severe level",true, response.isSuccessful());
 	}
 	
 	@Test
 	public void testSendChat() {
 		//invalid cookie
+		MoveResponse response = proxy.sendChat(TestingConstants.PLAYER_INDEX, "hello world", TestingConstants.INVALID_LOGIN_COOKIE);
+		assertEquals("Response code for unsuccessful send chat attempt",false, response.isSuccessful());
 		
 		//valid send "hello world"
+		response = proxy.sendChat(TestingConstants.PLAYER_INDEX, TestingConstants.CHAT_CONTENT, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for unsuccessful send chat attempt", true, response.isSuccessful());
+		assertEquals("Response game object for unsuccessful send chat attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testAcceptTrade() {
-		
+		//valid
+		MoveResponse response = proxy.acceptTrade(TestingConstants.PLAYER_INDEX, true, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful accept trade attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful accept trade attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testDiscardCards() {
-		
+		//valid
+		MoveResponse response = proxy.discardCards(TestingConstants.PLAYER_INDEX, TestingConstants.RESOURCE_HAND, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful discard attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful discard attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testRollNumber() {
-		
+		//valid
+		MoveResponse response = proxy.rollNumber(TestingConstants.PLAYER_INDEX, TestingConstants.ROLL_NUMBER, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful roll number attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful roll number attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void  testBuildRoad() {
-		
+		//valid
+		MoveResponse response = proxy.buildRoad(TestingConstants.PLAYER_INDEX, TestingConstants.EDGE_LOCATION, true, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful build road attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful build road attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testBuildSettlement() {
-		
+		//valid
+		MoveResponse response = proxy.buildSettlement(TestingConstants.PLAYER_INDEX, TestingConstants.VERTEX_LOCATION, true, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful build settlement attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful build settlement attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testBuildCity() {
-		
+		//valid
+		MoveResponse response = proxy.buildCity(TestingConstants.PLAYER_INDEX, TestingConstants.VERTEX_LOCATION, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful build city attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful build city attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testOfferTrade() {
-		
+		//valid
+		MoveResponse response = proxy.offerTrade(TestingConstants.PLAYER_INDEX, TestingConstants.RESOURCE_HAND, TestingConstants.ANOTHER_PLAYER_INDEX, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful trade offer attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful trade offer attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testOfferMaritimeTrade() {
-		
+		//valid
+		MoveResponse response = proxy.maritimeTrade(TestingConstants.PLAYER_INDEX, TestingConstants.MARITIME_RATIO, TestingConstants.RESOURCE_TYPE, TestingConstants.OTHER_RESOURCE_TYPE, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful maritime trade attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful maritime trade attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testFinishTurn() {
-		
+		//valid
+		MoveResponse response = proxy.finishTurn(TestingConstants.PLAYER_INDEX, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful finish turn attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful finish turn attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testBuyDevCard() {
-		
+		//valid
+		MoveResponse response = proxy.buyDevCard(TestingConstants.PLAYER_INDEX, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful buy dev card attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful buy dev card attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testPlayYearOfPlenty() {
-		
+		MoveResponse response = proxy.playYearOfPlentyCard(TestingConstants.PLAYER_INDEX, TestingConstants.RESOURCE_TYPE, TestingConstants.OTHER_RESOURCE_TYPE, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful play year of plenty attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful play year of plenty attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testPlayRoadBuilding() {
-		
+		MoveResponse response = proxy.playRoadBuildingCard(TestingConstants.PLAYER_INDEX, TestingConstants.EDGE_LOCATION, TestingConstants.ANOTHER_EDGE, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful dev road building attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful dev road building attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testPlayMonopoly() {
-		
+		MoveResponse response = proxy.playMonopolyCard(TestingConstants.PLAYER_INDEX, TestingConstants.RESOURCE_TYPE, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful play monopoly attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful play monopoly card attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testPlaySoldier() {
-		
+		MoveResponse response = proxy.playSoldierCard(TestingConstants.PLAYER_INDEX, TestingConstants.ANOTHER_PLAYER_INDEX, TestingConstants.HEX_LOCATION, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful play soldier attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful play soldier attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
 	@Test
 	public void testPlayMonument() {
-		
+		MoveResponse response = proxy.playMonumentCard(TestingConstants.PLAYER_INDEX, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		assertEquals("Response code for successful play monument attempt", true, response.isSuccessful());
+		assertEquals("Response game object for successful play monument attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
-	
-	
-	
-	
-	
-	@Test
-	public void testTranslateToJSON() {		
-		List<Player> players=new ArrayList();
-		players.add(new Player("Blue", "Ender", 0));
-		players.add(new Player("Orange", "Ralph", 1));
-		players.add(new Player("Red", "Santa", 2));
-		players.add(new Player("Brown", "Frodo", 3));
-		
-		GameModel game=new GameModel(new Bank(),new Chat(),new Log(),new Map(),players,null,new TurnTracker(),0,-1);
-		String translation=trans.translateTo(game);
-		//System.out.println(translation);
-		assertEquals("JSON should match",translation,"{\"chat\":{\"lines\":[]},\"bank\":{\"brick\":19,\"ore\":19,\"sheep\":19,\"wheat\":19,\"wood\":19},\"log\":{\"lines\":[]},\"map\":{\"radius\":3},\"players\":[{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Blue\",\"discarded\":false,\"monuments\":0,\"name\":\"Ender\",\"playerIndex\":0,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Orange\",\"discarded\":false,\"monuments\":0,\"name\":\"Ralph\",\"playerIndex\":1,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Red\",\"discarded\":false,\"monuments\":0,\"name\":\"Santa\",\"playerIndex\":2,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0},{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Brown\",\"discarded\":false,\"monuments\":0,\"name\":\"Frodo\",\"playerIndex\":3,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":0}],\"turnTracker\":{\"currentTurn\":0,\"status\":\"Playing\",\"longestRoad\":-1,\"largestArmy\":-1},\"version\":0,\"winner\":-1,\"deck\":{\"monopoly\":2,\"monument\":5,\"roadBuilding\":2,\"soldier\":14,\"yearOfPlenty\":2}}");
-	}
-	@Test
-	public void testTranslateFrom() {		
-		String message = "{\"chat\":{\"lines\":[]},"
-				+ "\"bank\":{\"brick\":10,\"ore\":19,\"sheep\":9,\"wheat\":19,\"wood\":19},"
-				+ "\"log\":{\"lines\":[]},\"map\":{\"radius\":3},"
-				+ "\"players\":[{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Blue\",\"discarded\":false,\"monuments\":0,\"name\":\"Ender\",\"playerIndex\":0,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":2},"
-				+ "{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Orange\",\"discarded\":false,\"monuments\":0,\"name\":\"Ralph\",\"playerIndex\":1,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":2},"
-				+ "{\"cities\":4,\"settlements\":5,\"roads\":15,\"color\":\"Red\",\"discarded\":false,\"monuments\":0,\"name\":\"Henry\",\"playerIndex\":2,\"playedDevCard\":false,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":2},"
-				+ "{\"cities\":4,\"settlements\":5,\"roads\":10,\"color\":\"Brown\",\"discarded\":false,\"monuments\":0,\"name\":\"Frodo\",\"playerIndex\":3,\"playedDevCard\":true,\"playerID\":0,\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0},\"soldiers\":0,\"victoryPoints\":2}],"
-				+ "\"turnTracker\":{\"currentTurn\":0,\"status\":\"Playing\",\"longestRoad\":-1,\"largestArmy\":-1},"
-				+ "\"version\":0,\"winner\":-1,"
-				+ "\"deck\":{\"monopoly\":2,\"monument\":5,\"roadBuilding\":2,\"soldier\":14,\"yearOfPlenty\":2}}";
-		GameModel game = (GameModel) trans.translateFrom(message, GameModel.class);
-		
-		assertEquals("Bank bricks should match(10)",game.getBank().getBrick(),10);
-		assertEquals("Bank sheeps should match(9)",game.getBank().getSheep(),9);
-		assertEquals("Player at (0) should be named Ender",game.getPlayers().get(0).getName(),"Ender");
-		assertEquals("Player at (2) should be named Henry",game.getPlayers().get(2).getName(),"Henry");
-		assertEquals("Player at (3) should have 10 roads",game.getPlayers().get(3).getRoads(),10);
-		assertEquals("Player at (3) should have played dev card",game.getPlayers().get(3).hasPlayedDevCard(),true);
-		assertEquals("Map should have a radius of 3",game.getMap().getRadius(),3);
-		
-	}
-	*/
 }

@@ -224,7 +224,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/commands", commands, Log.class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/game/commands", commands, Log.class);
 		PostGameCommandsResponse result;
 		if(response.getResponseCode() == 200) {
 			result = new PostGameCommandsResponse(true, (ServerModel)response.getResponseObject(), null);
@@ -241,7 +241,6 @@ public class ProxyServer implements IServer{
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "/game/listAI", null, String[].class);
-		String[] strArray = (String[]) response.getResponseObject();
 		List<String> list = Arrays.asList((String[])response.getResponseObject());
 		return new ListAIResponse(response.getResponseCode() == 200, list);
 	}
@@ -407,7 +406,7 @@ public class ProxyServer implements IServer{
 	}
 
 	@Override
-	public MoveResponse playSoldierCard(int playerIndex, PlayerIndex victimIndex, HexLocation location, String cookie) {
+	public MoveResponse playSoldierCard(int playerIndex, int victimIndex, HexLocation location, String cookie) {
 		SoldierDevRequest request = new SoldierDevRequest(playerIndex, victimIndex, location);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));

@@ -51,4 +51,38 @@ public class ResourceHand {
 	public void setOre(int ore) {
 		Ore = ore;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Brick;
+		result = prime * result + Ore;
+		result = prime * result + Sheep;
+		result = prime * result + Wheat;
+		result = prime * result + Wood;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ResourceHand other = (ResourceHand) obj;
+		if (Brick != other.Brick)
+			return false;
+		if (Ore != other.Ore)
+			return false;
+		if (Sheep != other.Sheep)
+			return false;
+		if (Wheat != other.Wheat)
+			return false;
+		if (Wood != other.Wood)
+			return false;
+		return true;
+	}
 }

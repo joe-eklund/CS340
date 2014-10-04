@@ -10,6 +10,7 @@ import shared.ServerMethodResponses.*;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
+import shared.definitions.ServerLogLevel;
 import shared.definitions.ServerModel;
 import client.model.Log;
 import junit.TestingConstants;
@@ -68,6 +69,7 @@ public class MockCommunicator implements ICommunicator {
 			result = new CommandResponse(null, 200, TestingConstants.MOCK_AIS, null);
 			break;
 		case "/game/commands":
+			result = new CommandResponse(null, 200, TestingConstants.getCommandsLog(), null);
 			break;
 		case "/game/model?version=0":
 			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue())) {
@@ -134,63 +136,177 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/game/commands":
 			Log postCommandsRequest = (Log) commandParameters;
+			if(postCommandsRequest.getLogMessages().equals(TestingConstants.getCommandsLog().getLogMessages())) {
+				result = new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, TestingConstants.getServerModel(), TestingConstants.INVALID_COMMANDS_MESSAGE);
+			}
 			break;
 		case "/game/addAI":
 			String addAIRequest = (String) commandParameters;
+			if(TestingConstants.MOCK_AIS_LIST.contains(addAIRequest)) {
+				result = new CommandResponse(null, 200, null, null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/util/changeLogLevel":
 			ChangeLogLevelRequest logRequest = (ChangeLogLevelRequest) commandParameters;
+			if(logRequest.getlogLevel().equals(ServerLogLevel.SEVERE.name().toLowerCase())) {
+				result = new CommandResponse(null, 200, null, null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/games/sendChat":
 			SendChatRequest chatRequest = (SendChatRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && chatRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && chatRequest.getContent().equals(TestingConstants.CHAT_CONTENT)) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/acceptTrade":
 			AcceptTradeRequest acceptTradeRequest = (AcceptTradeRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && acceptTradeRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && acceptTradeRequest.isWillAccept()) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/discardCards":
 			DiscardCardsRequest discardRequest = (DiscardCardsRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && discardRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && discardRequest.getDiscardedCards().equals(TestingConstants.RESOURCE_HAND)) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/rollNumber":
 			RollNumberRequest rollRequest = (RollNumberRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && rollRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && rollRequest.getNumber() == TestingConstants.ROLL_NUMBER) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/buildRoad":
 			BuildRoadRequest buildRoadRequest = (BuildRoadRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildRoadRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && buildRoadRequest.getRoadLocation().equals(TestingConstants.EDGE_LOCATION) && buildRoadRequest.isFree()) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/buildSettlement":
 			BuildSettlementRequest buildSettlementRequest = (BuildSettlementRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildSettlementRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && buildSettlementRequest.getVertexLocation().equals(TestingConstants.VERTEX_LOCATION) && buildSettlementRequest.isFree()) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/buildCity":
 			BuildCityRequest buildCityRequest = (BuildCityRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildCityRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && buildCityRequest.getCityLocation().equals(TestingConstants.VERTEX_LOCATION)) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/offerTrade":
 			OfferTradeRequest offerTradeRequest = (OfferTradeRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && offerTradeRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && offerTradeRequest.getOffer().equals(TestingConstants.RESOURCE_HAND) && offerTradeRequest.getReceiver() == TestingConstants.ANOTHER_PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/maritimeTrade":
 			MaritimeTradeRequest maritimeRequest = (MaritimeTradeRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && maritimeRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && maritimeRequest.getInputResource().equals(TestingConstants.RESOURCE_TYPE.name()) && maritimeRequest.getInputResource().equals(TestingConstants.RESOURCE_TYPE.name()) && maritimeRequest.getRatio() == TestingConstants.MARITIME_RATIO) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/finishTurn":
 			FinishTurnRequest finishRequest = (FinishTurnRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && finishRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/buyDevCard":
 			BuyDevCardRequest buyDevRequest = (BuyDevCardRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buyDevRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/Year_of_Plenty":
 			YearOfPlentyDevRequest yearPlentyRequest = (YearOfPlentyDevRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && yearPlentyRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && yearPlentyRequest.getResource1().equals(TestingConstants.RESOURCE_TYPE.name()) && yearPlentyRequest.getResource2().equals(TestingConstants.OTHER_RESOURCE_TYPE.name())) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/moves/Road_Building":
 			RoadBuildingDevRequest roadBuildRequest = (RoadBuildingDevRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && roadBuildRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && roadBuildRequest.getSpot1().equals(TestingConstants.EDGE_LOCATION) && roadBuildRequest.getSpot2().equals(TestingConstants.ANOTHER_EDGE)) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}			
 			break;
 		case "/moves/Monopoly":
 			MonopolyDevRequest monopolyRequest = (MonopolyDevRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monopolyRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && monopolyRequest.getResource().equals(TestingConstants.RESOURCE_TYPE.name())) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}			
 			break;
 		case "/moves/Soldier":
 			SoldierDevRequest soldierRequest = (SoldierDevRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && soldierRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && soldierRequest.getVictimIndex() == TestingConstants.ANOTHER_PLAYER_INDEX && soldierRequest.getLocation().equals(TestingConstants.HEX_LOCATION)) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}			
 			break;
 		case "/moves/Monument":
 			MonumentDevRequest monumentRequest = (MonumentDevRequest) commandParameters;
+			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monumentRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		default:
-			result = new CommandResponse(failHeaders, 400, "default case", "Error: Unhandled Post Case Reached!");
+			result = new CommandResponse(failHeaders, 400, "default case", "Error: Unhandled Post Case Reached!" + "Command provided: " + commandName );
 		}
 		return result;
 	}

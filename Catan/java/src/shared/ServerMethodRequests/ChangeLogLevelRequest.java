@@ -5,7 +5,7 @@ public class ChangeLogLevelRequest {
 	private String logLevel;
 
 	public ChangeLogLevelRequest(String logLevel) {
-		logLevel = logLevel.toLowerCase();
+		this.logLevel = logLevel.toLowerCase();
 	}
 
 	public String getlogLevel() {

@@ -16,7 +16,6 @@ import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.ServerMethodResponses.ResetGameResponse;
 import shared.ServerMethodResponses.SaveGameResponse;
 import shared.definitions.CatanColor;
-import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.definitions.ServerLogLevel;
@@ -676,7 +675,7 @@ public interface IServer {
 	 * @param cookie: catan cookie as set by server
 	 * 
 	 */
-	public MoveResponse playSoldierCard(int playerIndex, PlayerIndex victimIndex, HexLocation location, String cookie);
+	public MoveResponse playSoldierCard(int playerIndex, int victimIndex, HexLocation location, String cookie);
 	
 	/**
 	 * The player can play the "Monument Card" and he/she will gain one victory point

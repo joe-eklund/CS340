@@ -7,7 +7,7 @@ public class SendChatRequest {
 
 	public SendChatRequest(int playerIndex, String content) {
 		this.type = "sendChat";
-		this.playerIndex = 0;
+		this.playerIndex = playerIndex;
 		this.content = content;
 	}
 
