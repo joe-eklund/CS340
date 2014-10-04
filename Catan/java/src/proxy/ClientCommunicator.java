@@ -92,7 +92,7 @@ public class ClientCommunicator implements ICommunicator {
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
 		}
 		catch (IOException e) { // IO ERROR
-			System.err.print("Unable to doGet");
+			System.err.print("Unable to doGet\n");
 			
 			//throw new ClientException("FAILURE");
 		}
@@ -139,7 +139,7 @@ public class ClientCommunicator implements ICommunicator {
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
 		}
 		catch (IOException e) { // IO ERROR
-			System.err.print("Unable to doPost");
+			System.err.print("Unable to doPost\n");
 			
 			//throw new ClientException("FAILURE");
 		}
