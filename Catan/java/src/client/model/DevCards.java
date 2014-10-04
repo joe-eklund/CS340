@@ -5,11 +5,11 @@ package client.model;
  *
  */
 public class DevCards {
-	public int monopoly;
-	public int monument;
-	public int roadBuilding;
-	public int soldier;
-	public int yearOfPlenty;
+	private int monopoly;
+	private int monument;
+	private int roadBuilding;
+	private int soldier;
+	private int yearOfPlenty;
 	
 	public DevCards() {
 		monopoly = 2;
