@@ -1,7 +1,6 @@
 package proxy;
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.Map;
 
 import junit.TestingConstants;
 import shared.ServerMethodRequests.AcceptTradeRequest;
@@ -35,11 +34,6 @@ import client.model.Log;
  *
  */
 public class MockCommunicator implements ICommunicator {
-	
-	//private String samJoinReturnCookie = "catan.game=0";
-	//private String samFakeCookieAfterJoin = samLoginCookie + " " + samJoinReturnCookie;
-	private Map<String, List<String>> successJoinHeaders;
-	private Map<String, List<String>> failHeaders;
 	
 	/**
 	 * @param host
@@ -110,7 +104,7 @@ public class MockCommunicator implements ICommunicator {
 			result = new CommandResponse(null, 200, TestingConstants.GAMES_ARRAY, null);
 			break;
 		default:
-			result = new CommandResponse(failHeaders, 400, "default case", "Error: Unhandled Get Case Reached!");
+			result = new CommandResponse(null, 400, "default case", "Error: Unhandled Get Case Reached!");
 		}
 		return result;
 	}
@@ -147,7 +141,12 @@ public class MockCommunicator implements ICommunicator {
 		case "/games/create":
 			CreateGameRequest createGameRequest = (CreateGameRequest) commandParameters;
 			GameDescription newGame = new GameDescription(createGameRequest.getName(), 0, new PlayerDescription[4]);
-			result = new CommandResponse(null, 200, newGame, null);
+			if(createGameRequest.isRandomNumbers() && createGameRequest.isRandomPorts() && createGameRequest.isRandomTiles()) {
+				result = new CommandResponse(null, 200, newGame, null);
+			}
+			else {
+				result = new CommandResponse(null, 400, null, null);
+			}
 			break;
 		case "/games/join":
 			JoinGameRequest joinGameRequest = (JoinGameRequest) commandParameters;
@@ -333,7 +332,7 @@ public class MockCommunicator implements ICommunicator {
 			}
 			break;
 		default:
-			result = new CommandResponse(failHeaders, 400, "default case", "Error: Unhandled Post Case Reached!" + "Command provided: " + commandName );
+			result = new CommandResponse(null, 400, "default case", "Error: Unhandled Post Case Reached!" + "Command provided: " + commandName );
 		}
 		return result;
 	}

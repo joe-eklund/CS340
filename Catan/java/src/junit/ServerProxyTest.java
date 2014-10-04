@@ -26,7 +26,9 @@ import shared.definitions.CatanColor;
 import shared.definitions.ServerLogLevel;
 import client.model.Log;
 /**
- * 
+ * A class for testin ability of proxy to transmit parameter information to the client communicator and return response information back to presenter
+ * -the mock communicator is used to verify that testing constants are send and received correctly
+ * -tests verify proxy logic in terms of its ability to set up response objects, parse cookies, etc
  */
 public class ServerProxyTest {
 	private IServer proxy; 
@@ -39,6 +41,11 @@ public class ServerProxyTest {
 		proxy = ProxyServer.getSingleton();
 	}
 	
+	/*
+	 * basic test of proxy server login
+	 * -verifies ability to send user prompt message for invalid credentials
+	 * -verifies ability to send 'ok' message for valid credentials and user login cookie
+	 */
 	@Test
 	public void testLoginUser() {
 		UserResponse response;
@@ -54,6 +61,11 @@ public class ServerProxyTest {
 		assertEquals("Login response cookie for successful login attempt for Sam", TestingConstants.VALID_LOGIN_COOKIE_CLIENT, response.getCookie());
 	}
 	
+	/*
+	 * basic test of proxy register new user
+	 * -verifies ability to return message when user fails registrations
+	 * -verifies ability to return 'ok' message for successful registration and user login cookie
+	 */
 	@Test
 	public void testRegisterUser() {
 		UserResponse response;
@@ -69,6 +81,10 @@ public class ServerProxyTest {
 		assertEquals("Register response cookie for successful register attempt", TestingConstants.VALID_LOGIN_COOKIE_CLIENT, response.getCookie());
 	}
 	
+	/*
+	 * basic test of listGames request
+	 * -verifies ability to return games list of available games 
+	 */
 	@Test
 	public void testListGames() {
 		//test list games
@@ -77,14 +93,25 @@ public class ServerProxyTest {
 		assertEquals("Response object for successful listGames attempt", TestingConstants.GAMES_LIST, response.getGameDescriptions());
 	}
 	
+	/*
+	 * basic test of createGame request
+	 * -verifies ability to send random game setting bools
+	 * -verifies ability to return new game description
+	 */
 	@Test
 	public void testCreateGame() {
 		//test create game
-		CreateGameResponse response = proxy.createGame(false, false, false, TestingConstants.NEW_GAME_NAME, null);
+		CreateGameResponse response = proxy.createGame(true, true, true, TestingConstants.NEW_GAME_NAME, null);
 		assertEquals("Response code for successful createGames attempt",true, response.isSuccessful());
 		assertEquals("Response object for successful createGames attempt", TestingConstants.NEW_GAME, response.getGameDescription());
 	}
 	
+	/*
+	 * basic join game test
+	 * -verifies ability to send cookie through proxy
+	 * -verifies response code
+	 * -verifies ability return cookie through proxy
+	 */
 	@Test
 	public void testJoinGame() {
 		//test join game invalid login cookie
@@ -96,7 +123,12 @@ public class ServerProxyTest {
 		assertEquals("Response code for successful joinGame attempt",true, response.isSuccessful());
 		assertEquals("Response object for successful joinGame attempt", TestingConstants.VALID_JOINED_GAME_COOKIE, response.getCookie());
 	}
-		
+	
+	/*
+	 * basic game update test
+	 * -verifies ability to get updated game with valid cookie
+	 * -verifies response code
+	 */
 	@Test
 	public void testGetGameModel() {
 		//invalid cookie
@@ -110,6 +142,11 @@ public class ServerProxyTest {
 		assertEquals("Game version for successful getGameModel attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic reset game test
+	 * -verifies ability to return response code
+	 * -verifies ability to return reset game model
+	 */
 	@Test
 	public void testResetGame() {
 		//valid
@@ -119,6 +156,11 @@ public class ServerProxyTest {
 	}
 	
 
+	/*
+	 * basic get game commands test
+	 * -verifies ability to transmit commands via proxy
+	 * -verifies proxy ability to return request success
+	 */
 	@Test
 	public void testGetGameCommands() {
 		//valid
@@ -127,6 +169,13 @@ public class ServerProxyTest {
 		assertEquals("Command log is valid for successful getGameCommands attempt", TestingConstants.getCommandsLog().getLogMessages(), response.getCommands().getLogMessages());
 	}
 	
+	/*
+	 * basic post commands test
+	 * -verifies ability to transmit cookie through proxy code
+	 * -verifies ability to return fail code and error message
+	 * -verifies ability to return success code
+	 * -verifies ability to return valid game
+	 */
 	@Test
 	public void testPostGameCommands() {
 		//invalid command format
@@ -140,7 +189,11 @@ public class ServerProxyTest {
 		assertEquals("Response code for successful postGameCommands attempt", true, response.isSuccessful());
 		assertEquals("Game version for successful postGameCommands attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
-	
+	/*
+	 * basic list ai test
+	 * -verifies ability to return request success code
+	 * -verifies ability to return string list of available ais
+	 */
 	@Test
 	public void testListAI() {
 		//valid
@@ -149,6 +202,11 @@ public class ServerProxyTest {
 		assertEquals("List AIs available to add to game", TestingConstants.MOCK_AIS_LIST, response.getAiTypes());
 	}
 	
+	/*
+	 * basic add ai test
+	 * -verifies ability to return unsuccessful code for invalid ai type
+	 * -verifies ability to return success code for valid ai type
+	 */
 	@Test
 	public void testAddAI() {
 		//invalid
@@ -160,6 +218,11 @@ public class ServerProxyTest {
 		assertEquals("Response code for successful addAIs attempt",true, response.isSuccessful());
 	}
 	
+	/*
+	 * basic change log level test
+	 * -verifies proxy ability to correct transmit server log change parameter
+	 * -verifies proxy ability to return success code
+	 */
 	@Test
 	public void testChangeLogLevel() {
 		//valid
@@ -167,6 +230,13 @@ public class ServerProxyTest {
 		assertEquals("Response code for successful change server log to severe level",true, response.isSuccessful());
 	}
 	
+	/*
+	 * test send chat
+	 * -verifies ability to return unsuccessful code from proxy
+	 * -verifies ability to send chat through proxy
+	 * -verifies ability to return success code through proxy
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testSendChat() {
 		//invalid cookie
@@ -179,6 +249,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for unsuccessful send chat attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic accept trade test
+	 * -verifies ability to send paramaters (resource hand, sender & receiver index, cookie) through proxy
+	 * -verifies ability for proxy to return successfullness of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testAcceptTrade() {
 		//valid
@@ -187,6 +263,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful accept trade attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic discard cards test
+	 * -verifies ability to send paramaters (discard hand, player index, cookie) through proxy
+	 * -verifies ability for proxy to return successfullness of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testDiscardCards() {
 		//valid
@@ -195,6 +277,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful discard attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic roll number test
+	 * -tests ability to send player index, roll number, and cookie through proxy
+	 * -tests ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testRollNumber() {
 		//valid
@@ -203,6 +291,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful roll number attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic build road test
+	 * -verifies ability of proxy to send playerindex, edge location, freeness, cookie to communicator
+	 * -verifies ability to return successfullness code
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void  testBuildRoad() {
 		//valid
@@ -211,6 +305,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful build road attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic build settlement request test
+	 * -verifies ability to send player index, vertex location, freeness, and cookie through proxy
+	 * -verifies ability to return response success
+	 * -verifies ability to return updated game model
+	 */
 	@Test
 	public void testBuildSettlement() {
 		//valid
@@ -219,6 +319,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful build settlement attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic build city test
+	 * -verifies ability to send player index, vertex location and cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testBuildCity() {
 		//valid
@@ -227,6 +333,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful build city attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic send offer test
+	 * -verifies ability to send playerindex, resource hand (offer), receiver index, cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testOfferTrade() {
 		//valid
@@ -235,6 +347,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful trade offer attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic maritime trade/exchange test
+	 * -verifies ability to send playerindex, ratio, in resource type, out resource type, cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testOfferMaritimeTrade() {
 		//valid
@@ -243,6 +361,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful maritime trade attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic end turn request test
+	 * -verifies ability to send player index and cookie through proxy
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testFinishTurn() {
 		//valid
@@ -251,6 +375,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful finish turn attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic buy dev card test
+	 * -verifies ability to send player index and cookie via proxy
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testBuyDevCard() {
 		//valid
@@ -259,6 +389,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful buy dev card attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic play year of plenty card request
+	 * -verifies ability to send player index, resource type 1, resource type 2, and cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testPlayYearOfPlenty() {
 		MoveResponse response = proxy.playYearOfPlentyCard(TestingConstants.PLAYER_INDEX, TestingConstants.RESOURCE_TYPE, TestingConstants.OTHER_RESOURCE_TYPE, TestingConstants.VALID_JOINED_GAME_COOKIE);
@@ -266,6 +402,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful play year of plenty attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic play road building dev card request test
+	 * -tests ability to send player index, edge location 1 (spot1), edge location 2 (spot2), and cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testPlayRoadBuilding() {
 		MoveResponse response = proxy.playRoadBuildingCard(TestingConstants.PLAYER_INDEX, TestingConstants.EDGE_LOCATION, TestingConstants.ANOTHER_EDGE, TestingConstants.VALID_JOINED_GAME_COOKIE);
@@ -273,6 +415,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful dev road building attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic play monopoly request test
+	 * -verifies ability to send player index, resource type 1, and cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testPlayMonopoly() {
 		MoveResponse response = proxy.playMonopolyCard(TestingConstants.PLAYER_INDEX, TestingConstants.RESOURCE_TYPE, TestingConstants.VALID_JOINED_GAME_COOKIE);
@@ -280,6 +428,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful play monopoly card attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic play soldier request
+	 * -verifies ability send playerindex, victim index, hex location, and cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testPlaySoldier() {
 		MoveResponse response = proxy.playSoldierCard(TestingConstants.PLAYER_INDEX, TestingConstants.ANOTHER_PLAYER_INDEX, TestingConstants.HEX_LOCATION, TestingConstants.VALID_JOINED_GAME_COOKIE);
@@ -287,6 +441,12 @@ public class ServerProxyTest {
 		assertEquals("Response game object for successful play soldier attempt", TestingConstants.getServerModel().getVersion(), response.getGameModel().getVersion());
 	}
 	
+	/*
+	 * basic play monument card test
+	 * -verifies ability to send player index and cookie
+	 * -verifies ability to return success of request
+	 * -verifies ability of proxy to return updated game model
+	 */
 	@Test
 	public void testPlayMonument() {
 		MoveResponse response = proxy.playMonumentCard(TestingConstants.PLAYER_INDEX, TestingConstants.VALID_JOINED_GAME_COOKIE);

@@ -16,8 +16,17 @@ import client.poller.Poller;
 import client.presenter.IPresenter;
 import client.presenter.Presenter;
 
+/**
+ * a class designed to test Catan client poller
+ *
+ */
 public class PollerTest {
 	
+	/*
+	 * basic test of ability for presenter to update game model
+	 * -verifies that presenter clientmodel updates when run() is called
+	 * *run() is from implementing runnable() and is fired by poller timer
+	 */
 	@Test
 	public void testPresenterRun() {
 		ITranslator jsonTranslator = new TranslatorJSON();
@@ -31,6 +40,16 @@ public class PollerTest {
 		assertEquals("Model version should be ", proxy.getGameModel(TestingConstants.CLIENT_GAME_VERSION, TestingConstants.VALID_JOINED_GAME_COOKIE).getGameModel().getVersion(), presenter.getVersion());
 	}
 	
+	/*
+	 * basic test of poller updating
+	 * -tests ability to initialize, start, and stop poller
+	 * -tests that poller gets new game model using TestingConstants
+	 * -tests that poller is actually being fired every 2 seconds
+	 * 	==> poller is fired on start and ever 2 seconds therafter
+	 * 		in 6.5 seconds poller should fire 4 times (at 0s, 2s, 4s, 6s)
+	 * 		*0.5 seconds extra given for testing/machine tolerance
+	 * 
+	 */
 	@Test
 	public void testPollerUpdate() {
 		ITranslator jsonTranslator = new TranslatorJSON();
@@ -39,7 +58,7 @@ public class PollerTest {
 		final IServer proxy = ProxyServer.getSingleton();
 		ClientModel clientModel = new ClientModel(TestingConstants.getServerModel());
 		final IPresenter presenter = new Presenter(clientModel, proxy, TestingConstants.VALID_JOINED_GAME_COOKIE);
-		final IPoller poller = new Poller(presenter, 2);
+		final IPoller poller = new Poller(presenter, 2);	// set up poller to poll updated game every 2 seconds
 		assertEquals("Initial version for presenter should be: ", 0, presenter.getVersion());
 		poller.start();
 		try {
