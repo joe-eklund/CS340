@@ -170,13 +170,7 @@
 	<!--<property name="TEST_BUILD_DIR" location="java/build/junit"/>-->
 	
 	<target name="test" depends="clean,compile">
-		<!--<java jar="${jar.file}" fork="true">
-			<arg value="${port.arg}"/>
-			<arg value="${web.arg}"/>
-			<arg value="${requests.arg}"/>
-		</java>-->
 		<junit showoutput="true" fork="yes" haltonfailure="yes">
-			<!--<classpath refid="all-classpath"/>-->
 			<classpath>
 				<pathelement location="${java.lib}/junit-4.11.jar"/>
 				<pathelement location="${java.lib}/hamcrest-core-1.3.jar"/>

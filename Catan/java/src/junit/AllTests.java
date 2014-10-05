@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({/*ClientCommunicatorTest.class,*/ ClientModelUnitTest.class,
+@SuiteClasses({ClientCommunicatorTest.class, ClientModelUnitTest.class,
 		PlayerTest.class, ServerProxyTest.class,
 		TaylorJUnit.class, TranslatorTest.class, PollerTest.class })
 public class AllTests {
@@ -24,7 +24,7 @@ public class AllTests {
 		  List<Class> myClasses=new ArrayList();
 		  myClasses.add(ClientModelUnitTest.class);
 		  myClasses.add(PollerTest.class);
-		  //myClasses.add(ClientCommunicatorTest.class);
+		  myClasses.add(ClientCommunicatorTest.class);
 		  myClasses.add(PlayerTest.class);
 		  myClasses.add(ServerProxyTest.class);
 		  myClasses.add(TaylorJUnit.class);
