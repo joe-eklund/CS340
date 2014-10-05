@@ -131,7 +131,6 @@ public class ClientCommunicator implements ICommunicator {
 			String inputLine;
 			StringBuffer responseJson = new StringBuffer();
 			while ((inputLine = in.readLine()) != null) {
-				System.out.println(inputLine);
 				responseJson.append(inputLine);
 			}
 			in.close();	
@@ -179,7 +178,6 @@ public class ClientCommunicator implements ICommunicator {
 			String inputLine;
 			StringBuffer responseJson = new StringBuffer();
 			while ((inputLine = in.readLine()) != null) {
-				System.out.println(inputLine);
 				responseJson.append(inputLine);
 			}
 			in.close();	
