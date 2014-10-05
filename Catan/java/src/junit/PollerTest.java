@@ -1,6 +1,9 @@
 package junit;
 
 import static org.junit.Assert.assertEquals;
+import static shared.definitions.TestingConstants.CLIENT_GAME_VERSION;
+import static shared.definitions.TestingConstants.VALID_JOINED_GAME_COOKIE;
+import static shared.definitions.TestingConstants.getServerModel;
 
 import org.junit.Test;
 
@@ -33,11 +36,11 @@ public class PollerTest {
 		ICommunicator mockCommunicator = new MockCommunicator();
 		ProxyServer.setSingleton(mockCommunicator, jsonTranslator, "UTF-8");
 		IServer proxy = ProxyServer.getSingleton();
-		ClientModel clientModel = new ClientModel(TestingConstants.getServerModel());
-		Presenter presenter = new Presenter(clientModel, proxy, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		ClientModel clientModel = new ClientModel(getServerModel());
+		Presenter presenter = new Presenter(clientModel, proxy, VALID_JOINED_GAME_COOKIE);
 		assertEquals("Initial version for presenter should be: ", 0, presenter.getVersion());
 		presenter.run();
-		assertEquals("Model version should be ", proxy.getGameModel(TestingConstants.CLIENT_GAME_VERSION, TestingConstants.VALID_JOINED_GAME_COOKIE).getGameModel().getVersion(), presenter.getVersion());
+		assertEquals("Model version should be ", proxy.getGameModel(CLIENT_GAME_VERSION, VALID_JOINED_GAME_COOKIE).getGameModel().getVersion(), presenter.getVersion());
 	}
 	
 	/*
@@ -56,8 +59,8 @@ public class PollerTest {
 		ICommunicator mockCommunicator = new MockCommunicator();
 		ProxyServer.setSingleton(mockCommunicator, jsonTranslator, "UTF-8");
 		final IServer proxy = ProxyServer.getSingleton();
-		ClientModel clientModel = new ClientModel(TestingConstants.getServerModel());
-		final IPresenter presenter = new Presenter(clientModel, proxy, TestingConstants.VALID_JOINED_GAME_COOKIE);
+		ClientModel clientModel = new ClientModel(getServerModel());
+		final IPresenter presenter = new Presenter(clientModel, proxy, VALID_JOINED_GAME_COOKIE);
 		final IPoller poller = new Poller(presenter, 2);	// set up poller to poll updated game every 2 seconds
 		assertEquals("Initial version for presenter should be: ", 0, presenter.getVersion());
 		poller.start();
@@ -68,6 +71,6 @@ public class PollerTest {
 		}
 		poller.stop();
 		assertEquals("Poller number of updates performed", 4, presenter.getPollCycleCount()); //poller performs initial update upon start and updates every 2s thereafter
-		assertEquals("Model version should be ", proxy.getGameModel(TestingConstants.CLIENT_GAME_VERSION, TestingConstants.VALID_JOINED_GAME_COOKIE).getGameModel().getVersion(), presenter.getVersion());
+		assertEquals("Model version should be ", proxy.getGameModel(CLIENT_GAME_VERSION, VALID_JOINED_GAME_COOKIE).getGameModel().getVersion(), presenter.getVersion());
 	}
 }

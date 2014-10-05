@@ -2,7 +2,6 @@ package proxy;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import junit.TestingConstants;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;
@@ -27,6 +26,8 @@ import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerLogLevel;
 import client.model.Log;
+
+import static shared.definitions.TestingConstants.*;
 
 /**This class will contain some hard code data for the use of testing.
  * @author Chad
@@ -80,15 +81,15 @@ public class MockCommunicator implements ICommunicator {
 		}
 		switch(commandName) {
 		case "/game/listAI":
-			result = new CommandResponse(null, 200, TestingConstants.MOCK_AIS, null);
+			result = new CommandResponse(null, 200, MOCK_AIS, null);
 			break;
 		case "/game/commands":
-			result = new CommandResponse(null, 200, TestingConstants.getCommandsLog(), null);
+			result = new CommandResponse(null, 200, getCommandsLog(), null);
 			break;
 		case "/game/model":
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue())) {
-				if(clientVersion < TestingConstants.getServerModel().getVersion()) {
-					result = new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue())) {
+				if(clientVersion < getServerModel().getVersion()) {
+					result = new CommandResponse(null, 200, getServerModel(), null);
 				}
 				else {
 					result = new CommandResponse(null, 200, null, null);
@@ -99,7 +100,7 @@ public class MockCommunicator implements ICommunicator {
 			}
 			break;
 		case "/games/list":
-			result = new CommandResponse(null, 200, TestingConstants.GAMES_ARRAY, null);
+			result = new CommandResponse(null, 200, GAMES_ARRAY, null);
 			break;
 		default:
 			result = new CommandResponse(null, 400, "default case", "Error: Unhandled Get Case Reached!");
@@ -119,21 +120,21 @@ public class MockCommunicator implements ICommunicator {
 		switch(commandName) {
 		case "/user/login":
 			UserRequest loginRequest = (UserRequest) commandParameters;
-			if(loginRequest.getUsername().equals(TestingConstants.VALID_USERNAME) && loginRequest.getPassword().equals(TestingConstants.VALID_PASSWORD)) {
+			if(loginRequest.getUsername().equals(VALID_USERNAME) && loginRequest.getPassword().equals(VALID_PASSWORD)) {
 				
-				result = new CommandResponse(TestingConstants.SUCCESSFUL_LOGIN_HEADERS, 200, null, null);
+				result = new CommandResponse(SUCCESSFUL_LOGIN_HEADERS, 200, null, null);
 			}
 			else {
-				result = new CommandResponse(null, 400, null, TestingConstants.LOGIN_FAIL_MESSAGE);
+				result = new CommandResponse(null, 400, null, LOGIN_FAIL_MESSAGE);
 			}
 			break;
 		case "/user/register":
 			UserRequest registerRequest = (UserRequest) commandParameters;
-			if(registerRequest.getUsername().equals(TestingConstants.VALID_USERNAME)) {
-				result = new CommandResponse(null, 400, null, TestingConstants.REGISTER_FAIL_MESSAGE);
+			if(registerRequest.getUsername().equals(VALID_USERNAME)) {
+				result = new CommandResponse(null, 400, null, REGISTER_FAIL_MESSAGE);
 			}
 			else {
-				result = new CommandResponse(TestingConstants.SUCCESSFUL_LOGIN_HEADERS, 200, null, null);
+				result = new CommandResponse(SUCCESSFUL_LOGIN_HEADERS, 200, null, null);
 			}
 			break;
 		case "/games/create":
@@ -148,28 +149,28 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/games/join":
 			JoinGameRequest joinGameRequest = (JoinGameRequest) commandParameters;
-			if(joinGameRequest.getColor().equals(TestingConstants.JOIN_GAME_COLOR) && joinGameRequest.getID() == TestingConstants.VALID_JOIN_GAME_INDEX && headers.get(0).getValue() == TestingConstants.VALID_LOGIN_COOKIE_CLIENT) {
-				result = new CommandResponse(TestingConstants.SUCCESSFUL_JOIN_HEADERS, 200, null, null);
+			if(joinGameRequest.getColor().equals(JOIN_GAME_COLOR) && joinGameRequest.getID() == VALID_JOIN_GAME_INDEX && headers.get(0).getValue() == VALID_LOGIN_COOKIE_CLIENT) {
+				result = new CommandResponse(SUCCESSFUL_JOIN_HEADERS, 200, null, null);
 			}
 			else {
 				result = new CommandResponse(null, 404, null, null);
 			}
 			break;
 		case "/game/reset":
-			result = new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			result = new CommandResponse(null, 200, getServerModel(), null);
 			break;
 		case "/game/commands":
 			Log postCommandsRequest = (Log) commandParameters;
-			if(postCommandsRequest.getLogMessages().equals(TestingConstants.getCommandsLog().getLogMessages())) {
-				result = new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(postCommandsRequest.getLogMessages().equals(getCommandsLog().getLogMessages())) {
+				result = new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
-				result = new CommandResponse(null, 400, TestingConstants.getServerModel(), TestingConstants.INVALID_COMMANDS_MESSAGE);
+				result = new CommandResponse(null, 400, getServerModel(), INVALID_COMMANDS_MESSAGE);
 			}
 			break;
 		case "/game/addAI":
 			String addAIRequest = (String) commandParameters;
-			if(TestingConstants.MOCK_AIS_LIST.contains(addAIRequest)) {
+			if(MOCK_AIS_LIST.contains(addAIRequest)) {
 				result = new CommandResponse(null, 200, null, null);
 			}
 			else {
@@ -187,8 +188,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/games/sendChat":
 			SendChatRequest chatRequest = (SendChatRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && chatRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && chatRequest.getContent().equals(TestingConstants.CHAT_CONTENT)) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && chatRequest.getPlayerIndex() == PLAYER_INDEX && chatRequest.getContent().equals(CHAT_CONTENT)) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -196,8 +197,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/acceptTrade":
 			AcceptTradeRequest acceptTradeRequest = (AcceptTradeRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && acceptTradeRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && acceptTradeRequest.isWillAccept()) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && acceptTradeRequest.getPlayerIndex() == PLAYER_INDEX && acceptTradeRequest.isWillAccept()) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -205,8 +206,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/discardCards":
 			DiscardCardsRequest discardRequest = (DiscardCardsRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && discardRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && discardRequest.getDiscardedCards().equals(TestingConstants.RESOURCE_HAND)) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && discardRequest.getPlayerIndex() == PLAYER_INDEX && discardRequest.getDiscardedCards().equals(RESOURCE_HAND)) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -214,8 +215,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/rollNumber":
 			RollNumberRequest rollRequest = (RollNumberRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && rollRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && rollRequest.getNumber() == TestingConstants.ROLL_NUMBER) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && rollRequest.getPlayerIndex() == PLAYER_INDEX && rollRequest.getNumber() == ROLL_NUMBER) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -223,8 +224,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/buildRoad":
 			BuildRoadRequest buildRoadRequest = (BuildRoadRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildRoadRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && buildRoadRequest.getRoadLocation().equals(TestingConstants.EDGE_LOCATION) && buildRoadRequest.isFree()) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildRoadRequest.getPlayerIndex() == PLAYER_INDEX && buildRoadRequest.getRoadLocation().equals(EDGE_LOCATION) && buildRoadRequest.isFree()) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -232,8 +233,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/buildSettlement":
 			BuildSettlementRequest buildSettlementRequest = (BuildSettlementRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildSettlementRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && buildSettlementRequest.getVertexLocation().equals(TestingConstants.VERTEX_LOCATION) && buildSettlementRequest.isFree()) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildSettlementRequest.getPlayerIndex() == PLAYER_INDEX && buildSettlementRequest.getVertexLocation().equals(VERTEX_LOCATION) && buildSettlementRequest.isFree()) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -241,8 +242,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/buildCity":
 			BuildCityRequest buildCityRequest = (BuildCityRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildCityRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && buildCityRequest.getCityLocation().equals(TestingConstants.VERTEX_LOCATION)) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildCityRequest.getPlayerIndex() == PLAYER_INDEX && buildCityRequest.getCityLocation().equals(VERTEX_LOCATION)) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -250,8 +251,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/offerTrade":
 			OfferTradeRequest offerTradeRequest = (OfferTradeRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && offerTradeRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && offerTradeRequest.getOffer().equals(TestingConstants.RESOURCE_HAND) && offerTradeRequest.getReceiver() == TestingConstants.ANOTHER_PLAYER_INDEX) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && offerTradeRequest.getPlayerIndex() == PLAYER_INDEX && offerTradeRequest.getOffer().equals(RESOURCE_HAND) && offerTradeRequest.getReceiver() == ANOTHER_PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -259,8 +260,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/maritimeTrade":
 			MaritimeTradeRequest maritimeRequest = (MaritimeTradeRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && maritimeRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && maritimeRequest.getInputResource().equals(TestingConstants.RESOURCE_TYPE.name()) && maritimeRequest.getInputResource().equals(TestingConstants.RESOURCE_TYPE.name()) && maritimeRequest.getRatio() == TestingConstants.MARITIME_RATIO) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && maritimeRequest.getPlayerIndex() == PLAYER_INDEX && maritimeRequest.getInputResource().equals(RESOURCE_TYPE.name()) && maritimeRequest.getInputResource().equals(RESOURCE_TYPE.name()) && maritimeRequest.getRatio() == MARITIME_RATIO) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -268,8 +269,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/finishTurn":
 			FinishTurnRequest finishRequest = (FinishTurnRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && finishRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && finishRequest.getPlayerIndex() == PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -277,8 +278,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/buyDevCard":
 			BuyDevCardRequest buyDevRequest = (BuyDevCardRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buyDevRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buyDevRequest.getPlayerIndex() == PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -286,8 +287,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/Year_of_Plenty":
 			YearOfPlentyDevRequest yearPlentyRequest = (YearOfPlentyDevRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && yearPlentyRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && yearPlentyRequest.getResource1().equals(TestingConstants.RESOURCE_TYPE.name()) && yearPlentyRequest.getResource2().equals(TestingConstants.OTHER_RESOURCE_TYPE.name())) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && yearPlentyRequest.getPlayerIndex() == PLAYER_INDEX && yearPlentyRequest.getResource1().equals(RESOURCE_TYPE.name()) && yearPlentyRequest.getResource2().equals(OTHER_RESOURCE_TYPE.name())) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -295,8 +296,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/Road_Building":
 			RoadBuildingDevRequest roadBuildRequest = (RoadBuildingDevRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && roadBuildRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && roadBuildRequest.getSpot1().equals(TestingConstants.EDGE_LOCATION) && roadBuildRequest.getSpot2().equals(TestingConstants.ANOTHER_EDGE)) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && roadBuildRequest.getPlayerIndex() == PLAYER_INDEX && roadBuildRequest.getSpot1().equals(EDGE_LOCATION) && roadBuildRequest.getSpot2().equals(ANOTHER_EDGE)) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -304,8 +305,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/Monopoly":
 			MonopolyDevRequest monopolyRequest = (MonopolyDevRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monopolyRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && monopolyRequest.getResource().equals(TestingConstants.RESOURCE_TYPE.name())) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monopolyRequest.getPlayerIndex() == PLAYER_INDEX && monopolyRequest.getResource().equals(RESOURCE_TYPE.name())) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -313,8 +314,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/Soldier":
 			SoldierDevRequest soldierRequest = (SoldierDevRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && soldierRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX && soldierRequest.getVictimIndex() == TestingConstants.ANOTHER_PLAYER_INDEX && soldierRequest.getLocation().equals(TestingConstants.HEX_LOCATION)) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && soldierRequest.getPlayerIndex() == PLAYER_INDEX && soldierRequest.getVictimIndex() == ANOTHER_PLAYER_INDEX && soldierRequest.getLocation().equals(HEX_LOCATION)) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
@@ -322,8 +323,8 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "/moves/Monument":
 			MonumentDevRequest monumentRequest = (MonumentDevRequest) commandParameters;
-			if(TestingConstants.VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monumentRequest.getPlayerIndex() == TestingConstants.PLAYER_INDEX) {
-				result =  new CommandResponse(null, 200, TestingConstants.getServerModel(), null);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monumentRequest.getPlayerIndex() == PLAYER_INDEX) {
+				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
 				result = new CommandResponse(null, 400, null, null);
