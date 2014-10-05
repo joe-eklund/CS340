@@ -1,4 +1,4 @@
-package junit;
+package shared.definitions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,12 +7,6 @@ import java.util.List;
 
 import proxy.ITranslator;
 import proxy.TranslatorJSON;
-import shared.definitions.CatanColor;
-import shared.definitions.GameDescription;
-import shared.definitions.PlayerDescription;
-import shared.definitions.ResourceHand;
-import shared.definitions.ResourceType;
-import shared.definitions.ServerModel;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
