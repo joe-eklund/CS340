@@ -1,12 +1,7 @@
 package junit;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
