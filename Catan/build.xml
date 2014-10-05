@@ -13,7 +13,7 @@
     <property name="java.src.dir" value="${java.dir}/src"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
 	<property name="java.build.dir" value="${java.dir}/build"/>
-	   <property name="java.test.dir" value="${java.dir}/build/junit"/>
+	<property name="java.test.dir" value="${java.dir}/build/junit"/>
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
@@ -153,8 +153,14 @@
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
-	<property name="TEST_BUILD_DIR" location="java/build/junit"/>
+	<!--<property name="TEST_BUILD_DIR" location="java/build/junit"/>-->
+	
 	<target name="test" depends="package">
+		<!--<java jar="${jar.file}" fork="true">
+			<arg value="${port.arg}"/>
+			<arg value="${web.arg}"/>
+			<arg value="${requests.arg}"/>
+		</java>-->
 		<junit showoutput="true" fork="yes">
 			<classpath refid="all-classpath"/>
 			<formatter type="plain" usefile="false" />

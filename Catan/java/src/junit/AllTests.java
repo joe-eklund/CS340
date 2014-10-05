@@ -1,5 +1,7 @@
 package junit;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +16,15 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ /*ClientCommunicatorTest.class,*/ ClientModelUnitTest.class,
-		MockCommunicatorTest.class, PlayerTest.class, ServerProxyTest.class,
-		TaylorJUnit.class, TranslatorTest.class })
+@SuiteClasses({ ClientCommunicatorTest.class, ClientModelUnitTest.class,
+		PlayerTest.class, ServerProxyTest.class,
+		TaylorJUnit.class, TranslatorTest.class, PollerTest.class })
 public class AllTests {
-	  public static void main(String[] args) {
+	  public static void main(String[] args) {		  
 		  List<Class> myClasses=new ArrayList();
 		  myClasses.add(ClientModelUnitTest.class);
-		  //myClasses.add(MockCommunicatorTest.class);
+		  myClasses.add(PollerTest.class);
+		  myClasses.add(ClientCommunicatorTest.class);
 		  myClasses.add(PlayerTest.class);
 		  myClasses.add(ServerProxyTest.class);
 		  myClasses.add(TaylorJUnit.class);
