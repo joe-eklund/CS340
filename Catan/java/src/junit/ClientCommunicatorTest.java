@@ -109,7 +109,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testGetGameModel() {
 		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
@@ -118,7 +118,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testGameReset() {
 		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
@@ -127,7 +127,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testGetGameCommands() {
 		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
@@ -150,7 +150,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testAddAI() { 
 		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		headers.add(mockPair);
@@ -192,7 +192,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test 
+//	@Test 
 	public void testRobPlayer(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
@@ -214,7 +214,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testBuyDevCard(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
@@ -236,7 +236,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testRoadBuilding(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
@@ -247,7 +247,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testSoldier(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
@@ -280,7 +280,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testBuildRoad(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
@@ -291,19 +291,26 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testBuildSettlement(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
+		YearOfPlentyDevRequest data = new YearOfPlentyDevRequest(1, "sheep", "wood");
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/Year_of_Plenty", data, RequestType.class);
+		data = new YearOfPlentyDevRequest(1, "ore", "brick");
+		mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/Year_of_Plenty", data, RequestType.class);
+		data = new YearOfPlentyDevRequest(1, "wheat", "wheat");
+		mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/Year_of_Plenty", data, RequestType.class);
+		
 		VertexLocation vertex = new VertexLocation(new HexLocation(1,1),VertexDirection.NorthWest);
-		BuildSettlementRequest data = new BuildSettlementRequest(1 ,vertex, true);
-		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildSettlement", data, RequestType.class);
+		BuildSettlementRequest data1 = new BuildSettlementRequest(1 ,vertex, true);
+		mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildSettlement", data1, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testBuildCity(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
@@ -327,7 +334,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-	@Test
+//	@Test
 	public void testAcceptTrade(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
