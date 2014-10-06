@@ -13,7 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ClientCommunicatorTest.class, ClientModelUnitTest.class,
 		PlayerTest.class, ServerProxyTest.class,
-		TaylorJUnit.class, TranslatorTest.class, PollerTest.class })
+		TranslatorTest.class, PollerTest.class })
 public class AllTests {
 	  public static void main(String[] args) {		  
 		  List<Class> myClasses=new ArrayList();
@@ -22,7 +22,6 @@ public class AllTests {
 		  myClasses.add(ClientCommunicatorTest.class);
 		  myClasses.add(PlayerTest.class);
 		  myClasses.add(ServerProxyTest.class);
-		  myClasses.add(TaylorJUnit.class);
 		  myClasses.add(TranslatorTest.class);
 		  Result result;// = JUnitCore.runClasses(MyClassTest.class);
 		  for(Class obj:myClasses)

@@ -123,6 +123,7 @@ public class ClientModelUnitTest {
 		//Try valid edge
 		testEdge.setHexLoc(new HexLocation(0,1));
 		testEdge.setDir(EdgeDirection.SouthEast);
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 		assertEquals("Trying to build on valid edge and should pass", true,
 				clientModel.canBuildRoad(0, testEdge, false));
 	}
@@ -132,6 +133,7 @@ public class ClientModelUnitTest {
 		ArrayList<Road> originalRoads = new ArrayList<Road>(clientModel.getServerModel().getMap().getRoads());
 		
 		//All preconditions true
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 		clientModel.getServerModel().getMap().getRoads().add(new Road(1, new EdgeLocation(new HexLocation(-2,1), EdgeDirection.NorthWest)));
 		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(5,5,5,5,5));
 		clientModel.getServerModel().getTurnTracker().setCurrentTurn(1);
@@ -215,19 +217,27 @@ public class ClientModelUnitTest {
 	@Test
 	public void testFinishTurn(){
 		//Test valid can finish turn by having Playing status
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(1);
 		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 		assertEquals("Trying valid can finish turn with Playing status and should pass",true,
-				clientModel.canFinishTurn());
+				clientModel.canFinishTurn(1));
 		
 		//Test invalid can finish turn by having Rolling status
 		clientModel.getServerModel().getTurnTracker().setStatus("Rolling");
 		assertEquals("Trying invalid can finish turn with Rolling status and should fail",false,
-				clientModel.canFinishTurn());
+				clientModel.canFinishTurn(1));
+		
+		//Test invalid can finsih turn by having the wrong player try to finish a turn
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		assertEquals("Trying invalid can finish turn with Rolling status and should fail",false,
+				clientModel.canFinishTurn(2));
 	}
 	
 	@Test
 	public void testCanBuyDevCard(){
 		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,1,1,0,1));
+		clientModel.getServerModel().getTurnTracker().setCurrentTurn(0);
+		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 		DevCards cards = new DevCards();
 		cards.updateCards(1, 1, 1, 1, 1);
 		clientModel.getServerModel().setDeck(cards);

@@ -19,7 +19,8 @@ public class Chit {
 	
 	/**
 	 * Returns value of the Chit.
-	 * @return	The current Chit value.
+	 * @pre none
+	 * @post Returns the current Chit value.
 	 */
 	public int getValue() {
 		return value;
@@ -28,6 +29,8 @@ public class Chit {
 	/**
 	 * Sets the value of the Chit.
 	 * @param value	The inputed value to set.
+	 * @pre none
+	 * @post Sets the chit value to the parameter given.
 	 */
 	public void setValue(int value) {
 		this.value = value;

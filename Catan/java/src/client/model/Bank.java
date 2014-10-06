@@ -51,7 +51,8 @@ public class Bank {
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
 	 * @param amt
-	 * @return boolean
+	 * @pre none
+	 * @post returns boolean
 	 */
 	public boolean hasSheep(int amt) {
 		return (sheep >= amt) ? true : false;
@@ -59,7 +60,8 @@ public class Bank {
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
 	 * @param amt
-	 * @return boolean
+	 * @pre none
+	 * @post returns boolean
 	 */
 	public boolean hasOre(int amt) {
 		return (ore >= amt) ? true : false;
@@ -67,7 +69,8 @@ public class Bank {
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
 	 * @param amt
-	 * @return boolean
+	 * @pre none
+	 * @post returns boolean
 	 */
 	public boolean hasWood(int amt) {
 		return (wood >= amt) ? true : false;
@@ -75,7 +78,8 @@ public class Bank {
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
 	 * @param amt
-	 * @return boolean
+	 * @pre none
+	 * @post returns boolean
 	 */
 	public boolean hasWheat(int amt) {
 		return (wheat >= amt) ? true : false;
@@ -83,52 +87,114 @@ public class Bank {
 	/**
 	 * Checks to see if bank has at least the specified amount of card type.
 	 * @param amt
-	 * @return boolean
+	 * @pre none
+	 * @post returns boolean
 	 */
 	public boolean hasBrick(int amt) {
 		return (brick >= amt) ? true : false;
 	}
 
+	/**
+	 * Getter for brick
+	 * @pre none
+	 * @post returns the amount of brick the bank has
+	 */
 	public int getBrick() {
 		return brick;
 	}
 
+	/**
+	 * Setter for brick
+	 * @param brick: an integer representing how much brick the bank needs to have after the method is called
+	 * @pre none
+	 * @post sets the banks amount of bricks to the specified value given in the parameters
+	 */
 	public void setBrick(int brick) {
 		this.brick = brick;
 	}
 
+	/**
+	 * Getter for ore
+	 * @pre none
+	 * @post returns the amount of ore the bank has
+	 */
 	public int getOre() {
 		return ore;
 	}
 
+	/**
+	 * Setter for Ore
+	 * @param brick: an integer representing how much ore the bank needs to have after the method is called
+	 * @pre none
+	 * @post sets the banks amount of ore to the specified value given in the parameters
+	 */
 	public void setOre(int ore) {
 		this.ore = ore;
 	}
 
+	/**
+	 * Getter for sheep
+	 * @pre none
+	 * @post returns the amount of sheep the bank has
+	 */
 	public int getSheep() {
 		return sheep;
 	}
 
+	/**
+	 * Setter for sheep
+	 * @param brick: an integer representing how much sheep the bank needs to have after the method is called
+	 * @pre none
+	 * @post sets the banks amount of sheep to the specified value given in the parameters
+	 */
 	public void setSheep(int sheep) {
 		this.sheep = sheep;
 	}
 
+	/**
+	 * Getter for wheat
+	 * @pre none
+	 * @post returns the amount of wheat the bank has
+	 */
 	public int getWheat() {
 		return wheat;
 	}
-
+	
+	/**
+	 * Setter for wheat
+	 * @param brick: an integer representing how much wheat the bank needs to have after the method is called
+	 * @pre none
+	 * @post sets the banks amount of wheat to the specified value given in the parameters
+	 */
 	public void setWheat(int wheat) {
 		this.wheat = wheat;
 	}
 
+	/**
+	 * Getter for wood
+	 * @pre none
+	 * @post returns the amount of wood the bank has
+	 */
 	public int getWood() {
 		return wood;
 	}
-
+	
+	/**
+	 * Setter for wood
+	 * @param brick: an integer representing how much wood the bank needs to have after the method is called
+	 * @pre none
+	 * @post sets the banks amount of wood to the specified value given in the parameters
+	 */
 	public void setWood(int wood) {
 		this.wood = wood;
 	}
 	
+	/**
+	 * This method checks whether the bank has enough resources as specified in the parameter
+	 * @param resource: resource is a class that has values for all five possible resources
+	 * @pre none
+	 * @post This method returns a boolean: true if the bank has the amount of resources specified, false if the bank does not have the amount of resources specified.
+	 */
 	public boolean hasResource(ResourceType resource) {
 		boolean hasResource = false;
 		
