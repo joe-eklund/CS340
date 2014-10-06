@@ -120,7 +120,7 @@ public interface IServer {
 	 * This call returns information about all of the current games
 	 * 
 	 * @pre
-	 * 	None
+	 * 	Valid login cookie
 	 * 
 	 * @post
 	 * <ol>
@@ -141,11 +141,11 @@ public interface IServer {
 	 * Creates an empty game on the server
 	 * 
 	 * @pre
-	 * 	None
+	 * 	Valid login cookie
 	 * 
 	 * @post
 	 * <ol>
-	 *   <li>creates an empty game on server</li>
+	 *   <li>creates an empty game on server according to parameter booleans "randomTiles", "randomNumbers", and "Random Ports"; the parameter name settings are default if the given parameter is false otherwise the setting (i.e. ports) is randomized</li>
 	 * 	 <li>returns a CreateGameResponse Object with the following field settings (See CreateGameResponse class for more details):
 	 * 	   <ol>
 	 * 		 <li>successful = true</li>
@@ -194,8 +194,10 @@ public interface IServer {
 	 * 	<oL>
 	 * 	  <li>The player is now listed as a player for game associated with gameID and has the specified color</li>
 	 *    <li>returns a JoinGameResponse Object with the following field settings (See JoinGameResponse class for more details):
-	 *      <ol>
-	 *      </ol>
+	 * 	    <ol>
+	 * 		  <li>successful = true</li>
+	 * 	      <li>cookie = player.game cookie</li>
+	 * 	    </ol>
 	 *    </li>
 	 *  </ol>
 	 * 
@@ -210,13 +212,22 @@ public interface IServer {
 	 * Fetches the JSON for the model of the current game.
 	 * 
 	 * @pre
-	 * 	1) Requester has a valid catan.user and catan.game id set in cookie
+	 *  <ol>
+	 * 	  <li>Requester has a valid catan.user and catan.game id set in cookie</li>
 	 * 
 	 * @post
-	 *  if the server catan model is the same as the client model 
-	 *     1) returns null
-	 *  else 
-	 *     1) returns a the current server game model
+	 *  if the server catan model is the same as the client model returns GetGameModelResponse as follows:
+	 *    <ol>
+	 *       <li>needToUPdate = false</li>
+	 *       <li>successful = true</li>
+	 *       <li>gameModel = null</li>
+	 *    </ol>
+	 *  else returns GetGameModelResponse as follows:
+	 *    <ol>
+	 *      <li>needToUPdate = true</li>
+	 *      <li>successful = true</li>
+	 *      <li>gameModel = current server game model (already translated to Java from JSON response)</li>
+	 *    </ol>
 	 * 
 	 *  @param version : current game version number for client game model
 	 *  @param cookie : catan cookie as set by server
@@ -228,10 +239,16 @@ public interface IServer {
 	 * Resets the game to how it was after all the players joined
 	 * 
 	 * @pre
-	 *  1) Requester has a valid catan.user and catan.game id set in cookie
+	 *  <ol>
+	 *    <li>Requester has a valid catan.user and catan.game id set in cookie</li>
+	 *  </ol>
 	 * 
 	 * @post
-	 * 	1) Returns reset game model
+	 * 	resets server game and returns ResetGameResponse as follows:
+	 * 	  <ol>
+	 *      <li>successful = true</li>
+	 *      <li>gameModel = reset server game model</li>
+	 *    </ol>
 	 * 
 	 * @param cookie: catan cookie as set by server
 	 * 
@@ -243,10 +260,16 @@ public interface IServer {
 	 * Gets a list of all the commands played on a game
 	 * 
 	 * @pre
-	 *  1) Requester has a valid catan.user and catan.game id set in cookie
+	 *  <ol>
+	 *    <li>Requester has a valid catan.user and catan.game id set in cookie</li>
+	 *  </ol>
 	 *  
 	 * @post
-	 *  2) returns a list of the commands that have been executed in the game
+	 *   returns a GetGameCommandsResponse as follows:
+	 *   <ol>
+	 *     <li>successful = true</li>
+	 *     <li>commands = server log of commands executed so far in game</li>
+	 *   </ol>
 	 * 
 	 * @return string: see post for possible values
 	 * 
@@ -259,7 +282,10 @@ public interface IServer {
 	 * Applies a list of commands to the current game.
 	 * 
 	 * @pre
-	 *  1) Requester has a valid catan.user and catan.game id set in cookie
+	 *  <ol>
+	 *    <li>Requester has a valid catan.user and catan.game id set in cookie</li>
+	 *  </ol>
+	 *   
 	 * 
 	 * @post
 	 *  if the content could not be deserialized, or an error in applying the commands:
@@ -280,7 +306,11 @@ public interface IServer {
 	 *  None
 	 * 
 	 * @post
-	 *  1) returns a list of strings 
+	 *   returns a listAIResponse as follows:
+	 *   <ol>
+	 *     <li>successful = true</li>
+	 *     <li>aiTypes = server provided list of available ai types to add to game</li>
+	 *   </ol>
 	 * 
 	 * @param cookie: catan cookie as set by server
 	 * 
@@ -292,16 +322,17 @@ public interface IServer {
 	 * Adds an AI to the game
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> The player has a valid catan.user and catan.game id</li>
 	 *  <li> There is space in the game for an AI player</li>
-	 * </ul>
+	 * </ol>
 	 *  
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> The AI player is added to the next open spot in the game associated with the poster’s catan.game cookie</li>
 	 *  <li> The AI player uses a color not taken by any other player in the game</li>
-	 * </ul>
+	 *  <li> Returns an AddAIResponse object with successful set to true</li>
+	 * </ol>
 	 * 
 	 * @param aiToAdd string from list<string> provided by listAI() command
 	 * @param cookie: catan cookie as set by server
@@ -314,11 +345,24 @@ public interface IServer {
 	 * Sets the server’s logging level
 	 * 
 	 * @pre
-	 *  1) The poster specifies a valid logging level. Valid values include: 
-	 *     SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST
+	 *  <ol>
+	 *    <li>The poster specifies a valid logging level. Valid values include:
+	 *      <ul>
+	 *        <li>SEVERE,</li> 
+	 *        <li>WARNING,</li> 
+	 *        <li>INFO,</li> 
+	 *        <li>CONFIG,</li> 
+	 *        <li>FINE,</li>
+	 *        <li>FINER,</li>
+	 *        <li>FINEST</li>
+	 *      </ul></li>
+	 *  </ol>
 	 * 
 	 * @post
-	 *  1) The Server uses that logging level
+	 *  <ol>
+	 *    <li>The Server logging level is set to provided parameter</li>
+	 *    <li>Returns a ChangeLogLevelResponse with successful set to true</li>
+	 *  </ol>
 	 *  
 	 *  @param logLevel: desired logging level for server
 	 *  @param cookie: catan cookie as set by server
@@ -334,7 +378,10 @@ public interface IServer {
 	 *  None
 	 * 
 	 * @post
-	 *  1) chat log contains message
+	 *   <ol>
+	 *     <li>game chat log contains message</li>
+	 *     <li>returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 *   </ol>
 	 * 
 	 * @param playerIndex: player index in current game
 	 * @param message: message player wishes to post to chat log
@@ -348,16 +395,34 @@ public interface IServer {
 	 * Accept another player's trade offer
 	 * 
 	 * @pre
-	 * 	1) player has been offered a domestic trade
-	 *  if willAccept = true:
-	 *     2) player has resources offered on his/her part in trade
+	 * 	<ol>
+	 *    <li>player has been offered a domestic trade</li>
+	 *    <li>if willAccept = true
+	 *      <ol>
+	 *        <li>player has resources offered on his/her part in trade</li>
+	 *      </ol>
+	 *    </li>
+	 *  </ol>
 	 *     
 	 * @post
-	 * 	if willAccept = true:
-	 *     1) player accepting and player who offered exchange resources specified in trade
-	 *  if willAccept = false:
-	 *     1) no resources are exchanged
-	 *  2) trade offer is removed  
+	 *  <ol>
+	 *    <li>
+	 * 	    <ol>
+	 *        <li>if willAccept = true:
+	 *          <ol>
+	 *            <li>player accepting and player who offered exchange resources specified in trade</li>
+	 *          </ol>
+	 *        <li>if willAccept = false:
+	 *          <ol>
+	 *            <li>no resources are exchanged</li>
+	 *          </ol>
+	 *        </li>
+	 *      </ol>
+	 *    </li>
+	 *    <li>trade offer is removed from game model</li>
+	 *    <li>returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 *  </ol>
+	 *     
 	 * 
 	 * @param playerIndex: player index in current game
 	 * @param willAccept: boolean value of whether or not player accepts proposed trade
@@ -371,17 +436,18 @@ public interface IServer {
 	 * Discards cards from players hand
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> Player is in 'Discarding' state</li>
 	 *  <li> Player has over 7 cards</li>
 	 *  <li> Player has the cards player is choosing to discard.</li>
-	 * </ul>
+	 * </ol>
 	 * 
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> Player client now enters 'Robbing' state</li>
 	 *  <li> Player gives up specified cards</li>
-	 * </ul>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 *  
 	 *  @param playerIndex: player index in current game
 	 *  @param resources: list of valid resource types
@@ -393,16 +459,18 @@ public interface IServer {
 	/**
 	 * Specifies to the server the number that was rolled by the player
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> The client model's status is "rolling"</li>
 	 *  <li> It is the turn of the player trying to roll the dice</li>
-	 * </ul>
+	 * </ol>
 	 *  
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> An integer from 2 to 12 is returned that represents the that was rolled</li>
 	 *  <li> The client model's status is now in "discarding" or "robbing" or "playing"</li>
-	 * </ul>
+	 *  <li>returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
+	 * 
 	 *  @param playerIndex: player index in current game
 	 *  @param number: an integer from 2 to 12 that represents the number that was rolled.
 	 *  @param cookie: catan cookie as set by server
@@ -413,20 +481,21 @@ public interface IServer {
 	 * Builds a road of the same color as the player building the road and at the specified location on the map
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 * 	<li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The road location is open</li>
 	 *  <li> The road location is connected to another road</li>
 	 *  <li> The road location is not on water</li>
 	 *  <li> The player has the necessary resources to build a road (1 wood, 1 brick)</li>
-	 * </ul>
+	 * </ol>
 	 *  
 	 * @post
-	 * <ul>
-	 *  <li> You expend the resources to play the road (1 wood, 1 brick)</li>
+	 * <ol>
+	 *  <li> Player expends the resources to play the road (1 wood, 1 brick)</li>
 	 *  <li> The map lists the road correctly</li>
-	 * </ul>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 * 
 	 * @param playerIndex: player index in current game
 	 * @param roadLocation: An EdgeLocation that declares where on the map the road will be built. 
@@ -439,20 +508,21 @@ public interface IServer {
 	 * Builds a settlement of the same color as the player building the road and at the specified location on the map
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The settlement location is open</li>
 	 *  <li> The settlement location is not on water</li>
 	 *  <li> The settlement location is connected to one of your roads</li>
 	 *  <li> The player has the necessary resources to build a settlement (1 wood, 1 brick, 1 wheat, 1 sheep)</li>
-	 * </ul>
+	 * </ol>
 	 *  
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> The player expends the resources necessary to play the settlement (1 wood, 1 brick, 1 wheat, 1 sheep)</li>
 	 *  <li> The map lists the settlement location correctly</li>
-	 * </ul>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 * 
 	 * @param playerIndex: player index in current game
 	 * @param free: a boolean that specifies whether or not the settlement piece has been given to the player for free.
@@ -465,19 +535,20 @@ public interface IServer {
 	 * Builds a city of the same color as the player building the road and at the specified location on the map
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The city location is where the player currently has a settlement</li>
 	 *  <li> The player has the necessary resources to build a city (2 wheat, 3 ore)</li>
-	 * </ul>
+	 * </ol>
 	 * 
 	 * @post
-	 * <ul> 
+	 * <ol> 
 	 *  <li> The player expends the resources necessary to play the settlement (2 wheat, 3 ore)</li>
 	 *  <li> The player gets a settlement back</li>
 	 *  <li> The map lists the city location correctly</li>
-	 * </ul>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 * 
 	 *  @param playerIndex: player index in current game
 	 *  @param location: location of where city will be built
@@ -490,16 +561,17 @@ public interface IServer {
 	 * The player offers a trade of certain resources to a another player in the game in return for different resource.
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The player owns the designated resources that want to be traded</li>
-	 * </ul>
+	 * </ol>
 	 * 
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> The trade is offered to the specified player and stored in the model</li>
-	 * </ul>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 * 
 	 * @param playerIndex: player index in current game
 	 * @param offer: ResourceHand indicating the cards to be given and received.  Negative numbers mean the players is receiving cards of that resource in the trade.
@@ -513,16 +585,17 @@ public interface IServer {
 	 * The player offers a trade of certain resources to the bank at a specified ratio depending on the port the player has a settlement on.
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The player owns the designated resources that want to be traded</li>
-	 * </ul>
+	 * </ol>
 	 * 
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> The trade is offered to the specified player and stored in the model</li>
-	 * </ul
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol
 	 * 
 	 * @param playerIndex: player index in current game
 	 * @param ratio: an integer of value 2, 3, or 4
@@ -536,15 +609,16 @@ public interface IServer {
 	 * The player finishes his/her turn.
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
-	 * </ul>
+	 * </ol>
 	 *  
 	 * @post
-	 *  <ul> 
+	 *  <ol> 
 	 *   <li>It is the next players turn</li>
-	 *  </ul>
+	 *   <li>returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 *  </ol>
 	 *  
 	 *  @param playerIndex: player index in current game
 	 *  @param cookie: catan cookie as set by server
@@ -555,20 +629,21 @@ public interface IServer {
 	 * The player buys a development card from the bank.
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The player has the necessary resources (1 ore, 1 wheat, 1 sheep)</li>
 	 *  <li> There are development cards left in the deck.</li>
-	 * </ul>
+	 * </ol>
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> The player has the new card</li>
-	 *    <ul>
+	 *    <ol>
 	 *    	<li>If it is a monument card, it goes into the old devcard hand</li>
 	 *      <li>If it is any other card, it goes into the new devcard hand (unplayable this turn)</li>
-	 *    </ul>
-	 *  </ul>
+	 *    </ol>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 *  
 	 *  @param playerIndex: player index in current game
 	 *  @param cookie: catan cookie as set by server
@@ -578,17 +653,18 @@ public interface IServer {
 	/**
 	 * The player can play the "Year of Plenty Card" and gain any two resource from the bank if the preconditions are satisfied.
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> The player has the year of plenty card in their "old dev card hand"</li>
 	 *  <li> The player hasn't played a devlopment card this turn yet</li>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The two resources the player specifies are in the bank</li>
-	 * </ul>
+	 * </ol>
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li>The player gains one each of the two resources specified</li>
-	 * </ul>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 * 
 	 * @param playerIndex: player index in current game
 	 * @param ResourceOne: The first of the two resources that the player desires to receive from the bank
@@ -602,7 +678,7 @@ public interface IServer {
 	 * The player can play the "Road Buidling Card" and build two new roads at no charge if the preconditions are satisfied.
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> The player has the road building card in their "old dev card hand"</li>
 	 *  <li> The player hasn't played a devlopment card this turn yet</li>
 	 *  <li> It is the players turn</li>
@@ -611,13 +687,14 @@ public interface IServer {
 	 *  <li> The second road location is connected to one of the players existing roads</li>
 	 *  <li> Neither location of the two new roads is on water</li>
 	 *  <li> The player has to roads</li>
-	 * </ul>
+	 * </ol>
 	 * 
 	 *  @post
-	 *  <ul>
+	 *  <ol>
 	 *    <li>The player uses two roads</li>
-	 *   <li>The map lists the placement of the roads correctly</li>
-	 *  </ul>
+	 *    <li>The map lists the placement of the roads correctly</li>
+	 *    <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 *  </ol>
 	 *  
 	 *  @param playerIndex: player index in current game
 	 *  @param spot1: an EdgeLocation that specifies the location of the first road to be built
@@ -654,20 +731,21 @@ public interface IServer {
 	 * The player can play the "Soldier Card" and he/she now have to move the robber to a new location on the map and steal two resources from a player that has a settlement touching the robbers new location.
 	 * 
 	 * @pre
-	 * <ul>
+	 * <ol>
 	 *  <li> The player has the soldier plenty card in their "old dev card hand"</li>
 	 *  <li> The player hasn't played a devlopment card this turn yet</li>
 	 *  <li> It is the players turn</li>
 	 *  <li> The client model status is "Playing"</li>
 	 *  <li> The robber must move locations so the new location passed in cannot be the robbers current location</li>
 	 *  <li> The player to rob has cards</li>
-	 * </ul>
+	 * </ol>
 	 *  
 	 * @post
-	 * <ul>
+	 * <ol>
 	 *  <li> The robber is in the new location</li>
 	 *  <li> The player to rob gives one random resource card to the player playing the soldier card</li>
-	 * </ul>
+	 *  <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 * </ol>
 	 *  
 	 * @param playerIndex: player index in current game 
 	 * @param location: Hexlocation that specifies the robbers new location on the map
@@ -681,13 +759,16 @@ public interface IServer {
 	 * The player can play the "Monument Card" and he/she will gain one victory point
 	 * 
 	 * @pre
-	 *  <ul>
-	 *  <li> The player hasn't played a devlopment card this turn yet</li>
-	 *  <li> It is the players turn</li>
-	 *  <li> The client model status is "Playing"</li>
-	 *  </ul>
+	 *  <ol>
+	 *    <li> The player hasn't played a devlopment card this turn yet</li>
+	 *    <li> It is the players turn</li>
+	 *    <li> The client model status is "Playing"</li>
+	 *  </ol>
 	 * @post
-	 *  <ul><li> The player gains a victory point</li><ul>
+	 *  <ol>
+	 *    <li> The player gains a victory point</li>
+	 *    <li> returns MoveResponse with successful set to true and gameModel set to updated server game model<li>
+	 *  <ol>
 	 *  
 	 *  @param playerIndex: player index in current game
 	 *  @param cookie: catan cookie as set by server

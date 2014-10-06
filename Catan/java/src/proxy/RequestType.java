@@ -1,5 +1,15 @@
 package proxy;
 
+/**
+ *  A request type enum for specifying type of http request ClientCommunicator will be making
+ *  <br>
+ *  Domain
+ *  <ul>
+ *    <li>GET = "GET"</li>
+ *    <li>POST = "POST"</li>
+ *  </ul>
+ *
+ */
 public enum RequestType {
 	GET, POST/*, PUT, DELETE*/;
 	

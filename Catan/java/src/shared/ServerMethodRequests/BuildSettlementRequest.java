@@ -2,12 +2,38 @@ package shared.ServerMethodRequests;
 
 import shared.locations.VertexLocation;
 
+/**
+ * A class for encapsulating BuildSettlement request parameters
+ * 
+ * @Domain
+ *    <ul>
+ *      <li>type: "buildSettlement"</li>
+ *      <li>playerIndex: 0,1,2,3 denoting the player's game index</li>
+ *      <li>vertexLocation: a valid vertexLocation on the map where the player is allowed to build a settlement</li>
+ *      <li>free: true/false; whether the settlement is free (being built during initialization = true) or not</li>
+ *    </ul>
+ *
+ */
 public class BuildSettlementRequest {
 	private String type;
 	private int playerIndex;
 	private VertexLocation vertexLocation;
 	private boolean free;
 
+	/**
+	 * Constructor
+	 * @post
+	 *  <ul>
+	 * 	 <li>this.type = "buildRoad"</li>
+	 *   <li>this.playerIndex = playerIndex param</li>
+	 *   <li>this.vertexLocation = vertexLocation param</li>
+	 *   <li>this.free = free param</li>
+	 *  </ul>
+	 * 
+	 * @param playerIndex
+	 * @param roadLocation
+	 * @param free
+	 */
 	public BuildSettlementRequest(int playerIndex,
 			VertexLocation vertexLocation, boolean free) {
 		this.type = "buildSettlement";

@@ -4,7 +4,12 @@
 package shared.ServerMethodRequests;
 
 /**
- * @author Chad
+ * A class for encapsulating AddAI request parameters
+ * 
+ * @Domain
+ *    <ul>
+ *      <li>AIType: aiType to be added and must be from list of available ais as provided by server</li>
+ *    </ul>
  *
  */
 public class AddAIRequest {

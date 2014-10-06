@@ -5,7 +5,14 @@ import java.util.Map;
 
 /**
  * An interface for defining the object returned by ICommunicator.executeCommand
- * @author joshuabgrigg
+ *
+ * @Domain
+ * <ul>
+ *	 <li>responseHeaders: http response header value for "Set-cookie"; can be NULL</li> 
+ *   <li>responseCode: http response code; cannot be NULL</li>
+ *   <li>responseObjectFromJSON: object translated from http response JSON using GSON; can be NULL</li>
+ *   <li>responseMessage: response message; can be null<li>
+ * </ul>
  *
  */
 public interface ICommandResponse {

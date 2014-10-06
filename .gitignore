@@ -42,3 +42,7 @@ Catan/.classpath
 
 Catan/.classpath
 
+
+*.class
+
+*.class

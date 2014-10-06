@@ -12,6 +12,17 @@ import shared.ServerMethodResponses.*;
 import shared.definitions.*;
 import shared.locations.*;
 
+/**
+ * A Server Proxy class that implements the Server Interface
+ * 
+ * @Domain
+ *  <ul>
+ *    <li>singleton: singleton instance for proxy server; null until static setSingleton is used</li>
+ *    <li>clientCommunicator: of interface ICommunicator and used to carry out http communcation with server</li>
+ *    <li>cookieTranslator: of interface ITranslator and used to translate encoded cookie headers; must be set to correct type to translate cookie headers (should be TranslatorJSON for catan game)</li>
+ *    <li>cookieEncoding: encoding used by cookie headers (should be "UTF-8" for catan game)</li>
+ *
+ */
 public class ProxyServer implements IServer{
 	private final String COOKIE_STR = "Cookie";
 	private final String CONTENT_TYPE_STR = "Content-type";
