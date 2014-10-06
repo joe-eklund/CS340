@@ -25,13 +25,18 @@ public class Hex extends IHex{
 		
 	}
 	
+	/**
+	 * Class constructor
+	 * @param location
+	 */
 	public Hex(HexLocation location) {
 		this.location = location;
 	}
 	
 	/**
 	 * Gets the hex location.
-	 * @return	The current hex location.
+	 * @pre none
+	 * @post Returns the current hex location.
 	 */
 	@Override
 	public HexLocation getLocation() {
@@ -41,6 +46,8 @@ public class Hex extends IHex{
 	/**
 	 * Sets the hex location.
 	 * @param location	The inputed hex location to set.
+	 * @pre none
+	 * @post The Hex Location of the object is now the Hex Location given as a parameter
 	 */
 	@Override
 	public void setLocation(HexLocation location) {
@@ -51,6 +58,8 @@ public class Hex extends IHex{
 	 * Sets the hex location.
 	 * @param x: The x coordinate of the hex location to set.
 	 * @param y: The Y coordinate of the hex location to set.
+	 * @pre none
+	 * @post The Hex Location of the object now has the x and y coordinates that were specified in the parameters
 	 */
 	@Override
 	public void setLocation(int x, int y) {
@@ -60,6 +69,8 @@ public class Hex extends IHex{
 	/**
 	 * Gets the resource type.
 	 * @return	The current resource type.
+	 * @pre none
+	 * @post returns the type of resource the Hex produces as a String
 	 */
 	@Override
 	public String getResourceType() {
@@ -69,6 +80,8 @@ public class Hex extends IHex{
 	/**
 	 * Sets the resource type.
 	 * @param ResourceType	The resource type to set.
+	 * @pre none
+	 * @post Returns the type of resource that the Hex produces as a String
 	 */
 	@Override
 	public void setResourceType(String resource) {
@@ -78,6 +91,8 @@ public class Hex extends IHex{
 	/**
 	 * Gets the chit.
 	 * @return	The current chit.
+	 * @pre none
+	 * @post Returns the chit associated to the Hex
 	 */
 	@Override
 	public int getChit() {
@@ -87,25 +102,11 @@ public class Hex extends IHex{
 	/**
 	 * Sets the chit.
 	 * @param chit	The inputed chit to set.
+	 * @pre none
+	 * @post Sets the chit of the hex to the interger passed in as a parameter
 	 */
 	@Override
 	public void setChit(int chit) {
 		this.chit = chit;
-	}
-
-	/**
-	 * @return the resource
-	 */
-	public String getResource() {
-		return resource;
-	}
-
-	/**
-	 * @param resource the resource to set
-	 */
-	public void setResource(String resource) {
-		this.resource = resource;
-	}
-	
-	
+	}	
 }

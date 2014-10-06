@@ -26,7 +26,8 @@ public class Map {
 	
 	/**
 	 * Gets the list of hexes.
-	 * @return	The list of hexes.
+	 * @pre none
+	 * @post Returns the list of hexes.
 	 */
 	public ArrayList<Hex> getHexes() {
 		return hexes;
@@ -35,6 +36,8 @@ public class Map {
 	/**
 	 * Sets the list of hexes.
 	 * @param hexes	The inputed list of hexes.
+	 * @pre none
+	 * @post Sets the list of Hexes in the object to be the same as the list of hexes passed as a parameter
 	 */
 	public void setHexes(ArrayList<Hex> hexes) {
 		this.hexes = hexes;
@@ -42,7 +45,8 @@ public class Map {
 	
 	/**
 	 * Gets the list of ports.
-	 * @return	The list of ports.
+	 * @pre none
+	 * @post Returns the list of ports.
 	 */
 	public ArrayList<Port> getPorts() {
 		return ports;
@@ -51,6 +55,8 @@ public class Map {
 	/**
 	 * Sets the list of ports.
 	 * @param ports	The inputed list of ports.
+	 * @pre none
+	 * @post Sets the list of ports in the object to be the same as the List of ports passed as a parameter
 	 */
 	public void setPorts(ArrayList<Port> ports) {
 		this.ports = ports;
@@ -58,7 +64,8 @@ public class Map {
 	
 	/**
 	 * Gets the list of roads.
-	 * @return	The inputed list of roads.
+	 * @pre none
+	 * @post Returns the inputed list of roads.
 	 */
 	public ArrayList<Road> getRoads() {
 		return roads;
@@ -67,6 +74,8 @@ public class Map {
 	/**
 	 * Sets the list of roads.
 	 * @param roads	The inputed list of roads.
+	 * @pre none
+	 * @post Sets the list of roads within the object to be the same as the list of roads passed in as a parameter
 	 */
 	public void setRoads(ArrayList<Road> roads) {
 		this.roads = roads;
@@ -74,7 +83,8 @@ public class Map {
 	
 	/**
 	 * Gets the list of settlements.
-	 * @return	The list of settlements.
+	 * @pre none
+	 * @post Returns the list of settlements.
 	 */
 	public ArrayList<Settlement> getSettlements() {
 		return settlements;
@@ -83,6 +93,8 @@ public class Map {
 	/**
 	 * Sets the list of settlements.
 	 * @param settlements	The inputed list of settlements.
+	 * @pre none
+	 * @post Sets the list of settlements within the object to be the same as the list of settlements passed as a parameter
 	 */
 	public void setSettlements(ArrayList<Settlement> settlements) {
 		this.settlements = settlements;
@@ -90,7 +102,8 @@ public class Map {
 	
 	/**
 	 * Gets the list of cities.
-	 * @return	The list of cities.
+	 * @pre none
+	 * @post Returns the list of cities.
 	 */
 	public ArrayList<City> getCities() {
 		return cities;
@@ -98,7 +111,9 @@ public class Map {
 
 	/**
 	 * Sets the list of cities.
-	 * @param cities	The inputed list of cities.
+	 * @param cities: The inputed list of cities.
+	 * @pre none
+	 * @post Sets the list of cities within the object to be the same as the list of cities passed as a parameter
 	 */
 	public void setCities(ArrayList<City> cities) {
 		this.cities = cities;
@@ -106,7 +121,8 @@ public class Map {
 
 	/**
 	 * Gets the radius of the map. Number of hexes from the middle.
-	 * @return	The radius.
+	 * @pre none
+	 * @post Returns the radius.
 	 */
 	public int getRadius() {
 		return radius;
@@ -114,7 +130,9 @@ public class Map {
 
 	/**
 	 * Sets the radius.
-	 * @param radius	The inputed radius to set.
+	 * @param radius:	The inputed radius to set.
+	 * @pre none
+	 * @post Sets the radius within the object to be the same as the radius passed as a parameter
 	 */
 	public void setRadius(int radius) {
 		this.radius = radius;
@@ -122,7 +140,8 @@ public class Map {
 	
 	/**
 	 * Gets the robber.
-	 * @return	The robber.
+	 * @pre none
+	 * @post Returns the robber.
 	 */
 	public Robber getRobber() {
 		return robber;
@@ -130,7 +149,9 @@ public class Map {
 
 	/**
 	 * Sets the robber.
-	 * @param robber	The inputed robber to set.
+	 * @param robber:	The inputed robber to set.
+	 * @pre none
+	 * @post Sets the robber within the object to be the same as the robber passed as a parameter
 	 */
 	public void setRobber(Robber robber) {
 		this.robber = robber;

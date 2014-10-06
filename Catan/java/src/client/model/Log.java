@@ -22,6 +22,8 @@ public class Log {
 	/**
 	 * Adds a message to the log
 	 * @param messageToAdd	The inputed message to add.
+	 * @pre none
+	 * @post The Log now contains the message given as a parameter
 	 */
 	public void addMessage(Message messageToAdd){
 		
@@ -29,7 +31,8 @@ public class Log {
 	
 	/**
 	 * Gets the log message list.
-	 * @return	the log message list.
+	 * @pre none
+	 * @post Returns the log message list.
 	 */
 	public ArrayList<Message> getLogMessages() {
 		return lines;
@@ -38,6 +41,8 @@ public class Log {
 	/**
 	 * Sets the log message list.
 	 * @param logMessages	The inputed log message list to set.
+	 * @pre none
+	 * @post The list containing the log messages is now the list given as a parameter
 	 */
 	public void setLogMessages(ArrayList<Message> logMessages) {
 		this.lines = logMessages;
