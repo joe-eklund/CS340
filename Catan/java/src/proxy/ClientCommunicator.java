@@ -77,8 +77,12 @@ public class ClientCommunicator implements ICommunicator {
 	/**Starts the request from the server given the information from the proxy. Starts by packaging up the info and having the translator change it to json. Then takes the json object with the request type and sends it to the server. 
 	 * @pre A list of headers most be put together, plus all the other necessary information for boxing up a package to be sent to the server
 	 * @post If all conditions are right, and execution is normal, A commandResponse object packaged up with all necessary data is sent back to proxy. 
-	 * @param commandName
-	 * @param commandParameters
+	 * @Domain This class gets a range of objects each defined as a in param documentation for this method. Basically, String objects, class.types, and a list of strings is what is a possible. 
+	 * @param commandName the type of command to be carried out on the server
+	 * @param commandParameters the object to be sent to the server
+	 * @param headers the given cookie data
+	 * @param requestType what is expected back object wise
+	 * @param responseCastClass what the translator needs to get the right object back
 	 * @return ICommandResponse from the server
 	 * @throws MalformedURLException 
 	 */
@@ -111,8 +115,8 @@ public class ClientCommunicator implements ICommunicator {
 	/**Preforms a get operation to the server
 	 * @pre The Connection to the server must all ready be set up with the necessary headers
 	 * @post Response data is returned. 
-	 * @param headers 
-	 * @param urlPath
+	 * @Domain Method is give a connection from the proxy that should have already been initialized. Can ONLY be give a connection
+	 * @param connection the given connection to the server 
 	 * @throws ClientException
 	 */
 	private CommandResponse doGet(HttpURLConnection connection) //throws ClientException may need to add this in later
@@ -152,8 +156,9 @@ public class ClientCommunicator implements ICommunicator {
 	 *passing in the specified postData object
 	 * @pre The connection will  have already been set up, and the jsonObject has been packaged for being sent to the server
 	 * @post The right data is put onto the output stream
-	 * @param urlPath
-	 * @param postData
+	 * @Domain Will be given a connection and then a jsonObject that can contain a string representing any of the can-do, or game control methods
+	 * @param jsonObject the object to be sent to the server in the form of a string json object
+	 * @param connection the connection to the server
 	 * @throws ClientException
 	 */
 	private CommandResponse doPost(String jsonObject, HttpURLConnection connection){
