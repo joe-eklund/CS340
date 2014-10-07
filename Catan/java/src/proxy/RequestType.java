@@ -3,7 +3,7 @@ package proxy;
 /**
  *  A request type enum for specifying type of http request ClientCommunicator will be making
  *  <br>
- *  Domain
+ *  <b>Domain:</b>
  *  <ul>
  *    <li>GET = "GET"</li>
  *    <li>POST = "POST"</li>

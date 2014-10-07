@@ -1,5 +1,9 @@
 package shared.definitions;
 
+/**
+ * A class that describes a generic location so that the model given from the server can be casted directly into a type of this class
+ *
+ */
 public class Location {
 	String direction;
 	int x;
@@ -40,6 +44,10 @@ public class Location {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +58,10 @@ public class Location {
 		result = prime * result + y;
 		return result;
 	}
+	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -18,9 +18,8 @@ import shared.locations.VertexLocation;
 import java.util.Map;
 
 /**
- * 
- * @author Epper Marshall
  * The client side representation of the model.
+ * @author Epper Marshall
  * 
  */
 public class ClientModel implements IClientModel{

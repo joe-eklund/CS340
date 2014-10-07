@@ -7,6 +7,7 @@ import shared.definitions.ResourceType;
 
 /**
  * Player class contains all the information for each individual player in the game.
+ * <br><b>Domain:</b> 0-5 settlements, 0-4 cities, 0-15 roads
  * @author Epper Marshall
  *
  */

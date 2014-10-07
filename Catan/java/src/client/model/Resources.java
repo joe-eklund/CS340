@@ -2,7 +2,7 @@ package client.model;
 /**
  * 
  * Keeps track of the number of each resource a player has.
- *
+ * <br><b>Domain:</b> 0-95 Resources
  */
 public class Resources {
 	public int brick;

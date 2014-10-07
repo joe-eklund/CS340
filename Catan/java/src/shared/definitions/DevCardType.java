@@ -1,5 +1,9 @@
 package shared.definitions;
 
+/**
+ * An enum representing the type of development cards
+ *
+ */
 public enum DevCardType
 {
 	

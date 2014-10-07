@@ -3,11 +3,20 @@ package shared.definitions;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A class that describes the game, such as game title and id
+ */
 public class GameDescription {
 	private String title;
 	private int id;
 	private PlayerDescription[] playerDescriptions;
 	
+	/**
+	 * Class constructor
+	 * @param title
+	 * @param id
+	 * @param playerDescriptions
+	 */
 	public GameDescription(String title, int id,
 			PlayerDescription[] playerDescriptions) {
 		this.title = title;
@@ -15,30 +24,56 @@ public class GameDescription {
 		this.playerDescriptions = playerDescriptions;
 	}
 
+	/**
+	 * @obvious
+	 */
 	public String getTitle() {
 		return title;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public int getId() {
 		return id;
 	}
 	
+	/** 
+	 * Returns descriptions of the current players of the game
+	 * @pre none
+	 * @post Returns descriptions of the current players of the game
+	 */
 	public PlayerDescription[] getPlayerDescriptions() {
 		return playerDescriptions;
 	}
 	
+	/**
+	 * @obvious
+	 * @param title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 	
+	/**
+	 * @obvious
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 	
+	/**
+	 * @obvious
+	 * @param playerDescriptions
+	 */
 	public void setPlayerDescriptions(PlayerDescription[] playerDescriptions) {
 		this.playerDescriptions = playerDescriptions;
 	}
 
+	/**
+	 * @obvious
+	 */
 	@Override
 	public String toString() {
 		return "GameDescription [title=" + title + ", id=" + id
@@ -46,6 +81,9 @@ public class GameDescription {
 				+ "]";
 	}
 
+	/**
+	 * @obvious
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -56,6 +94,9 @@ public class GameDescription {
 		return result;
 	}
 
+	/**
+	 * @obvious
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

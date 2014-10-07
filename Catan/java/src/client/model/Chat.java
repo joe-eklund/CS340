@@ -2,10 +2,9 @@ package client.model;
 
 import java.util.ArrayList;
 /**
- * 
- * @author Epper Marshall, Joe Eklund
- * @domain Lines will have between 0 and the max size of the list lines
  * The chat class holds the list of messages that have been sent by each player.
+ * <br><b>Domain:</b> Lines will have between 0 and the max size of the list lines
+ * @author Epper Marshall, Joe Eklund
  */
 public class Chat {
 	private ArrayList<Message> lines;

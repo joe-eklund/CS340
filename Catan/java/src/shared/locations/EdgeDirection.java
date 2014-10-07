@@ -2,6 +2,11 @@ package shared.locations;
 
 import client.exceptions.ClientModelException;
 
+/**
+ * An enum which describes an Edge Direction
+ * <br><b>Domain:</b> NorthWest, North, NorthEast, SouthEast, South, SouthWest
+ *
+ */
 public enum EdgeDirection
 {
 	
@@ -19,11 +24,23 @@ public enum EdgeDirection
 		SouthWest.opposite = NorthEast;
 	}
 	
+	/**
+	 * Gets the opposite direction of the Edge Direction
+	 * @pre none
+	 * @post Returns the opposite direction of the Edge Direction
+	 */
 	public EdgeDirection getOppositeDirection()
 	{
 		return opposite;
 	}
 	
+	/**
+	 * Determines which direction enum to return based off of the string given as a parameter
+	 * @param dir
+	 * @pre none
+	 * @post Returns an enum assocaited to the specified direction
+	 * @throws ClientModelException
+	 */
 	public static EdgeDirection determineDirection(String dir) throws ClientModelException {
 		switch(dir) {
 		case "NorthWest":

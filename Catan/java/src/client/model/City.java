@@ -6,10 +6,9 @@ import shared.locations.VertexLocation;
 import client.exceptions.ClientModelException;
 
 /**
- * 
- * @author Joe Eklund
- * @domain The owner index must be between 0 and 4
  * The city class represents a city object.
+ * <br><b>Domain:</b> The owner index must be between 0 and 4
+ * @author Joe Eklund
  */
 public class City {
 	private int ownerIndex;

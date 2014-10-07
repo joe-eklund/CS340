@@ -2,7 +2,7 @@ package proxy;
 
 /**
  * A class that represents the information stored in the player cookie as set by the server; used for decoding server cookie header response
- * @Domain
+ * <br><b>Domain</b>
  *  <ul>
  *    <li>name: player's name</li>
  *    <li>password: player's password</li>

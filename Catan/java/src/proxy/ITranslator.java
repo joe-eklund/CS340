@@ -3,12 +3,11 @@ package proxy;
 import com.google.gson.*;
 
 /**
- * 
- * @author Epper Marshall
  * This interface is used to set the type of communication the http body will contain (json, xml). Based on 
  * what the translator used is, it will convert the Java Object into the correct String type.
+ * <br><b>Domain:</b>a string in a specific language (xml, json, etc) or a java object
+ * @author Epper Marshall
  * 
- * @domain a string in a specific language (xml, json, etc) or a java object
  */
 public interface ITranslator {
 	/**

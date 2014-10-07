@@ -7,7 +7,8 @@ import shared.locations.VertexDirection;
 import client.exceptions.ClientModelException;
 
 /**
- * Another piece owned by the player. Interacts with the player and the board. Must be purchased to be placed on the board. 
+ * Another piece owned by the player. Interacts with the player and the board. Must be purchased to be placed on the board.
+ * <br><b>Domain:</b> 0-1 Vertex Location 
  * @author Chad
  */
 public class Settlement {

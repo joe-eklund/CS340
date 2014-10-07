@@ -15,7 +15,7 @@ import shared.locations.*;
 /**
  * A Server Proxy class that implements the Server Interface
  * 
- * @Domain
+ * <br><b>Domain</b>
  *  <ul>
  *    <li>singleton: singleton instance for proxy server; null until static setSingleton is used</li>
  *    <li>clientCommunicator: of interface ICommunicator and used to carry out http communcation with server</li>

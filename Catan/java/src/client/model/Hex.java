@@ -6,10 +6,10 @@ import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 
 /**
- * 
- * @author Epper Marshall
- *	The hex class represents a hex on the map. It has a location, resource type, 
+ * The hex class represents a hex on the map. It has a location, resource type, 
  *	and an int.
+ * @author Epper Marshall
+ *	
  */
 public class Hex extends IHex{
 	private HexLocation location;

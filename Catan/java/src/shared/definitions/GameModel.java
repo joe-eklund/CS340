@@ -22,6 +22,11 @@ public class GameModel {
 		initializeMap();
 	}
 	
+	/**
+	 * Initializes the map to reflect the map given by the server
+	 * @pre The server has sent an initial model
+	 * @post The map in the GameModel now reflects the map given by the server
+	 */
 	private void initializeMap() {
 		board = new HashMap<HexLocation, IHex>();
 		ArrayList<Hex> hexes = serverModel.getMap().getHexes();
@@ -128,13 +133,14 @@ public class GameModel {
 	}
 	
 	/**
-	 * @return the serverModel
+	 * @obvious the serverModel
 	 */
 	public ServerModel getServerModel() {
 		return serverModel;
 	}
 
 	/**
+	 * @obvious
 	 * @param serverModel the serverModel to set
 	 */
 	public void setServerModel(ServerModel serverModel) {
@@ -142,13 +148,14 @@ public class GameModel {
 	}
 
 	/**
-	 * @return the board
+	 * @obvious the board
 	 */
 	public Map<HexLocation, IHex> getBoard() {
 		return board;
 	}
 
 	/**
+	 * @obvious
 	 * @param board the board to set
 	 */
 	public void setBoard(Map<HexLocation, IHex> board) {

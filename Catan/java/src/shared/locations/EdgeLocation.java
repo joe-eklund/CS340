@@ -9,17 +9,28 @@ public class EdgeLocation
 	private HexLocation hexLoc;
 	private EdgeDirection dir;
 	
+	/**
+	 * Class Constructor
+	 * @param hexLoc
+	 * @param dir
+	 */
 	public EdgeLocation(HexLocation hexLoc, EdgeDirection dir)
 	{
 		setHexLoc(hexLoc);
 		setDir(dir);
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public HexLocation getHexLoc()
 	{
 		return hexLoc;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public void setHexLoc(HexLocation hexLoc)
 	{
 		if(hexLoc == null)
@@ -29,22 +40,36 @@ public class EdgeLocation
 		this.hexLoc = hexLoc;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public EdgeDirection getDir()
 	{
 		return dir;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public void setDir(EdgeDirection dir)
 	{
 		this.dir = dir;
 	}
 	
+	/**
+	 * Retruns a string representation of the Edge Location
+	 * @pre none
+	 * @post returns a string
+	 */
 	@Override
 	public String toString()
 	{
 		return "EdgeLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
 	}
 	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -55,6 +80,9 @@ public class EdgeLocation
 		return result;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{

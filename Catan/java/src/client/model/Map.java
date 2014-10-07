@@ -3,10 +3,9 @@ package client.model;
 import java.util.ArrayList;
 
 /**
- * 
- * @author Joe Eklund
  * The map class represents the game board and everything on it. This includes hexes,
  * ports, roads, settlements, cities, the radius of the board, and the robber.
+ * @author Joe Eklund
  */
 public class Map {
 	private ArrayList<Hex> hexes;

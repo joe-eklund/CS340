@@ -2,6 +2,11 @@ package shared.locations;
 
 import client.exceptions.ClientModelException;
 
+/**
+ * An enum which describes an Vertex Direction
+ * <br><b>Domain:</b> West, NorthWEst, NorthEast, East, SouthEast, SouthWest
+ *
+ */
 public enum VertexDirection
 {
 	West, NorthWest, NorthEast, East, SouthEast, SouthWest;
@@ -18,11 +23,23 @@ public enum VertexDirection
 		SouthWest.opposite = NorthEast;
 	}
 	
+	/**
+	 * Gets the opposite direction of the Vertex Direction
+	 * @pre none
+	 * @post Returns the opposite direction of the Vertex Direction
+	 */
 	public VertexDirection getOppositeDirection()
 	{
 		return opposite;
 	}
 	
+	/**
+	 * Determines which direction enum to return based off of the string given as a parameter
+	 * @param dir
+	 * @pre none
+	 * @post Returns an enum assocaited to the specified direction
+	 * @throws ClientModelException
+	 */
 	public static VertexDirection determineDirection(String dir) throws ClientModelException {
 		switch(dir) {
 		case "NorthWest":

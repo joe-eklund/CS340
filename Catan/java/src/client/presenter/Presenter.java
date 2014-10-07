@@ -4,6 +4,10 @@ import proxy.IServer;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import client.model.ClientModel;
 
+/**
+ * A class that holds a proxy and clientModel and acts upon those objects
+ *
+ */
 public class Presenter implements IPresenter {
 	private ClientModel clientModel;
 	private IServer proxy;
@@ -47,10 +51,16 @@ public class Presenter implements IPresenter {
 		pollCycleCount++;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public int getVersion() {
 		return version;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public int getPollCycleCount() {
 		return pollCycleCount;
 	}

@@ -2,6 +2,10 @@ package shared.definitions;
 
 import java.awt.Color;
 
+/**
+ * An enum representing a color
+ *
+ */
 public enum CatanColor
 {
 	RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
@@ -21,6 +25,9 @@ public enum CatanColor
 		BROWN.color = new Color(161, 143, 112);
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public Color getJavaColor()
 	{
 		return color;

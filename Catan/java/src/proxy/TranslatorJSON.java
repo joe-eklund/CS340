@@ -8,7 +8,7 @@ import com.google.gson.*;
  * @author Epper Marshall
  * This is used to translate a Java Object into JSON or to convert JSON back into an Object.
  * 
- * @domain a string in json or a java obj (gameModel)
+ * <br><b>Domain</b> a string in json or a java obj (gameModel)
  */
 public class TranslatorJSON implements ITranslator{
 	private Gson gson;

@@ -14,6 +14,10 @@ import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import client.model.Log;
 
+/**
+ * A class made for testing constraints on the proxy, client communicator, translator, and server
+ *
+ */
 public final class TestingConstants {
 	
 	public static final String VALID_LOGIN_COOKIE_CLIENT = "catan.user=%7B%22name%22%3A%22Sam%22%2C%22password%22%3A%22sam%22%2C%22playerID%22%3A0%7D";

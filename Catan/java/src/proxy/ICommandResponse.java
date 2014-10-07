@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * An interface for defining the object returned by ICommunicator.executeCommand
  *
- * @Domain
+ * <br><b>Domain</b>
  * <ul>
  *	 <li>responseHeaders: http response header value for "Set-cookie"; can be NULL</li> 
  *   <li>responseCode: http response code; cannot be NULL</li>

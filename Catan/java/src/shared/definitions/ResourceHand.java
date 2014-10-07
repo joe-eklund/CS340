@@ -13,6 +13,14 @@ public class ResourceHand {
 	private int Wheat; 
 	private int Ore;
 	
+	/**
+	 * Class constructor
+	 * @param brick
+	 * @param wood
+	 * @param sheep
+	 * @param wheat
+	 * @param ore
+	 */
 	public ResourceHand(int brick, int wood, int sheep, int wheat, int ore) {
 		Brick = brick;
 		Wood = wood;
@@ -21,37 +29,75 @@ public class ResourceHand {
 		Ore = ore;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public int getBrick() {
 		return Brick;
 	}
+	/**
+	 * @obvious
+	 */
 	public int getWood() {
 		return Wood;
 	}
+	/**
+	 * @obvious
+	 */
 	public int getSheep() {
 		return Sheep;
 	}
+	/**
+	 * @obvious
+	 */
 	public int getWheat() {
 		return Wheat;
 	}
+	/**
+	 * @obvious
+	 */
 	public int getOre() {
 		return Ore;
 	}
+	/**
+	 * @obvious
+	 * @param brick
+	 */
 	public void setBrick(int brick) {
 		Brick = brick;
 	}
+	/**
+	 * @obvious
+	 * @param wood
+	 */
 	public void setWood(int wood) {
 		Wood = wood;
 	}
+	/**
+	 * @obvious
+	 * @param sheep
+	 */
 	public void setSheep(int sheep) {
 		Sheep = sheep;
 	}
+	/**
+	 * @obvious
+	 * @param wheat
+	 */
 	public void setWheat(int wheat) {
 		Wheat = wheat;
 	}
+	/**
+	 * @obvious
+	 * @param ore
+	 */
 	public void setOre(int ore) {
 		Ore = ore;
 	}
 
+	/**
+	 * @obvious
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -64,6 +110,9 @@ public class ResourceHand {
 		return result;
 	}
 
+	/**
+	 * @obvious
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -7,11 +7,11 @@ import shared.definitions.*;
 import client.resources.*;
 
 /**
- * 
- * @author Epper Marshall, Joe Eklund
- * @domain Each resource must be between 0 and 19
  * The Bank class holds resource cards that are
  * available to the players. These are cards that no player currently has.
+ *  <br><b>Domain:</b> Each resource must be between 0 and 19
+ * @author Epper Marshall, Joe Eklund
+ *
  */
 public class Bank {
 	public int brick;

@@ -3,6 +3,10 @@ package client.model.interfaces;
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
 
+/**
+ *  The iHex class is the abstract interface represents a hex on the map.
+ *
+ */
 public abstract class IHex {
 	private HexType type;
 	

@@ -20,7 +20,7 @@ public class ClientCommunicator implements ICommunicator {
 	private int Port;
 	
 	/**@Obvious
-	 * @return the jsonTrans
+	 * @post returns the jsonTrans
 	 */
 	public ITranslator getJsonTrans() {
 		return jsonTrans;
@@ -34,7 +34,7 @@ public class ClientCommunicator implements ICommunicator {
 	}
 
 	/**@Obvious
-	 * @return the host
+	 * @post returns the host
 	 */
 	public String getHost() {
 		return Host;
@@ -48,7 +48,7 @@ public class ClientCommunicator implements ICommunicator {
 	}
 
 	/**@Obvious
-	 * @return the port
+	 * @post returns the port
 	 */
 	public int getPort() {
 		return Port;

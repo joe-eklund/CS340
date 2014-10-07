@@ -1,6 +1,9 @@
 package client.poller;
 
-
+/**
+ * An interface that defines a class to poll (execute) a task every n seconds where n is defined by "pollingInterval" and task is defined by "timedTask" 
+ *
+ */
 public interface IPoller {
 	
 	/**

@@ -7,6 +7,10 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
+/**
+ * The inerface client side representation of the model.
+ *
+ */
 public interface IClientModel {
 	
 	/**

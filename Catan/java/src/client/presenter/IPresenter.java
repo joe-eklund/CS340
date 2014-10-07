@@ -1,5 +1,9 @@
 package client.presenter;
 
+/**
+ * The interface that defines a class that holds a proxy and clientModel
+ *
+ */
 public interface IPresenter extends Runnable {
 	
 	/**

@@ -9,17 +9,29 @@ public class VertexLocation
 	private HexLocation hexLoc;
 	private VertexDirection dir;
 	
+	/**
+	 * Class constructor
+	 * @param hexLoc
+	 * @param dir
+	 */
 	public VertexLocation(HexLocation hexLoc, VertexDirection dir)
 	{
 		setHexLoc(hexLoc);
 		setDir(dir);
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public HexLocation getHexLoc()
 	{
 		return hexLoc;
 	}
 	
+	/**
+	 * @obvious
+	 * @param hexLoc
+	 */
 	private void setHexLoc(HexLocation hexLoc)
 	{
 		if(hexLoc == null)
@@ -29,22 +41,35 @@ public class VertexLocation
 		this.hexLoc = hexLoc;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public VertexDirection getDir()
 	{
 		return dir;
 	}
 	
+	/**
+	 * @obvious
+	 * @param direction
+	 */
 	private void setDir(VertexDirection direction)
 	{
 		this.dir = direction;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public String toString()
 	{
 		return "VertexLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
 	}
 	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -55,6 +80,9 @@ public class VertexLocation
 		return result;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{

@@ -9,38 +9,65 @@ public class HexLocation
 	private int x;
 	private int y;
 	
+	/**
+	 * Class constructor
+	 * @param x
+	 * @param y
+	 */
 	public HexLocation(int x, int y)
 	{
 		setX(x);
 		setY(y);
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public int getX()
 	{
 		return x;
 	}
 	
+	/**
+	 * @obvious
+	 * @param x
+	 */
 	private void setX(int x)
 	{
 		this.x = x;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	public int getY()
 	{
 		return y;
 	}
 	
+	/**
+	 * @obvious
+	 * @param y
+	 */
 	private void setY(int y)
 	{
 		this.y = y;
 	}
 	
+	/**
+	 * Returns a string representation of the Hes Location
+	 * @pre
+	 * @post returns a string
+	 */
 	@Override
 	public String toString()
 	{
 		return "HexLocation [x=" + x + ", y=" + y + "]";
 	}
 	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -51,6 +78,9 @@ public class HexLocation
 		return result;
 	}
 	
+	/**
+	 * @obvious
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -68,6 +98,12 @@ public class HexLocation
 		return true;
 	}
 	
+	/**
+	 * Gets the Hex Location of the neighboring hex in the direction specified.
+	 * @param dir
+	 * @pre none
+	 * @post returns the Hex Location of the neighboring hex in the directino specified
+	 */
 	public HexLocation getNeighborLoc(EdgeDirection dir)
 	{
 		switch (dir)

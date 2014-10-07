@@ -1,6 +1,8 @@
 package client.model;
 
-/**The TradeOffer class will be used in trades between players and the bank. 
+/**
+ * The TradeOffer class will be used in trades between players and the bank. 
+ * <br><b>Domain:</b> 1 sender, 1 receiver, 0-95 resources to be traded
  * @author Chad
  */
 public class TradeOffer {
