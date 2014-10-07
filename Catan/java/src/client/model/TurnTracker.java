@@ -10,6 +10,9 @@ public class TurnTracker {
 	private int longestRoad;
 	private int largestArmy;
 	
+	/**
+	 * Class constructor
+	 */
 	public TurnTracker() {
 		status = "Playing";
 		currentTurn = 0;
@@ -17,27 +20,77 @@ public class TurnTracker {
 		largestArmy=-1;
 	}
 	
+	/**
+	 * Getter for the player whose current turn it is
+	 * @pre none
+	 * @post Returns the integer index representing the player whose turn it is
+	 */
 	public int getCurrentTurn() {
 		return currentTurn;
 	}
+	
+	/**
+	 * Setter for the player whose current turn it is
+	 * @param currentTurn
+	 * @pre none
+	 * @post The current turn is set to reflect the integer passed as a parameter 
+	 */
 	public void setCurrentTurn(int currentTurn) {
 		this.currentTurn = currentTurn;
 	}
+	
+	/**
+	 * Getter for what state game play is currently in
+	 * @pre none
+	 * @post Returns the string that represents the current state of game play
+	 */
 	public String getStatus() {
 		return status;
 	}
+	
+	/**
+	 * Setter for the state game play is currently in
+	 * @param status
+	 * @pre none
+	 * @post The string representing the state of game play is updated to equal the string passed as a parameter
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	/**
+	 * Getter for the player with the longest road achievement
+	 * @pre none
+	 * @post Returns the integer index of the current player who has the longest road
+	 */
 	public int getLongestRoad() {
 		return longestRoad;
 	}
+	
+	/**
+	 * Setter for the player with the longest road achievement 
+	 * @param longestRoad
+	 * @pre none
+	 * @post The integer representing the player with the longest road achievement is updated to the integer passed as a parameter
+	 */
 	public void setLongestRoad(int longestRoad) {
 		this.longestRoad = longestRoad;
 	}
+	
+	/**
+	 * Getter for the player with the largest army achievement
+	 * @pre none
+	 * @post Returns the intger index of the current player who has the longest road
+	 */
 	public int getLargestArmy() {
 		return largestArmy;
 	}
+	/**
+	 * Setter for the player with the longest road achievement
+	 * @param largestArmy
+	 * @pre none
+	 * @post The integer representing the player with the longest road achievement is updated to the integer passed as a parameter
+	 */
 	public void setLargestArmy(int largestArmy) {
 		this.largestArmy = largestArmy;
 	}
