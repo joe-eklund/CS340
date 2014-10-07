@@ -15,14 +15,14 @@ import java.util.Map;
  */
 public class ClientCommunicator implements ICommunicator {
 
-	private TranslatorJSON jsonTrans;
+	private ITranslator jsonTrans;
 	private String Host;
 	private int Port;
 	
 	/**@Obvious
 	 * @return the jsonTrans
 	 */
-	public TranslatorJSON getJsonTrans() {
+	public ITranslator getJsonTrans() {
 		return jsonTrans;
 	}
 
