@@ -7,18 +7,20 @@ import com.google.gson.*;
  * @author Epper Marshall
  * This interface is used to set the type of communication the http body will contain (json, xml). Based on 
  * what the translator used is, it will convert the Java Object into the correct String type.
+ * 
+ * @domain a string in a specific language (xml, json, etc) or a java object
  */
 public interface ITranslator {
 	/**
 	 * Translates Java Object to correct language.
-	 * @param obj
-	 * @return String
+	 * @pre gets a Java object
+	 * @post returns a string
 	 */
 	public String translateTo(Object obj);
 	/**
 	 * Translates from the set language into a Java Object.
-	 * @param message
-	 * @return Java Object
+	 * @pre takes in a string and the type of object to translate to 
+	 * @post returns a java object of type reponseCastClass
 	 */
 	public Object translateFrom(String message, Class<?> responseCastClass);
 }
