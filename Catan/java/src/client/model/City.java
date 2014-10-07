@@ -8,6 +8,7 @@ import client.exceptions.ClientModelException;
 /**
  * 
  * @author Joe Eklund
+ * @domain The owner index must be between 0 and 4
  * The city class represents a city object.
  */
 public class City {

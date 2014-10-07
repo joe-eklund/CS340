@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * 
  * @author Joe Eklund
+ * @domain The list length is between 0 and the max length of a list.
  * The Log class represents a log of commands that have happened.
  */
 

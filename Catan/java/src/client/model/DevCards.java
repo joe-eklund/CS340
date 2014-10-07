@@ -1,6 +1,6 @@
 package client.model;
 /**
- * 
+ * @domain	There are 2 monopoly, 5 monument, 2 roadBuilding, 14 soldier, and 2 yearOfPlenty cards.
  * Contains information relevant to the Development Card Deck and player Development Cards.
  *
  */

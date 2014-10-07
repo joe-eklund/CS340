@@ -4,6 +4,7 @@ import java.util.ArrayList;
 /**
  * 
  * @author Epper Marshall, Joe Eklund
+ * @domain Lines will have between 0 and the max size of the list lines
  * The chat class holds the list of messages that have been sent by each player.
  */
 public class Chat {

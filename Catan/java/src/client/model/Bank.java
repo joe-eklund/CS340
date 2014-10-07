@@ -9,6 +9,7 @@ import client.resources.*;
 /**
  * 
  * @author Epper Marshall, Joe Eklund
+ * @domain Each resource must be between 0 and 19
  * The Bank class holds resource cards that are
  * available to the players. These are cards that no player currently has.
  */
