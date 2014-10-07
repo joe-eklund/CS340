@@ -4,7 +4,7 @@ package shared.ServerMethodResponses;
  * An abstract class to act as a base class for server response to User Requests (login/register).  Extends server response.
  *
  */
-public abstract class UserResponse extends ServerResponse {
+public abstract class UserResponse extends ServerResponse implements IUserResponse {
 	private String message;
 	private String name;
 	private String cookie;

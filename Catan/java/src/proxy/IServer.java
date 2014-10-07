@@ -623,7 +623,7 @@ public interface IServer {
 	 *  @param playerIndex: player index in current game
 	 *  @param cookie: catan cookie as set by server
 	 */
-	public MoveResponse finishTurn(int playerIndex, String cookie);;
+	public MoveResponse finishTurn(int playerIndex, String cookie);
 	
 	/**
 	 * The player buys a development card from the bank.
