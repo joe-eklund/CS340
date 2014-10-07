@@ -2,6 +2,7 @@ package client.model;
 
 import java.util.ArrayList;
 
+import client.model.interfaces.IClientModel;
 import client.model.interfaces.IHex;
 import shared.definitions.GameModel;
 import shared.definitions.HexType;
@@ -23,7 +24,7 @@ import java.util.Map;
  * The client side representation of the model.
  * 
  */
-public class ClientModel {
+public class ClientModel implements IClientModel{
 	
 	private GameModel gameModel;
 	private ServerModel serverModel;
@@ -143,6 +144,7 @@ public class ClientModel {
 		return (playerIndex == serverModel.getTurnTracker().getCurrentTurn() && 
 				serverModel.getTurnTracker().getStatus().equals("Playing")) ? true : false;
 	}
+	
 	/**
 	 * Determines if a specified player can build a road at the specified Edge Location.
 	 * @param playerIndex
@@ -351,7 +353,7 @@ public class ClientModel {
 		}
 	}
 	
-	public boolean checkNorthEastVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
+	private boolean checkNorthEastVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
 		
 		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), VertexDirection.NorthWest);
 		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.NorthWest);
@@ -385,7 +387,7 @@ public class ClientModel {
 		return false;
 	}
 	
-	public boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
+	private boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
 		
 		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.NorthEast);
 		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast);
