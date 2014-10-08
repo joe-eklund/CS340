@@ -1,0 +1,14 @@
+1. Write a document explaining the following aspects of your design:
+-Explain in detail how you will implement the Observer pattern in your Model.
+-Explain in detail how you will use the State pattern to change the behavior of your
+MapController depending on the current game state. What are the different
+states? What will be the MapController’s behavior in each state?
+
+2. Create the following two UML sequence diagrams:
+-Create a sequence diagram that shows in detail how the Server Poller will
+periodically update the client Model. Be sure to show how the GUI gets updated
+to reflect the new state of the Model.
+-Create a sequence diagram that shows in detail what your program will do when
+a player places a road. Start the diagram at the point where the user clicks to
+place the road, and end the diagram by showing how the GUI gets updated to
+display the newly placed road.

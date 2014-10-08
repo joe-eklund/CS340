@@ -1,0 +1,91 @@
+implement Model View Controller arch
+implement controller classes(have view), 14 stubs->initialize from local model
+-mapController
+-domesticTradeControl
+-maritimeTradeController
+-discardController
+-resourcebarController
+-devCardController
+-others
+when poller updates from server, controllers need to be notified
+make model observable for controller, an observer
+
+Observer
+
+public void update(Observable obs, Object obj)
+Called when a change has occurred in the state of the observable.
+
+Observable
+
+public void addObserver(Observer obs)
+Adds an observer to the internal list of observers.
+
+public void deleteObserver(Observer obs)
+Deletes an observer from the internal list of observers.
+
+public void deleteObservers()
+Deletes all observers from the internal list of observers.
+
+public int countObservers()
+Returns the number of observers in the internal list of observers.
+
+protected void setChanged()
+Sets the internal flag that indicates this observable has changed
+state.
+
+protected void clearChanged()
+Clears the internal flag that indicates this observable has
+changed state.
+
+public boolean hasChanged()
+Returns the boolean value true if this observable has changed
+state.
+
+public void notifyObservers()
+Checks the internal flag to see if the observable has changed
+state and notifies all observers.
+
+public void notifyObservers(Object obj)
+Checks the internal flag to see if the observable has changed
+state and notifies all observers. Passes the object specified in the
+parameter list to the notify() method of the observer.
+
+Example:
+//a poller/controller is an observer
+import java.util.Observable;
+public class ObservableValue extends Observable
+{
+   private int n = 0;
+   public ObservableValue(int n)
+   {
+      this.n = n;
+   }
+   public void setValue(int n)
+   {
+      this.n = n;
+      setChanged();
+      notifyObservers();
+   }
+   public int getValue()
+   {
+      return n;
+   }
+}
+//view is observable to update any poller changes
+import java.util.Observer;
+import java.util.Observable;
+public class TextObserver implements Observer
+{
+   private ObservableValue ov = null;
+   public TextObserver(ObservableValue ov)
+   {
+      this.ov = ov;
+   }
+   public void update(Observable obs, Object obj)
+   {
+      if (obs == ov)
+      {
+         System.out.println(ov.getValue());
+      }
+   }
+}
