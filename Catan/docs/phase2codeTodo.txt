@@ -51,7 +51,7 @@ state and notifies all observers. Passes the object specified in the
 parameter list to the notify() method of the observer.
 
 Example:
-//a poller/controller is an observer
+//a controller is an observer
 import java.util.Observable;
 public class ObservableValue extends Observable
 {
