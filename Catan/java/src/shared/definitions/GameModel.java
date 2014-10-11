@@ -51,10 +51,10 @@ public class GameModel {
 			}
 		}
 		
-		for (Hex hex : hexes) {
+		/*for (Hex hex : hexes) {
 			hex.setType(HexType.LAND);
 			board.put(hex.getLocation(), hex);
-		}
+		}*/
 		
 		Hex oceanHex;
 		
