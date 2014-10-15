@@ -1,6 +1,7 @@
 package client.login;
 
 import shared.ServerMethodResponses.LoginUserResponse;
+import shared.ServerMethodResponses.RegisterUserResponse;
 import client.base.Controller;
 import client.base.IAction;
 import client.misc.IMessageView;
@@ -98,10 +99,28 @@ public class LoginController extends Controller implements ILoginController {
 	public void register() {
 		
 		// TODO: register new user (which, if successful, also logs them in)
+		String username=this.getLoginView().getRegisterUsername();
+		String password1=this.getLoginView().getRegisterPassword();
+		String password2=this.getLoginView().getRegisterPasswordRepeat();
 		
-		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		if(password1.equals(password2)) {
+			RegisterUserResponse response=this.presenter.register(username, password1);
+			if(response.isSuccessful()) {
+				// If register succeeded
+				getLoginView().closeModal();
+				loginAction.execute();
+			} else {
+				//registration failed
+				messageView.setMessage(response.getMessage());
+				messageView.showModal();
+			}
+		} else {
+			//passwords don't match
+			messageView.setMessage("Passwords don't match");
+			messageView.showModal();
+		}
+		
+		
 	}
 
 }

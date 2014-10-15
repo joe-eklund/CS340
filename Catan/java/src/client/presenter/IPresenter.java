@@ -5,6 +5,7 @@ import java.util.List;
 import client.data.PlayerInfo;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
+import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.definitions.PlayerDescription;
 
 /**
@@ -41,4 +42,6 @@ public interface IPresenter extends Runnable {
 	public ListGamesResponse getGames();
 
 	public PlayerDescription getPlayerInfo();
+	
+	public RegisterUserResponse register(String user,String pass);
 }

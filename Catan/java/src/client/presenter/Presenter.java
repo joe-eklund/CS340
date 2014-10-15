@@ -6,6 +6,7 @@ import proxy.IServer;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
+import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.definitions.PlayerDescription;
 import client.data.PlayerInfo;
 import client.model.ClientModel;
@@ -88,5 +89,12 @@ public class Presenter implements IPresenter {
 	public PlayerDescription getPlayerInfo() {
 		// TODO Auto-generated method stub
 		return this.playerInfo;
+	}
+
+	@Override
+	public RegisterUserResponse register(String user, String pass) {
+		RegisterUserResponse response = this.proxy.registerUser(user, pass);
+		//TODO playerInfo stuff
+		return response;
 	}
 }
