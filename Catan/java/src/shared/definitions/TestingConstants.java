@@ -43,7 +43,7 @@ public final class TestingConstants {
 			new PlayerDescription(CatanColor.GREEN, 2, "Sam"),
 			new PlayerDescription(CatanColor.ORANGE, 3, "May"),
 	};
-	public static final GameDescription GAME_DESCRIPTION_1 = new GameDescription("Game1", 0, PLAYER_SET_1);
+	public static final GameDescription GAME_DESCRIPTION_1 = new GameDescription("Game1", 0, Arrays.asList(PLAYER_SET_1));
 	
 	public static final PlayerDescription[] PLAYER_SET_2 = {
 			new PlayerDescription(CatanColor.BLUE, 0, "June"),
@@ -51,7 +51,7 @@ public final class TestingConstants {
 			new PlayerDescription(CatanColor.GREEN, 2, "Sam"),
 			new PlayerDescription(CatanColor.ORANGE, 3, "Nick"),
 	};
-	public static final GameDescription GAME_DESCRIPTION_2 = new GameDescription("Game2", 1, PLAYER_SET_2);
+	public static final GameDescription GAME_DESCRIPTION_2 = new GameDescription("Game2", 1, Arrays.asList(PLAYER_SET_2));
 	
 	public static final List<GameDescription> GAMES_LIST = new ArrayList<GameDescription>() {{
 		add(GAME_DESCRIPTION_1);
@@ -61,7 +61,7 @@ public final class TestingConstants {
 	public static final GameDescription[] GAMES_ARRAY = { GAME_DESCRIPTION_1, GAME_DESCRIPTION_2};
 	
 	public static final String NEW_GAME_NAME = "New Game";
-	public static final GameDescription NEW_GAME = new GameDescription(NEW_GAME_NAME, 0, new PlayerDescription[4]);
+	public static final GameDescription NEW_GAME = new GameDescription(NEW_GAME_NAME, 0, new ArrayList<PlayerDescription>());
 
 	public static final String MOCK_AIS[] = new String[] {"Bill","Fred","Tom","Jim"};
 	public static final List<String> MOCK_AIS_LIST = Arrays.asList(MOCK_AIS);
