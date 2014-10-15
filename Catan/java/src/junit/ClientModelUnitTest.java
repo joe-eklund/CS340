@@ -249,14 +249,14 @@ public class ClientModelUnitTest {
 		//Player doesn't have enough resources to buy dev card
 		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,0,0,0,0));
 		assertEquals("Player doesn't have enough resources to buy dev card", false, 
-				clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+				clientModel.canBuyDevCard(0));
 		
 		//Bank doesn't have any dev cards left
 		clientModel.getServerModel().getPlayers().get(0).setResources(new Resources(0,1,1,0,1));
 		cards.updateCards(0, 0, 0, 0, 0);
 		clientModel.getServerModel().setDeck(cards);
 		assertEquals("Bank doesn't have any dev cards left", false, 
-				clientModel.canPlayYearOfPlenty(0, ResourceType.BRICK, ResourceType.WHEAT));
+				clientModel.canBuyDevCard(0));
 	}
 	
 	@Test
