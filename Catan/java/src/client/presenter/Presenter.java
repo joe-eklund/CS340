@@ -3,6 +3,7 @@ package client.presenter;
 import java.util.List;
 
 import proxy.IServer;
+import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
@@ -96,6 +97,12 @@ public class Presenter implements IPresenter {
 		RegisterUserResponse response = this.proxy.registerUser(user, pass);
 		this.cookie = response.getCookie();
 		playerInfo = new PlayerDescription(null,response.getUserID(),response.getName());
+		return response;
+	}
+
+	@Override
+	public CreateGameResponse createGame(boolean randTiles,boolean randNums,boolean randPorts,String name) {
+		CreateGameResponse response = this.proxy.createGame(randTiles, randNums, randPorts, name, this.cookie);
 		return response;
 	}
 }

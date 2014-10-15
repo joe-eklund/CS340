@@ -3,6 +3,7 @@ package client.presenter;
 import java.util.List;
 
 import client.data.PlayerInfo;
+import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
@@ -44,4 +45,6 @@ public interface IPresenter extends Runnable {
 	public PlayerDescription getPlayerInfo();
 	
 	public RegisterUserResponse register(String user,String pass);
+
+	public CreateGameResponse createGame(boolean randTiles,boolean randNums,boolean randPorts,String name);
 }

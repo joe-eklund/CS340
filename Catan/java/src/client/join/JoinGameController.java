@@ -1,5 +1,6 @@
 package client.join;
 
+import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
@@ -129,8 +130,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
+		//TODO make game stuff-add to games list
+		boolean randTiles=this.getNewGameView().getRandomlyPlaceHexes();
+		boolean randNums=this.getNewGameView().getRandomlyPlaceNumbers();
+		boolean randPorts=this.getNewGameView().getUseRandomPorts();
+		String name=this.getNewGameView().getTitle();
 		
-		getNewGameView().closeModal();
+		CreateGameResponse response=this.presenter.createGame(randTiles,randNums,randPorts,name);
+		if(response.isSuccessful()) {
+			getNewGameView().closeModal();
+		}else {
+			messageView.setMessage("Creating a game failed.");
+			messageView.showModal();
+		}
 	}
 
 	@Override
