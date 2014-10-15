@@ -150,7 +150,15 @@ public class ProxyServer implements IServer{
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "games/list", null, GameDescription[].class);
 		boolean successful = response.getResponseCode() == 200;
-		return new ListGamesResponse(successful, successful ? Arrays.asList((GameDescription[])response.getResponseObject()) : null);
+		//return new ListGamesResponse(successful, successful ? Arrays.asList((GameDescription[])response.getResponseObject()) : null);
+		List<GameDescription> games = null;
+		if(successful) {
+			games = new ArrayList<GameDescription>();
+			for(GameDescription game : (GameDescription[])response.getResponseObject()) {
+				games.add(new GameDescription(game));
+			}
+		}
+		return new ListGamesResponse(successful, games);
 	}
 
 	@Override
@@ -161,7 +169,7 @@ public class ProxyServer implements IServer{
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "games/create", createGameRequest, GameDescription.class);
 		boolean successful = response.getResponseCode() == 200;
-		return new CreateGameResponse(successful, successful ? (GameDescription)response.getResponseObject(): null);
+		return new CreateGameResponse(successful, successful ? new GameDescription((GameDescription)response.getResponseObject()): null);
 	}
 	
 	@Override

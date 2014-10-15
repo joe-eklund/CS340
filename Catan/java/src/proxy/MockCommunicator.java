@@ -1,5 +1,6 @@
 package proxy;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.ServerMethodRequests.AcceptTradeRequest;
@@ -141,7 +142,7 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "games/create":
 			CreateGameRequest createGameRequest = (CreateGameRequest) commandParameters;
-			GameDescription newGame = new GameDescription(createGameRequest.getName(), 0, new PlayerDescription[4]);
+			GameDescription newGame = new GameDescription(createGameRequest.getName(), 0, new ArrayList<PlayerDescription>());
 			if(createGameRequest.isRandomNumbers() && createGameRequest.isRandomPorts() && createGameRequest.isRandomTiles()) {
 				result = new CommandResponse(null, 200, newGame, null);
 			}

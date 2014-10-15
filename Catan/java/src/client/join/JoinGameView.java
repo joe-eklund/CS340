@@ -1,16 +1,23 @@
 package client.join;
 
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-
-import client.base.*;
-import client.data.*;
-import shared.definitions.*;
-
-import java.util.Arrays;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import shared.definitions.GameDescription;
+import shared.definitions.PlayerDescription;
+import client.base.OverlayView;
 
 /**
  * Implementation for the join game view, which lets the user select a game to
@@ -106,7 +113,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				JLabel tmp2 = new JLabel(game.getTitle());
 				tmp2.setFont(labelFont);
 				gamePanel.add(tmp2);
-				List<PlayerDescription> playersList = Arrays.asList(game.getPlayerDescriptions());
+				List<PlayerDescription> playersList = game.getPlayerDescriptions();
 				String players = String.valueOf(playersList.size())+ "/4 : ";
 				//String players = String.valueOf(game.getPlayers().size()) + "/4 : ";
 				for (int j = 0; j < playersList.size(); j++) {

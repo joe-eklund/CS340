@@ -1,6 +1,7 @@
 package shared.definitions;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -9,7 +10,7 @@ import java.util.Arrays;
 public class GameDescription {
 	private String title;
 	private int id;
-	private PlayerDescription[] players;
+	private List<PlayerDescription> players;
 	//private List<PlayerDescription> playerDescriptions;
 
 	
@@ -20,10 +21,21 @@ public class GameDescription {
 	 * @param playerDescriptions
 	 */
 	public GameDescription(String title, int id,
-			PlayerDescription[] playerDescriptions) {
+			List<PlayerDescription> players) {
 		this.title = title;
 		this.id = id;
-		this.players = playerDescriptions;
+		this.players = players;
+	}
+	
+	public GameDescription(GameDescription game) {
+		this.title = game.title;
+		this.id = game.id;
+		this.players = new ArrayList<PlayerDescription>();
+		for(PlayerDescription player : game.getPlayerDescriptions()) {
+			if(player.getName() != null) {
+				this.players.add(player);
+			}
+		}
 	}
 
 	/**
@@ -45,7 +57,7 @@ public class GameDescription {
 	 * @pre none
 	 * @post Returns descriptions of the current players of the game
 	 */
-	public PlayerDescription[] getPlayerDescriptions() {
+	public List<PlayerDescription> getPlayerDescriptions() {
 		return players;
 	}
 	
@@ -69,35 +81,34 @@ public class GameDescription {
 	 * @obvious
 	 * @param playerDescriptions
 	 */
-	public void setPlayerDescriptions(PlayerDescription[] players) {
+	public void setPlayerDescriptions(List<PlayerDescription> players) {
 		this.players = players;
 	}
 
-	/**
-	 * @obvious
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "GameDescription [title=" + title + ", id=" + id
-				+ ", playerDescriptions=" + Arrays.toString(players)
-				+ "]";
+		return "GameDescription [title=" + title + ", id=" + id + ", players="
+				+ players + "]";
 	}
 
-	/**
-	 * @obvious
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + Arrays.hashCode(players);
+		result = prime * result + ((players == null) ? 0 : players.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
 
-	/**
-	 * @obvious
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -110,7 +121,10 @@ public class GameDescription {
 		GameDescription other = (GameDescription) obj;
 		if (id != other.id)
 			return false;
-		if (!Arrays.equals(players, other.players))
+		if (players == null) {
+			if (other.players != null)
+				return false;
+		} else if (!players.equals(other.players))
 			return false;
 		if (title == null) {
 			if (other.title != null)
@@ -119,5 +133,7 @@ public class GameDescription {
 			return false;
 		return true;
 	}
+
+	
 	
 }
