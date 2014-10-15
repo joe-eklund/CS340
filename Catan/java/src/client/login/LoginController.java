@@ -1,23 +1,10 @@
 package client.login;
 
-import client.base.*;
-import client.misc.*;
-import client.presenter.IPresenter;
-
-import java.net.*;
-import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
-
-import proxy.ICommunicator;
-import proxy.IServer;
-import proxy.MockCommunicator;
-import proxy.ProxyServer;
-import proxy.TranslatorJSON;
 import shared.ServerMethodResponses.LoginUserResponse;
-
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import client.base.Controller;
+import client.base.IAction;
+import client.misc.IMessageView;
+import client.presenter.IPresenter;
 
 
 /**
@@ -97,13 +84,13 @@ public class LoginController extends Controller implements ILoginController {
 
 		LoginUserResponse response=this.presenter.login(username, password);
 		if(response.isSuccessful()) {
-			// If log in succeeded
+			//successful authentication
 			getLoginView().closeModal();
 			loginAction.execute();
 		}else {
-			//you fail
-			System.out.println("not valid"+response.getMessage());
+			//invalid credentials
 			messageView.setMessage(response.getMessage());
+			messageView.showModal();
 		}
 	}
 

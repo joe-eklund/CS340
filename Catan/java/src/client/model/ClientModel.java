@@ -2,7 +2,7 @@ package client.model;
 
 import java.util.ArrayList;
 
-import client.model.interfaces.IClientModel;
+//import client.model.interfaces.IClientModel;
 import client.model.interfaces.IHex;
 import shared.definitions.GameModel;
 import shared.definitions.HexType;
@@ -22,7 +22,7 @@ import java.util.Map;
  * @author Epper Marshall
  * 
  */
-public class ClientModel implements IClientModel{
+public class ClientModel /*implements IClientModel*/{
 	
 	private GameModel gameModel;
 	private ServerModel serverModel;

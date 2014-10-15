@@ -2,7 +2,6 @@ package proxy;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -89,25 +88,26 @@ public class ClientCommunicator implements ICommunicator {
 	 */
 	@Override
 	public CommandResponse executeCommand(RequestType requestType, List<Pair<String,String>> headers, String commandName, Object commandParameters, Class<?> responseCastClass){
+		System.out.println(commandName);
 		CommandResponse serverResponse = null;
 		String translatedJson = jsonTrans.translateTo(commandParameters);
 		
 		try {
 			URL url = new URL("http://" + Host + ':' + Port + "/" + commandName);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			for(Pair<?, ?> header : headers){
-				connection.addRequestProperty((String)header.getKey(), (String)header.getValue());
+			for(Pair<String, String> header : headers){
+				connection.addRequestProperty(header.getKey(), header.getValue());
 			}
 			if(requestType.name().equals("GET")) {
 				
 				serverResponse = doGet(connection, responseCastClass); //will take the translated json object and the parameters and send a request to the server. 
 			}
 			else {
-				serverResponse = doPost(translatedJson, connection);
+				serverResponse = doPost(translatedJson, connection, responseCastClass);
 			}	
 		}
 		catch (IOException e) { // IO ERROR
-			System.out.print("Unable to establish URL connection!");
+			System.err.print("Unable to establish URL connection!");
 			e.printStackTrace();
 		}
 		return serverResponse;
@@ -144,12 +144,14 @@ public class ClientCommunicator implements ICommunicator {
 			responseHeaders = connection.getHeaderFields();
 			
 			//Object javaObject = jsonTrans.translateTo(responseJson.toString());
+			System.out.println(responseJson.toString());
 			Object javaObject = jsonTrans.translateFrom(responseJson.toString(), responseType);
 			
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
 		}
 		catch (IOException e) { // IO ERROR
 			System.err.print("Unable to doGet\n");
+			e.printStackTrace();
 		}
 		return result;
 	}
@@ -163,7 +165,7 @@ public class ClientCommunicator implements ICommunicator {
 	 * @param connection the connection to the server
 	 * @throws ClientException
 	 */
-	private CommandResponse doPost(String jsonObject, HttpURLConnection connection){
+	private CommandResponse doPost(String jsonObject, HttpURLConnection connection, Class<?> responseType){
 		CommandResponse result = null;
 		int responseCode;
 		String responseMessage = "";
@@ -182,8 +184,10 @@ public class ClientCommunicator implements ICommunicator {
 			responseCode = connection.getResponseCode();
 			
 			BufferedReader in;
+			boolean errorCode = false;
 			if(responseCode == 400){
 				in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+				errorCode = true;
 			}
 			else {
 				in = new BufferedReader(new InputStreamReader(connection.getInputStream()));		
@@ -195,9 +199,17 @@ public class ClientCommunicator implements ICommunicator {
 			}
 			in.close();	
 			
-			Object javaObject = jsonTrans.translateTo(responseJson.toString()); //send over the buffered reader result ,"result1"
+			//Object javaObject = jsonTrans.translateTo(responseJson.toString()); //send over the buffered reader result ,"result1"
+			Object javaObject = null;
+			System.out.println(responseJson.toString());
+			if(!errorCode && responseType != null) {
+				javaObject = jsonTrans.translateFrom(responseJson.toString(), responseType);
+				responseMessage = connection.getResponseMessage();
+			}
+			else {
+				responseMessage = responseJson.toString();
+			}
 			responseHeaders = connection.getHeaderFields();
-			responseMessage = connection.getResponseMessage();
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
 			
 		}

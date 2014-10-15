@@ -1,6 +1,7 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Log class represents a log of commands that have happened.
@@ -11,13 +12,17 @@ import java.util.ArrayList;
 
 //TODO: 
 public class Log {
-	private ArrayList<Message> lines;
+	private List<Message> lines;
 
 	/**
 	 * Class constructor.
 	 */
 	public Log(){
-		lines=new ArrayList();
+		lines=new ArrayList<Message>();
+	}
+	
+	public Log(List<Message> list) {
+		this.lines = list;
 	}
 	
 	/**
@@ -27,7 +32,7 @@ public class Log {
 	 * @post The Log now contains the message given as a parameter
 	 */
 	public void addMessage(Message messageToAdd){
-		
+		lines.add(messageToAdd);
 	}
 	
 	/**
@@ -35,7 +40,7 @@ public class Log {
 	 * @pre none
 	 * @post Returns the log message list.
 	 */
-	public ArrayList<Message> getLogMessages() {
+	public List<Message> getLogMessages() {
 		return lines;
 	}
 

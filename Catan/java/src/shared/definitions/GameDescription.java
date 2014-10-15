@@ -1,7 +1,7 @@
 package shared.definitions;
 
 import java.util.Arrays;
-import java.util.List;
+
 
 /**
  * A class that describes the game, such as game title and id
@@ -69,29 +69,29 @@ public class GameDescription {
 	 * @obvious
 	 * @param playerDescriptions
 	 */
-	public void setPlayerDescriptions(PlayerDescription[] playerDescriptions) {
-		this.players = playerDescriptions;
+	public void setPlayerDescriptions(PlayerDescription[] players) {
+		this.players = players;
 	}
 
 	/**
 	 * @obvious
 	 */
-	/*@Override
+	@Override
 	public String toString() {
 		return "GameDescription [title=" + title + ", id=" + id
-				+ ", playerDescriptions=" + Arrays.toString(playerDescriptions)
+				+ ", playerDescriptions=" + Arrays.toString(players)
 				+ "]";
 	}
 
 	/**
 	 * @obvious
 	 */
-	/*@Override
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + Arrays.hashCode(playerDescriptions);
+		result = prime * result + Arrays.hashCode(players);
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -99,7 +99,7 @@ public class GameDescription {
 	/**
 	 * @obvious
 	 */
-	/*@Override
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -110,7 +110,7 @@ public class GameDescription {
 		GameDescription other = (GameDescription) obj;
 		if (id != other.id)
 			return false;
-		if (!Arrays.equals(playerDescriptions, other.playerDescriptions))
+		if (!Arrays.equals(players, other.players))
 			return false;
 		if (title == null) {
 			if (other.title != null)
@@ -118,6 +118,6 @@ public class GameDescription {
 		} else if (!title.equals(other.title))
 			return false;
 		return true;
-	}*/
+	}
 	
 }
