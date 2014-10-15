@@ -2,6 +2,7 @@ package proxy;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -179,7 +180,13 @@ public class ClientCommunicator implements ICommunicator {
 
 			responseCode = connection.getResponseCode();
 			
-	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			BufferedReader in;
+			if(responseCode == 400){
+				in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+			}
+			else {
+				in = new BufferedReader(new InputStreamReader(connection.getInputStream()));		
+			}
 			String inputLine;
 			StringBuffer responseJson = new StringBuffer();
 			while ((inputLine = in.readLine()) != null) {
@@ -187,11 +194,11 @@ public class ClientCommunicator implements ICommunicator {
 			}
 			in.close();	
 			
-			responseHeaders = connection.getHeaderFields();			
-			responseMessage = connection.getResponseMessage();
-			
 			Object javaObject = jsonTrans.translateTo(responseJson.toString()); //send over the buffered reader result ,"result1"
+			responseHeaders = connection.getHeaderFields();
+			responseMessage = connection.getResponseMessage();
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
+			
 		}
 		catch (IOException e) { // IO ERROR
 			System.err.print("Unable to doPost\n");
