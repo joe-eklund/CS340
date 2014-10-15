@@ -66,20 +66,26 @@ public class Catan extends JFrame
 			{
 				new Catan();
 				
+				TranslatorJSON translator = new TranslatorJSON();
+				ClientCommunicator communicator=new ClientCommunicator("localhost",8081,translator);
+				ProxyServer.setSingleton(communicator, translator, "UTF-8");
+				ProxyServer proxy = ProxyServer.getSingleton();
+				ClientModel clientmodel = new ClientModel(null);
+				Presenter presenter = new Presenter(clientmodel,proxy,"");
+				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
-				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
-																									playerWaitingView);
+				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);
 				playerWaitingView.setController(playerWaitingController);
 				
 				JoinGameView joinView = new JoinGameView();
 				NewGameView newGameView = new NewGameView();
 				SelectColorView selectColorView = new SelectColorView();
 				MessageView joinMessageView = new MessageView();
-				final JoinGameController joinController = new JoinGameController(
-																				 joinView,
+				final JoinGameController joinController = new JoinGameController(joinView,
 																				 newGameView,
 																				 selectColorView,
-																				 joinMessageView);
+																				 joinMessageView,
+																				 presenter);
 				joinController.setJoinAction(new IAction() {
 					@Override
 					public void execute()
@@ -95,12 +101,6 @@ public class Catan extends JFrame
 				LoginView loginView = new LoginView();
 				MessageView loginMessageView = new MessageView();
 				
-				TranslatorJSON translator = new TranslatorJSON();
-				ClientCommunicator communicator=new ClientCommunicator("localhost",8081,translator);
-				ProxyServer.setSingleton(communicator, translator, "UTF-8");
-				ProxyServer proxy = ProxyServer.getSingleton();
-				ClientModel clientmodel = new ClientModel(null);
-				Presenter presenter = new Presenter(clientmodel,proxy,"");
 				LoginController loginController = new LoginController(loginView,
 																	  loginMessageView,
 																	  presenter);

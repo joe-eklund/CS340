@@ -9,7 +9,9 @@ import java.util.List;
 public class GameDescription {
 	private String title;
 	private int id;
-	private PlayerDescription[] playerDescriptions;
+	private PlayerDescription[] players;
+	//private List<PlayerDescription> playerDescriptions;
+
 	
 	/**
 	 * Class constructor
@@ -21,7 +23,7 @@ public class GameDescription {
 			PlayerDescription[] playerDescriptions) {
 		this.title = title;
 		this.id = id;
-		this.playerDescriptions = playerDescriptions;
+		this.players = playerDescriptions;
 	}
 
 	/**
@@ -44,7 +46,7 @@ public class GameDescription {
 	 * @post Returns descriptions of the current players of the game
 	 */
 	public PlayerDescription[] getPlayerDescriptions() {
-		return playerDescriptions;
+		return players;
 	}
 	
 	/**
@@ -68,13 +70,13 @@ public class GameDescription {
 	 * @param playerDescriptions
 	 */
 	public void setPlayerDescriptions(PlayerDescription[] playerDescriptions) {
-		this.playerDescriptions = playerDescriptions;
+		this.players = playerDescriptions;
 	}
 
 	/**
 	 * @obvious
 	 */
-	@Override
+	/*@Override
 	public String toString() {
 		return "GameDescription [title=" + title + ", id=" + id
 				+ ", playerDescriptions=" + Arrays.toString(playerDescriptions)
@@ -84,7 +86,7 @@ public class GameDescription {
 	/**
 	 * @obvious
 	 */
-	@Override
+	/*@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -97,7 +99,7 @@ public class GameDescription {
 	/**
 	 * @obvious
 	 */
-	@Override
+	/*@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -116,6 +118,6 @@ public class GameDescription {
 		} else if (!title.equals(other.title))
 			return false;
 		return true;
-	}
+	}*/
 	
 }

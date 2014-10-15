@@ -1,9 +1,12 @@
 package client.join;
 
+import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
+import shared.definitions.GameDescription;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.presenter.IPresenter;
 
 
 /**
@@ -15,6 +18,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	
+	private IPresenter presenter;
 	
 	/**
 	 * JoinGameController constructor
@@ -34,6 +39,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setMessageView(messageView);
 	}
 	
+	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
+			ISelectColorView selectColorView, IMessageView messageView, IPresenter presenter) {
+
+		super(view);
+		
+		setPresenter(presenter);
+		setNewGameView(newGameView);
+		setSelectColorView(selectColorView);
+		setMessageView(messageView);
+	}
+	
+	private void setPresenter(IPresenter presenter2) {
+		this.presenter=presenter2;
+	}
+
 	public IJoinGameView getJoinGameView() {
 		
 		return (IJoinGameView)super.getView();
@@ -89,7 +109,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-		
+		//get list of games
+		ListGamesResponse response= presenter.getGames();
+		this.getJoinGameView().setGames(response.getGameDescriptions(), presenter.getPlayerInfo());
 		getJoinGameView().showModal();
 	}
 
@@ -112,7 +134,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	}
 
 	@Override
-	public void startJoinGame(GameInfo game) {
+	public void startJoinGame(GameDescription game) {
 
 		getSelectColorView().showModal();
 	}

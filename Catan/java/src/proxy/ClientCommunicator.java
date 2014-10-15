@@ -100,7 +100,7 @@ public class ClientCommunicator implements ICommunicator {
 			}
 			if(requestType.name().equals("GET")) {
 				
-				serverResponse = doGet(connection); //will take the translated json object and the parameters and send a request to the server. 
+				serverResponse = doGet(connection, responseCastClass); //will take the translated json object and the parameters and send a request to the server. 
 			}
 			else {
 				serverResponse = doPost(translatedJson, connection);
@@ -120,7 +120,7 @@ public class ClientCommunicator implements ICommunicator {
 	 * @param connection the given connection to the server 
 	 * @throws ClientException
 	 */
-	private CommandResponse doGet(HttpURLConnection connection) //throws ClientException may need to add this in later
+	private CommandResponse doGet(HttpURLConnection connection, Class<?> responseType) //throws ClientException may need to add this in later
 	{
 		CommandResponse result = null;
 		int responseCode;
@@ -143,7 +143,8 @@ public class ClientCommunicator implements ICommunicator {
 			responseMessage = connection.getResponseMessage();
 			responseHeaders = connection.getHeaderFields();
 			
-			Object javaObject = jsonTrans.translateTo(responseJson.toString());
+			//Object javaObject = jsonTrans.translateTo(responseJson.toString());
+			Object javaObject = jsonTrans.translateFrom(responseJson.toString(), responseType);
 			
 			result = new CommandResponse(responseHeaders, responseCode, javaObject, responseMessage);
 		}

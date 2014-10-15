@@ -38,7 +38,7 @@ public interface IJoinGameController extends IController
 	 * @param game
 	 *            The game that the user is joining
 	 */
-	void startJoinGame(GameInfo game);
+	void startJoinGame(GameDescription game);
 	
 	/**
 	 * Called by the select color view when the user clicks the "Cancel" button

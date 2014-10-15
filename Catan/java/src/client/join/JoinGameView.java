@@ -7,6 +7,10 @@ import javax.swing.*;
 
 import client.base.*;
 import client.data.*;
+import shared.definitions.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Implementation for the join game view, which lets the user select a game to
@@ -36,8 +40,9 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 	private JPanel gamePanel;
 	private JPanel buttonPanel;
 
-	private GameInfo[] games;
-	private PlayerInfo localPlayer;
+	//private GameInfo[] games;
+	private List<GameDescription> games;
+	private PlayerDescription localPlayer;
 
 	public JoinGameView()
 	{
@@ -90,10 +95,10 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 		gamePanel.add(join);
 
 		// This is the looped layout
-		if (games != null && games.length > 0)
+		if (games != null && games.size() > 0)
 		{
 			labelFont = labelFont.deriveFont(labelFont.getStyle(), PANEL_TEXT_SIZE);
-			for (GameInfo game : games)
+			for (GameDescription game : games)
 			{
 				JLabel tmp1 = new JLabel(String.valueOf(game.getId()));
 				tmp1.setFont(labelFont);
@@ -101,12 +106,14 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				JLabel tmp2 = new JLabel(game.getTitle());
 				tmp2.setFont(labelFont);
 				gamePanel.add(tmp2);
-				String players = String.valueOf(game.getPlayers().size()) + "/4 : ";
-				for (int j = 0; j < game.getPlayers().size(); j++) {
-					if (j < game.getPlayers().size() - 1) {
-						players = players + game.getPlayers().get(j).getName() + ", ";
+				List<PlayerDescription> playersList = Arrays.asList(game.getPlayerDescriptions());
+				String players = String.valueOf(playersList.size())+ "/4 : ";
+				//String players = String.valueOf(game.getPlayers().size()) + "/4 : ";
+				for (int j = 0; j < playersList.size(); j++) {
+					if (j < playersList.size() - 1) {
+						players = players + playersList.get(j).getName() + ", ";
 					} else {
-						players = players + game.getPlayers().get(j).getName();
+						players = players + playersList.get(j).getName();
 					}
 				}
 				JLabel tmp3 = new JLabel(players);
@@ -114,11 +121,11 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				gamePanel.add(tmp3);
 				JButton joinButton;
 				
-				if (game.getPlayers().contains(localPlayer))
+				if (playersList.contains(localPlayer))
 				{
 					joinButton = new JButton("Re-Join");
 				}
-				else if (game.getPlayers().size() >= 4)
+				else if (playersList.size() >= 4)
 				{
 					joinButton = new JButton("Full");
 					joinButton.setEnabled(false);
@@ -160,7 +167,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 	}
 
 	@Override
-	public void setGames(GameInfo[] games, PlayerInfo localPlayer)
+	public void setGames(List<GameDescription> games, PlayerDescription localPlayer)
 	{
 		this.games = games;
 		this.localPlayer = localPlayer;
@@ -187,8 +194,8 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 				{
 					//System.out.println(e.getActionCommand());
 					int gameId = Integer.parseInt(e.getActionCommand());
-					GameInfo game = null;
-					for (GameInfo g : games)
+					GameDescription game = null;
+					for (GameDescription g : games)
 					{
 						if (g.getId() == gameId)
 						{

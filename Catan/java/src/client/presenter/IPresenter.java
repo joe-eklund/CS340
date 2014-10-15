@@ -1,6 +1,11 @@
 package client.presenter;
 
+import java.util.List;
+
+import client.data.PlayerInfo;
+import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
+import shared.definitions.PlayerDescription;
 
 /**
  * The interface that defines a class that holds a proxy and clientModel
@@ -32,4 +37,8 @@ public interface IPresenter extends Runnable {
 	public int getPollCycleCount();
 	
 	public LoginUserResponse login(String user,String pass);
+	
+	public ListGamesResponse getGames();
+
+	public PlayerDescription getPlayerInfo();
 }

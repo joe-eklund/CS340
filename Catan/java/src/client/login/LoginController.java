@@ -102,7 +102,8 @@ public class LoginController extends Controller implements ILoginController {
 			loginAction.execute();
 		}else {
 			//you fail
-			System.out.println("not valid");
+			System.out.println("not valid"+response.getMessage());
+			messageView.setMessage(response.getMessage());
 		}
 	}
 

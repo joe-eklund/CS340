@@ -1,8 +1,13 @@
 package client.presenter;
 
+import java.util.List;
+
 import proxy.IServer;
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
+import shared.definitions.PlayerDescription;
+import client.data.PlayerInfo;
 import client.model.ClientModel;
 
 /**
@@ -15,6 +20,7 @@ public class Presenter implements IPresenter {
 	private int version;
 	private String cookie;
 	private int pollCycleCount;
+	private PlayerDescription playerInfo;
 	
 	/**
 	 * @pre
@@ -35,6 +41,7 @@ public class Presenter implements IPresenter {
 		this.version = 0;
 		this.cookie = cookie;	// no cookie = empty string
 		pollCycleCount = 0;
+		//playerInfo=new PlayerInfo();
 	}
 
 	@Override
@@ -67,6 +74,19 @@ public class Presenter implements IPresenter {
 	}
 	
 	public LoginUserResponse login(String user,String pass) {
-		return this.proxy.loginUser(user, pass);
+		LoginUserResponse response = this.proxy.loginUser(user, pass);
+		this.cookie = response.getCookie();
+		playerInfo=new PlayerDescription(null, response.getUserID(), response.getName());
+		return response;
+	}
+	
+	public ListGamesResponse getGames(){
+		return this.proxy.listGames(cookie);
+	}
+
+	@Override
+	public PlayerDescription getPlayerInfo() {
+		// TODO Auto-generated method stub
+		return this.playerInfo;
 	}
 }
