@@ -94,7 +94,8 @@ public class Presenter implements IPresenter {
 	@Override
 	public RegisterUserResponse register(String user, String pass) {
 		RegisterUserResponse response = this.proxy.registerUser(user, pass);
-		//TODO playerInfo stuff
+		this.cookie = response.getCookie();
+		playerInfo = new PlayerDescription(null,response.getUserID(),response.getName());
 		return response;
 	}
 }
