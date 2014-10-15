@@ -1,5 +1,7 @@
 package client.presenter;
 
+import shared.ServerMethodResponses.LoginUserResponse;
+
 /**
  * The interface that defines a class that holds a proxy and clientModel
  *
@@ -28,4 +30,6 @@ public interface IPresenter extends Runnable {
 	public int getVersion();
 	
 	public int getPollCycleCount();
+	
+	public LoginUserResponse login(String user,String pass);
 }

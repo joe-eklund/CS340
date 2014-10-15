@@ -19,7 +19,9 @@ public class GameModel {
 
 	public GameModel(ServerModel serverModel) {
 		this.serverModel = serverModel;
-		initializeMap();
+		if(serverModel != null) {
+			initializeMap();
+		}
 	}
 	
 	/**

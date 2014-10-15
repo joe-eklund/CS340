@@ -90,7 +90,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		UserRequest loginRequest = new UserRequest(username, password);
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "/user/login", loginRequest, null);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "user/login", loginRequest, null);
 		boolean successful = false;
 		String cookie = "";
 		String playerName = "";

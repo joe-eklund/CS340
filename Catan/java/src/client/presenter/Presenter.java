@@ -2,6 +2,7 @@ package client.presenter;
 
 import proxy.IServer;
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.LoginUserResponse;
 import client.model.ClientModel;
 
 /**
@@ -64,5 +65,8 @@ public class Presenter implements IPresenter {
 	public int getPollCycleCount() {
 		return pollCycleCount;
 	}
-
+	
+	public LoginUserResponse login(String user,String pass) {
+		return this.proxy.loginUser(user, pass);
+	}
 }

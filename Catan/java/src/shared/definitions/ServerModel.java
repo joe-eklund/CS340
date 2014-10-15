@@ -1,5 +1,6 @@
 package shared.definitions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import client.model.*;
@@ -44,6 +45,11 @@ public class ServerModel {
 		this.turnTracker = turnTracker;
 		this.winner = winner;
 		this.deck = new DevCards();
+	}
+	
+	public ServerModel() {
+		winner=-1;
+		players=new ArrayList<Player>();
 	}
 	
 	/**

@@ -2,11 +2,20 @@ package client.login;
 
 import client.base.*;
 import client.misc.*;
+import client.presenter.IPresenter;
 
 import java.net.*;
 import java.io.*;
 import java.util.*;
 import java.lang.reflect.*;
+
+import proxy.ICommunicator;
+import proxy.IServer;
+import proxy.MockCommunicator;
+import proxy.ProxyServer;
+import proxy.TranslatorJSON;
+import shared.ServerMethodResponses.LoginUserResponse;
+
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,14 +28,24 @@ public class LoginController extends Controller implements ILoginController {
 	private IMessageView messageView;
 	private IAction loginAction;
 	
+	private IPresenter presenter;
+	
 	/**
 	 * LoginController constructor
 	 * 
 	 * @param view Login view
 	 * @param messageView Message view (used to display error messages that occur during the login process)
 	 */
+	public LoginController(ILoginView view, IMessageView messageView, IPresenter presenter) {
+		
+		super(view);
+		
+		this.presenter = presenter;
+		this.messageView = messageView;
+	}
+	
 	public LoginController(ILoginView view, IMessageView messageView) {
-
+		
 		super(view);
 		
 		this.messageView = messageView;
@@ -72,11 +91,19 @@ public class LoginController extends Controller implements ILoginController {
 	public void signIn() {
 		
 		// TODO: log in user
-		
+		//boolean validLogin;
+		String password=this.getLoginView().getLoginPassword();
+		String username=this.getLoginView().getLoginUsername();
 
-		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+		LoginUserResponse response=this.presenter.login(username, password);
+		if(response.isSuccessful()) {
+			// If log in succeeded
+			getLoginView().closeModal();
+			loginAction.execute();
+		}else {
+			//you fail
+			System.out.println("not valid");
+		}
 	}
 
 	@Override

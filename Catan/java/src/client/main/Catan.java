@@ -2,10 +2,19 @@ package client.main;
 
 import javax.swing.*;
 
+import proxy.ClientCommunicator;
+import proxy.ICommunicator;
+import proxy.ITranslator;
+import proxy.ProxyServer;
+import proxy.TranslatorJSON;
+import shared.definitions.ServerModel;
 import client.catan.*;
 import client.login.*;
 import client.join.*;
 import client.misc.*;
+import client.model.ClientModel;
+import client.presenter.IPresenter;
+import client.presenter.Presenter;
 import client.base.*;
 
 /**
@@ -85,9 +94,16 @@ public class Catan extends JFrame
 				
 				LoginView loginView = new LoginView();
 				MessageView loginMessageView = new MessageView();
-				LoginController loginController = new LoginController(
-																	  loginView,
-																	  loginMessageView);
+				
+				TranslatorJSON translator = new TranslatorJSON();
+				ClientCommunicator communicator=new ClientCommunicator("localhost",8081,translator);
+				ProxyServer.setSingleton(communicator, translator, "UTF-8");
+				ProxyServer proxy = ProxyServer.getSingleton();
+				ClientModel clientmodel = new ClientModel(null);
+				Presenter presenter = new Presenter(clientmodel,proxy,"");
+				LoginController loginController = new LoginController(loginView,
+																	  loginMessageView,
+																	  presenter);
 				loginController.setLoginAction(new IAction() {
 					@Override
 					public void execute()
@@ -96,7 +112,7 @@ public class Catan extends JFrame
 					}
 				});
 				loginView.setController(loginController);
-				loginView.setController(loginController);
+				//loginView.setController(loginController);
 				
 				loginController.start();
 			}
