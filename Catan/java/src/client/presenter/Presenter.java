@@ -1,7 +1,10 @@
 package client.presenter;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
+import shared.definitions.GameDescription;
 import proxy.IServer;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
@@ -9,20 +12,20 @@ import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.definitions.PlayerDescription;
-import client.data.PlayerInfo;
 import client.model.ClientModel;
 
 /**
  * A class that holds a proxy and clientModel and acts upon those objects
  *
  */
-public class Presenter implements IPresenter {
+public class Presenter extends Observable implements IPresenter {
 	private ClientModel clientModel;
 	private IServer proxy;
 	private int version;
 	private String cookie;
 	private int pollCycleCount;
 	private PlayerDescription playerInfo;
+	private ArrayList<GameDescription> games;
 	
 	/**
 	 * @pre
@@ -82,8 +85,12 @@ public class Presenter implements IPresenter {
 		return response;
 	}
 	
-	public ListGamesResponse getGames(){
-		return this.proxy.listGames(cookie);
+	public ListGamesResponse listGames(){
+		ListGamesResponse response =  this.proxy.listGames(cookie);
+		games = (ArrayList<GameDescription>) response.getGameDescriptions();
+		setChanged();
+		notifyObservers();
+		return response;
 	}
 
 	@Override
@@ -103,6 +110,15 @@ public class Presenter implements IPresenter {
 	@Override
 	public CreateGameResponse createGame(boolean randTiles,boolean randNums,boolean randPorts,String name) {
 		CreateGameResponse response = this.proxy.createGame(randTiles, randNums, randPorts, name, this.cookie);
+		games.add(response.getGameDescription());
+		setChanged();
+		notifyObservers();
 		return response;
 	}
+	
+	@Override
+	public ArrayList<GameDescription> getGames() {
+		return games;
+	}
 }
+

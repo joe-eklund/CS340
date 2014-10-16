@@ -18,7 +18,7 @@ import client.join.SelectColorView;
 import client.login.LoginController;
 import client.login.LoginView;
 import client.misc.MessageView;
-import client.model.ClientModel;
+import client.model.ClientModel; 
 import client.presenter.Presenter;
 
 /**
@@ -90,6 +90,9 @@ public class Catan extends JFrame
 																				 selectColorView,
 																				 joinMessageView,
 																				 presenter);
+				//Adding joinController as observer
+				presenter.addObserver(joinController);
+				
 				joinController.setJoinAction(new IAction() {
 					@Override
 					public void execute()
@@ -119,6 +122,9 @@ public class Catan extends JFrame
 				//loginView.setController(loginController);
 				
 				loginController.start();
+				
+				//Thread thread = new Thread(presenter);
+				//thread.start();
 			}
 		});
 	}

@@ -1,5 +1,9 @@
 package client.join;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
@@ -13,7 +17,7 @@ import client.presenter.IPresenter;
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController {
+public class JoinGameController extends Controller implements IJoinGameController, Observer {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
@@ -111,8 +115,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void start() {
 		//get list of games
-		ListGamesResponse response= presenter.getGames();
-		this.getJoinGameView().setGames(response.getGameDescriptions(), presenter.getPlayerInfo());
+		presenter.listGames();
+		//this.getJoinGameView().setGames(response.getGameDescriptions(), presenter.getPlayerInfo());
 		getJoinGameView().showModal();
 	}
 
@@ -164,6 +168,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		joinAction.execute();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.getJoinGameView().setGames(presenter.getGames(), presenter.getPlayerInfo());
 	}
 
 }
