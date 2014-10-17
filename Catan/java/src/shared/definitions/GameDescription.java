@@ -86,15 +86,6 @@ public class GameDescription {
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "GameDescription [title=" + title + ", id=" + id + ", players="
-				+ players + "]";
-	}
-
-	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -133,6 +124,17 @@ public class GameDescription {
 			return false;
 		return true;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "GameDescription [title=" + title + ", id=" + id + ", players="
+				+ players + "]";
+	}
+
+
 
 	
 	

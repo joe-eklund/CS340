@@ -154,7 +154,8 @@ public class ProxyServer implements IServer{
 		List<GameDescription> games = null;
 		if(successful) {
 			games = new ArrayList<GameDescription>();
-			for(GameDescription game : (GameDescription[])response.getResponseObject()) {
+			GameDescription[] gamesArray = (GameDescription[])response.getResponseObject();
+			for(GameDescription game : gamesArray) {
 				games.add(new GameDescription(game));
 			}
 		}

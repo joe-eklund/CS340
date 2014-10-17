@@ -38,18 +38,18 @@ public final class TestingConstants {
 	public static final String VALID_REGISTER_USERNAME = "Brooke";
 	public static final String VALID_REGISTER_PASSWORD = "brooke";
 	public static final PlayerDescription[] PLAYER_SET_1 = {
-			new PlayerDescription(CatanColor.BLUE, 0, "Bill"),
-			new PlayerDescription(CatanColor.BROWN, 1, "Fred"),
-			new PlayerDescription(CatanColor.GREEN, 2, "Sam"),
-			new PlayerDescription(CatanColor.ORANGE, 3, "May"),
+//			new PlayerDescription(CatanColor.BLUE, 0, "Bill"),
+//			new PlayerDescription(CatanColor.BROWN, 1, "Fred"),
+//			new PlayerDescription(CatanColor.GREEN, 2, "Sam"),
+//			new PlayerDescription(CatanColor.ORANGE, 3, "May"),
 	};
 	public static final GameDescription GAME_DESCRIPTION_1 = new GameDescription("Game1", 0, Arrays.asList(PLAYER_SET_1));
 	
 	public static final PlayerDescription[] PLAYER_SET_2 = {
-			new PlayerDescription(CatanColor.BLUE, 0, "June"),
-			new PlayerDescription(CatanColor.BROWN, 1, "Tom"),
-			new PlayerDescription(CatanColor.GREEN, 2, "Sam"),
-			new PlayerDescription(CatanColor.ORANGE, 3, "Nick"),
+//			new PlayerDescription(CatanColor.BLUE, 0, "June"),
+//			new PlayerDescription(CatanColor.BROWN, 1, "Tom"),
+//			new PlayerDescription(CatanColor.GREEN, 2, "Sam"),
+//			new PlayerDescription(CatanColor.ORANGE, 3, "Nick"),
 	};
 	public static final GameDescription GAME_DESCRIPTION_2 = new GameDescription("Game2", 1, Arrays.asList(PLAYER_SET_2));
 	

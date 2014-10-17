@@ -5,7 +5,7 @@ package shared.definitions;
  *
  */
 public class PlayerDescription {
-	private CatanColor color;
+	private String color;
 	private int id;
 	private String name;
 	
@@ -15,7 +15,7 @@ public class PlayerDescription {
 	 * @param id
 	 * @param name
 	 */
-	public PlayerDescription(CatanColor color, int id, String name) {
+	public PlayerDescription(String color, int id, String name) {
 		this.color = color;
 		this.id = id;
 		this.name = name;
@@ -24,7 +24,7 @@ public class PlayerDescription {
 	/**
 	 * @obvious
 	 */
-	public CatanColor getColor() {
+	public String getColor() {
 		return color;
 	}
 	
@@ -48,7 +48,7 @@ public class PlayerDescription {
 	 * @obvious
 	 * @param color
 	 */
-	public void setColor(CatanColor color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 	
@@ -102,8 +102,6 @@ public class PlayerDescription {
 		if (getClass() != obj.getClass())
 			return false;
 		PlayerDescription other = (PlayerDescription) obj;
-		if (color != other.color)
-			return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {

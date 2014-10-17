@@ -8,6 +8,7 @@ import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
+import shared.definitions.PlayerDescription;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
@@ -151,7 +152,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameDescription game) {
-
+		
+		for (PlayerDescription p : game.getPlayerDescriptions()) {
+			if (p.getColor() != null && !p.getName().equals(presenter.getPlayerInfo().getName())) {
+				getSelectColorView().setColorEnabled(CatanColor.valueOf(p.getColor().toUpperCase()), false);
+			}
+		}
 		getSelectColorView().showModal();
 	}
 
@@ -167,6 +173,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
+		//LOAD GAME MAP HERE
 		joinAction.execute();
 	}
 
