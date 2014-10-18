@@ -49,7 +49,7 @@ public class Presenter extends Observable implements IPresenter {
 		super();
 		this.clientModel = clientModel;
 		this.proxy = proxy;
-		this.version = 0;
+		this.version = -1;
 		this.cookie = cookie;	// no cookie = empty string
 		pollCycleCount = 0;
 		state = GameState.LOGIN;
