@@ -135,10 +135,10 @@ public class ClientCommunicatorTest {
 	
 	@Test
 	public void testGameReset() {
-		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
-		Pair<String, String> mockPair2 = new Pair<String, String>("Cookie", "catan.game=0");		
+		Pair<String, String> mockPair = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D; catan.game=0");
+		//Pair<String, String> mockPair2 = new Pair<String, String>("Cookie", "catan.game=0");		
 		headers.add(mockPair);
-		headers.add(mockPair2);
+		//headers.add(mockPair2);
 		ResetGameRequest data = null; //new ResetGameRequest();
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "game/reset", data, ServerModel.class);
 		assertTrue(mockResponse.getResponseCode() == 200);

@@ -112,7 +112,8 @@ public class Presenter extends Observable implements IPresenter {
 	
 	@Override
 	public void joinGame(CatanColor color, int gameID) {
-		this.proxy.joinGame(color, gameID, this.cookie);
+		JoinGameResponse response = this.proxy.joinGame(color, gameID, this.cookie);
+		this.cookie = response.getCookie();
 		System.out.println("joined");
 		updateModel();
 	}

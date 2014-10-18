@@ -30,7 +30,7 @@ public class TranslatorJSON implements ITranslator{
 	 * @post returns the equivalent Java Object
 	 */
 	public Object translateFrom(String message, Class<?> responseCastClass){
-		if(message.equals("true"))
+		if(message.equals(new String("\"true\"")))
 			return null;
 		else {
 			Object obj = gson.fromJson(message, responseCastClass);

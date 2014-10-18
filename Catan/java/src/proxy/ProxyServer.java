@@ -177,7 +177,7 @@ public class ProxyServer implements IServer{
 	public JoinGameResponse joinGame(CatanColor color, int gameID, String cookie) {
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
-		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
+		//requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
 		JoinGameRequest joinGameRequest = new JoinGameRequest(gameID, color.name().toString());
 		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "games/join", joinGameRequest, null);
 		boolean successful = false;
@@ -187,7 +187,7 @@ public class ProxyServer implements IServer{
 			String gameCookieExtension = response.getResponseHeaders().get("Set-cookie").get(0);
 			int index = gameCookieExtension.lastIndexOf(";Path=/;");
 			gameCookieExtension = gameCookieExtension.substring(0, index);
-			cookie = cookie + "; " + gameCookieExtension;
+			cookie = cookie + "; " + gameCookieExtension;
 			resultCookie = cookie;
 		}
 		return new JoinGameResponse(successful, resultCookie);

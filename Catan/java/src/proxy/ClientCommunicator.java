@@ -96,6 +96,7 @@ public class ClientCommunicator implements ICommunicator {
 			URL url = new URL("http://" + Host + ':' + Port + "/" + commandName);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			for(Pair<String, String> header : headers){
+				System.out.println("Header: " + header.getKey() + " = " + header.getValue());
 				connection.addRequestProperty(header.getKey(), header.getValue());
 			}
 			if(requestType.name().equals("GET")) {
@@ -130,9 +131,24 @@ public class ClientCommunicator implements ICommunicator {
 		try { 
 			connection.setRequestMethod("GET");
 			connection.connect(); 
-	
+			
 			responseCode = connection.getResponseCode();
-						
+			BufferedReader in;
+			boolean errorCode = false;
+			if(responseCode == 400){
+				in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+				errorCode = true;
+			}
+			else {
+				in = new BufferedReader(new InputStreamReader(connection.getInputStream()));		
+			}
+			String inputLine;
+			StringBuffer responseJson = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				responseJson.append(inputLine);
+			}
+			in.close();
+			/*			
 	        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String inputLine;
 			StringBuffer responseJson = new StringBuffer();
@@ -140,6 +156,7 @@ public class ClientCommunicator implements ICommunicator {
 				responseJson.append(inputLine);
 			}
 			in.close();	
+			*/
 			
 			responseMessage = connection.getResponseMessage();
 			responseHeaders = connection.getHeaderFields();
