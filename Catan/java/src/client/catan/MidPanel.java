@@ -1,9 +1,11 @@
 package client.catan;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import client.map.*;
+import client.presenter.IPresenter;
 
 @SuppressWarnings("serial")
 public class MidPanel extends JPanel

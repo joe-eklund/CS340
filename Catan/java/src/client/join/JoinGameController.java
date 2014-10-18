@@ -24,6 +24,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private GameDescription currentGame;
 	
 	private IPresenter presenter;
 	
@@ -153,6 +154,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameDescription game) {
 		
+		currentGame = game;
+		
 		for (PlayerDescription p : game.getPlayerDescriptions()) {
 			if (p.getColor() != null && !p.getName().equals(presenter.getPlayerInfo().getName())) {
 				getSelectColorView().setColorEnabled(CatanColor.valueOf(p.getColor().toUpperCase()), false);
@@ -169,11 +172,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		//LOAD GAME MAP HERE
+		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
 		joinAction.execute();
 	}
 

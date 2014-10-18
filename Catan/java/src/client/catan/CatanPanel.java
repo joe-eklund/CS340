@@ -11,6 +11,7 @@ import shared.definitions.ResourceType;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
 import client.misc.WaitView;
+import client.presenter.IPresenter;
 import client.roll.RollController;
 import client.roll.RollResultView;
 import client.roll.RollView;

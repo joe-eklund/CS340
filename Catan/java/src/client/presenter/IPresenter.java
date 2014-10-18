@@ -2,12 +2,15 @@ package client.presenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 import client.data.PlayerInfo;
 import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
+import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 
@@ -50,6 +53,10 @@ public interface IPresenter extends Runnable {
 
 	public CreateGameResponse createGame(boolean randTiles,boolean randNums,boolean randPorts,String name);
 	
+	public void joinGame(CatanColor color, int gameID);
+	
 	public ArrayList<GameDescription> getGames();
+
+	public void addNewObserver(Observer observer);
 	
 }

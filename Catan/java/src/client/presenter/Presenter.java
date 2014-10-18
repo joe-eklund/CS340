@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import proxy.IServer;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
@@ -51,16 +53,8 @@ public class Presenter extends Observable implements IPresenter {
 
 	@Override
 	public void run() {
-		GetGameModelResponse response = proxy.getGameModel(version, cookie);
-		if(response.isSuccessful()) {
-			if(response.isNeedToUpdate()) {
-				version = response.getGameModel().getVersion();
-				clientModel.updateServerModel(response.getGameModel());
-			}
-		}
-		else {
-			System.err.println("Error: Unable to process update game model request!");
-		}
+		System.out.println("run() method in presenter");
+		updateModel();
 		pollCycleCount++;
 	}
 	
@@ -117,8 +111,36 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	@Override
+	public void joinGame(CatanColor color, int gameID) {
+		this.proxy.joinGame(color, gameID, this.cookie);
+		System.out.println("joined");
+		updateModel();
+	}
+	
+	@Override
 	public ArrayList<GameDescription> getGames() {
 		return games;
+	}
+
+	@Override
+	public void addNewObserver(Observer observer) {
+		this.addObserver(observer);
+	}
+	
+	private void updateModel() {
+		GetGameModelResponse response = proxy.getGameModel(version, cookie);
+		if(response.isSuccessful()) {
+			if(response.isNeedToUpdate()) {
+				version = response.getGameModel().getVersion();
+				clientModel.updateServerModel(response.getGameModel());
+				setChanged();
+				notifyObservers();
+				System.out.println("updating");
+			}
+		}
+		else {
+			System.err.println("Error: Unable to process update game model request!");
+		}
 	}
 }
 

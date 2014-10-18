@@ -6,18 +6,21 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import client.main.Catan;
 
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
+		
+		Catan.getPresenter().addNewObserver(this);
 		
 		setRobView(robView);
 		
@@ -163,6 +166,12 @@ public class MapController extends Controller implements IMapController {
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
+		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
 		
 	}
 	

@@ -19,6 +19,7 @@ import client.login.LoginController;
 import client.login.LoginView;
 import client.misc.MessageView;
 import client.model.ClientModel; 
+import client.presenter.IPresenter;
 import client.presenter.Presenter;
 
 /**
@@ -27,6 +28,11 @@ import client.presenter.Presenter;
 @SuppressWarnings("serial")
 public class Catan extends JFrame
 {
+	private static Presenter presenter;
+	
+	public static IPresenter getPresenter() {
+		return presenter;
+	}
 	
 	private CatanPanel catanPanel;
 	
@@ -68,18 +74,18 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
-				new Catan();
-				
 				TranslatorJSON translator = new TranslatorJSON();
 				ClientCommunicator communicator=new ClientCommunicator("localhost",8081,translator);
 				ProxyServer.setSingleton(communicator, translator, "UTF-8");
 				ProxyServer proxy = ProxyServer.getSingleton();
 				ClientModel clientmodel = new ClientModel(null);
-				Presenter presenter = new Presenter(clientmodel,proxy,"");
+				presenter = new Presenter(clientmodel,proxy,"");
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);
 				playerWaitingView.setController(playerWaitingController);
+				
+				new Catan();
 				
 				JoinGameView joinView = new JoinGameView();
 				NewGameView newGameView = new NewGameView();
