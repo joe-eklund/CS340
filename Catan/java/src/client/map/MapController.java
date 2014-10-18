@@ -20,7 +20,7 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		super(view);
 		
-		Catan.getPresenter().addNewObserver(this);
+		Catan.getPresenter().addObserverToModel(this);
 		
 		setRobView(robView);
 		

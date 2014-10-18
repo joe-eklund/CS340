@@ -122,11 +122,6 @@ public class Presenter extends Observable implements IPresenter {
 	public ArrayList<GameDescription> getGames() {
 		return games;
 	}
-
-	@Override
-	public void addNewObserver(Observer observer) {
-		this.addObserver(observer);
-	}
 	
 	private void updateModel() {
 		GetGameModelResponse response = proxy.getGameModel(version, cookie);
@@ -134,14 +129,16 @@ public class Presenter extends Observable implements IPresenter {
 			if(response.isNeedToUpdate()) {
 				version = response.getGameModel().getVersion();
 				clientModel.updateServerModel(response.getGameModel());
-				setChanged();
-				notifyObservers();
 				System.out.println("updating");
 			}
 		}
 		else {
 			System.err.println("Error: Unable to process update game model request!");
 		}
+	}
+	
+	public void addObserverToModel(Observer observer) {
+		clientModel.addObserver(observer);
 	}
 }
 

@@ -217,6 +217,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/model?version=" + Integer.toString(version), null, ServerModel.class);
+		//ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/model", null, ServerModel.class);
 		boolean needToUpdate = true;
 		if(response.getResponseObject() == null) {
 			needToUpdate = false;

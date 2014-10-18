@@ -2,6 +2,8 @@ package client.model;
 
 import java.util.ArrayList;
 
+import java.util.Observable;
+
 //import client.model.interfaces.IClientModel;
 import client.model.interfaces.IHex;
 import shared.definitions.GameModel;
@@ -22,7 +24,7 @@ import java.util.Map;
  * @author Epper Marshall
  * 
  */
-public class ClientModel /*implements IClientModel*/{
+public class ClientModel extends Observable /*implements IClientModel*/{
 	
 	private GameModel gameModel;
 	private ServerModel serverModel;
@@ -45,6 +47,8 @@ public class ClientModel /*implements IClientModel*/{
 	public void updateServerModel(ServerModel newServerModel) {
 		this.serverModel = newServerModel;
 		gameModel = new GameModel(newServerModel);
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**

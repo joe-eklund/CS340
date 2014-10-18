@@ -56,7 +56,6 @@ public interface IPresenter extends Runnable {
 	public void joinGame(CatanColor color, int gameID);
 	
 	public ArrayList<GameDescription> getGames();
-
-	public void addNewObserver(Observer observer);
 	
+	public void addObserverToModel(Observer observer);
 }
