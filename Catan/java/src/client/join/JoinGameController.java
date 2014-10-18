@@ -8,6 +8,7 @@ import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
+import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
 import client.base.*;
 import client.data.*;
@@ -136,7 +137,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void createNewGame() {
-		//TODO make game stuff-add to games list
 		boolean randTiles=this.getNewGameView().getRandomlyPlaceHexes();
 		boolean randNums=this.getNewGameView().getRandomlyPlaceNumbers();
 		boolean randPorts=this.getNewGameView().getUseRandomPorts();
@@ -153,7 +153,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameDescription game) {
-		
+		presenter.setGameState(GameState.JOINING);
 		currentGame = game;
 		
 		for (PlayerDescription p : game.getPlayerDescriptions()) {
@@ -175,8 +175,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
-		//LOAD GAME MAP HERE
 		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
+		presenter.setGameState(GameState.PLAYERWAITING);
 		joinAction.execute();
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observer;
 
 import client.data.PlayerInfo;
+import client.model.ClientModel;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
@@ -12,6 +13,7 @@ import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
+import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
 
 /**
@@ -57,5 +59,13 @@ public interface IPresenter extends Runnable {
 	
 	public ArrayList<GameDescription> getGames();
 	
+	public String[] listAIChoices();
+	
 	public void addObserverToModel(Observer observer);
+	
+	public ClientModel getClientModel();
+	
+	public void setGameState(GameState state);
+	
+	public GameState getGameState();
 }

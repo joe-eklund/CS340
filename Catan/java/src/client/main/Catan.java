@@ -19,6 +19,8 @@ import client.login.LoginController;
 import client.login.LoginView;
 import client.misc.MessageView;
 import client.model.ClientModel; 
+import client.poller.IPoller;
+import client.poller.Poller;
 import client.presenter.IPresenter;
 import client.presenter.Presenter;
 
@@ -80,6 +82,7 @@ public class Catan extends JFrame
 				ProxyServer proxy = ProxyServer.getSingleton();
 				ClientModel clientmodel = new ClientModel(null);
 				presenter = new Presenter(clientmodel,proxy,"");
+				IPoller poller = new Poller(presenter, 2);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);

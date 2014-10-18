@@ -61,6 +61,15 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	}
 	
 	/**
+	 * Gets the GameModel
+	 * @pre none
+	 * @post Returns the current GameModel.
+	 */
+	public GameModel getGameModel() {
+		return gameModel;
+	}
+	
+	/**
 	 * Determines if a trade offer can be accepted.
 	 * @pre <ul>
 	 * 			<li>The player has been offered a domestic trade</li>

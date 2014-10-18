@@ -6,10 +6,12 @@ import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
+import shared.definitions.GameState;
 import proxy.IServer;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.JoinGameResponse;
+import shared.ServerMethodResponses.ListAIResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
@@ -28,6 +30,8 @@ public class Presenter extends Observable implements IPresenter {
 	private int pollCycleCount;
 	private PlayerDescription playerInfo;
 	private ArrayList<GameDescription> games;
+	private GameState state;
+	
 	
 	/**
 	 * @pre
@@ -48,6 +52,7 @@ public class Presenter extends Observable implements IPresenter {
 		this.version = 0;
 		this.cookie = cookie;	// no cookie = empty string
 		pollCycleCount = 0;
+		state = GameState.LOGIN;
 		//playerInfo=new PlayerInfo();
 	}
 
@@ -114,7 +119,6 @@ public class Presenter extends Observable implements IPresenter {
 	public void joinGame(CatanColor color, int gameID) {
 		JoinGameResponse response = this.proxy.joinGame(color, gameID, this.cookie);
 		this.cookie = response.getCookie();
-		System.out.println("joined");
 		updateModel();
 	}
 	
@@ -129,7 +133,6 @@ public class Presenter extends Observable implements IPresenter {
 			if(response.isNeedToUpdate()) {
 				version = response.getGameModel().getVersion();
 				clientModel.updateServerModel(response.getGameModel());
-				System.out.println("updating");
 			}
 		}
 		else {
@@ -137,8 +140,26 @@ public class Presenter extends Observable implements IPresenter {
 		}
 	}
 	
+	@Override
+	public String[] listAIChoices() {
+		ListAIResponse response = proxy.listAI(cookie);
+		return (String[])response.getAiTypes().toArray();
+	}
+	
 	public void addObserverToModel(Observer observer) {
 		clientModel.addObserver(observer);
+	}
+	
+	public ClientModel getClientModel() {
+		return clientModel;
+	}
+	
+	public void setGameState(GameState state) {
+		this.state = state;
+	}
+	
+	public GameState getGameState() {
+		return state;
 	}
 }
 

@@ -14,7 +14,7 @@ import shared.definitions.ResourceType;
 public class Hex extends IHex{
 	private HexLocation location;
 	private String resource;
-	private int chit;
+	private int number;
 	
 	/**
 	 * Class constructor.
@@ -96,7 +96,7 @@ public class Hex extends IHex{
 	 */
 	@Override
 	public int getChit() {
-		return chit;
+		return number;
 	}
 	
 	/**
@@ -107,6 +107,6 @@ public class Hex extends IHex{
 	 */
 	@Override
 	public void setChit(int chit) {
-		this.chit = chit;
+		this.number = number;
 	}	
 }

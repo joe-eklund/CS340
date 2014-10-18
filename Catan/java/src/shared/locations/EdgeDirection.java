@@ -41,7 +41,7 @@ public enum EdgeDirection
 	 * @post Returns an enum assocaited to the specified direction
 	 * @throws ClientModelException
 	 */
-	public static EdgeDirection determineDirection(String dir) throws ClientModelException {
+	public static EdgeDirection determineDirection(String dir) {
 		switch(dir) {
 		case "NorthWest":
 			return EdgeDirection.NorthWest;
@@ -68,7 +68,7 @@ public enum EdgeDirection
 		case "SW":
 			return EdgeDirection.SouthWest;
 		default:
-			throw new ClientModelException("Invalid direction string given to static method EdgeDirection determineDirectionin EdgeDirection class");
+			return null;
 		}
 	}
 }

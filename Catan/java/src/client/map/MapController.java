@@ -7,6 +7,13 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 import client.main.Catan;
+import client.model.City;
+import client.model.ClientModel;
+import client.model.Port;
+import client.model.Road;
+import client.model.Settlement;
+import client.model.interfaces.IHex;
+import client.presenter.IPresenter;
 
 
 /**
@@ -15,12 +22,14 @@ import client.main.Catan;
 public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
+	private static IPresenter presenter;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
 		
-		Catan.getPresenter().addObserverToModel(this);
+		presenter = Catan.getPresenter();
+		presenter.addObserverToModel(this);
 		
 		setRobView(robView);
 		
@@ -40,9 +49,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
-		
-		//<temp>
-		
 		Random rand = new Random();
 
 		for (int x = 0; x <= 3; ++x) {
@@ -53,14 +59,6 @@ public class MapController extends Controller implements IMapController, Observe
 				HexType hexType = HexType.values()[r];
 				HexLocation hexLoc = new HexLocation(x, y);
 				getView().addHex(hexLoc, hexType);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-						CatanColor.RED);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-						CatanColor.BLUE);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-						CatanColor.ORANGE);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 			}
 			
 			if (x != 0) {
@@ -70,40 +68,9 @@ public class MapController extends Controller implements IMapController, Observe
 					HexType hexType = HexType.values()[r];
 					HexLocation hexLoc = new HexLocation(-x, y);
 					getView().addHex(hexLoc, hexType);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-							CatanColor.RED);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-							CatanColor.BLUE);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-							CatanColor.ORANGE);
-					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 				}
 			}
 		}
-		
-		PortType portType = PortType.BRICK;
-		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-		
-		getView().placeRobber(new HexLocation(0, 0));
-		
-		getView().addNumber(new HexLocation(-2, 0), 2);
-		getView().addNumber(new HexLocation(-2, 1), 3);
-		getView().addNumber(new HexLocation(-2, 2), 4);
-		getView().addNumber(new HexLocation(-1, 0), 5);
-		getView().addNumber(new HexLocation(-1, 1), 6);
-		getView().addNumber(new HexLocation(1, -1), 8);
-		getView().addNumber(new HexLocation(1, 0), 9);
-		getView().addNumber(new HexLocation(2, -2), 10);
-		getView().addNumber(new HexLocation(2, -1), 11);
-		getView().addNumber(new HexLocation(2, 0), 12);
-		
-		//</temp>
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -171,9 +138,53 @@ public class MapController extends Controller implements IMapController, Observe
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		ClientModel model = presenter.getClientModel();
+		Map<HexLocation, IHex> board = model.getGameModel().getBoard();
 		
+		
+		if (presenter.getGameState().equals(GameState.JOINING)) {
+			for (HexLocation hexLoc : board.keySet()) {
+				IHex hex = board.get(hexLoc);
+				getView().addHex(hexLoc, board.get(hexLoc).getType());
+				if (hex.getChit() > 0 && hex.getChit() <= 12 && hex.getChit() != 7) {
+					getView().addNumber(hexLoc, board.get(hexLoc).getChit());
+				}
+			}
+		}
+		
+		ArrayList<Road> roads = model.getServerModel().getMap().getRoads();
+		ArrayList<City> cities = model.getServerModel().getMap().getCities();
+		ArrayList<Settlement> settlements = model.getServerModel().getMap().getSettlements();
+		
+		
+		for (Road road : roads) {
+			CatanColor roadColor = CatanColor.valueOf(model.getServerModel().getPlayers().get(road.getOwnerIndex()).getColor().toUpperCase());
+			getView().placeRoad(road.getLocation(), roadColor);
+		}
+		
+		for (Settlement settlement : settlements) {
+			CatanColor settlementColor = CatanColor.valueOf(model.getServerModel().getPlayers().get(settlement.getOwnerIndex()).getColor().toUpperCase());
+			getView().placeSettlement(settlement.getLocation(), settlementColor);
+		}
+		
+		for (City city : cities) {
+			CatanColor cityColor = CatanColor.valueOf(model.getServerModel().getPlayers().get(city.getOwnerIndex()).getColor().toUpperCase());
+			getView().placeSettlement(city.getLocation(), cityColor);
+		}
+		
+		ArrayList<Port> ports = model.getServerModel().getMap().getPorts();
+		for (Port port : ports) {
+			String resourceType = port.getResourceType();
+			if (resourceType == null) {
+				resourceType = "THREE";
+			}
+			else {
+				resourceType = port.getResourceType().toUpperCase();
+			}
+			getView().addPort(new EdgeLocation(port.getLocation(), EdgeDirection.determineDirection(port.getDirection())), PortType.valueOf(resourceType));
+		}
+		
+		getView().placeRobber(model.getServerModel().getMap().getRobber().getLocation());
 	}
-	
 }
 
