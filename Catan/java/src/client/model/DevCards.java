@@ -1,4 +1,9 @@
 package client.model;
+
+import java.util.Random;
+
+import shared.definitions.DevCardType;
+
 /**
  * Contains information relevant to the Development Card Deck and player Development Cards.
  * <br><b>Domain:</b>	There are 2 monopoly, 5 monument, 2 roadBuilding, 14 soldier, and 2 yearOfPlenty cards.
@@ -19,6 +24,57 @@ public class DevCards {
 		roadBuilding = 2;
 		soldier = 14;
 		yearOfPlenty = 2;
+	}
+	
+	/**
+	 * Gets a random dev card
+	 */
+	public DevCardType buyDevCard(){
+		DevCardType card=DevCardType.SOLDIER;
+		int rand;
+		Random randomGenerator = new Random();
+		rand=randomGenerator.nextInt(getTotalDevCardCount());
+		if(rand < soldier) {
+			card=DevCardType.SOLDIER;
+			soldier--;
+		}else if(rand>=soldier && rand<soldier+monument){
+			card=DevCardType.MONUMENT;
+			monument--;
+		}else if(rand>=soldier+monument && rand<soldier+monument+monopoly){
+			card=DevCardType.MONOPOLY;
+			monopoly--;
+		}else if(rand>=soldier+monument+monopoly && rand<soldier+monument+monopoly+roadBuilding){
+			card=DevCardType.ROAD_BUILD;
+			roadBuilding--;
+		}else{
+			card=DevCardType.YEAR_OF_PLENTY;
+			yearOfPlenty--;
+		}
+		return card;
+	}
+	/**
+	 * Adds an additional card of card type
+	 * @param card
+	 */
+	public void addToDeck(DevCardType card)
+	{
+		switch(card){
+			case SOLDIER:
+				soldier++;
+				break;
+			case YEAR_OF_PLENTY:
+				yearOfPlenty++;
+				break;
+			case ROAD_BUILD:
+				roadBuilding++;
+				break;
+			case MONOPOLY:
+				monopoly++;
+				break;
+			case MONUMENT:
+				monument++;
+				break;
+		}
 	}
 	
 	/**

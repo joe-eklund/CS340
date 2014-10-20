@@ -1,17 +1,41 @@
 package client.devcards;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
+
+import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.GameState;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import client.base.*;
+import client.main.Catan;
+import client.model.City;
+import client.model.ClientModel;
+import client.model.DevCards;
+import client.model.Player;
+import client.model.Port;
+import client.model.Road;
+import client.model.Settlement;
+import client.model.interfaces.IHex;
+import client.presenter.IPresenter;
 
 
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController {
+public class DevCardController extends Controller implements IDevCardController, Observer {
 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
 	private IAction roadAction;
+	private static IPresenter presenter;
 	
 	/**
 	 * DevCardController constructor
@@ -25,6 +49,9 @@ public class DevCardController extends Controller implements IDevCardController 
 								IAction soldierAction, IAction roadAction) {
 
 		super(view);
+
+		presenter = Catan.getPresenter();
+		presenter.addObserverToModel(this);
 		
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
@@ -41,8 +68,9 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void startBuyCard() {
-		
-		getBuyCardView().showModal();
+		//if(/*have resources*/) {
+			buyCardView.showModal();
+		//}
 	}
 
 	@Override
@@ -53,7 +81,19 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void buyCard() {
-		
+		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
+		DevCards deck=presenter.getClientModel().getServerModel().getDeck();
+		DevCardType devCard;
+		DevCards hand;
+		for(Player player : players){
+			if(player.getName().equals(presenter.getPlayerInfo().getName())){
+				hand=player.getOldDevCards();
+				devCard=deck.buyDevCard();
+				presenter.getClientModel().getServerModel().setDeck(deck);
+				hand.addToDeck(devCard);
+				player.setNewDevCards(hand);
+			}
+		}
 		getBuyCardView().closeModal();
 	}
 
@@ -94,6 +134,11 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+
 	}
 
 }
