@@ -12,6 +12,7 @@ import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
 import client.base.*;
 import client.data.*;
+import client.main.Catan;
 import client.misc.*;
 import client.presenter.IPresenter;
 
@@ -176,7 +177,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
-		presenter.setGameState(GameState.PLAYERWAITING);
+		presenter.setGameState(GameState.PLAYERWAITING); //important that this does not move
+		Catan.getPoller().start();
 		joinAction.execute();
 	}
 

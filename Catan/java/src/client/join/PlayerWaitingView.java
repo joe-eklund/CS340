@@ -117,7 +117,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		String labelText = "";
 		if(value.length == NUMBER_OF_PLAYERS){
 			labelText = "This game is ready to go!";
-			addAiButton.setEnabled(false);
+			//addAiButton.setEnabled(false);
 		}
 		else{
 			labelText = ("Waiting for Players: Need " + (NUMBER_OF_PLAYERS-value.length) + " more");
@@ -167,6 +167,11 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 	@Override
 	public String getSelectedAI() {
 		return (String)aiChoices.getValue();
+	}
+	
+	@Override
+	public void setLabelText(String labelText) {
+		label.setText(labelText);
 	}
 
 }

@@ -16,6 +16,10 @@ import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.definitions.PlayerDescription;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import client.model.ClientModel;
 
 /**
@@ -94,7 +98,6 @@ public class Presenter extends Observable implements IPresenter {
 
 	@Override
 	public PlayerDescription getPlayerInfo() {
-		// TODO Auto-generated method stub
 		return this.playerInfo;
 	}
 
@@ -131,6 +134,7 @@ public class Presenter extends Observable implements IPresenter {
 		GetGameModelResponse response = proxy.getGameModel(version, cookie);
 		if(response.isSuccessful()) {
 			if(response.isNeedToUpdate()) {
+				System.out.println("UPDATING MODEL");
 				version = response.getGameModel().getVersion();
 				clientModel.updateServerModel(response.getGameModel());
 			}
@@ -160,6 +164,55 @@ public class Presenter extends Observable implements IPresenter {
 	
 	public GameState getGameState() {
 		return state;
+	}
+	
+	public Boolean canPlaceRoad(EdgeLocation edgeLoc) {
+		if (state.equals(GameState.SETUP)) {
+			return clientModel.canBuildRoad(playerInfo.getID(), edgeLoc, true);
+		}
+		else {
+			//TESTING BUILDING ROAD, SETTLEMENT, CITY
+			clientModel.getServerModel().getPlayers().get(0).setBrick(5);
+			clientModel.getServerModel().getPlayers().get(0).setWood(5);
+			clientModel.getServerModel().getPlayers().get(0).setWheat(5);
+			clientModel.getServerModel().getPlayers().get(0).setSheep(5);
+			clientModel.getServerModel().getPlayers().get(0).setOre(5);
+			clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+			//end test setup
+			
+			return clientModel.canBuildRoad(playerInfo.getID(), edgeLoc, false);
+		}
+	}
+	
+	public void buildRoad(EdgeLocation roadLocation) {
+		if (state.equals(GameState.SETUP)) {
+			proxy.buildRoad(playerInfo.getID(), roadLocation, true, cookie);
+		}
+		else {
+			proxy.buildRoad(playerInfo.getID(), roadLocation, false, cookie);
+		}
+		updateModel();
+	}
+	
+	public boolean canPlaceSettlement(VertexLocation vertLoc) {
+		return clientModel.canBuildSettlement(playerInfo.getID(), vertLoc);
+	}
+	
+	public void buildSettlement(VertexLocation vertLoc) {
+		if (state.equals(GameState.SETUP)) {
+			proxy.buildSettlement(playerInfo.getID(), vertLoc, true, cookie);
+		}
+		else {
+			proxy.buildSettlement(playerInfo.getID(), vertLoc, false, cookie);
+		}
+	}
+	
+	public boolean canPlaceCity(VertexLocation vertLoc) {
+		return clientModel.canBuildSettlement(playerInfo.getID(), vertLoc);
+	}
+	
+	public void buildCity(VertexLocation vertLoc) {
+		proxy.buildCity(playerInfo.getID(), vertLoc, cookie);
 	}
 }
 

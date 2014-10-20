@@ -15,6 +15,8 @@ import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
+import shared.locations.EdgeLocation;
+import shared.locations.VertexLocation;
 
 /**
  * The interface that defines a class that holds a proxy and clientModel
@@ -68,4 +70,16 @@ public interface IPresenter extends Runnable {
 	public void setGameState(GameState state);
 	
 	public GameState getGameState();
+	
+	public void buildRoad(EdgeLocation roadLocation);
+	
+	public Boolean canPlaceRoad(EdgeLocation edgeLoc);
+
+	public boolean canPlaceSettlement(VertexLocation vertLoc);
+
+	public void buildSettlement(VertexLocation vertLoc);
+
+	public boolean canPlaceCity(VertexLocation vertLoc);
+
+	public void buildCity(VertexLocation vertLoc);
 }

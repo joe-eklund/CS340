@@ -18,6 +18,7 @@ public class ServerModel {
 	private TurnTracker turnTracker;
 	private int winner;
 	private DevCards deck;
+	private int version;
 	
 	/**
 	 * 
@@ -201,6 +202,10 @@ public class ServerModel {
 	 * @return	The version.
 	 */
 	public int getVersion() {
-		return log.getLogMessages().size();
+		return version;
+	}
+	
+	public void incrementVersion() {
+		version++;
 	}
 }

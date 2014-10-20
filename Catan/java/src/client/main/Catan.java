@@ -31,9 +31,14 @@ import client.presenter.Presenter;
 public class Catan extends JFrame
 {
 	private static Presenter presenter;
+	private static Poller poller;
 	
 	public static IPresenter getPresenter() {
 		return presenter;
+	}
+	
+	public static IPoller getPoller() {
+		return poller;
 	}
 	
 	private CatanPanel catanPanel;
@@ -82,7 +87,7 @@ public class Catan extends JFrame
 				ProxyServer proxy = ProxyServer.getSingleton();
 				ClientModel clientmodel = new ClientModel(null);
 				presenter = new Presenter(clientmodel,proxy,"");
-				IPoller poller = new Poller(presenter, 2);
+				poller = new Poller(presenter, 2);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);

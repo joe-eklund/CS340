@@ -45,8 +45,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
-
-		
 		getView().closeModal();
 	}
 
@@ -54,7 +52,20 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void update(Observable o, Object arg) {
 		System.out.println("Updating Method called in PlayerWating Controller");
 		if (presenter.getGameState().equals(GameState.PLAYERWAITING)) {
+			System.out.println("UPDATING PLAYER WAITING");
 			getView().setPlayers(getPlayerInfoArray());
+			
+//			for(int i = 5; i > 0; i--) {
+//				try {
+//				    Thread.sleep(1000);                 //1000 milliseconds is one second.
+//				} catch(InterruptedException ex) {
+//				    Thread.currentThread().interrupt();
+//				}
+//				
+//				System.out.println(i);
+//				String labelText = "Game Starting in: " + Integer.toString(i);
+//				getView().setLabelText(labelText);
+//			}
 		}
 	}
 	

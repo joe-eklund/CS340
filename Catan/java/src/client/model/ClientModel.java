@@ -204,7 +204,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		HexLocation neighborLoc = normEdgeLocation.getHexLoc().getNeighborLoc(normEdgeLocation.getDir());
 		
 		//if hex is water and the neighbor in the direction of the edge location is water this location is invalid
-		if (!board.containsKey(neighborLoc) || 
+		if (!board.containsKey(neighborLoc) || !board.containsKey(normEdgeLocation.getHexLoc()) || 
 			(board.get(normEdgeLocation.getHexLoc()).getType() == HexType.WATER && 
 			board.get(neighborLoc).getType() == HexType.WATER)) {
 			return false;

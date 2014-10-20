@@ -123,7 +123,6 @@ public class ClientCommunicator implements ICommunicator {
 	 */
 	private CommandResponse doGet(HttpURLConnection connection, Class<?> responseType) //throws ClientException may need to add this in later
 	{
-		System.out.println("URL: " + connection.getURL().getPath());
 		CommandResponse result = null;
 		int responseCode;
 		String responseMessage = "";
