@@ -21,6 +21,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.model.ClientModel;
+import client.model.Road;
 
 /**
  * A class that holds a proxy and clientModel and acts upon those objects
@@ -172,12 +173,12 @@ public class Presenter extends Observable implements IPresenter {
 		}
 		else {
 			//TESTING BUILDING ROAD, SETTLEMENT, CITY
-			clientModel.getServerModel().getPlayers().get(0).setBrick(5);
-			clientModel.getServerModel().getPlayers().get(0).setWood(5);
-			clientModel.getServerModel().getPlayers().get(0).setWheat(5);
-			clientModel.getServerModel().getPlayers().get(0).setSheep(5);
-			clientModel.getServerModel().getPlayers().get(0).setOre(5);
-			clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+//			clientModel.getServerModel().getPlayers().get(0).setBrick(5);
+//			clientModel.getServerModel().getPlayers().get(0).setWood(5);
+//			clientModel.getServerModel().getPlayers().get(0).setWheat(5);
+//			clientModel.getServerModel().getPlayers().get(0).setSheep(5);
+//			clientModel.getServerModel().getPlayers().get(0).setOre(5);
+//			clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 			//end test setup
 			
 			return clientModel.canBuildRoad(playerInfo.getID(), edgeLoc, false);
@@ -195,6 +196,15 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
+		//TESTING BUILDING ROAD, SETTLEMENT, CITY
+//		clientModel.getServerModel().getPlayers().get(0).setBrick(5);
+//		clientModel.getServerModel().getPlayers().get(0).setWood(5);
+//		clientModel.getServerModel().getPlayers().get(0).setWheat(5);
+//		clientModel.getServerModel().getPlayers().get(0).setSheep(5);
+//		clientModel.getServerModel().getPlayers().get(0).setOre(5);
+//		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		//end test setup
+		
 		return clientModel.canBuildSettlement(playerInfo.getID(), vertLoc);
 	}
 	
@@ -208,7 +218,16 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		return clientModel.canBuildSettlement(playerInfo.getID(), vertLoc);
+		//TESTING BUILDING ROAD, SETTLEMENT, CITY
+//		clientModel.getServerModel().getPlayers().get(0).setBrick(5);
+//		clientModel.getServerModel().getPlayers().get(0).setWood(5);
+//		clientModel.getServerModel().getPlayers().get(0).setWheat(5);
+//		clientModel.getServerModel().getPlayers().get(0).setSheep(5);
+//		clientModel.getServerModel().getPlayers().get(0).setOre(5);
+//		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
+		//end test setup
+		
+		return clientModel.canBuildCity(playerInfo.getID(), vertLoc);
 	}
 	
 	public void buildCity(VertexLocation vertLoc) {

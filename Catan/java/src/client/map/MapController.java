@@ -79,13 +79,19 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
-		
-		return presenter.canPlaceSettlement(vertLoc);
+//		if ((vertLoc.getHexLoc().getX() == 1 && vertLoc.getHexLoc().getY() == 1) || (vertLoc.getHexLoc().getX() == 2 && vertLoc.getHexLoc().getY() == 0)) {
+//			presenter.getClientModel().getServerModel().getMap().getRoads().add(new Road(presenter.getPlayerInfo().getID(), 1, 1, "North"));
+//			presenter.getClientModel().getServerModel().getMap().getRoads().add(new Road(presenter.getPlayerInfo().getID(), 2,0, "NorthWest"));
+			return presenter.canPlaceSettlement(vertLoc);
+//		}
+//		return false;
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
-		return presenter.canPlaceCity(vertLoc);
+//		if ((vertLoc.getHexLoc().getX() == 2 && vertLoc.getHexLoc().getY() == 1)) {
+			return presenter.canPlaceCity(vertLoc);
+//		}
+		//return false;
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {

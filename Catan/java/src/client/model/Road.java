@@ -25,7 +25,7 @@ public class Road {
 	 * @param direction
 	 * @throws ClientModelException
 	 */
-	public Road(int ownerIndex, int x, int y, String direction) throws ClientModelException {
+	public Road(int ownerIndex, int x, int y, String direction) {
 		this.owner = ownerIndex;
 		this.edgeLocation = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
 	}
