@@ -87,6 +87,7 @@ public class Catan extends JFrame
 				ProxyServer proxy = ProxyServer.getSingleton();
 				ClientModel clientmodel = new ClientModel(null);
 				presenter = new Presenter(clientmodel,proxy,"");
+				clientmodel.setPresenter(presenter);
 				poller = new Poller(presenter, 2);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();

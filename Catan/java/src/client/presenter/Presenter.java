@@ -7,6 +7,7 @@ import java.util.Observer;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.GameState;
+import shared.definitions.SystemState;
 import proxy.IServer;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
@@ -35,7 +36,8 @@ public class Presenter extends Observable implements IPresenter {
 	private int pollCycleCount;
 	private PlayerDescription playerInfo;
 	private ArrayList<GameDescription> games;
-	private GameState state;
+	private SystemState systemState;
+	private GameState gameState;
 	
 	
 	/**
@@ -57,7 +59,8 @@ public class Presenter extends Observable implements IPresenter {
 		this.version = -1;
 		this.cookie = cookie;	// no cookie = empty string
 		pollCycleCount = 0;
-		state = GameState.LOGIN;
+		systemState = SystemState.LOGIN;
+		gameState = null;
 		//playerInfo=new PlayerInfo();
 	}
 
@@ -132,7 +135,13 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	private void updateModel() {
-		GetGameModelResponse response = proxy.getGameModel(version, cookie);
+		GetGameModelResponse response; 
+		if (systemState.equals(SystemState.PLAYERWAITING)) {
+			response = proxy.getGameModel(-1, cookie);
+		}
+		else {
+			response = proxy.getGameModel(version, cookie);
+		}
 		if(response.isSuccessful()) {
 			if(response.isNeedToUpdate()) {
 				System.out.println("UPDATING MODEL");
@@ -159,16 +168,29 @@ public class Presenter extends Observable implements IPresenter {
 		return clientModel;
 	}
 	
-	public void setGameState(GameState state) {
-		this.state = state;
+	public void setSystemState(SystemState state) {
+		this.systemState = state;
+	}
+	
+	public SystemState getSystemState() {
+		return systemState;
+	}
+	
+	public void setGameStateAccordingToModelState() {
+		gameState = GameState.valueOf(clientModel.getServerModel().getTurnTracker().getStatus().toUpperCase());
+		clientModel.notifyModelObservers();
 	}
 	
 	public GameState getGameState() {
-		return state;
+		return gameState;
+	}
+	
+	public boolean isGameState(GameState gameState) {
+		return (this.gameState != null && this.gameState.equals(gameState));
 	}
 	
 	public Boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		if (state.equals(GameState.SETUP)) {
+		if (systemState.equals(GameState.SETUP)) {
 			return clientModel.canBuildRoad(playerInfo.getID(), edgeLoc, true);
 		}
 		else {
@@ -186,7 +208,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void buildRoad(EdgeLocation roadLocation) {
-		if (state.equals(GameState.SETUP)) {
+		if (gameState.equals(GameState.SETUP)) {
 			proxy.buildRoad(playerInfo.getID(), roadLocation, true, cookie);
 		}
 		else {
@@ -209,7 +231,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void buildSettlement(VertexLocation vertLoc) {
-		if (state.equals(GameState.SETUP)) {
+		if (gameState.equals(GameState.SETUP)) {
 			proxy.buildSettlement(playerInfo.getID(), vertLoc, true, cookie);
 		}
 		else {
@@ -232,6 +254,15 @@ public class Presenter extends Observable implements IPresenter {
 	
 	public void buildCity(VertexLocation vertLoc) {
 		proxy.buildCity(playerInfo.getID(), vertLoc, cookie);
+	}
+	
+	public void rollNumber(int diceRoll) {
+		proxy.rollNumber(playerInfo.getID(), diceRoll, cookie);
+		updateModel();
+	}
+	
+	public boolean isPlayersTurn() {
+		return (playerInfo.getID() == clientModel.getServerModel().getTurnTracker().getCurrentTurn());
 	}
 }
 

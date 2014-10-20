@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.definitions.GameState;
+import shared.definitions.SystemState;
 import client.base.*;
 import client.data.PlayerInfo;
 import client.main.Catan;
@@ -45,13 +46,17 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
+		//This all needs to be changed
+		//where ever this model is closed then the state changes needs to be changed right after it.
 		getView().closeModal();
+		presenter.setSystemState(SystemState.GAMING);
+		
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println("Updating Method called in PlayerWating Controller");
-		if (presenter.getGameState().equals(GameState.PLAYERWAITING)) {
+		if (presenter.getSystemState().equals(SystemState.PLAYERWAITING)) {
 			System.out.println("UPDATING PLAYER WAITING");
 			getView().setPlayers(getPlayerInfoArray());
 			

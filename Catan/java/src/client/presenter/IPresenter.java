@@ -15,6 +15,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
+import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
@@ -67,9 +68,9 @@ public interface IPresenter extends Runnable {
 	
 	public ClientModel getClientModel();
 	
-	public void setGameState(GameState state);
+	public void setSystemState(SystemState state);
 	
-	public GameState getGameState();
+	public SystemState getSystemState();
 	
 	public void buildRoad(EdgeLocation roadLocation);
 	
@@ -82,4 +83,14 @@ public interface IPresenter extends Runnable {
 	public boolean canPlaceCity(VertexLocation vertLoc);
 
 	public void buildCity(VertexLocation vertLoc);
+
+	public boolean isPlayersTurn();
+
+	public void setGameStateAccordingToModelState();
+	
+	public GameState getGameState();
+	
+	public boolean isGameState(GameState gameState);
+
+	public void rollNumber(int diceRoll);
 }

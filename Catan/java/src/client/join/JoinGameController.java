@@ -10,6 +10,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
+import shared.definitions.SystemState;
 import client.base.*;
 import client.data.*;
 import client.main.Catan;
@@ -154,7 +155,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameDescription game) {
-		presenter.setGameState(GameState.JOINING);
+		presenter.setSystemState(SystemState.JOINING);
 		currentGame = game;
 		
 		for (PlayerDescription p : game.getPlayerDescriptions()) {
@@ -177,7 +178,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
-		presenter.setGameState(GameState.PLAYERWAITING); //important that this does not move
+		presenter.setSystemState(SystemState.PLAYERWAITING); //important that this does not move
 		Catan.getPoller().start();
 		joinAction.execute();
 	}

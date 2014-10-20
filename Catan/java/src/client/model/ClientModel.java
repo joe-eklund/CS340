@@ -1,11 +1,14 @@
 package client.model;
 
 import java.util.ArrayList;
-
 import java.util.Observable;
+
+
 
 //import client.model.interfaces.IClientModel;
 import client.model.interfaces.IHex;
+import client.presenter.IPresenter;
+import client.presenter.Presenter;
 import shared.definitions.GameModel;
 import shared.definitions.HexType;
 import shared.definitions.ResourceHand;
@@ -28,6 +31,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	
 	private GameModel gameModel;
 	private ServerModel serverModel;
+	private IPresenter presenter;
 	
 	/**
 	 * ClientModel constructor
@@ -47,6 +51,11 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	public void updateServerModel(ServerModel newServerModel) {
 		this.serverModel = newServerModel;
 		gameModel = new GameModel(newServerModel);
+		presenter.setGameStateAccordingToModelState();
+		notifyModelObservers();
+	}
+	
+	public void notifyModelObservers() {
 		setChanged();
 		notifyObservers();
 	}
@@ -753,6 +762,10 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		}
 		
 		return true;
+	}
+
+	public void setPresenter(Presenter presenter2) {
+		presenter = presenter2;
 	}
 }
 
