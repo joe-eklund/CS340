@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import shared.definitions.CatanColor;
-import shared.definitions.GameDescription;
-import shared.definitions.GameState;
-import shared.definitions.SystemState;
 import proxy.IServer;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
@@ -16,13 +12,15 @@ import shared.ServerMethodResponses.ListAIResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
+import shared.definitions.CatanColor;
+import shared.definitions.GameDescription;
+import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
-import shared.locations.EdgeDirection;
+import shared.definitions.ServerModel;
+import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.model.ClientModel;
-import client.model.Road;
 
 /**
  * A class that holds a proxy and clientModel and acts upon those objects
@@ -263,6 +261,39 @@ public class Presenter extends Observable implements IPresenter {
 	
 	public boolean isPlayersTurn() {
 		return (playerInfo.getID() == clientModel.getServerModel().getTurnTracker().getCurrentTurn());
+	}
+
+	@Override
+	public void setCookie(String cookie) {
+		this.cookie = cookie;
+	}
+
+	@Override
+	public IServer getProxy() {
+		return this.proxy;
+	}
+
+	@Override
+	public void setPlayerInfo(PlayerDescription playerInfo) {
+		this.playerInfo = playerInfo;
+	}
+
+	@Override
+	public String getCookie() {
+		return cookie;
+	}
+
+	@Override
+	public void setGames(ArrayList<GameDescription> games) {
+		this.games = games;
+		setChanged();
+		notifyObservers();
+	}
+
+	@Override
+	public void updateServerModel(ServerModel serverModel) {
+		this.clientModel.updateServerModel(serverModel);
+		this.version = serverModel.getVersion();
 	}
 }
 

@@ -1,8 +1,5 @@
 package client.model;
 
-import java.util.ArrayList;
-
-import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 /**

@@ -1,13 +1,10 @@
 package client.presenter;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
 
-import client.data.PlayerInfo;
-import client.model.ClientModel;
+import proxy.IServer;
 import shared.ServerMethodResponses.CreateGameResponse;
-import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
@@ -15,9 +12,11 @@ import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
+import shared.definitions.ServerModel;
 import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+import client.model.ClientModel;
 
 /**
  * The interface that defines a class that holds a proxy and clientModel
@@ -93,4 +92,16 @@ public interface IPresenter extends Runnable {
 	public boolean isGameState(GameState gameState);
 
 	public void rollNumber(int diceRoll);
+
+	public void setCookie(String cookie);
+
+	public IServer getProxy();
+
+	public void setPlayerInfo(PlayerDescription playerDescription);
+
+	public String getCookie();
+
+	public void setGames(ArrayList<GameDescription> games);
+
+	public void updateServerModel(ServerModel serverModel);
 }
