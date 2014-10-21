@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import client.model.Log;
-import client.model.LogEntry;
+import client.communication.LogEntry;
 import shared.ServerMethodRequests.*;
 import shared.ServerMethodResponses.*;
 import shared.definitions.*;
