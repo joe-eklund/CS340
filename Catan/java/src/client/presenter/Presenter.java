@@ -321,5 +321,9 @@ public class Presenter extends Observable implements IPresenter {
 	public void setState(IState state) {
 		this.state = state;
 	}
+	
+	public IState getState() {
+		return state;
+	}
 }
 

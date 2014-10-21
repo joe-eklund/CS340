@@ -107,4 +107,6 @@ public interface IPresenter extends Runnable {
 	public void updateServerModel(ServerModel serverModel);
 
 	public void setState(IState state);
+	
+	public IState getState();
 }

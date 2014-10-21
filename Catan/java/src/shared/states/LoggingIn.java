@@ -6,7 +6,7 @@ import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.definitions.PlayerDescription;
 
 public class LoggingIn extends State {
-	public LoggingIn(boolean placedRoad) {
+	public LoggingIn() {
 		super("LoggingIn");
 	}
 	

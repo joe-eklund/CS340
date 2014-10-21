@@ -32,4 +32,6 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 	public void rollNumber(IPresenter presenter, int diceRoll);
 
 	public GetGameModelResponse getGameModel(IPresenter presenter);
+	
+	public String getStatus();
 }

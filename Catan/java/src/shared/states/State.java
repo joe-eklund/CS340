@@ -83,5 +83,8 @@ public abstract class State implements IState {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public String getStatus() {
+		return status;
+	}
 }

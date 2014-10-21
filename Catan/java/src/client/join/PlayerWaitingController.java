@@ -56,7 +56,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println("Updating Method called in PlayerWating Controller");
-		if (presenter.getSystemState().equals(SystemState.PLAYERWAITING)) {
+		if (presenter.getState().getStatus().equals("PlayerWaiting")) {
 			System.out.println("UPDATING PLAYER WAITING");
 			getView().setPlayers(getPlayerInfoArray());
 			
