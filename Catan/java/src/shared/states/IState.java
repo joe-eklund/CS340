@@ -34,4 +34,7 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 	public GetGameModelResponse getGameModel(IPresenter presenter);
 	
 	public String getStatus();
+
+	void sendChat(IPresenter presenter, String message);
+
 }

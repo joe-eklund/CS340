@@ -1,19 +1,22 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import shared.definitions.CatanColor;
 /**
  * The chat class holds the list of messages that have been sent by each player.
  * <br><b>Domain:</b> Lines will have between 0 and the max size of the list lines
  * @author Epper Marshall, Joe Eklund
  */
 public class Chat {
-	private ArrayList<Message> lines;
+	private ArrayList<client.communication.LogEntry> lines;
 	
 	/**
 	 * Class constructor.
 	 */
 	public Chat(){
-		lines = new ArrayList<Message>();
+		lines = new ArrayList<client.communication.LogEntry>();
 	}
 	
 	/**
@@ -23,8 +26,8 @@ public class Chat {
 	 * @pre none
 	 * @post the message is anded to the list of messages along with its source.
 	 */
-	public void addMessage(String message, String source){
-		lines.add(new Message(message, source));
+	public void addMessage(CatanColor color, String message){
+		lines.add(new client.communication.LogEntry(color, message));
 	}
 	
 	/**
@@ -32,7 +35,7 @@ public class Chat {
 	 * @pre none
 	 * @post returns a list of messages
 	 */
-	public ArrayList<Message> getMessages() {
+	public List<client.communication.LogEntry> getMessages() {
 		return lines;
 	}
 
@@ -42,7 +45,7 @@ public class Chat {
 	 * @pre none
 	 * @post sets the list of messages to the parameter given
 	 */
-	public void setMessages(ArrayList<Message> messages) {
+	public void setMessages(ArrayList<client.communication.LogEntry> messages) {
 		this.lines = messages;
 	}
 	

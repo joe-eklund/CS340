@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import client.model.Log;
-import client.model.Message;
+import client.model.LogEntry;
 import shared.ServerMethodRequests.*;
 import shared.ServerMethodResponses.*;
 import shared.definitions.*;
@@ -241,9 +241,9 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/commands", null, Message[].class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.GET, requestHeaders, "game/commands", null, LogEntry[].class);
 		boolean successful = response.getResponseCode() == 200;
-		return new GetGameCommandsResponse(successful, successful ? new Log(Arrays.asList((Message[])response.getResponseObject())) : null);
+		return new GetGameCommandsResponse(successful, successful ? new Log(Arrays.asList((LogEntry[])response.getResponseObject())) : null);
 	}
 
 	@Override

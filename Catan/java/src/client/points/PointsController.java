@@ -44,7 +44,6 @@ public class PointsController extends Controller implements IPointsController, O
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
 		getPointsView().setPoints(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getID()).getVictoryPoints());
 	}
 	

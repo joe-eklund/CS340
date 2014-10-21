@@ -12,16 +12,16 @@ import java.util.List;
 
 //TODO: 
 public class Log {
-	private List<Message> lines;
+	private List<client.communication.LogEntry> lines;
 
 	/**
 	 * Class constructor.
 	 */
 	public Log(){
-		lines=new ArrayList<Message>();
+		lines=new ArrayList<client.communication.LogEntry>();
 	}
 	
-	public Log(List<Message> list) {
+	public Log(List<client.communication.LogEntry> list) {
 		this.lines = list;
 	}
 	
@@ -31,7 +31,7 @@ public class Log {
 	 * @pre none
 	 * @post The Log now contains the message given as a parameter
 	 */
-	public void addMessage(Message messageToAdd){
+	public void addMessage(client.communication.LogEntry messageToAdd){
 		lines.add(messageToAdd);
 	}
 	
@@ -40,7 +40,7 @@ public class Log {
 	 * @pre none
 	 * @post Returns the log message list.
 	 */
-	public List<Message> getLogMessages() {
+	public List<client.communication.LogEntry> getLogMessages() {
 		return lines;
 	}
 
@@ -50,7 +50,7 @@ public class Log {
 	 * @pre none
 	 * @post The list containing the log messages is now the list given as a parameter
 	 */
-	public void setLogMessages(ArrayList<Message> logMessages) {
+	public void setLogMessages(ArrayList<client.communication.LogEntry> logMessages) {
 		this.lines = logMessages;
 	}
 

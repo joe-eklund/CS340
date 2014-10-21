@@ -44,7 +44,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import client.model.Message;
+import client.model.LogEntry;
 
 /**
  * @author Chad
@@ -151,7 +151,7 @@ public class ClientCommunicatorTest {
 		headers.add(mockPair);
 		headers.add(mockPair2);
 		mockUser = new User("Brooke", "brooke");
-		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.GET, headers, "game/commands", null, Message[].class);
+		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.GET, headers, "game/commands", null, LogEntry[].class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	

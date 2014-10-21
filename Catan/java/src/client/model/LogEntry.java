@@ -4,7 +4,7 @@ package client.model;
  * Message class will be used for the messages in the chat feature.
  * @author Chad
  */
-public class Message {
+public class LogEntry {
 	private String message;
 	private String source;
 
@@ -13,7 +13,7 @@ public class Message {
 	 * @param message
 	 * @param source
 	 */
-	public Message(String message, String source) {
+	public LogEntry(String message, String source) {
 		this.message = message;
 		this.source = source;
 	}
@@ -81,7 +81,7 @@ public class Message {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Message other = (Message) obj;
+		LogEntry other = (LogEntry) obj;
 		if (message == null) {
 			if (other.message != null)
 				return false;

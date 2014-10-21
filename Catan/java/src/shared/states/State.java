@@ -87,4 +87,10 @@ public abstract class State implements IState {
 	public String getStatus() {
 		return status;
 	}
+
+	@Override
+	public void sendChat(IPresenter presenter, String message){
+		
+
+	}
 }

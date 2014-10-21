@@ -325,5 +325,12 @@ public class Presenter extends Observable implements IPresenter {
 	public IState getState() {
 		return state;
 	}
+
+	@Override
+	public void sendChat(String message) {
+		this.state.sendChat(this, message);
+		
+	}
+	
 }
 
