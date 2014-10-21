@@ -148,7 +148,7 @@ public class MapController extends Controller implements IMapController, Observe
 		Map<HexLocation, IHex> board = model.getGameModel().getBoard();
 		
 		
-		if (presenter.getSystemState().equals(SystemState.JOINING)) {
+		if (presenter.getSystemState().equals(SystemState.GAMING)) {
 			for (HexLocation hexLoc : board.keySet()) {
 				IHex hex = board.get(hexLoc);
 				getView().addHex(hexLoc, board.get(hexLoc).getType());

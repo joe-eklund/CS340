@@ -59,7 +59,6 @@ public class Presenter extends Observable implements IPresenter {
 		this.version = -1;
 		this.cookie = cookie;	// no cookie = empty string
 		pollCycleCount = 0;
-		systemState = SystemState.LOGIN;
 		gameState = null;
 		//playerInfo=new PlayerInfo();
 	}

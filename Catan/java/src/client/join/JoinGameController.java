@@ -152,7 +152,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startJoinGame(GameDescription game) {
-		presenter.setSystemState(SystemState.JOINING);
+		//presenter.setSystemState(SystemState.JOINING);
 		currentGame = game;
 		
 		for (PlayerDescription p : game.getPlayerDescriptions()) {
