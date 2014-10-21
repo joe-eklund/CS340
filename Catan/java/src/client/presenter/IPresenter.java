@@ -4,20 +4,31 @@ import java.util.ArrayList;
 import java.util.Observer;
 
 import proxy.IServer;
+import shared.ServerMethodResponses.AddAIResponse;
+import shared.ServerMethodResponses.ChangeLogLevelResponse;
 import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.GetGameCommandsResponse;
+import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
+import shared.ServerMethodResponses.PostGameCommandsResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
+import shared.definitions.ResourceHand;
+import shared.definitions.ResourceType;
+import shared.definitions.ServerLogLevel;
 import shared.definitions.ServerModel;
 import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.states.IState;
 import client.model.ClientModel;
+import client.model.Log;
 
 /**
  * The interface that defines a class that holds a proxy and clientModel
@@ -82,8 +93,6 @@ public interface IPresenter extends Runnable {
 
 	public boolean canPlaceCity(VertexLocation vertLoc);
 
-	public void buildCity(VertexLocation vertLoc);
-
 	public boolean isPlayersTurn();
 
 	public void setGameStateAccordingToModelState();
@@ -91,8 +100,6 @@ public interface IPresenter extends Runnable {
 	public GameState getGameState();
 	
 	public boolean isGameState(GameState gameState);
-
-	public void rollNumber(int diceRoll);
 
 	public void setCookie(String cookie);
 
@@ -110,5 +117,44 @@ public interface IPresenter extends Runnable {
 	
 	public IState getState();
 
-	void sendChat(String message);
+	public GetGameModelResponse getGameModel();
+
+	public ResetGameResponse resetGame();
+
+	public GetGameCommandsResponse getGameCommands();
+
+	public PostGameCommandsResponse postGameCommands( Log commands);
+
+	public AddAIResponse addAI( String aiToAdd);
+
+	public ChangeLogLevelResponse changeLogLevel( ServerLogLevel logLevel);
+
+	public void sendChat( String message);
+
+	public void acceptTrade( boolean willAccept);
+
+	public void discardCards( ResourceHand resourceHand);
+
+	public void rollNumber(int number);
+
+	public void buildCity( VertexLocation vertexLocation);
+
+	public void offerTrade( ResourceHand offer, int receiver);
+
+	public void maritimeTrade( int ratio, ResourceType inputResource, ResourceType outputResource);
+
+	public void finishTurn();
+
+	public void buyDevCard();
+
+	public void playYearOfPlentyCard( ResourceType resource1,
+			ResourceType resource2);
+
+	public void playRoadBuildingCard( EdgeLocation spot1, EdgeLocation spot2);
+
+	public void playMonopolyCard( ResourceType resource);
+
+	public void playSoldierCard( int victimIndex, HexLocation location);
+
+	public void playMonumentCard();
 }

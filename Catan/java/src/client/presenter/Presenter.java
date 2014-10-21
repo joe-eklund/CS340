@@ -5,23 +5,32 @@ import java.util.Observable;
 import java.util.Observer;
 
 import proxy.IServer;
+import shared.ServerMethodResponses.AddAIResponse;
+import shared.ServerMethodResponses.ChangeLogLevelResponse;
 import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.GetGameCommandsResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
-import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListAIResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
+import shared.ServerMethodResponses.PostGameCommandsResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
+import shared.definitions.ResourceHand;
+import shared.definitions.ResourceType;
+import shared.definitions.ServerLogLevel;
 import shared.definitions.ServerModel;
 import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.states.IState;
 import client.model.ClientModel;
+import client.model.Log;
 
 /**
  * A class that holds a proxy and clientModel and acts upon those objects
@@ -330,6 +339,94 @@ public class Presenter extends Observable implements IPresenter {
 	public void sendChat(String message) {
 		this.state.sendChat(this, message);
 		
+	}
+
+	@Override
+	public GetGameModelResponse getGameModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResetGameResponse resetGame() {
+		return this.state.resetGame(this);
+	}
+
+	@Override
+	public GetGameCommandsResponse getGameCommands() {
+		return this.state.getGameCommands(this);
+	}
+
+	@Override
+	public PostGameCommandsResponse postGameCommands(Log commands) {
+		return this.state.postGameCommands(this, commands);
+	}
+
+	@Override
+	public AddAIResponse addAI(String aiToAdd) {
+		return this.state.addAI(this, aiToAdd);
+	}
+
+	@Override
+	public ChangeLogLevelResponse changeLogLevel(ServerLogLevel logLevel) {
+		return this.state.changeLogLevel(this, logLevel);
+	}
+
+	@Override
+	public void acceptTrade(boolean willAccept) {
+		this.state.acceptTrade(this, willAccept);
+	}
+
+	@Override
+	public void discardCards(ResourceHand resourceHand) {
+		this.state.discardCards(this, resourceHand);
+	}
+
+	@Override
+	public void offerTrade(ResourceHand offer, int receiver) {
+		this.state.offerTrade(this, offer, receiver);
+	}
+
+	@Override
+	public void maritimeTrade(int ratio, ResourceType inputResource,
+			ResourceType outputResource) {
+		this.state.maritimeTrade(this, ratio, inputResource, outputResource);
+	}
+
+	@Override
+	public void finishTurn() {
+		this.state.finishTurn(this);
+	}
+
+	@Override
+	public void buyDevCard() {
+		this.state.buyDevCard(this);
+	}
+
+	@Override
+	public void playYearOfPlentyCard(ResourceType resource1,
+			ResourceType resource2) {
+		this.state.playYearOfPlentyCard(this, resource1, resource2);
+	}
+
+	@Override
+	public void playRoadBuildingCard(EdgeLocation spot1, EdgeLocation spot2) {
+		this.state.playRoadBuildingCard(this, spot1, spot2);
+	}
+
+	@Override
+	public void playMonopolyCard(ResourceType resource) {
+		this.state.playMonopolyCard(this, resource);
+	}
+
+	@Override
+	public void playSoldierCard(int victimIndex, HexLocation location) {
+		this.state.playSoldierCard(this, victimIndex, location);
+	}
+
+	@Override
+	public void playMonumentCard() {
+		this.state.playMonumentCard(this);
 	}
 	
 }
