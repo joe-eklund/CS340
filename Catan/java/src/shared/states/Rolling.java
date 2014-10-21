@@ -13,11 +13,4 @@ public class Rolling extends GamePlay {
 		presenter.getProxy().rollNumber(presenter.getPlayerInfo().getIndex(), diceRoll, presenter.getCookie());
 		
 	}
-	
-	@Override 
-	public GetGameModelResponse getGameModel(IPresenter presenter) {
-		GetGameModelResponse response = presenter.getProxy().getGameModel(presenter.getClientModel().getServerModel().getVersion(), presenter.getCookie());
-		
-		return response;
-	}
 }

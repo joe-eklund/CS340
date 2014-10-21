@@ -89,10 +89,10 @@ public abstract class State implements IState {
 		
 	}
 	
-	@Override 
 	public GetGameModelResponse getGameModel(IPresenter presenter) {
 		// TODO Auto-generated method stub
-		return null;
+		GetGameModelResponse response = presenter.getProxy().getGameModel(presenter.getClientModel().getServerModel().getVersion(), presenter.getCookie());
+		return response;
 	}
 	
 	public String getStatus() {
