@@ -20,13 +20,11 @@ import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.ServerMethodResponses.ResetGameResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
-import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.definitions.ServerLogLevel;
 import shared.definitions.ServerModel;
-import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -53,8 +51,6 @@ public class Presenter extends Observable implements IPresenter {
 	private int pollCycleCount;
 	private PlayerDescription playerInfo;
 	private ArrayList<GameDescription> games;
-	private SystemState systemState;
-	private GameState gameState;
 	private IState state;
 	
 	
@@ -77,7 +73,6 @@ public class Presenter extends Observable implements IPresenter {
 		this.version = -1;
 		this.cookie = cookie;	// no cookie = empty string
 		pollCycleCount = 0;
-		gameState = null;
 		//playerInfo=new PlayerInfo();
 	}
 
@@ -204,28 +199,12 @@ public class Presenter extends Observable implements IPresenter {
 		return clientModel;
 	}
 	
-	public void setSystemState(SystemState state) {
-		this.systemState = state;
-	}
-	
-	public SystemState getSystemState() {
-		return systemState;
-	}
-	
 	public void setGameStateAccordingToModelState() {
 		
 	}
 	
-	public GameState getGameState() {
-		return gameState;
-	}
-	
-	public boolean isGameState(GameState gameState) {
-		return (this.gameState != null && this.gameState.equals(gameState));
-	}
-	
 	public Boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		if (systemState.equals(GameState.SETUP)) {
+		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound")) {
 			return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, true);
 		}
 		else {
@@ -243,7 +222,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void buildRoad(EdgeLocation roadLocation) {
-		if (gameState.equals(GameState.SETUP)) {
+		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound")) {
 			proxy.buildRoad(playerInfo.getIndex(), roadLocation, true, cookie);
 		}
 		else {
@@ -268,7 +247,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void buildSettlement(VertexLocation vertLoc) {
-		if (gameState.equals(GameState.SETUP)) {
+		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound")) {
 			proxy.buildSettlement(playerInfo.getIndex(), vertLoc, true, cookie);
 		}
 		else {

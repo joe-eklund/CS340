@@ -16,13 +16,11 @@ import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.ServerMethodResponses.ResetGameResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
-import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.definitions.ServerLogLevel;
 import shared.definitions.ServerModel;
-import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -79,10 +77,6 @@ public interface IPresenter extends Runnable {
 	
 	public ClientModel getClientModel();
 	
-	public void setSystemState(SystemState state);
-	
-	public SystemState getSystemState();
-	
 	public void buildRoad(EdgeLocation roadLocation);
 	
 	public Boolean canPlaceRoad(EdgeLocation edgeLoc);
@@ -96,10 +90,6 @@ public interface IPresenter extends Runnable {
 	public boolean isPlayersTurn();
 
 	public void setGameStateAccordingToModelState();
-	
-	public GameState getGameState();
-	
-	public boolean isGameState(GameState gameState);
 
 	public void setCookie(String cookie);
 

@@ -3,8 +3,6 @@ package client.roll;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
-
-import shared.definitions.GameState;
 import client.base.*;
 import client.main.Catan;
 import client.presenter.IPresenter;

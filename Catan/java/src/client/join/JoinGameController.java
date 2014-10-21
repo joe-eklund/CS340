@@ -7,7 +7,6 @@ import shared.ServerMethodResponses.CreateGameResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
-import shared.definitions.SystemState;
 import client.base.Controller;
 import client.base.IAction;
 import client.main.Catan;

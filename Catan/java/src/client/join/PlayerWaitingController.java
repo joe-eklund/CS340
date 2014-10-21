@@ -7,8 +7,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
-import shared.definitions.GameState;
-import shared.definitions.SystemState;
 import client.base.*;
 import client.data.PlayerInfo;
 import client.main.Catan;

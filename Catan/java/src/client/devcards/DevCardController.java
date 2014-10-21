@@ -8,7 +8,6 @@ import java.util.Observer;
 
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
-import shared.definitions.GameState;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
