@@ -2,6 +2,7 @@ package shared.states;
 
 import client.presenter.IPresenter;
 import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
@@ -29,4 +30,6 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 	public void buildCity(IPresenter presenter, VertexLocation vertLoc);
 
 	public void rollNumber(IPresenter presenter, int diceRoll);
+
+	public GetGameModelResponse getGameModel(IPresenter presenter);
 }

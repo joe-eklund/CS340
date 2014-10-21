@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 import proxy.ClientCommunicator;
 import proxy.ProxyServer;
 import proxy.TranslatorJSON;
+import shared.states.LoggingIn;
 import client.base.IAction;
 import client.catan.CatanPanel;
 import client.join.JoinGameController;
@@ -87,6 +88,7 @@ public class Catan extends JFrame
 				ProxyServer proxy = ProxyServer.getSingleton();
 				ClientModel clientmodel = new ClientModel(null);
 				presenter = new Presenter(clientmodel,proxy,"");
+				presenter.setState(new LoggingIn());
 				clientmodel.setPresenter(presenter);
 				poller = new Poller(presenter, 2);
 				

@@ -1,12 +1,16 @@
 package shared.states;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.JoinGameResponse;
+import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
+import client.model.Player;
 import client.presenter.IPresenter;
 
 public class Joining extends State {
@@ -25,11 +29,17 @@ public class Joining extends State {
 	}
 	
 	@Override
+	public ListGamesResponse listGames(IPresenter presenter) {
+		ListGamesResponse response =  presenter.getProxy().listGames(presenter.getCookie());
+		presenter.setGames((ArrayList<GameDescription>) response.getGameDescriptions());
+		return response;
+	}
+	
+	@Override
 	public void joinGame(IPresenter presenter, CatanColor color, int gameID) {
-		String cookie = presenter.getCookie();
-		JoinGameResponse joinResponse = presenter.getProxy().joinGame(color, gameID, cookie);
+		JoinGameResponse joinResponse = presenter.getProxy().joinGame(color, gameID, presenter.getCookie());
 		presenter.setCookie(joinResponse.getCookie());
-		GetGameModelResponse modelResponse = presenter.getProxy().getGameModel(-1, cookie);
+		GetGameModelResponse modelResponse = presenter.getProxy().getGameModel(-1, presenter.getCookie());
 		if(modelResponse.isNeedToUpdate()) {
 			System.out.println("UPDATING MODEL");
 			presenter.updateServerModel(modelResponse.getGameModel());
@@ -39,8 +49,13 @@ public class Joining extends State {
 		}
 		
 		// Can we start playing?
-		if(modelResponse.getGameModel().getPlayers().size() == 4) {
-			//presenter.setState(new Playing());
+		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
+		players.removeAll(Collections.singleton(null));
+		if(players.size() == 4) {
+			presenter.setState(new Playing());
+		}
+		else {
+			presenter.setState(new PlayerWaiting());
 		}
 	}
 }

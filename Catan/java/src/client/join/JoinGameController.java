@@ -1,20 +1,17 @@
 package client.join;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import shared.ServerMethodResponses.CreateGameResponse;
-import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
-import shared.definitions.GameState;
 import shared.definitions.PlayerDescription;
 import shared.definitions.SystemState;
-import client.base.*;
-import client.data.*;
+import client.base.Controller;
+import client.base.IAction;
 import client.main.Catan;
-import client.misc.*;
+import client.misc.IMessageView;
 import client.presenter.IPresenter;
 
 

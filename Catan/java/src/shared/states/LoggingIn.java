@@ -11,6 +11,12 @@ public class LoggingIn extends State {
 		LoginUserResponse response = presenter.getProxy().loginUser(user, pass);
 		presenter.setCookie(response.getCookie());
 		presenter.setPlayerInfo(new PlayerDescription(null, response.getUserID(), response.getName()));
+		
+		// login successful
+		if(response.isSuccessful()) {
+			presenter.setState(new Joining());
+			System.out.println("State: JOINING");
+		}
 		return response;
 	}
 	
@@ -19,6 +25,12 @@ public class LoggingIn extends State {
 		RegisterUserResponse response = presenter.getProxy().registerUser(user, pass);
 		presenter.setCookie(response.getCookie());
 		presenter.setPlayerInfo(new PlayerDescription(null,response.getUserID(),response.getName()));
+		
+		// Successful registration
+		if(response.isSuccessful()) {
+			presenter.setState(new Joining());
+			System.out.println("State: JOINING");
+		}
 		return response;
 	}
 }

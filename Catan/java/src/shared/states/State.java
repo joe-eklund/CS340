@@ -2,6 +2,7 @@ package shared.states;
 
 import client.presenter.IPresenter;
 import shared.ServerMethodResponses.CreateGameResponse;
+import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.LoginUserResponse;
 import shared.ServerMethodResponses.RegisterUserResponse;
@@ -70,6 +71,12 @@ public abstract class State implements IState {
 	public void rollNumber(IPresenter presenter, int diceRoll) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override 
+	public GetGameModelResponse getGameModel(IPresenter presenter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

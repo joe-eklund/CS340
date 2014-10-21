@@ -20,6 +20,7 @@ import shared.definitions.ServerModel;
 import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+import shared.states.IState;
 import client.model.ClientModel;
 
 /**
@@ -36,6 +37,7 @@ public class Presenter extends Observable implements IPresenter {
 	private ArrayList<GameDescription> games;
 	private SystemState systemState;
 	private GameState gameState;
+	private IState state;
 	
 	
 	/**
@@ -83,19 +85,27 @@ public class Presenter extends Observable implements IPresenter {
 		return pollCycleCount;
 	}
 	
+	@Override
 	public LoginUserResponse login(String user,String pass) {
+		/*
 		LoginUserResponse response = this.proxy.loginUser(user, pass);
 		this.cookie = response.getCookie();
 		playerInfo=new PlayerDescription(null, response.getUserID(), response.getName());
 		return response;
+		*/
+		return state.login(this, user, pass);
 	}
 	
+	@Override
 	public ListGamesResponse listGames(){
+		/*
 		ListGamesResponse response =  this.proxy.listGames(cookie);
 		games = (ArrayList<GameDescription>) response.getGameDescriptions();
 		setChanged();
 		notifyObservers();
 		return response;
+		*/
+		return state.listGames(this);
 	}
 
 	@Override
@@ -105,26 +115,35 @@ public class Presenter extends Observable implements IPresenter {
 
 	@Override
 	public RegisterUserResponse register(String user, String pass) {
+		/*
 		RegisterUserResponse response = this.proxy.registerUser(user, pass);
 		this.cookie = response.getCookie();
 		playerInfo = new PlayerDescription(null,response.getUserID(),response.getName());
 		return response;
+		*/
+		return state.register(this, user, pass);
 	}
 
 	@Override
 	public CreateGameResponse createGame(boolean randTiles,boolean randNums,boolean randPorts,String name) {
+		/*
 		CreateGameResponse response = this.proxy.createGame(randTiles, randNums, randPorts, name, this.cookie);
 		games.add(response.getGameDescription());
 		setChanged();
 		notifyObservers();
 		return response;
+		*/
+		return state.createGame(this, randTiles, randNums, randPorts, name);
 	}
 	
 	@Override
 	public void joinGame(CatanColor color, int gameID) {
+		/*
 		JoinGameResponse response = this.proxy.joinGame(color, gameID, this.cookie);
 		this.cookie = response.getCookie();
 		updateModel();
+		*/
+		state.joinGame(this, color, gameID);
 	}
 	
 	@Override
@@ -133,6 +152,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	private void updateModel() {
+		/*
 		GetGameModelResponse response; 
 		if (systemState.equals(SystemState.PLAYERWAITING)) {
 			response = proxy.getGameModel(-1, cookie);
@@ -140,7 +160,9 @@ public class Presenter extends Observable implements IPresenter {
 		else {
 			response = proxy.getGameModel(version, cookie);
 		}
-		if(response.isSuccessful()) {
+		*/
+		GetGameModelResponse response = state.getGameModel(this);
+		if(response != null && response.isSuccessful()) {
 			if(response.isNeedToUpdate()) {
 				System.out.println("UPDATING MODEL");
 				version = response.getGameModel().getVersion();
@@ -294,6 +316,11 @@ public class Presenter extends Observable implements IPresenter {
 	public void updateServerModel(ServerModel serverModel) {
 		this.clientModel.updateServerModel(serverModel);
 		this.version = serverModel.getVersion();
+	}
+
+	@Override
+	public void setState(IState state) {
+		this.state = state;
 	}
 }
 

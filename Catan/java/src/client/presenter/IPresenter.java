@@ -16,6 +16,7 @@ import shared.definitions.ServerModel;
 import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+import shared.states.IState;
 import client.model.ClientModel;
 
 /**
@@ -104,4 +105,6 @@ public interface IPresenter extends Runnable {
 	public void setGames(ArrayList<GameDescription> games);
 
 	public void updateServerModel(ServerModel serverModel);
+
+	public void setState(IState state);
 }
