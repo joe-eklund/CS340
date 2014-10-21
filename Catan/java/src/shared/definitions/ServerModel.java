@@ -208,4 +208,20 @@ public class ServerModel {
 	public void incrementVersion() {
 		version++;
 	}
+	
+	public Player getPlayerByID(int id) {
+		for (Player player : players) {
+			if (player.getPlayerID() == id)
+				return player;
+		}
+		return null;
+	}
+	
+	public int getPlayerIndexByID(int id) {
+		for (Player player : players) {
+			if (player.getPlayerID() == id)
+				return player.getPlayerIndex();
+		}
+		return -1;
+	}
 }

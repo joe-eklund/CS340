@@ -23,6 +23,7 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	private IRobView robView;
 	private static IPresenter presenter;
+	private boolean haveInitializedHexes;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -34,6 +35,8 @@ public class MapController extends Controller implements IMapController, Observe
 		setRobView(robView);
 		
 		initFromModel();
+		
+		haveInitializedHexes = false;
 	}
 	
 	public IMapView getView() {
@@ -148,7 +151,7 @@ public class MapController extends Controller implements IMapController, Observe
 		Map<HexLocation, IHex> board = model.getGameModel().getBoard();
 		
 		
-		if (presenter.getState().getStatus().equals("Joining")) {
+		if (!haveInitializedHexes) {
 			for (HexLocation hexLoc : board.keySet()) {
 				IHex hex = board.get(hexLoc);
 				getView().addHex(hexLoc, board.get(hexLoc).getType());
@@ -156,6 +159,7 @@ public class MapController extends Controller implements IMapController, Observe
 					getView().addNumber(hexLoc, board.get(hexLoc).getChit());
 				}
 			}
+			haveInitializedHexes = true;
 		}
 		
 		ArrayList<Road> roads = model.getServerModel().getMap().getRoads();

@@ -87,4 +87,6 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 
 	public void playMonumentCard(IPresenter presenter);
 
+	public boolean isInAnyPlayingState();
+
 }

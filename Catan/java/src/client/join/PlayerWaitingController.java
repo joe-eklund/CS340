@@ -39,9 +39,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void start() {
 		
-		getView().setPlayers(getPlayerInfoArray());
-		getView().setAIChoices(getAIChoicesArray());
-		getView().showModal();
+		PlayerInfo[] pInfo = getPlayerInfoArray();
+		if (pInfo.length < 4) {
+			getView().setPlayers(pInfo);
+			getView().setAIChoices(getAIChoicesArray());
+			getView().showModal();
+		}	
 	}
 
 	@Override
@@ -49,28 +52,13 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		//This all needs to be changed
 		//where ever this model is closed then the state changes needs to be changed right after it.
 		getView().closeModal();
-		presenter.setSystemState(SystemState.GAMING);
-		
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Updating Method called in PlayerWating Controller");
 		if (presenter.getState().getStatus().equals("PlayerWaiting")) {
-			System.out.println("UPDATING PLAYER WAITING");
+			System.out.println("Updating Method called in PlayerWating Controller");
 			getView().setPlayers(getPlayerInfoArray());
-			
-//			for(int i = 5; i > 0; i--) {
-//				try {
-//				    Thread.sleep(1000);                 //1000 milliseconds is one second.
-//				} catch(InterruptedException ex) {
-//				    Thread.currentThread().interrupt();
-//				}
-//				
-//				System.out.println(i);
-//				String labelText = "Game Starting in: " + Integer.toString(i);
-//				getView().setLabelText(labelText);
-//			}
 		}
 	}
 	

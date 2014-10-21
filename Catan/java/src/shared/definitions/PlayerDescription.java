@@ -8,6 +8,7 @@ public class PlayerDescription {
 	private String color;
 	private int id;
 	private String name;
+	private int index;
 	
 	/**
 	 * Class Constructor
@@ -44,6 +45,10 @@ public class PlayerDescription {
 		return name;
 	}
 	
+	public int getIndex() {
+		return index;
+	}
+	
 	/**
 	 * @obvious
 	 * @param color
@@ -56,8 +61,12 @@ public class PlayerDescription {
 	 * @obvious
 	 * @param id
 	 */
-	public void setIndex(int id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public void setIndex(int index) {
+		this.index = index;
 	}
 	
 	/**

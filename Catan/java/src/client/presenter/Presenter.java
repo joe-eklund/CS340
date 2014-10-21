@@ -28,7 +28,13 @@ import shared.definitions.SystemState;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.states.Discarding;
+import shared.states.FirstRound;
 import shared.states.IState;
+import shared.states.Playing;
+import shared.states.Robbing;
+import shared.states.Rolling;
+import shared.states.SecondRound;
 import client.model.ClientModel;
 import client.model.Log;
 
@@ -74,7 +80,7 @@ public class Presenter extends Observable implements IPresenter {
 
 	@Override
 	public void run() {
-		System.out.println("run() method in presenter");
+		System.out.println("CURRENT STATE IS: " + state.getStatus());
 		updateModel();
 		pollCycleCount++;
 	}
@@ -205,8 +211,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void setGameStateAccordingToModelState() {
-		gameState = GameState.valueOf(clientModel.getServerModel().getTurnTracker().getStatus().toUpperCase());
-		clientModel.notifyModelObservers();
+		
 	}
 	
 	public GameState getGameState() {
@@ -219,7 +224,7 @@ public class Presenter extends Observable implements IPresenter {
 	
 	public Boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		if (systemState.equals(GameState.SETUP)) {
-			return clientModel.canBuildRoad(playerInfo.getID(), edgeLoc, true);
+			return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, true);
 		}
 		else {
 			//TESTING BUILDING ROAD, SETTLEMENT, CITY
@@ -231,16 +236,16 @@ public class Presenter extends Observable implements IPresenter {
 //			clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 			//end test setup
 			
-			return clientModel.canBuildRoad(playerInfo.getID(), edgeLoc, false);
+			return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, false);
 		}
 	}
 	
 	public void buildRoad(EdgeLocation roadLocation) {
 		if (gameState.equals(GameState.SETUP)) {
-			proxy.buildRoad(playerInfo.getID(), roadLocation, true, cookie);
+			proxy.buildRoad(playerInfo.getIndex(), roadLocation, true, cookie);
 		}
 		else {
-			proxy.buildRoad(playerInfo.getID(), roadLocation, false, cookie);
+			proxy.buildRoad(playerInfo.getIndex(), roadLocation, false, cookie);
 		}
 		updateModel();
 	}
@@ -254,16 +259,18 @@ public class Presenter extends Observable implements IPresenter {
 //		clientModel.getServerModel().getPlayers().get(0).setOre(5);
 //		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 		//end test setup
-		
-		return clientModel.canBuildSettlement(playerInfo.getID(), vertLoc);
+		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound"))
+			return clientModel.canBuildSettlement(playerInfo.getIndex(), vertLoc, true);
+		else
+			return clientModel.canBuildSettlement(playerInfo.getIndex(), vertLoc, false);
 	}
 	
 	public void buildSettlement(VertexLocation vertLoc) {
 		if (gameState.equals(GameState.SETUP)) {
-			proxy.buildSettlement(playerInfo.getID(), vertLoc, true, cookie);
+			proxy.buildSettlement(playerInfo.getIndex(), vertLoc, true, cookie);
 		}
 		else {
-			proxy.buildSettlement(playerInfo.getID(), vertLoc, false, cookie);
+			proxy.buildSettlement(playerInfo.getIndex(), vertLoc, false, cookie);
 		}
 	}
 	
@@ -277,20 +284,20 @@ public class Presenter extends Observable implements IPresenter {
 //		clientModel.getServerModel().getTurnTracker().setStatus("Playing");
 		//end test setup
 		
-		return clientModel.canBuildCity(playerInfo.getID(), vertLoc);
+		return clientModel.canBuildCity(playerInfo.getIndex(), vertLoc);
 	}
 	
 	public void buildCity(VertexLocation vertLoc) {
-		proxy.buildCity(playerInfo.getID(), vertLoc, cookie);
+		proxy.buildCity(playerInfo.getIndex(), vertLoc, cookie);
 	}
 	
 	public void rollNumber(int diceRoll) {
-		proxy.rollNumber(playerInfo.getID(), diceRoll, cookie);
+		proxy.rollNumber(playerInfo.getIndex(), diceRoll, cookie);
 		updateModel();
 	}
 	
 	public boolean isPlayersTurn() {
-		return (playerInfo.getID() == clientModel.getServerModel().getTurnTracker().getCurrentTurn());
+		return (playerInfo.getIndex() == clientModel.getServerModel().getTurnTracker().getCurrentTurn());
 	}
 
 	@Override
@@ -427,6 +434,32 @@ public class Presenter extends Observable implements IPresenter {
 	@Override
 	public void playMonumentCard() {
 		this.state.playMonumentCard(this);
+	}
+
+	@Override
+	public void setStateBasedOfString(String status) {
+		
+		switch(status) {
+		case "FirstRound":
+			state = new FirstRound();
+			break;
+		case "SecondRound":
+			state = new SecondRound();
+			break;
+		case "Playing":
+			state = new Playing();
+			break;
+		case "Discarding":
+			state = new Discarding();
+			break;
+		case "Robbing":
+			state = new Robbing();
+			break;
+		case "Rolling":
+			state = new Rolling();
+			break;
+		}
+		
 	}
 	
 }

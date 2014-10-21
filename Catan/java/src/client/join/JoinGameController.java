@@ -175,7 +175,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
-		presenter.setSystemState(SystemState.PLAYERWAITING); //important that this does not move
+//		presenter.setSystemState(SystemState.PLAYERWAITING); //important that this does not move
 		Catan.getPoller().start();
 		joinAction.execute();
 	}

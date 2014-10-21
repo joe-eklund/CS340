@@ -157,4 +157,6 @@ public interface IPresenter extends Runnable {
 	public void playSoldierCard( int victimIndex, HexLocation location);
 
 	public void playMonumentCard();
+
+	public void setStateBasedOfString(String status);
 }

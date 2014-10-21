@@ -51,7 +51,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	public void updateServerModel(ServerModel newServerModel) {
 		this.serverModel = newServerModel;
 		gameModel = new GameModel(newServerModel);
-		presenter.setGameStateAccordingToModelState();
+		
 		notifyModelObservers();
 	}
 	
@@ -227,7 +227,16 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		}
 	
 //		if (serverModel.getTurnTracker().getStatus().equals("FirstRound") || serverModel.getTurnTracker().getStatus().equals("SecondRound")) {
-//			
+//			switch(normEdgeLocation.getDir()) {
+//			case NorthEast:
+//				return canBuildSettlement();
+//			case North:
+//				return checkNorthEdge(normEdgeLocation, roads, playerIndex);
+//			case NorthWest:
+//				return checkNorthWestEdge(normEdgeLocation, roads, playerIndex);
+//			default:
+//				return false;
+//			}
 //		}
 //		else {
 			switch(normEdgeLocation.getDir()) {
@@ -408,14 +417,12 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		
 		ArrayList<Road> roads = serverModel.getMap().getRoads();
 		
-		if (!presenter.getState().getStatus().equals("FirstRound") && !presenter.getState().getStatus().equals("SecondRound")) {
-			for (Road road : roads) {
-				if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
-					(road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwnerIndex()) ||
-					(road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwnerIndex())) {
-					
-					return true;
-				}
+		for (Road road : roads) {
+			if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+				(road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+				(road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwnerIndex())) {
+				
+				return true;
 			}
 		}
 		return false;

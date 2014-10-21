@@ -41,24 +41,25 @@ public class Joining extends State {
 	@Override
 	public void joinGame(IPresenter presenter, CatanColor color, int gameID) {
 		JoinGameResponse joinResponse = presenter.getProxy().joinGame(color, gameID, presenter.getCookie());
+		
 		presenter.setCookie(joinResponse.getCookie());
 		GetGameModelResponse modelResponse = presenter.getProxy().getGameModel(-1, presenter.getCookie());
 		if(modelResponse.isNeedToUpdate()) {
-			System.out.println("UPDATING MODEL");
+			// Can we start playing?
+			List<Player> players = new ArrayList<Player>(modelResponse.getGameModel().getPlayers());
+			players.removeAll(Collections.singleton(null));
+			if(players.size() == 4) {
+				presenter.setStateBasedOfString(modelResponse.getGameModel().getTurnTracker().getStatus());
+			}
+			else {
+				presenter.setState(new PlayerWaiting());
+			}
+			
 			presenter.updateServerModel(modelResponse.getGameModel());
+			presenter.getPlayerInfo().setIndex(presenter.getClientModel().getServerModel().getPlayerIndexByID(presenter.getPlayerInfo().getID()));
 		}
 		else {
 			System.err.println("Error: Unable to process update game model request!");
-		}
-		
-		// Can we start playing?
-		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
-		players.removeAll(Collections.singleton(null));
-		if(players.size() == 4) {
-			presenter.setState(new Playing());
-		}
-		else {
-			presenter.setState(new PlayerWaiting());
 		}
 	}
 }

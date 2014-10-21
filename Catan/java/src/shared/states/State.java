@@ -227,4 +227,13 @@ public abstract class State implements IState {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public boolean isInAnyPlayingState() {
+		return (status.equals("FirstRound") || 
+				status.equals("SecondRound") || 
+				status.equals("Rolling") || 
+				status.equals("Playing") || 
+				status.equals("Discarding") ||
+				status.equals("Robbing"));
+	}
 }

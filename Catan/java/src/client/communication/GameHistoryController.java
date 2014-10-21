@@ -31,7 +31,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		getView().setEntries(presenter.getClientModel().getServerModel().getLog().getLogMessages());
+		//getView().setEntries(presenter.getClientModel().getServerModel().getLog().getLogMessages());
 	}
 	
 }

@@ -61,8 +61,8 @@ public class RollController extends Controller implements IRollController, Obser
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (presenter.isGameState(GameState.ROLLING) && presenter.isPlayersTurn()) {
-			//rollView.showModal();
+		if (presenter.getState().getStatus().equals("Rolling") && presenter.isPlayersTurn()) {
+			rollView.showModal();
 		}
 	}
 

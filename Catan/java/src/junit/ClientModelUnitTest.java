@@ -138,25 +138,25 @@ public class ClientModelUnitTest {
 		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(5,5,5,5,5));
 		clientModel.getServerModel().getTurnTracker().setCurrentTurn(1);
 		assertEquals("Trying to build on a valid vertex and should pass", true,
-				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-2,1), VertexDirection.NorthWest)));
+				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-2,1), VertexDirection.NorthWest), false));
 		
 		//Player doesn't have enough resources
 		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(0,0,0,0,0));
 		assertEquals("Player doesn't have enough resources, will fail", false,
-				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-2,1), VertexDirection.NorthWest)));
+				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-2,1), VertexDirection.NorthWest), false));
 		
 		//The settlement is on water
 		clientModel.getServerModel().getPlayers().get(1).setResources(new Resources(5,5,5,5,5));
 		assertEquals("Try building settlement on the water, will fail", false,
-				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-3,1), VertexDirection.NorthWest)));
+				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-3,1), VertexDirection.NorthWest), false));
 		
 		//Try building settlement next to a road the player doesn't own, will fail
 		assertEquals("Try building settlement next to a road the player doesn't own, will fail", false,
-				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(0,1), VertexDirection.SouthWest)));
+				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(0,1), VertexDirection.SouthWest), false));
 		
 		//Try building settlement on top of another settlement, will fail
 		assertEquals("Try building settlement on top of another settlement, will fail", false,
-				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-2,1), VertexDirection.SouthWest)));
+				clientModel.canBuildSettlement(1, new VertexLocation(new HexLocation(-2,1), VertexDirection.SouthWest), false));
 		
 		clientModel.getServerModel().getMap().setRoads(originalRoads);
 	}
