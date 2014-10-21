@@ -62,80 +62,35 @@ public class GameModel {
 			board.put(hex.getLocation(), hex);
 		}
 		
-		Hex oceanHex;
+		Hex oceanHex;		
 		
-		oceanHex = new Hex(new HexLocation(0, -3));
+		int x=0;
+		int y=-3;
+		int xVar=1;
+		int yVar=0;
+		while(x!=-1||y!=-2) {
+			oceanHex = new Hex(new HexLocation(x, y));
+			oceanHex.setType(HexType.WATER);
+			board.put(oceanHex.getLocation(), oceanHex);
+			if(x==3&&y==-3){
+				yVar=1;
+				xVar=0;
+			}else if(y==0&&x==3){
+				xVar=-1;
+			}else if(y==3&&x==0){
+				yVar=0;
+			}else if(x==-3&&y==3){
+				xVar=0;
+				yVar=-1;
+			}else if(y==0&&x==-3){
+				xVar=1;
+			}
+			x+=xVar;
+			y+=yVar;
+		}
+		oceanHex = new Hex(new HexLocation(x, y));
 		oceanHex.setType(HexType.WATER);
 		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(1, -3));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(2, -3));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(3, -3));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(3, -2));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(3, -1));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(3, 0));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(2, 1));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(1, 2));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(0, 3));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(-1, 3));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(-2, 3));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-
-		oceanHex = new Hex(new HexLocation(-3, 3));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-
-		oceanHex = new Hex(new HexLocation(-3, 2));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(-3, 1));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(-3, 0));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(-2, -1));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
-		oceanHex = new Hex(new HexLocation(-1, -2));
-		oceanHex.setType(HexType.WATER);
-		board.put(oceanHex.getLocation(), oceanHex);
-		
 	}
 	
 	/**

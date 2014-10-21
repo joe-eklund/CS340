@@ -81,19 +81,7 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void buyCard() {
-		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
-		DevCards deck=presenter.getClientModel().getServerModel().getDeck();
-		DevCardType devCard;
-		DevCards hand;
-		for(Player player : players){
-			if(player.getName().equals(presenter.getPlayerInfo().getName())){
-				hand=player.getOldDevCards();
-				devCard=deck.buyDevCard();
-				presenter.getClientModel().getServerModel().setDeck(deck);
-				hand.addToDeck(devCard);
-				player.setNewDevCards(hand);
-			}
-		}
+
 		getBuyCardView().closeModal();
 	}
 
