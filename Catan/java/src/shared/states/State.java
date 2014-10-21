@@ -11,6 +11,11 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 public abstract class State implements IState {
+	private String status;
+	
+	public State(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public LoginUserResponse login(IPresenter presenter, String user, String pass) {

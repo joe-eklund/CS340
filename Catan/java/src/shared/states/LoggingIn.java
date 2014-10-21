@@ -6,6 +6,10 @@ import shared.ServerMethodResponses.RegisterUserResponse;
 import shared.definitions.PlayerDescription;
 
 public class LoggingIn extends State {
+	public LoggingIn(boolean placedRoad) {
+		super("LoggingIn");
+	}
+	
 	@Override
 	public LoginUserResponse login(IPresenter presenter, String user, String pass) {
 		LoginUserResponse response = presenter.getProxy().loginUser(user, pass);

@@ -14,6 +14,9 @@ import client.model.Player;
 import client.presenter.IPresenter;
 
 public class Joining extends State {
+	public Joining() {
+		super("Joining");
+	}
 	
 	@Override
 	public CreateGameResponse createGame(IPresenter presenter, boolean randTiles, boolean randNums,
