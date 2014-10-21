@@ -109,4 +109,6 @@ public interface IPresenter extends Runnable {
 	public void setState(IState state);
 	
 	public IState getState();
+
+	void sendChat(String message);
 }
