@@ -16,12 +16,6 @@ public class PlayerWaiting extends State {
 	public GetGameModelResponse getGameModel(IPresenter presenter) {
 		GetGameModelResponse response = presenter.getProxy().getGameModel(-1, presenter.getCookie());
 		
-		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
-		players.removeAll(Collections.singleton(null));
-		if(players.size() == 4) {
-			presenter.setStateBasedOfString(presenter.getClientModel().getServerModel().getTurnTracker().getStatus());
-		}
-		
 		return response;
 	}
 }

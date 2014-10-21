@@ -49,7 +49,7 @@ public class Joining extends State {
 			List<Player> players = new ArrayList<Player>(modelResponse.getGameModel().getPlayers());
 			players.removeAll(Collections.singleton(null));
 			if(players.size() == 4) {
-				presenter.setStateBasedOfString(modelResponse.getGameModel().getTurnTracker().getStatus());
+				presenter.setStateBasedOffString(modelResponse.getGameModel().getTurnTracker().getStatus());
 			}
 			else {
 				presenter.setState(new PlayerWaiting());

@@ -158,5 +158,5 @@ public interface IPresenter extends Runnable {
 
 	public void playMonumentCard();
 
-	public void setStateBasedOfString(String status);
+	public void setStateBasedOffString(String status);
 }

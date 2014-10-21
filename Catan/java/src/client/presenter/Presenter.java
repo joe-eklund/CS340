@@ -1,6 +1,8 @@
 package client.presenter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -37,6 +39,7 @@ import shared.states.Rolling;
 import shared.states.SecondRound;
 import client.model.ClientModel;
 import client.model.Log;
+import client.model.Player;
 
 /**
  * A class that holds a proxy and clientModel and acts upon those objects
@@ -80,8 +83,8 @@ public class Presenter extends Observable implements IPresenter {
 
 	@Override
 	public void run() {
-		System.out.println("CURRENT STATE IS: " + state.getStatus());
 		updateModel();
+		System.out.println("CURRENT STATE IS: " + state.getStatus());
 		pollCycleCount++;
 	}
 	
@@ -166,19 +169,18 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	private void updateModel() {
-		/*
-		GetGameModelResponse response; 
-		if (systemState.equals(SystemState.PLAYERWAITING)) {
-			response = proxy.getGameModel(-1, cookie);
-		}
-		else {
-			response = proxy.getGameModel(version, cookie);
-		}
-		*/
+		
 		GetGameModelResponse response = state.getGameModel(this);
 		if(response != null && response.isSuccessful()) {
 			if(response.isNeedToUpdate()) {
 				System.out.println("UPDATING MODEL");
+				
+				List<Player> players = response.getGameModel().getPlayers();
+				players.removeAll(Collections.singleton(null));
+				if(players.size() == 4) {
+					setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
+				}
+				
 				version = response.getGameModel().getVersion();
 				clientModel.updateServerModel(response.getGameModel());
 			}
@@ -292,8 +294,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void rollNumber(int diceRoll) {
-		proxy.rollNumber(playerInfo.getIndex(), diceRoll, cookie);
-		updateModel();
+		state.rollNumber(this, diceRoll);
 	}
 	
 	public boolean isPlayersTurn() {
@@ -437,7 +438,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 
 	@Override
-	public void setStateBasedOfString(String status) {
+	public void setStateBasedOffString(String status) {
 		
 		switch(status) {
 		case "FirstRound":

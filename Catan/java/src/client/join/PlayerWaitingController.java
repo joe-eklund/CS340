@@ -51,14 +51,18 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void addAI() {
 		//This all needs to be changed
 		//where ever this model is closed then the state changes needs to be changed right after it.
-		getView().closeModal();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		if (presenter.getState().getStatus().equals("PlayerWaiting")) {
 			System.out.println("Updating Method called in PlayerWating Controller");
-			getView().setPlayers(getPlayerInfoArray());
+			
+			PlayerInfo[] pInfo = getPlayerInfoArray();
+			getView().setPlayers(pInfo);
+		}
+		else if (getView().isModalShowing()) {
+			getView().closeModal();
 		}
 	}
 	
