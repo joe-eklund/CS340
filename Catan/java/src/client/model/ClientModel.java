@@ -165,6 +165,13 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 				serverModel.getTurnTracker().getStatus().equals("Playing")) ? true : false;
 	}
 	
+	private boolean buildRoadPreconditions(int playerIndex) {
+		return (playerIndex == serverModel.getTurnTracker().getCurrentTurn() && 
+				(serverModel.getTurnTracker().getStatus().equals("Playing") ||
+				 serverModel.getTurnTracker().getStatus().equals("FirstRound") ||
+				 serverModel.getTurnTracker().getStatus().equals("SecondRound"))) ? true : false;
+	}
+	
 	/**
 	 * Determines if a specified player can build a road at the specified Edge Location.
 	 * @param playerIndex
@@ -188,7 +195,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	
 	private boolean checkBuildRoad(int playerIndex, EdgeLocation edgeLocation, ArrayList<Road> roads, boolean free){
 		
-		if (!playingCommandsPreconditions(playerIndex)) {
+		if (!buildRoadPreconditions(playerIndex)) {
 			return false;
 		}
 		
@@ -219,16 +226,21 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 			return false;
 		}
 	
-		switch(normEdgeLocation.getDir()) {
-		case NorthEast:
-			return checkNorthEastEdge(normEdgeLocation, roads, playerIndex);
-		case North:
-			return checkNorthEdge(normEdgeLocation, roads, playerIndex);
-		case NorthWest:
-			return checkNorthWestEdge(normEdgeLocation, roads, playerIndex);
-		default:
-			return false;
-		}
+//		if (serverModel.getTurnTracker().getStatus().equals("FirstRound") || serverModel.getTurnTracker().getStatus().equals("SecondRound")) {
+//			
+//		}
+//		else {
+			switch(normEdgeLocation.getDir()) {
+			case NorthEast:
+				return checkNorthEastEdge(normEdgeLocation, roads, playerIndex);
+			case North:
+				return checkNorthEdge(normEdgeLocation, roads, playerIndex);
+			case NorthWest:
+				return checkNorthWestEdge(normEdgeLocation, roads, playerIndex);
+			default:
+				return false;
+			}
+//		}
 	}
 	
 	private boolean checkNorthEastEdge(EdgeLocation normEdgeLocation, ArrayList<Road> roads, int playerIndex) {
@@ -316,7 +328,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	 * 			<li>Returns true if the preconditions are satisfied, otherwise returns false</li>
 	 * 		</ul>
 	 */
-	public boolean canBuildSettlement(int playerIndex, VertexLocation location) {
+	public boolean canBuildSettlement(int playerIndex, VertexLocation location, boolean free) {
 		VertexLocation normVerLoc = location.getNormalizedLocation();
 		
 		if (!playingCommandsPreconditions(playerIndex)) {
@@ -324,15 +336,16 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		}
 		
 		Player player = serverModel.getPlayers().get(playerIndex);
-		if (player.getBrick() < 1 || 
-			player.getWood() < 1 ||
-			player.getWheat() < 1 ||
-			player.getSheep() < 1 ||
-			player.getSettlements() < 1) {
-			
-			return false;
+		if (!free) {
+			if (player.getBrick() < 1 || 
+				player.getWood() < 1 ||
+				player.getWheat() < 1 ||
+				player.getSheep() < 1 ||
+				player.getSettlements() < 1) {
+				
+				return false;
+			}
 		}
-		
 		
 		ArrayList<Settlement> settlements = serverModel.getMap().getSettlements();
 		
@@ -395,15 +408,16 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		
 		ArrayList<Road> roads = serverModel.getMap().getRoads();
 		
-		for (Road road : roads) {
-			if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
-				(road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwnerIndex()) ||
-				(road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwnerIndex())) {
-				
-				return true;
+		if (!presenter.getState().getStatus().equals("FirstRound") && !presenter.getState().getStatus().equals("SecondRound")) {
+			for (Road road : roads) {
+				if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+					(road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwnerIndex()) ||
+					(road.getLocation().getNormalizedLocation().equals(edge3) && player.getPlayerIndex() == road.getOwnerIndex())) {
+					
+					return true;
+				}
 			}
 		}
-		
 		return false;
 	}
 	
