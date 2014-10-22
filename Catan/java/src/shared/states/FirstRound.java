@@ -21,7 +21,7 @@ public class FirstRound extends GamePlay {
 	
 	@Override
 	public void buildRoad(IPresenter presenter, EdgeLocation roadLocation) {
+//		GetGameModelResponse gameRe = presenter.getProxy().getGameModel(-1, presenter.getCookie());
 		MoveResponse response = presenter.getProxy().buildRoad(presenter.getPlayerInfo().getIndex(), roadLocation, true, presenter.getCookie());
-		
 	}
 }

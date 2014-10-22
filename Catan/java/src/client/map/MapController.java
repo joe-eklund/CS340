@@ -83,8 +83,8 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
 //		if ((vertLoc.getHexLoc().getX() == 1 && vertLoc.getHexLoc().getY() == 1) || (vertLoc.getHexLoc().getX() == 2 && vertLoc.getHexLoc().getY() == 0)) {
-//			presenter.getClientModel().getServerModel().getMap().getRoads().add(new Road(presenter.getPlayerInfo().getID(), 1, 1, "North"));
-//			presenter.getClientModel().getServerModel().getMap().getRoads().add(new Road(presenter.getPlayerInfo().getID(), 2,0, "NorthWest"));
+//			presenter.getClientModel().getServerModel().getMap().getRoads().add(new Road(presenter.getPlayerInfo().getIndex(), 1, 1, "North"));
+//			presenter.getClientModel().getServerModel().getMap().getRoads().add(new Road(presenter.getPlayerInfo().getIndex(), 2,0, "NorthWest"));
 			return presenter.canPlaceSettlement(vertLoc);
 //		}
 //		return false;
@@ -126,7 +126,7 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		
-		getView().startDrop(pieceType, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getID()).getColor().toUpperCase()), true);
+		getView().startDrop(pieceType, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), true);
 	}
 	
 	public void cancelMove() {
@@ -195,6 +195,11 @@ public class MapController extends Controller implements IMapController, Observe
 		}
 		
 		getView().placeRobber(model.getServerModel().getMap().getRobber().getLocation());
+		
+		if ((presenter.getState().getStatus().equals("FirstRound") || presenter.getState().getStatus().equals("SecondRound")) &&
+				presenter.isPlayersTurn()) {
+			//getView().setUpPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
+		}
 	}
 }
 

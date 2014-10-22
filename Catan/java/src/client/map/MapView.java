@@ -19,6 +19,9 @@ public class MapView extends PanelView implements IMapView
 	private MapComponent map;
 	private MapOverlay overlay;
 	
+	private enum SetupRoundState {ROAD, SETTLEMENT};
+	private SetupRoundState setupRoundState;
+	
 	public MapView()
 	{
 		
@@ -27,6 +30,8 @@ public class MapView extends PanelView implements IMapView
 		map = new MapComponent();
 		
 		this.add(map, BorderLayout.CENTER);
+		
+		setupRoundState = SetupRoundState.ROAD;
 	}
 	
 	@Override
@@ -95,6 +100,21 @@ public class MapView extends PanelView implements IMapView
 		overlay.setController(overlayController);
 		overlay.startDrop(pieceType, pieceColor, isCancelAllowed);
 		overlay.showModal();
+	}
+	
+	@Override
+	public void setUpPhase(CatanColor pieceColor) {
+		switch(setupRoundState) {
+		case ROAD:
+			startDrop(PieceType.ROAD, pieceColor, false);
+			setupRoundState = SetupRoundState.SETTLEMENT;
+			break;
+		case SETTLEMENT:
+			startDrop(PieceType.SETTLEMENT, pieceColor, false);
+			setupRoundState = SetupRoundState.ROAD;
+			break;
+		}
+		
 	}
 	
 	private IMapController overlayController = new IMapController() {
@@ -306,7 +326,7 @@ public class MapView extends PanelView implements IMapView
 					return "";
 			}
 		}
+		
 	}
-	
 }
 
