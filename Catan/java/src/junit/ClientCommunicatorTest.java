@@ -37,6 +37,7 @@ import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.GameDescription;
 import shared.definitions.ResourceHand;
+import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
 import shared.definitions.User;
 import shared.locations.EdgeDirection;
@@ -305,7 +306,7 @@ public class ClientCommunicatorTest {
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
 		headers.add(user);
 		headers.add(game);
-		BuildRoadRequest data = new BuildRoadRequest(1, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.SouthEast), true);
+		BuildRoadRequest data = new BuildRoadRequest(1, new RoadLocation(0, 0, EdgeDirection.SouthEast), true);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildRoad", data, RequestType.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}

@@ -292,7 +292,7 @@ public class ProxyServer implements IServer{
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "games/sendChat", request, ServerModel.class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "moves/sendChat", request, ServerModel.class);
 		boolean successful = response.getResponseCode() == 200;
 		return new MoveResponse(successful, successful ? (ServerModel) response.getResponseObject() : null);
 	}
@@ -330,7 +330,8 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public MoveResponse buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free, String cookie) {
-		BuildRoadRequest request = new BuildRoadRequest(playerIndex, roadLocation, free);
+		RoadLocation roadLocationRequest = new RoadLocation(roadLocation.getHexLoc().getX(), roadLocation.getHexLoc().getY(), roadLocation.getDir());
+		BuildRoadRequest request = new BuildRoadRequest(playerIndex, roadLocationRequest, free);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));

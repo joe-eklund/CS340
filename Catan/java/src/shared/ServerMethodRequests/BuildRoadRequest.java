@@ -1,6 +1,6 @@
 package shared.ServerMethodRequests;
 
-import shared.locations.EdgeLocation;
+import shared.definitions.RoadLocation;
 
 /**
  * A class for encapsulating BuildRoad request parameters
@@ -17,7 +17,7 @@ import shared.locations.EdgeLocation;
 public class BuildRoadRequest {
 	private String type;
 	private int playerIndex;
-	private EdgeLocation roadLocation;
+	private RoadLocation roadLocation;
 	private boolean free;
 	
 	/**
@@ -34,7 +34,7 @@ public class BuildRoadRequest {
 	 * @param roadLocation
 	 * @param free
 	 */
-	public BuildRoadRequest(int playerIndex, EdgeLocation roadLocation,
+	public BuildRoadRequest(int playerIndex, RoadLocation roadLocation,
 			boolean free) {
 		this.type = "buildRoad";
 		this.playerIndex = playerIndex;
@@ -59,7 +59,7 @@ public class BuildRoadRequest {
 	/**
 	 * @obvious
 	 */
-	public EdgeLocation getRoadLocation() {
+	public RoadLocation getRoadLocation() {
 		return roadLocation;
 	}
 
@@ -87,7 +87,7 @@ public class BuildRoadRequest {
 	/**
 	 * @obvious
 	 */
-	public void setRoadLocation(EdgeLocation roadLocation) {
+	public void setRoadLocation(RoadLocation roadLocation) {
 		this.roadLocation = roadLocation;
 	}
 
