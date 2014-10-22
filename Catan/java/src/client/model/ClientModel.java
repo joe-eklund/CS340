@@ -165,7 +165,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 				serverModel.getTurnTracker().getStatus().equals("Playing")) ? true : false;
 	}
 	
-	private boolean buildRoadPreconditions(int playerIndex) {
+	private boolean buildingPreconditions(int playerIndex) {
 		return (playerIndex == serverModel.getTurnTracker().getCurrentTurn() && 
 				(serverModel.getTurnTracker().getStatus().equals("Playing") ||
 				 serverModel.getTurnTracker().getStatus().equals("FirstRound") ||
@@ -195,7 +195,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	
 	private boolean checkBuildRoad(int playerIndex, EdgeLocation edgeLocation, ArrayList<Road> roads, boolean free){
 		
-		if (!buildRoadPreconditions(playerIndex)) {
+		if (!buildingPreconditions(playerIndex)) {
 			return false;
 		}
 		
@@ -226,19 +226,38 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 			return false;
 		}
 	
-//		if (serverModel.getTurnTracker().getStatus().equals("FirstRound") || serverModel.getTurnTracker().getStatus().equals("SecondRound")) {
-//			switch(normEdgeLocation.getDir()) {
-//			case NorthEast:
-//				return canBuildSettlement();
-//			case North:
-//				return checkNorthEdge(normEdgeLocation, roads, playerIndex);
-//			case NorthWest:
-//				return checkNorthWestEdge(normEdgeLocation, roads, playerIndex);
-//			default:
-//				return false;
-//			}
-//		}
-//		else {
+		if (serverModel.getTurnTracker().getStatus().equals("FirstRound") || serverModel.getTurnTracker().getStatus().equals("SecondRound")) {
+			
+			VertexLocation v1;
+			VertexLocation v2;
+			
+			switch(normEdgeLocation.getDir()) {
+			case NorthEast:
+				roads = new ArrayList<Road>(serverModel.getMap().getRoads());
+				roads.add(new Road(playerIndex, normEdgeLocation));
+				v1 = new VertexLocation(normEdgeLocation.getHexLoc(), VertexDirection.NorthEast);
+				v2 = new VertexLocation(normEdgeLocation.getHexLoc(), VertexDirection.East);
+				return (checkBuildSettlement(playerIndex, v1, free, roads) || checkBuildSettlement(playerIndex, v2, free, roads));
+				
+			case North:
+				roads = new ArrayList<Road>(serverModel.getMap().getRoads());
+				roads.add(new Road(playerIndex, normEdgeLocation));
+				v1 = new VertexLocation(normEdgeLocation.getHexLoc(), VertexDirection.NorthEast);
+				v2 = new VertexLocation(normEdgeLocation.getHexLoc(), VertexDirection.NorthWest);
+				return (checkBuildSettlement(playerIndex, v1, free, roads) || checkBuildSettlement(playerIndex, v2, free, roads));
+				
+			case NorthWest:
+				roads = new ArrayList<Road>(serverModel.getMap().getRoads());
+				roads.add(new Road(playerIndex, normEdgeLocation));
+				v1 = new VertexLocation(normEdgeLocation.getHexLoc(), VertexDirection.NorthWest);
+				v2 = new VertexLocation(normEdgeLocation.getHexLoc(), VertexDirection.West);
+				return (checkBuildSettlement(playerIndex, v1, free, roads) || checkBuildSettlement(playerIndex, v2, free, roads));
+				
+			default:
+				return false;
+			}
+		}
+		else {
 			switch(normEdgeLocation.getDir()) {
 			case NorthEast:
 				return checkNorthEastEdge(normEdgeLocation, roads, playerIndex);
@@ -249,7 +268,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 			default:
 				return false;
 			}
-//		}
+		}
 	}
 	
 	private boolean checkNorthEastEdge(EdgeLocation normEdgeLocation, ArrayList<Road> roads, int playerIndex) {
@@ -338,9 +357,13 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	 * 		</ul>
 	 */
 	public boolean canBuildSettlement(int playerIndex, VertexLocation location, boolean free) {
+		return checkBuildSettlement(playerIndex, location, free, serverModel.getMap().getRoads());
+	}
+	
+	private boolean checkBuildSettlement(int playerIndex, VertexLocation location, boolean free, ArrayList<Road> roads) {
 		VertexLocation normVerLoc = location.getNormalizedLocation();
 		
-		if (!playingCommandsPreconditions(playerIndex)) {
+		if (!buildingPreconditions(playerIndex)) {
 			return false;
 		}
 		
@@ -387,15 +410,15 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	
 		switch(normVerLoc.getDir()) {
 		case NorthEast:
-			return checkNorthEastVertex(normVerLoc, settlements, player);
+			return checkNorthEastVertex(normVerLoc, settlements, player, roads);
 		case NorthWest:
-			return checkNorthWestVertex(normVerLoc, settlements, player);
+			return checkNorthWestVertex(normVerLoc, settlements, player, roads);
 		default:
 			return false;
 		}
 	}
 	
-	private boolean checkNorthEastVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
+	private boolean checkNorthEastVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player, ArrayList<Road> roads) {
 		
 		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), VertexDirection.NorthWest);
 		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.NorthWest);
@@ -415,8 +438,6 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		EdgeLocation edge2= new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.North);
 		EdgeLocation edge3 = new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.NorthEast);
 		
-		ArrayList<Road> roads = serverModel.getMap().getRoads();
-		
 		for (Road road : roads) {
 			if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
 				(road.getLocation().getNormalizedLocation().equals(edge2) && player.getPlayerIndex() == road.getOwnerIndex()) ||
@@ -428,7 +449,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		return false;
 	}
 	
-	private boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player) {
+	private boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player, ArrayList<Road> roads) {
 		
 		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.NorthEast);
 		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast);
@@ -447,8 +468,6 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		EdgeLocation edge1 = new EdgeLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), EdgeDirection.NorthEast);
 		EdgeLocation edge2= new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.North);
 		EdgeLocation edge3 = new EdgeLocation(normVerLoc.getHexLoc(), EdgeDirection.NorthWest);
-		
-		ArrayList<Road> roads = serverModel.getMap().getRoads();
 		
 		for (Road road : roads) {
 			if ((road.getLocation().getNormalizedLocation().equals(edge1) && player.getPlayerIndex() == road.getOwnerIndex()) ||
@@ -478,6 +497,10 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	 */
 	public boolean canBuildCity(int playerIndex, VertexLocation location) {
 		VertexLocation normVerLoc = location.getNormalizedLocation();
+		
+		if (!playingCommandsPreconditions(playerIndex)) {
+			return false;
+		}
 		
 		Player player = serverModel.getPlayers().get(playerIndex);
 		if (player.getWheat() < 2 || player.getOre() < 3 || player.getCities() < 1) {

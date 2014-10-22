@@ -1,6 +1,5 @@
 package shared.states;
 
-import shared.ServerMethodResponses.GetGameModelResponse;
 import client.presenter.IPresenter;
 
 public class Rolling extends GamePlay {

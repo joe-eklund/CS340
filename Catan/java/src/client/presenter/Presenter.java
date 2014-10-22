@@ -222,13 +222,7 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void buildRoad(EdgeLocation roadLocation) {
-		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound")) {
-			proxy.buildRoad(playerInfo.getIndex(), roadLocation, true, cookie);
-		}
-		else {
-			proxy.buildRoad(playerInfo.getIndex(), roadLocation, false, cookie);
-		}
-		updateModel();
+		state.buildRoad(this, roadLocation);
 	}
 	
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {

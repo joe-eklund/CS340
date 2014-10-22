@@ -1,5 +1,9 @@
 package shared.states;
 
+import shared.ServerMethodResponses.MoveResponse;
+import shared.locations.EdgeLocation;
+import client.presenter.IPresenter;
+
 public class FirstRound extends GamePlay {
 	private boolean placedRoad;
 
@@ -13,5 +17,11 @@ public class FirstRound extends GamePlay {
 	
 	public void setPlacedRoad() {
 		placedRoad = true;
+	}
+	
+	@Override
+	public void buildRoad(IPresenter presenter, EdgeLocation roadLocation) {
+		MoveResponse response = presenter.getProxy().buildRoad(presenter.getPlayerInfo().getIndex(), roadLocation, true, presenter.getCookie());
+		
 	}
 }

@@ -1,6 +1,7 @@
 package shared.states;
 
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.locations.EdgeLocation;
 import client.presenter.IPresenter;
 
 public class Playing extends GamePlay {
@@ -11,5 +12,10 @@ public class Playing extends GamePlay {
 	@Override 
 	public GetGameModelResponse getGameModel(IPresenter presenter) {
 		return presenter.getProxy().getGameModel(presenter.getVersion(), presenter.getCookie());
+	}
+	
+	@Override
+	public void buildRoad(IPresenter presenter, EdgeLocation roadLocation) {
+		presenter.getProxy().buildRoad(presenter.getPlayerInfo().getIndex(), roadLocation, false, presenter.getCookie());
 	}
 }
