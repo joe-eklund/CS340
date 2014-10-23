@@ -1,21 +1,23 @@
-ChatController - Josh
-GameHistoryController - Epper
-JoinGameController - Josh
-PlayerWaitingController -  
-PointsController - Joe
-RollController - Chad
-TurnTrackerController - Taylor 
+EASY
+PlayerWaitingController   
+RollController
+ 
 
 
 HARD
-MapController - Together
-DevCardController - Epper
-DomesticTradeController -  Taylor
-MaritimeTradeController - Joe
-DiscardController - Chad
-ResourceBarController - Josh
+MapController
+DevCardController
+DomesticTradeController
+MaritimeTradeController
+DiscardController
+ResourceBarController
 
 
 
-DONE
+NEED TO TEST
 LoginController
+ChatController
+GameHistoryController
+JoinGameController
+PointsController
+TurnTrackerController
