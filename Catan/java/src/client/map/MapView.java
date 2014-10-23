@@ -105,19 +105,20 @@ public class MapView extends PanelView implements IMapView
 	public void setUpPhase(CatanColor pieceColor, IPresenter presenter) {
 		Player player = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex());
 		
-		if (player.getRoads() == 0) {
+		if (player.getRoads() == 15) {
 			startDrop(PieceType.ROAD, pieceColor, false);
 		}
-		else if (player.getRoads() == 1 && player.getSettlements() == 0) { 
+		else if (player.getRoads() == 14 && player.getSettlements() == 5) { 
 			startDrop(PieceType.SETTLEMENT, pieceColor, false);
 		}
-		else if (player.getRoads() == 1 && player.getSettlements() == 1) { 
+		else if (player.getRoads() == 14 && player.getSettlements() == 4) { 
 			startDrop(PieceType.ROAD, pieceColor, false);
 		}
-		else if (player.getRoads() == 2 && player.getSettlements() == 1) { 
+		else if (player.getRoads() == 13 && player.getSettlements() == 4) { 
 			startDrop(PieceType.SETTLEMENT, pieceColor, false);
 		}
 		else {
+			
 			System.err.println("Something wrong in setUpPhase of MapView.java");
 		}
 	}

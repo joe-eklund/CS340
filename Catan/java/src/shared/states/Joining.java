@@ -55,8 +55,8 @@ public class Joining extends State {
 				presenter.setState(new PlayerWaiting());
 			}
 			
+			presenter.getPlayerInfo().setIndex(modelResponse.getGameModel().getPlayerIndexByID(presenter.getPlayerInfo().getID()));
 			presenter.updateServerModel(modelResponse.getGameModel());
-			presenter.getPlayerInfo().setIndex(presenter.getClientModel().getServerModel().getPlayerIndexByID(presenter.getPlayerInfo().getID()));
 		}
 		else {
 			System.err.println("Error: Unable to process update game model request!");

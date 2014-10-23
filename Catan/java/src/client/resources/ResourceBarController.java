@@ -78,9 +78,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		int playerIndex = presenter.getPlayerInfo().getIndex();
 		ServerModel model = presenter.getClientModel().getServerModel();
-		Player player = model.getPlayerByID(playerIndex);
+		Player player = model.getPlayerByID(presenter.getPlayerInfo().getID());
 		getView().setElementAmount(ResourceBarElement.BRICK, player.getBrick());
 		getView().setElementAmount(ResourceBarElement.ORE, player.getOre());
 		getView().setElementAmount(ResourceBarElement.SHEEP, player.getSheep());
