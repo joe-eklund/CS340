@@ -1,6 +1,7 @@
 package shared.definitions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -209,8 +210,76 @@ public class ServerModel {
 	public int getVersion() {
 		return version;
 	}
+	
 	/**
+	 * Gets each player and the resources they get for a roll
 	 * 
+	 * @return hashmap key-playerIndex, value-list of resources they get
+	 */
+	public HashMap<Integer,List<String>> getRollResources(int roll){
+		HashMap collection=new HashMap<Integer,List<String>>();
+
+		List<String> resources;
+		
+		VertexLocation v1=new VertexLocation();
+		VertexLocation v2=new VertexLocation();
+		VertexLocation v3=new VertexLocation();
+		VertexLocation v4=new VertexLocation();
+		VertexLocation v5=new VertexLocation();
+		VertexLocation v6=new VertexLocation();
+		for(int i=0;i<map.getHexes().size();i++){
+			if(map.getHexes().get(i).getChit()==roll){
+				v1=new VertexLocation(map.getHexes().get(i).getLocation(),VertexDirection.NorthEast);
+				v2=new VertexLocation(map.getHexes().get(i).getLocation(),VertexDirection.NorthWest);
+				v3=new VertexLocation(new HexLocation(map.getHexes().get(i).getLocation().getX(),map.getHexes().get(i).getLocation().getY()-1),VertexDirection.NorthEast);
+				v4=new VertexLocation(new HexLocation(map.getHexes().get(i).getLocation().getX(),map.getHexes().get(i).getLocation().getY()-1),VertexDirection.NorthWest);
+				v5=new VertexLocation(new HexLocation(map.getHexes().get(i).getLocation().getX()-1,map.getHexes().get(i).getLocation().getY()),VertexDirection.NorthEast);
+				v6=new VertexLocation(new HexLocation(map.getHexes().get(i).getLocation().getX()+1,map.getHexes().get(i).getLocation().getY()),VertexDirection.NorthWest);
+				for(int j=0;j<map.getCities().size();j++){
+					//if city on vertex of said hex
+					if(map.getCities().get(j).getLocation().equals(v1)||map.getCities().get(j).getLocation().equals(v2)||
+							map.getCities().get(j).getLocation().equals(v3)||map.getCities().get(j).getLocation().equals(v4)||
+							map.getCities().get(j).getLocation().equals(v5)||map.getCities().get(j).getLocation().equals(v6)){
+						if(collection.containsKey(map.getCities().get(j).getOwnerIndex())){
+							resources=(List<String>) collection.get(map.getCities().get(j).getOwnerIndex());
+							//add 2 for city
+							resources.add(map.getHexes().get(i).getResourceType());
+							resources.add(map.getHexes().get(i).getResourceType());
+							collection.remove(map.getCities().get(j).getOwnerIndex());
+							collection.put(map.getCities().get(j).getOwnerIndex(), resources);
+						}else{
+							resources=new ArrayList<String>();
+							resources.add(map.getHexes().get(i).getResourceType());
+							resources.add(map.getHexes().get(i).getResourceType());
+							collection.put(map.getCities().get(j).getOwnerIndex(), resources);
+						}
+					}
+				}
+				for(int j=0;j<map.getSettlements().size();j++){
+					//if settlement on vertex of said hex
+					if(map.getSettlements().get(j).getLocation().equals(v1)||map.getSettlements().get(j).getLocation().equals(v2)||
+							map.getSettlements().get(j).getLocation().equals(v3)||map.getSettlements().get(j).getLocation().equals(v4)||
+							map.getSettlements().get(j).getLocation().equals(v5)||map.getSettlements().get(j).getLocation().equals(v6)){
+						if(collection.containsKey(map.getSettlements().get(j).getOwnerIndex())){
+							resources=(List<String>) collection.get(map.getSettlements().get(j).getOwnerIndex());
+							//add 1 for settlement
+							resources.add(map.getHexes().get(i).getResourceType());
+							collection.remove(map.getSettlements().get(j).getOwnerIndex());
+							collection.put(map.getSettlements().get(j).getOwnerIndex(), resources);
+						}else{
+							resources=new ArrayList<String>();
+							resources.add(map.getHexes().get(i).getResourceType());
+							collection.put(map.getSettlements().get(j).getOwnerIndex(), resources);
+						}
+					}
+				}
+			}
+		}
+		return collection;
+	}
+	
+	/**
+	 *  Gets the Maritime trade ratios for a player
 	 */
 	public Set<Port> getRatios(int playerIndex){
 		Set<Port> ratios=new HashSet<Port>();
