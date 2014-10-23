@@ -286,7 +286,12 @@ public class Presenter extends Observable implements IPresenter {
 
 	@Override
 	public void setState(IState state) {
-		this.state = state;
+		if (this.state != null && this.state.equals("Rolling")){
+			this.state.getStatus();
+			this.state = state;
+		}
+		else
+			this.state = state;
 	}
 	
 	public IState getState() {

@@ -15,6 +15,7 @@ public class Playing extends GamePlay {
 	@Override 
 	public GetGameModelResponse getGameModel(IPresenter presenter) {
 		return presenter.getProxy().getGameModel(presenter.getVersion(), presenter.getCookie());
+//		return presenter.getProxy().getGameModel(-1, presenter.getCookie());
 	}
 	
 	@Override
@@ -61,6 +62,7 @@ public class Playing extends GamePlay {
 		MoveResponse response = presenter.getProxy().finishTurn(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
 		if(response != null && response.isSuccessful()) {			
 			presenter.updateServerModel(response.getGameModel());
+			presenter.setVersion(presenter.getVersion()-1);
 		}
 		else {
 			System.err.println("Error with ending turn in playing state");
