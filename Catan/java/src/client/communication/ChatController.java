@@ -29,7 +29,6 @@ public class ChatController extends Controller implements IChatController, Obser
 
 	@Override
 	public void sendMessage(String message) {
-		//TODO based on state
 		presenter.sendChat(message);
 	}
 
