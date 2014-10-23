@@ -2,10 +2,13 @@ package client.map;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import client.base.*;
 import client.data.*;
+import client.model.Player;
+import client.presenter.IPresenter;
 import shared.definitions.*;
 import shared.locations.*;
 
@@ -19,9 +22,6 @@ public class MapView extends PanelView implements IMapView
 	private MapComponent map;
 	private MapOverlay overlay;
 	
-	private enum SetupRoundState {ROAD, SETTLEMENT};
-	private SetupRoundState setupRoundState;
-	
 	public MapView()
 	{
 		
@@ -31,7 +31,6 @@ public class MapView extends PanelView implements IMapView
 		
 		this.add(map, BorderLayout.CENTER);
 		
-		setupRoundState = SetupRoundState.ROAD;
 	}
 	
 	@Override
@@ -103,18 +102,24 @@ public class MapView extends PanelView implements IMapView
 	}
 	
 	@Override
-	public void setUpPhase(CatanColor pieceColor) {
-		switch(setupRoundState) {
-		case ROAD:
-			startDrop(PieceType.ROAD, pieceColor, false);
-			setupRoundState = SetupRoundState.SETTLEMENT;
-			break;
-		case SETTLEMENT:
-			startDrop(PieceType.SETTLEMENT, pieceColor, false);
-			setupRoundState = SetupRoundState.ROAD;
-			break;
-		}
+	public void setUpPhase(CatanColor pieceColor, IPresenter presenter) {
+		Player player = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex());
 		
+		if (player.getRoads() == 0) {
+			startDrop(PieceType.ROAD, pieceColor, false);
+		}
+		else if (player.getRoads() == 1 && player.getSettlements() == 0) { 
+			startDrop(PieceType.SETTLEMENT, pieceColor, false);
+		}
+		else if (player.getRoads() == 1 && player.getSettlements() == 1) { 
+			startDrop(PieceType.ROAD, pieceColor, false);
+		}
+		else if (player.getRoads() == 2 && player.getSettlements() == 1) { 
+			startDrop(PieceType.SETTLEMENT, pieceColor, false);
+		}
+		else {
+			System.err.println("Something wrong in setUpPhase of MapView.java");
+		}
 	}
 	@Override
 	public void roadBuildingPhase(CatanColor pieceColor) {

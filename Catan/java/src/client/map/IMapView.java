@@ -3,6 +3,7 @@ package client.map;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
+import client.presenter.IPresenter;
 
 /**
  * Interface for the map view
@@ -93,7 +94,7 @@ public interface IMapView extends IView
 	void startDrop(PieceType pieceType, CatanColor pieceColor,
 				   boolean isCancelAllowed);
 
-	void setUpPhase(CatanColor pieceColor);
+	void setUpPhase(CatanColor pieceColor, IPresenter presenter);
 	
 	void roadBuildingPhase(CatanColor pieceColor);
 }
