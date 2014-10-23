@@ -95,5 +95,7 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	 */
 	void showGiveOptions(ResourceType[] enabledResources);
 	
+	//Disables give resource images
+	void disableGiveResources();
 }
 

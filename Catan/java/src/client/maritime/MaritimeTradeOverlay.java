@@ -254,6 +254,15 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 		}
 	}
 	
+	//Disables give resource images
+	public void disableGiveResources(){
+		givewood.setEnabled(false);
+		givebrick.setEnabled(false);
+		givesheep.setEnabled(false);
+		givewheat.setEnabled(false);
+		giveore.setEnabled(false);
+	}
+	
 	private void createListeners() {
 		actionListener = new ActionListener() {
 			@Override
