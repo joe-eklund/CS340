@@ -126,7 +126,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		//getView().startDrop(pieceType, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), true);
+		getView().startDrop(pieceType, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), true);
 	}
 	
 	public void cancelMove() {

@@ -1,5 +1,4 @@
-EASY
-PlayerWaitingController   
+EASY 
 RollController
  
 
@@ -21,3 +20,4 @@ GameHistoryController
 JoinGameController
 PointsController
 TurnTrackerController
+PlayerWaitingController  
