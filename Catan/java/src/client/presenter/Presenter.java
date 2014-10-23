@@ -241,12 +241,8 @@ public class Presenter extends Observable implements IPresenter {
 	}
 	
 	public void buildSettlement(VertexLocation vertLoc) {
-		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound")) {
-			proxy.buildSettlement(playerInfo.getIndex(), vertLoc, true, cookie);
-		}
-		else {
-			proxy.buildSettlement(playerInfo.getIndex(), vertLoc, false, cookie);
-		}
+		
+		state.buildSettlement(this, vertLoc);
 	}
 	
 	public boolean canPlaceCity(VertexLocation vertLoc) {

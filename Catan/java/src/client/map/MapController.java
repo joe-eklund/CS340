@@ -198,7 +198,7 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		if ((presenter.getState().getStatus().equals("FirstRound") || presenter.getState().getStatus().equals("SecondRound")) &&
 				presenter.isPlayersTurn()) {
-			//getView().setUpPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
+			getView().setUpPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
 		}
 	}
 }
