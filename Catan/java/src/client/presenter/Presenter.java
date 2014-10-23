@@ -183,7 +183,10 @@ public class Presenter extends Observable implements IPresenter {
 	
 	public Boolean canPlaceRoad(EdgeLocation edgeLoc) {
 		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound")) {
-			return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, true);
+			if (edgeLoc.getHexLoc().getX() == 0 && edgeLoc.getHexLoc().getY() == -2)
+				return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, true);
+			else 
+				return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, true);
 		}
 		else {
 			//TESTING BUILDING ROAD, SETTLEMENT, CITY

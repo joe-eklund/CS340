@@ -429,7 +429,8 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		
 		//if hex is water and the neighbor in the direction of the vertex location is water this location is invalid
 		if (!board.containsKey(northNeighborLoc) || !board.containsKey(sideNeighborLoc) || 
-			(board.get(northNeighborLoc).getType() == HexType.WATER && 
+			(board.get(normVerLoc.getHexLoc()).getType() == HexType.WATER &&
+			board.get(northNeighborLoc).getType() == HexType.WATER && 
 			board.get(sideNeighborLoc).getType() == HexType.WATER)) {
 			
 			return false;
