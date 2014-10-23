@@ -18,4 +18,8 @@ public class Playing extends GamePlay {
 	public void buildRoad(IPresenter presenter, EdgeLocation roadLocation) {
 		presenter.getProxy().buildRoad(presenter.getPlayerInfo().getIndex(), roadLocation, false, presenter.getCookie());
 	}
+	@Override
+	public void buyDevCard(IPresenter presenter) {
+		presenter.getProxy().buyDevCard(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
+	}
 }
