@@ -47,8 +47,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
-		//This all needs to be changed
-		//where ever this model is closed then the state changes needs to be changed right after it.
+//		presenter.addAI(aiToAdd)
 	}
 
 	@Override

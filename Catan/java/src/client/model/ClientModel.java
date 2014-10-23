@@ -1,6 +1,7 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -841,7 +842,10 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	private HashMap<String, CatanColor> getPlayerColorMap() {
 		HashMap<String, CatanColor> playerColors = new HashMap<String, CatanColor>();
 		if(this.serverModel != null) {
-			for(Player player: this.serverModel.getPlayers()) {
+			List<Player> players = new ArrayList<Player>(presenter.getClientModel().getServerModel().getPlayers());
+			players.removeAll(Collections.singleton(null));
+			
+			for(Player player: players) {
 				playerColors.put(player.getName(), CatanColor.valueOf(player.getColor().toUpperCase()));
 			}
 		}

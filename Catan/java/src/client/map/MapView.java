@@ -117,10 +117,10 @@ public class MapView extends PanelView implements IMapView
 		else if (player.getRoads() == 13 && player.getSettlements() == 4 && presenter.getState().getStatus().equals("SecondRound")) { 
 			startDrop(PieceType.SETTLEMENT, pieceColor, false);
 		}
-		else {
-			
-			System.err.println("Something wrong in setUpPhase of MapView.java");
-		}
+//		else {
+//			
+//			System.err.println("Something wrong in setUpPhase of MapView.java");
+//		}
 	}
 	
 	@Override
