@@ -21,6 +21,13 @@ public class VertexLocation
 	}
 	
 	/**
+	 * Class constructor 2
+	 */
+	public VertexLocation(){
+		
+	}
+	
+	/**
 	 * @obvious
 	 */
 	public HexLocation getHexLoc()
