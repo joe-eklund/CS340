@@ -67,9 +67,9 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void startBuyCard() {
-		//if(/*have resources*/) {
+		if(presenter.getClientModel().canBuyDevCard(presenter.getPlayerInfo().getIndex())) {
 			buyCardView.showModal();
-		//}
+		}
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void buyCard() {
-
+		presenter.buyDevCard();
 		getBuyCardView().closeModal();
 	}
 

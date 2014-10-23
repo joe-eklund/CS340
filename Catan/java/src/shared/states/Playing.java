@@ -24,4 +24,9 @@ public class Playing extends GamePlay {
 	public void buildSettlement(IPresenter presenter, VertexLocation vertLoc) {
 		presenter.getProxy().buildSettlement(presenter.getPlayerInfo().getIndex(), vertLoc, false, presenter.getCookie());
 	}
+
+	@Override
+	public void buyDevCard(IPresenter presenter) {
+		presenter.getProxy().buyDevCard(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
+	}
 }
