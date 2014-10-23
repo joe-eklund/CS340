@@ -35,8 +35,7 @@ public class ChatController extends Controller implements IChatController, Obser
 
 	@Override
 	public void update(Observable o, Object arg) {
-		IChatView view = (IChatView) getView();
-		view.setEntries(presenter.getClientModel().getChatLog());
+		getView().setEntries(presenter.getClientModel().getChatLog());
 	}
 
 }
