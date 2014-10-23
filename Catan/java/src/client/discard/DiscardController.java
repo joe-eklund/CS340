@@ -1,8 +1,14 @@
 package client.discard;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import shared.definitions.*;
 import client.base.*;
+import client.main.Catan;
 import client.misc.*;
+import client.model.Resources;
+import client.presenter.IPresenter;
 
 
 /**
@@ -10,6 +16,7 @@ import client.misc.*;
  */
 public class DiscardController extends Controller implements IDiscardController {
 
+	private IPresenter presenter;
 	private IWaitView waitView;
 	
 	/**
@@ -21,7 +28,8 @@ public class DiscardController extends Controller implements IDiscardController 
 	public DiscardController(IDiscardView view, IWaitView waitView) {
 		
 		super(view);
-		
+		presenter = Catan.getPresenter();
+//		presenter.addObserverToModel(this);
 		this.waitView = waitView;
 	}
 
@@ -35,7 +43,7 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	@Override
 	public void increaseAmount(ResourceType resource) {
-		
+		Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getID()).getResources();
 	}
 
 	@Override
@@ -45,9 +53,8 @@ public class DiscardController extends Controller implements IDiscardController 
 
 	@Override
 	public void discard() {
-		
 		getDiscardView().closeModal();
+		
 	}
-
 }
 

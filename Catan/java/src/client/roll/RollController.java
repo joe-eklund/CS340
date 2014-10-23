@@ -53,7 +53,8 @@ public class RollController extends Controller implements IRollController, Obser
 		int diceRoll = dice1 + dice2;
 //		System.out.println("dice1 " + dice1 + " dice2 " + dice2);
 		getResultView().setRollValue(diceRoll);
-		getResultView().showModal();
+		rollView.closeModal();
+		getResultView().showModal();	
 		presenter.rollNumber(diceRoll);
 	}
 
@@ -61,6 +62,7 @@ public class RollController extends Controller implements IRollController, Obser
 	public void update(Observable o, Object arg) {
 		if (presenter.getState().getStatus().equals("Rolling") && presenter.isPlayersTurn()) {
 			rollView.showModal();
+			rollView.startTimer();
 		}
 	}
 

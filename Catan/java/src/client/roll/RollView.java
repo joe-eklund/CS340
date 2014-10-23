@@ -26,9 +26,11 @@ public class RollView extends OverlayView implements IRollView {
 	private final int BORDER_WIDTH = 1;
 
 	private JLabel label;
+	private JLabel countDownLabel;
     private JLabel imageLabel;
 	private JButton rollButton;
 	private JPanel buttonPanel;
+	private Timer timer;
 
 	public RollView() {
 		
@@ -36,7 +38,7 @@ public class RollView extends OverlayView implements IRollView {
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
 		
-		label = new JLabel("Roll View");
+		label = new JLabel("Roll for your turn");
 		Font labelFont = label.getFont();
 		labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
 		label.setFont(labelFont);
@@ -59,11 +61,18 @@ public class RollView extends OverlayView implements IRollView {
 		
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));		
+		countDownLabel = new JLabel("Rolling automatically in " + "5" + " seconds");
+		countDownLabel.setFont(labelFont);
 		buttonPanel.add(rollButton);		
-		this.add(buttonPanel, BorderLayout.SOUTH);
+		buttonPanel.add(countDownLabel);
+		this.add(buttonPanel, BorderLayout.SOUTH);   
+				
+		timer = new Timer(0, actionListener);
 	}
 
 	private ActionListener actionListener = new ActionListener() {
+		int elapsedSeconds = 5000;
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
@@ -72,6 +81,14 @@ public class RollView extends OverlayView implements IRollView {
 				closeModal();
 				
 				getController().rollDice();
+			}
+			if(e.getSource() == timer){
+				elapsedSeconds--;
+				countDownLabel.setText("Rolling automatically in " + (elapsedSeconds+1000)/1000 + " seconds");
+		        if(elapsedSeconds == 0){
+		            timer.stop();
+		            getController().rollDice();
+		        }
 			}
 		}	
 	};
@@ -85,6 +102,11 @@ public class RollView extends OverlayView implements IRollView {
 	@Override
 	public void setMessage(String message) {
 		label.setText(message);
+	}
+	
+	@Override
+	public void startTimer(){
+		timer.start(); 
 	}
 
 }
