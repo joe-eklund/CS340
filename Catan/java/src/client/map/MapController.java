@@ -126,7 +126,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
-		
 		getView().startDrop(pieceType, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), true);
 	}
 	
@@ -135,10 +134,13 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void playSoldierCard() {	
-		
+		RobView rob=new RobView();
+		//look at line 256 on MapView-for further ideas
+		rob.showModal();
 	}
 	
 	public void playRoadBuildingCard() {
+		//look at line 212 on MapView for potential change
 		getView().roadBuildingPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
 	}
 	
