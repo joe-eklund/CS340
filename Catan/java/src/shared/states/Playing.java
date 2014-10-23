@@ -1,6 +1,7 @@
 package shared.states;
 
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.MoveResponse;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
@@ -18,12 +19,24 @@ public class Playing extends GamePlay {
 	
 	@Override
 	public void buildRoad(IPresenter presenter, EdgeLocation roadLocation) {
-		presenter.getProxy().buildRoad(presenter.getPlayerInfo().getIndex(), roadLocation, false, presenter.getCookie());
+		MoveResponse response = presenter.getProxy().buildRoad(presenter.getPlayerInfo().getIndex(), roadLocation, false, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error building road in playing state");
+		}
 	}
 	
 	@Override
 	public void buildSettlement(IPresenter presenter, VertexLocation vertLoc) {
-		presenter.getProxy().buildSettlement(presenter.getPlayerInfo().getIndex(), vertLoc, false, presenter.getCookie());
+		MoveResponse response = presenter.getProxy().buildSettlement(presenter.getPlayerInfo().getIndex(), vertLoc, false, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error building settlement in playing state");
+		}
 	}
 
 	@Override
@@ -34,11 +47,23 @@ public class Playing extends GamePlay {
 	@Override
 	public void maritimeTrade(IPresenter presenter, int ratio,
 			ResourceType inputResource, ResourceType outputResource) {
-		presenter.getProxy().maritimeTrade(presenter.getPlayerInfo().getIndex(), ratio, inputResource, outputResource, presenter.getCookie());
+		MoveResponse response = presenter.getProxy().maritimeTrade(presenter.getPlayerInfo().getIndex(), ratio, inputResource, outputResource, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error with maritime trade in playing state");
+		}
 	}
 	
 	@Override
 	public void finishTurn(IPresenter presenter) {
-		presenter.getProxy().finishTurn(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
+		MoveResponse response = presenter.getProxy().finishTurn(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error with ending turn in playing state");
+		}
 	}
 }

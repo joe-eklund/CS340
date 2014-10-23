@@ -11,7 +11,7 @@ public abstract class GamePlay extends State {
 	
 	@Override
 	public void sendChat(IPresenter presenter, String message){
-		MoveResponse response = presenter.getProxy().sendChat(presenter.getPlayerInfo().getID(), message, presenter.getCookie());
+		MoveResponse response = presenter.getProxy().sendChat(presenter.getPlayerInfo().getIndex(), message, presenter.getCookie());
 		if(response.isSuccessful()) {
 			presenter.updateServerModel(response.getGameModel());
 		}
