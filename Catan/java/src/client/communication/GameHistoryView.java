@@ -37,7 +37,7 @@ public class GameHistoryView extends PanelView implements IGameHistoryView
 	}
 	
 	@Override
-	public void setEntries(final List<LogEntry> entries)
+	public void setEntries(final List<CommsLogEntry> entries)
 	{
 		
 		// Can't set entries immediately, because logPanel doesn't

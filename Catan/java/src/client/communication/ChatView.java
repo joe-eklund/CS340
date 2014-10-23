@@ -75,7 +75,7 @@ public class ChatView extends PanelView implements IChatView {
     }
 
     @Override
-    public void setEntries(final List<LogEntry> entries) {
+    public void setEntries(final List<CommsLogEntry> entries) {
         chatPanel.setEntries(entries);
     }
     

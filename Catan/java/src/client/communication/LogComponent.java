@@ -25,7 +25,7 @@ public class LogComponent extends JComponent
 	
 	private Font font;
 	
-	private List<LogEntry> entries;
+	private List<CommsLogEntry> entries;
 	
 	public LogComponent()
 	{		
@@ -38,12 +38,12 @@ public class LogComponent extends JComponent
 		setEntries(null);
 	}
 	
-	public void setEntries(List<LogEntry> entries)
+	public void setEntries(List<CommsLogEntry> entries)
 	{		
 		if(entries == null || entries.size() == 0)
 		{
-			this.entries = new ArrayList<LogEntry>();
-			this.entries.add(new LogEntry(CatanColor.WHITE, "No messages"));
+			this.entries = new ArrayList<CommsLogEntry>();
+			this.entries.add(new CommsLogEntry(CatanColor.WHITE, "No messages"));
 		}
 		else
 		{
@@ -91,7 +91,7 @@ public class LogComponent extends JComponent
 		
 		g2.setFont(font);
 		
-		for (LogEntry entry : entries)
+		for (CommsLogEntry entry : entries)
 		{		
 			List<String> lines = wrapText(fontContext, entry.getMessage(), width);
 			int rectHeight = TOP_MARGIN + BOTTOM_MARGIN + lines.size()

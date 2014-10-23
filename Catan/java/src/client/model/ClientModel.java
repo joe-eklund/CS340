@@ -1,14 +1,12 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
-
-
-//import client.model.interfaces.IClientModel;
-import client.model.interfaces.IHex;
-import client.presenter.IPresenter;
-import client.presenter.Presenter;
+import shared.definitions.CatanColor;
 import shared.definitions.GameModel;
 import shared.definitions.HexType;
 import shared.definitions.ResourceHand;
@@ -19,8 +17,11 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-
-import java.util.Map;
+import client.communication.CommsLogEntry;
+//import client.model.interfaces.IClientModel;
+import client.model.interfaces.IHex;
+import client.presenter.IPresenter;
+import client.presenter.Presenter;
 
 /**
  * The client side representation of the model.
@@ -32,6 +33,8 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	private GameModel gameModel;
 	private ServerModel serverModel;
 	private IPresenter presenter;
+	private List<client.communication.CommsLogEntry> log;
+	private List<client.communication.CommsLogEntry> chat;
 	
 	/**
 	 * ClientModel constructor
@@ -40,6 +43,17 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	public ClientModel(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		gameModel = new GameModel(serverModel);
+		HashMap<String, CatanColor> playerColorMap = this.getPlayerColorMap();
+		log = new ArrayList<client.communication.CommsLogEntry>();
+		chat = new ArrayList<client.communication.CommsLogEntry>();
+		if(serverModel != null) {
+			for(LogEntry entry : serverModel.getLog().getLogMessages()) {
+				log.add(new client.communication.CommsLogEntry(playerColorMap.get(entry.getSource()), entry.getMessage()));
+			}
+			for(LogEntry chatMessage : serverModel.getChat().getMessages()) {
+				chat.add(new client.communication.CommsLogEntry(playerColorMap.get(chatMessage.getSource()), chatMessage.getMessage()));
+			}
+		}
 	}
 	
 	/**
@@ -51,6 +65,18 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	public void updateServerModel(ServerModel newServerModel) {
 		this.serverModel = newServerModel;
 		gameModel = new GameModel(newServerModel);
+		
+		HashMap<String, CatanColor> playerColorMap = this.getPlayerColorMap();
+		if(serverModel != null) {
+			log = new ArrayList<client.communication.CommsLogEntry>();
+			for(LogEntry entry : serverModel.getLog().getLogMessages()) {
+				log.add(new client.communication.CommsLogEntry(playerColorMap.get(entry.getSource()), entry.getMessage()));
+			}
+			chat = new ArrayList<client.communication.CommsLogEntry>();
+			for(LogEntry chatMessage : serverModel.getChat().getMessages()) {
+				chat.add(new client.communication.CommsLogEntry(playerColorMap.get(chatMessage.getSource()), chatMessage.getMessage()));
+			}
+		}
 		
 		notifyModelObservers();
 	}
@@ -810,6 +836,24 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 
 	public void setPresenter(Presenter presenter2) {
 		presenter = presenter2;
+	}
+	
+	private HashMap<String, CatanColor> getPlayerColorMap() {
+		HashMap<String, CatanColor> playerColors = new HashMap<String, CatanColor>();
+		if(this.serverModel != null) {
+			for(Player player: this.serverModel.getPlayers()) {
+				playerColors.put(player.getName(), CatanColor.valueOf(player.getColor().toUpperCase()));
+			}
+		}
+		return playerColors;
+	}
+
+	public List<CommsLogEntry> getChatLog() {
+		return chat;
+	}
+
+	public List<CommsLogEntry> getGameLog() {
+		return log;
 	}
 }
 
