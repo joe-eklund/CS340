@@ -43,8 +43,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(presenter.getState().getStatus() == "Playing") {
+		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {
 			getView().updateGameState("Finish Turn", true);
+		}
+		else if (presenter.getState().getStatus().equals("Rolling") && presenter.isPlayersTurn()) {
+			getView().updateGameState("Finish Turn", false);
 		}
 		else {
 			getView().updateGameState("Waiting for other Players", false);

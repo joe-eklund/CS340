@@ -2,3 +2,6 @@ Having two players in joinGame state looking at the list of games and one player
 
 When two logged in players create a game, the nubmers of the listed game get out of order
 
+Playing a game with one person and 3 AI often skips the rolling state
+
+Top bar should be color of the player, I think (TurnTracker.java initFromModel())

@@ -85,7 +85,7 @@ public class RollView extends OverlayView implements IRollView {
 			if(e.getSource() == timer){
 				elapsedSeconds--;
 				countDownLabel.setText("Rolling automatically in " + (elapsedSeconds+1000)/1000 + " seconds");
-		        if(elapsedSeconds == 0){
+		        if(elapsedSeconds <= 0){
 		            timer.stop();
 		            getController().rollDice();
 		        }

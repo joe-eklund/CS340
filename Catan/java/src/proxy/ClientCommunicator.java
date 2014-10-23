@@ -88,6 +88,8 @@ public class ClientCommunicator implements ICommunicator {
 	 */
 	@Override
 	public CommandResponse executeCommand(RequestType requestType, List<Pair<String,String>> headers, String commandName, Object commandParameters, Class<?> responseCastClass){
+		
+		System.out.println();
 		System.out.println(commandName);
 		CommandResponse serverResponse = null;
 		String translatedJson = jsonTrans.translateTo(commandParameters);

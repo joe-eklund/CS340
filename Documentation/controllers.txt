@@ -1,6 +1,6 @@
 EASY 
 RollController
- 
+PlayerWaitingController   
 
 
 HARD
@@ -20,4 +20,3 @@ GameHistoryController
 JoinGameController
 PointsController
 TurnTrackerController
-PlayerWaitingController  
