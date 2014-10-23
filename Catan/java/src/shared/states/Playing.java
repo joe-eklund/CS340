@@ -1,6 +1,7 @@
 package shared.states;
 
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 import client.presenter.IPresenter;
@@ -28,5 +29,11 @@ public class Playing extends GamePlay {
 	@Override
 	public void buyDevCard(IPresenter presenter) {
 		presenter.getProxy().buyDevCard(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
+	}
+	
+	@Override
+	public void maritimeTrade(IPresenter presenter, int ratio,
+			ResourceType inputResource, ResourceType outputResource) {
+		presenter.getProxy().maritimeTrade(presenter.getPlayerInfo().getIndex(), ratio, inputResource, outputResource, presenter.getCookie());
 	}
 }
