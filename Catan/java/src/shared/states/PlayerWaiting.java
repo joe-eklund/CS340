@@ -22,8 +22,8 @@ public class PlayerWaiting extends State {
 	
 	@Override
 	public void addAI(IPresenter presenter, String aiToAdd) {
-		@SuppressWarnings("unused")
-		AddAIResponse response = presenter.getProxy().addAI("LARGEST_ARMY", presenter.getCookie());
+//		AddAIResponse response = presenter.getProxy().addAI("LARGEST_ARMY", presenter.getCookie());
+		AddAIResponse response = presenter.getProxy().addAI(aiToAdd, presenter.getCookie());
 		
 	}
 }

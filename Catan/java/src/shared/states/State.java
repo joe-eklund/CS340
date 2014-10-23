@@ -1,5 +1,8 @@
 package shared.states;
 
+import java.util.Collections;
+import java.util.List;
+
 import shared.ServerMethodResponses.AddAIResponse;
 import shared.ServerMethodResponses.ChangeLogLevelResponse;
 import shared.ServerMethodResponses.CreateGameResponse;
@@ -19,6 +22,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.model.Log;
+import client.model.Player;
 import client.presenter.IPresenter;
 
 public abstract class State implements IState {
@@ -235,5 +239,28 @@ public abstract class State implements IState {
 				status.equals("Playing") || 
 				status.equals("Discarding") ||
 				status.equals("Robbing"));
+	}
+	
+	@Override
+	public void update(IPresenter presenter) {
+		
+		GetGameModelResponse response = getGameModel(presenter);
+		if(response != null && response.isSuccessful()) {
+			if(response.isNeedToUpdate()) {
+				System.out.println("UPDATING MODEL");
+				
+				List<Player> players = response.getGameModel().getPlayers();
+				players.removeAll(Collections.singleton(null));
+				if(players.size() == 4) {
+					presenter.setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
+				}
+				
+				presenter.setVersion(response.getGameModel().getVersion());
+				presenter.getClientModel().updateServerModel(response.getGameModel());
+			}
+		}
+		else {
+			System.err.println("Error: Unable to process update game model request!");
+		}
 	}
 }

@@ -1,0 +1,4 @@
+Having two players in joinGame state looking at the list of games and one player creates a new game.  Does the other player have the option to create a new game?
+
+When two logged in players create a game, the nubmers of the listed game get out of order
+

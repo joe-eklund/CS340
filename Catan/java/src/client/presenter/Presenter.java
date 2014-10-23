@@ -78,7 +78,7 @@ public class Presenter extends Observable implements IPresenter {
 
 	@Override
 	public void run() {
-		updateModel();
+		state.update(this);
 		System.out.println("CURRENT STATE IS: " + state.getStatus());
 		pollCycleCount++;
 	}
@@ -161,28 +161,6 @@ public class Presenter extends Observable implements IPresenter {
 	@Override
 	public ArrayList<GameDescription> getGames() {
 		return games;
-	}
-	
-	private void updateModel() {
-		
-		GetGameModelResponse response = state.getGameModel(this);
-		if(response != null && response.isSuccessful()) {
-			if(response.isNeedToUpdate()) {
-				System.out.println("UPDATING MODEL");
-				
-				List<Player> players = response.getGameModel().getPlayers();
-				players.removeAll(Collections.singleton(null));
-				if(players.size() == 4) {
-					setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
-				}
-				
-				version = response.getGameModel().getVersion();
-				clientModel.updateServerModel(response.getGameModel());
-			}
-		}
-		else {
-			System.err.println("Error: Unable to process update game model request!");
-		}
 	}
 	
 	@Override
@@ -430,6 +408,11 @@ public class Presenter extends Observable implements IPresenter {
 			break;
 		}
 		
+	}
+
+	@Override
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 }

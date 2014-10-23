@@ -89,4 +89,6 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 
 	public boolean isInAnyPlayingState();
 
+	public void update(IPresenter presenter);
+
 }

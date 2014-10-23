@@ -62,4 +62,9 @@ public class Joining extends State {
 			System.err.println("Error: Unable to process update game model request!");
 		}
 	}
+	
+	@Override
+	public void update(IPresenter presenter) {
+		listGames(presenter);
+	}
 }

@@ -1,5 +1,6 @@
 package client.join;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,6 +27,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private GameDescription currentGame;
 	
 	private IPresenter presenter;
+	private int numGames;
+	private ArrayList<CatanColor> currentColors;
 	
 	/**
 	 * JoinGameController constructor
@@ -43,6 +46,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		
+		numGames = 0;
 	}
 	
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
@@ -54,6 +59,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+		
+		numGames = 0;
 	}
 	
 	private void setPresenter(IPresenter presenter2) {
@@ -119,6 +126,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		presenter.listGames();
 		//this.getJoinGameView().setGames(response.getGameDescriptions(), presenter.getPlayerInfo());
 		getJoinGameView().showModal();
+		Catan.getPoller().start();
 	}
 
 	@Override
@@ -175,13 +183,30 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getJoinGameView().closeModal();
 		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
 //		presenter.setSystemState(SystemState.PLAYERWAITING); //important that this does not move
-		Catan.getPoller().start();
 		joinAction.execute();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.getJoinGameView().setGames(presenter.getGames(), presenter.getPlayerInfo());
+		if (presenter.getGames().size() > numGames) {
+			this.getJoinGameView().setGames(presenter.getGames(), presenter.getPlayerInfo());
+			numGames = presenter.getGames().size();
+		}
+		
+		if (currentGame != null) {
+			GameDescription newGame = presenter.getGames().get(currentGame.getId());
+			for (int i = 0; i < newGame.getPlayerDescriptions().size(); i++) {
+				if (i < currentGame.getPlayerDescriptions().size()) {
+					if (!currentGame.getPlayerDescriptions().get(i).getColor().equals(newGame.getPlayerDescriptions().get(i).getColor())) {
+						getSelectColorView().setColorEnabled(CatanColor.valueOf(currentGame.getPlayerDescriptions().get(i).getColor().toUpperCase()), true);
+						getSelectColorView().setColorEnabled(CatanColor.valueOf(newGame.getPlayerDescriptions().get(i).getColor().toUpperCase()), false);
+					}
+				}
+				else {
+					getSelectColorView().setColorEnabled(CatanColor.valueOf(newGame.getPlayerDescriptions().get(i).getColor().toUpperCase()), false);
+				}
+			}
+		}
 	}
 
 }

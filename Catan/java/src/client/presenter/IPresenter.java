@@ -149,4 +149,6 @@ public interface IPresenter extends Runnable {
 	public void playMonumentCard();
 
 	public void setStateBasedOffString(String status);
+
+	public void setVersion(int version);
 }
