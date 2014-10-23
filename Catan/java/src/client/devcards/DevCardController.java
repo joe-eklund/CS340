@@ -127,9 +127,9 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void update(Observable o, Object arg) {
-		int playerIndex = presenter.getPlayerInfo().getIndex();
+		
 		ServerModel model = presenter.getClientModel().getServerModel();
-		Player player = model.getPlayerByID(playerIndex);
+		Player player = model.getPlayerByID(presenter.getPlayerInfo().getID());
 		DevCards cards = player.getOldDevCards();
 		
 		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, cards.getMonopoly());
