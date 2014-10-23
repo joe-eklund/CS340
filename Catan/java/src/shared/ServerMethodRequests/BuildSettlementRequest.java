@@ -1,6 +1,6 @@
 package shared.ServerMethodRequests;
 
-import shared.locations.VertexLocation;
+import shared.definitions.VertexLocationRequest;
 
 /**
  * A class for encapsulating BuildSettlement request parameters
@@ -17,7 +17,7 @@ import shared.locations.VertexLocation;
 public class BuildSettlementRequest {
 	private String type;
 	private int playerIndex;
-	private VertexLocation vertexLocation;
+	private VertexLocationRequest vertexLocation;
 	private boolean free;
 
 	/**
@@ -35,7 +35,7 @@ public class BuildSettlementRequest {
 	 * @param free
 	 */
 	public BuildSettlementRequest(int playerIndex,
-			VertexLocation vertexLocation, boolean free) {
+			VertexLocationRequest vertexLocation, boolean free) {
 		this.type = "buildSettlement";
 		this.playerIndex = playerIndex;
 		this.vertexLocation = vertexLocation;
@@ -50,7 +50,7 @@ public class BuildSettlementRequest {
 		return playerIndex;
 	}
 
-	public VertexLocation getVertexLocation() {
+	public VertexLocationRequest getVertexLocation() {
 		return vertexLocation;
 	}
 
@@ -66,7 +66,7 @@ public class BuildSettlementRequest {
 		this.playerIndex = playerIndex;
 	}
 
-	public void setVertexLocation(VertexLocation vertexLocation) {
+	public void setVertexLocation(VertexLocationRequest vertexLocation) {
 		this.vertexLocation = vertexLocation;
 	}
 

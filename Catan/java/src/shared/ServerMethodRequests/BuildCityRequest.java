@@ -1,5 +1,6 @@
 package shared.ServerMethodRequests;
 
+import shared.definitions.VertexLocationRequest;
 import shared.locations.VertexLocation;
 
 /**
@@ -16,7 +17,7 @@ import shared.locations.VertexLocation;
 public class BuildCityRequest {
 	private String type;
 	private int playerIndex;
-	private VertexLocation cityLocation;
+	private VertexLocationRequest cityLocation;
 
 	/**
 	 * @post
@@ -28,7 +29,7 @@ public class BuildCityRequest {
 	 * @param playerIndex
 	 * @param cityLocation
 	 */
-	public BuildCityRequest(int playerIndex, VertexLocation cityLocation) {
+	public BuildCityRequest(int playerIndex, VertexLocationRequest cityLocation) {
 		this.type = "buildCity";
 		this.playerIndex = playerIndex;
 		this.cityLocation = cityLocation;
@@ -51,7 +52,7 @@ public class BuildCityRequest {
 	/**
 	 * @obvious
 	 */
-	public VertexLocation getCityLocation() {
+	public VertexLocationRequest getCityLocation() {
 		return cityLocation;
 	}
 
@@ -72,7 +73,7 @@ public class BuildCityRequest {
 	/**
 	 * @obvious
 	 */
-	public void setCityLocation(VertexLocation cityLocation) {
+	public void setCityLocation(VertexLocationRequest cityLocation) {
 		this.cityLocation = cityLocation;
 	}
 }

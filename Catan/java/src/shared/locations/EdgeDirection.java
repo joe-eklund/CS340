@@ -1,5 +1,7 @@
 package shared.locations;
 
+import com.google.gson.annotations.SerializedName;
+
 import client.exceptions.ClientModelException;
 
 /**
@@ -10,7 +12,12 @@ import client.exceptions.ClientModelException;
 public enum EdgeDirection
 {
 	
-	NorthWest, North, NorthEast, SouthEast, South, SouthWest;
+	@SerializedName("NW")NorthWest, 
+	@SerializedName("N")North, 
+	@SerializedName("NE")NorthEast, 
+	@SerializedName("SE")SouthEast, 
+	@SerializedName("S")South, 
+	@SerializedName("SW")SouthWest;
 	
 	private EdgeDirection opposite;
 	

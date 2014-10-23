@@ -40,8 +40,8 @@ import shared.definitions.ResourceHand;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
 import shared.definitions.User;
+import shared.definitions.VertexLocationRequest;
 import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -300,7 +300,7 @@ public class ClientCommunicatorTest {
 		assertTrue(mockResponse.getResponseCode() == 200);
 	}
 	
-//	@Test
+	@Test
 	public void testBuildRoad(){
 		Pair<String, String> user = new Pair<String, String>("Cookie", "catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D");
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=2");
@@ -317,7 +317,7 @@ public class ClientCommunicatorTest {
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=0");
 		headers.add(user);
 		headers.add(game);		
-		VertexLocation vertex = new VertexLocation(new HexLocation(1,1),VertexDirection.NorthWest);
+		VertexLocationRequest vertex = new VertexLocationRequest(1,1,VertexDirection.NorthWest);
 		BuildSettlementRequest data1 = new BuildSettlementRequest(1 ,vertex, true);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildSettlement", data1, ServerModel.class);
 		assertTrue(mockResponse.getResponseCode() == 200);
@@ -329,7 +329,7 @@ public class ClientCommunicatorTest {
 		Pair<String, String> game = new Pair<String, String>("Cookie", "catan.game=0");
 		headers.add(user);
 		headers.add(game);
-		VertexLocation vertex = new VertexLocation(new HexLocation(3,4),VertexDirection.NorthWest);
+		VertexLocationRequest vertex = new VertexLocationRequest(3,4,VertexDirection.NorthWest);
 
 		BuildCityRequest data = new BuildCityRequest(1, vertex);
 		CommandResponse mockResponse = CCTestor.executeCommand(RequestType.POST, headers, "moves/buildCity", data, ServerModel.class);

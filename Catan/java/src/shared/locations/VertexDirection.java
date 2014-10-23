@@ -1,5 +1,7 @@
 package shared.locations;
 
+import com.google.gson.annotations.SerializedName;
+
 import client.exceptions.ClientModelException;
 
 /**
@@ -9,7 +11,12 @@ import client.exceptions.ClientModelException;
  */
 public enum VertexDirection
 {
-	West, NorthWest, NorthEast, East, SouthEast, SouthWest;
+	@SerializedName("W")West, 
+	@SerializedName("NW")NorthWest, 
+	@SerializedName("NE")NorthEast, 
+	@SerializedName("E")East, 
+	@SerializedName("SE")SouthEast, 
+	@SerializedName("SW")SouthWest;
 	
 	private VertexDirection opposite;
 	

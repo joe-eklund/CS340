@@ -341,7 +341,8 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public MoveResponse buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free, String cookie) {
-		BuildSettlementRequest request = new BuildSettlementRequest(playerIndex, vertexLocation, free);
+		VertexLocationRequest vertexLocationRequest = new VertexLocationRequest(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir());
+		BuildSettlementRequest request = new BuildSettlementRequest(playerIndex, vertexLocationRequest, free);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
@@ -351,7 +352,8 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public MoveResponse buildCity(int playerIndex, VertexLocation vertexLocation, String cookie) {
-		BuildCityRequest request = new BuildCityRequest(playerIndex, vertexLocation);
+		VertexLocationRequest vertexLocationRequest = new VertexLocationRequest(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir());
+		BuildCityRequest request = new BuildCityRequest(playerIndex, vertexLocationRequest);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
