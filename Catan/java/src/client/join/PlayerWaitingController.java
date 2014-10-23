@@ -47,7 +47,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void addAI() {
-//		presenter.addAI(aiToAdd)
+		presenter.addAI(getView().getSelectedAI());
 	}
 
 	@Override

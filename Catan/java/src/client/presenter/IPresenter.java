@@ -115,7 +115,7 @@ public interface IPresenter extends Runnable {
 
 	public PostGameCommandsResponse postGameCommands( Log commands);
 
-	public AddAIResponse addAI( String aiToAdd);
+	public void addAI( String aiToAdd);
 
 	public ChangeLogLevelResponse changeLogLevel( ServerLogLevel logLevel);
 

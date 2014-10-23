@@ -50,7 +50,7 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 
 	public ListAIResponse listAI(IPresenter presenter);
 
-	public AddAIResponse addAI(IPresenter presenter, String aiToAdd);
+	public void addAI(IPresenter presenter, String aiToAdd);
 
 	public ChangeLogLevelResponse changeLogLevel(IPresenter presenter, ServerLogLevel logLevel);
 

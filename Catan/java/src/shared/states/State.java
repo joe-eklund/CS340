@@ -125,9 +125,9 @@ public abstract class State implements IState {
 	}
 
 	@Override
-	public AddAIResponse addAI(IPresenter presenter, String aiToAdd) {
+	public void addAI(IPresenter presenter, String aiToAdd) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override

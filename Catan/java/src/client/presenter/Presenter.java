@@ -340,8 +340,8 @@ public class Presenter extends Observable implements IPresenter {
 	}
 
 	@Override
-	public AddAIResponse addAI(String aiToAdd) {
-		return this.state.addAI(this, aiToAdd);
+	public void addAI(String aiToAdd) {
+		this.state.addAI(this, aiToAdd);
 	}
 
 	@Override
