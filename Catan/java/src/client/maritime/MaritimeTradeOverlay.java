@@ -253,7 +253,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 			else if (res == ResourceType.ORE)	{  giveore.setEnabled(true);} 
 		}
 	}
-
+	
 	private void createListeners() {
 		actionListener = new ActionListener() {
 			@Override
@@ -504,5 +504,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
 		g2d.dispose();
 		return bi;
 	}
+	
+	
 }
 
