@@ -94,5 +94,7 @@ public interface IMapView extends IView
 				   boolean isCancelAllowed);
 
 	void setUpPhase(CatanColor pieceColor);
+	
+	void roadBuildingPhase(CatanColor pieceColor);
 }
 
