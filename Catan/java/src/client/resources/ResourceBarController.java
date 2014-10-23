@@ -2,7 +2,11 @@ package client.resources;
 
 import java.util.*;
 
+import shared.definitions.ServerModel;
 import client.base.*;
+import client.main.Catan;
+import client.model.Player;
+import client.presenter.IPresenter;
 
 
 /**
@@ -11,12 +15,15 @@ import client.base.*;
 public class ResourceBarController extends Controller implements IResourceBarController {
 
 	private Map<ResourceBarElement, IAction> elementActions;
+	private IPresenter presenter;
 	
 	public ResourceBarController(IResourceBarView view) {
 
 		super(view);
 		
 		elementActions = new HashMap<ResourceBarElement, IAction>();
+		presenter = Catan.getPresenter();
+		presenter.addObserverToModel(this);
 	}
 
 	@Override
@@ -67,6 +74,18 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 			IAction action = elementActions.get(element);
 			action.execute();
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		int playerIndex = presenter.getPlayerInfo().getIndex();
+		ServerModel model = presenter.getClientModel().getServerModel();
+		Player player = model.getPlayerByID(playerIndex);
+		getView().setElementAmount(ResourceBarElement.BRICK, player.getBrick());
+		getView().setElementAmount(ResourceBarElement.ORE, player.getOre());
+		getView().setElementAmount(ResourceBarElement.SHEEP, player.getSheep());
+		getView().setElementAmount(ResourceBarElement.WHEAT, player.getWheat());
+		getView().setElementAmount(ResourceBarElement.WOOD, player.getWood());
 	}
 
 }

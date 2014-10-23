@@ -1,11 +1,13 @@
 package client.resources;
 
+import java.util.Observer;
+
 import client.base.*;
 
 /**
  * Interface for the resource bar controller
  */
-public interface IResourceBarController extends IController
+public interface IResourceBarController extends IController, Observer
 {
 	
 	/**
