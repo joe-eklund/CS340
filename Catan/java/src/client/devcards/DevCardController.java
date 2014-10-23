@@ -67,9 +67,9 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void startBuyCard() {
-		//if(/*have resources*/) {
+		if(presenter.getClientModel().canBuyDevCard(presenter.getPlayerInfo().getIndex())) {
 			buyCardView.showModal();
-		//}
+		}
 	}
 
 	@Override
@@ -80,14 +80,15 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void buyCard() {
-
+		presenter.buyDevCard();
 		getBuyCardView().closeModal();
 	}
 
 	@Override
 	public void startPlayCard() {
-		
-		getPlayCardView().showModal();
+		if(presenter.getClientModel().getServerModel().getPlayerByID(presenter.getPlayerInfo().getIndex()).getOldDevCards().getTotalDevCardCount()>0){
+			getPlayCardView().showModal();
+		}
 	}
 
 	@Override
@@ -98,12 +99,12 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-		
+		presenter.playMonopolyCard(resource);
 	}
 
 	@Override
 	public void playMonumentCard() {
-		
+		presenter.playMonumentCard();
 	}
 
 	@Override
@@ -120,7 +121,7 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
-		
+		presenter.playYearOfPlentyCard(resource1, resource2);
 	}
 
 	@Override
