@@ -111,10 +111,10 @@ public class MapView extends PanelView implements IMapView
 		else if (player.getRoads() == 14 && player.getSettlements() == 5) { 
 			startDrop(PieceType.SETTLEMENT, pieceColor, false);
 		}
-		else if (player.getRoads() == 14 && player.getSettlements() == 4) { 
+		else if (player.getRoads() == 14 && player.getSettlements() == 4 && presenter.getState().getStatus().equals("SecondRound")) { 
 			startDrop(PieceType.ROAD, pieceColor, false);
 		}
-		else if (player.getRoads() == 13 && player.getSettlements() == 4) { 
+		else if (player.getRoads() == 13 && player.getSettlements() == 4 && presenter.getState().getStatus().equals("SecondRound")) { 
 			startDrop(PieceType.SETTLEMENT, pieceColor, false);
 		}
 		else {
@@ -122,6 +122,7 @@ public class MapView extends PanelView implements IMapView
 			System.err.println("Something wrong in setUpPhase of MapView.java");
 		}
 	}
+	
 	@Override
 	public void roadBuildingPhase(CatanColor pieceColor) {
 		startDrop(PieceType.ROAD, pieceColor, false);	
