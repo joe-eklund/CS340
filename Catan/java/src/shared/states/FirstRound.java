@@ -27,5 +27,6 @@ public class FirstRound extends GamePlay {
 	@Override
 	public void buildSettlement(IPresenter presenter, VertexLocation vertLoc) {
 		presenter.getProxy().buildSettlement(presenter.getPlayerInfo().getIndex(), vertLoc, true, presenter.getCookie());
+		presenter.getProxy().finishTurn(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
 	}
 }
