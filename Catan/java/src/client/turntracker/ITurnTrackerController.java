@@ -1,11 +1,13 @@
 package client.turntracker;
 
+import java.util.Observer;
+
 import client.base.*;
 
 /**
  * Interface for the turn tracker controller
  */
-public interface ITurnTrackerController extends IController
+public interface ITurnTrackerController extends IController, Observer
 {
 	
 	/**

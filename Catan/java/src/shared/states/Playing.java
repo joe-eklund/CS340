@@ -36,4 +36,9 @@ public class Playing extends GamePlay {
 			ResourceType inputResource, ResourceType outputResource) {
 		presenter.getProxy().maritimeTrade(presenter.getPlayerInfo().getIndex(), ratio, inputResource, outputResource, presenter.getCookie());
 	}
+	
+	@Override
+	public void finishTurn(IPresenter presenter) {
+		presenter.getProxy().finishTurn(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
+	}
 }
