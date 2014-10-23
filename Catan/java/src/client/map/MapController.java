@@ -14,6 +14,7 @@ import client.model.Road;
 import client.model.Settlement;
 import client.model.interfaces.IHex;
 import client.presenter.IPresenter;
+import client.resources.ResourceBarElement;
 
 
 /**
@@ -137,8 +138,9 @@ public class MapController extends Controller implements IMapController, Observe
 		
 	}
 	
-	public void playRoadBuildingCard() {	
-		
+	public void playRoadBuildingCard() {
+		//createStartMoveAction(this,PieceType.ROAD)
+		//presenter.playRoadBuildingCard(spot1, spot2);
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {	
