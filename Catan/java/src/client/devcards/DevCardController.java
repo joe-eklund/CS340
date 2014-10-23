@@ -10,6 +10,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
+import shared.definitions.ServerModel;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -29,7 +30,7 @@ import client.presenter.IPresenter;
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController, Observer {
+public class DevCardController extends Controller implements IDevCardController {
 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
@@ -126,7 +127,16 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void update(Observable o, Object arg) {
-
+		int playerIndex = presenter.getPlayerInfo().getIndex();
+		ServerModel model = presenter.getClientModel().getServerModel();
+		Player player = model.getPlayerByID(playerIndex);
+		DevCards cards = player.getOldDevCards();
+		
+		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, cards.getMonopoly());
+		getPlayCardView().setCardAmount(DevCardType.MONUMENT, cards.getMonument());
+		getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, cards.getRoadBuilding());
+		getPlayCardView().setCardAmount(DevCardType.SOLDIER, cards.getSoldier());
+		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, cards.getYearOfPlenty());
 	}
 
 }

@@ -1,12 +1,14 @@
 package client.devcards;
 
+import java.util.Observer;
+
 import client.base.*;
 import shared.definitions.*;
 
 /**
  * "Dev card" controller interface
  */
-public interface IDevCardController extends IController
+public interface IDevCardController extends IController, Observer
 {
 	
 	/**
