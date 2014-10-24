@@ -17,7 +17,7 @@ import shared.locations.VertexLocation;
 public class BuildCityRequest {
 	private String type;
 	private int playerIndex;
-	private VertexLocationRequest cityLocation;
+	private VertexLocationRequest vertexLocation;
 
 	/**
 	 * @post
@@ -32,7 +32,7 @@ public class BuildCityRequest {
 	public BuildCityRequest(int playerIndex, VertexLocationRequest cityLocation) {
 		this.type = "buildCity";
 		this.playerIndex = playerIndex;
-		this.cityLocation = cityLocation;
+		this.vertexLocation = cityLocation;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class BuildCityRequest {
 	 * @obvious
 	 */
 	public VertexLocationRequest getCityLocation() {
-		return cityLocation;
+		return vertexLocation;
 	}
 
 	/**
@@ -74,6 +74,6 @@ public class BuildCityRequest {
 	 * @obvious
 	 */
 	public void setCityLocation(VertexLocationRequest cityLocation) {
-		this.cityLocation = cityLocation;
+		this.vertexLocation = cityLocation;
 	}
 }
