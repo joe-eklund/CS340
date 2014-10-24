@@ -5,6 +5,7 @@ import shared.ServerMethodResponses.MoveResponse;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import client.presenter.IPresenter;
 
@@ -12,7 +13,6 @@ public class Playing extends GamePlay {
 	public Playing() {
 		super("Playing");
 	}
-	
 	@Override 
 	public GetGameModelResponse getGameModel(IPresenter presenter) {
 		return presenter.getProxy().getGameModel(presenter.getVersion(), presenter.getCookie());
@@ -38,6 +38,18 @@ public class Playing extends GamePlay {
 		}
 		else {
 			System.err.println("Error building settlement in playing state");
+		}
+	}
+
+	@Override
+	public void playSoldierCard(IPresenter presenter, int playerIndex, int victimIndex,
+			HexLocation location) {
+		MoveResponse response=presenter.getProxy().robPlayer(playerIndex, victimIndex, location, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error robbing during play state");
 		}
 	}
 	

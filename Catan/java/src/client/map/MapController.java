@@ -146,7 +146,11 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {
-		presenter.robPlayer(presenter.getPlayerInfo().getIndex(),victim.getPlayerIndex(), robberSpot);
+		if(victim!=null){
+			presenter.robPlayer(presenter.getPlayerInfo().getIndex(),victim.getPlayerIndex(), robberSpot);
+		}else{
+			presenter.robPlayer(presenter.getPlayerInfo().getIndex(), -1, robberSpot);
+		}
 		robberSpot=null;
 	}
 	public void resumePlaying(){
