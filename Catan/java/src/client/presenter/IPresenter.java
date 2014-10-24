@@ -1,6 +1,7 @@
 package client.presenter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 import proxy.IServer;
@@ -155,4 +156,8 @@ public interface IPresenter extends Runnable {
 	public void setVersion(int version);
 
 	public boolean canPlaceRobber(HexLocation hexLoc);
+	
+	public PlayerDescription[] getPlayerInfoArray();
+	
+	public void setPlayerDescriptionsForGame(List<PlayerDescription> list);
 }
