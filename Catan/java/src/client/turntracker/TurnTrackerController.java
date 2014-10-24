@@ -45,7 +45,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("turn status:"+presenter.getState().getStatus()+" "+presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor());
 		boolean la=false;
 		boolean lr=false;
 		if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null){
