@@ -26,6 +26,8 @@ public class MapController extends Controller implements IMapController, Observe
 	private static IPresenter presenter;
 	private boolean haveInitializedHexes;
 	
+	private HexLocation robberSpot;
+	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
@@ -38,6 +40,7 @@ public class MapController extends Controller implements IMapController, Observe
 		initFromModel();
 		
 		haveInitializedHexes = false;
+		robberSpot=null;
 	}
 	
 	public IMapView getView() {
@@ -119,10 +122,15 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
+		//presenter.playSoldierCard(victimIndex, hexLoc);
+		//getView().placeRobber(hexLoc);
 		
-		getView().placeRobber(hexLoc);
-		
+		//System.out.println("*****should update players"+hexLoc.toString());
+		//presenter.getClientModel().getServerModel().getVictims();
+		getRobView().setPlayers(presenter.getClientModel().getServerModel().getVictims(presenter.getPlayerInfo().getIndex(),hexLoc));
 		getRobView().showModal();
+		robberSpot=hexLoc;
+		//presenter.playSoldierCard(victimIndex, hexLoc);
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
@@ -145,7 +153,8 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {
-		
+		presenter.playSoldierCard(presenter.getPlayerInfo().getIndex(),victim.getPlayerIndex(), robberSpot);
+		robberSpot=null;
 	}
 	public void resumePlaying(){
 		presenter.setStateBasedOffString("Playing");
@@ -155,8 +164,9 @@ public class MapController extends Controller implements IMapController, Observe
 	public void update(Observable o, Object arg) {
 		ClientModel model = presenter.getClientModel();
 		Map<HexLocation, IHex> board = model.getGameModel().getBoard();
-		if(presenter.getState().getStatus().equals("Robbing")){
-			getRobView().showModal();
+		if(presenter.getState().getStatus().equals("Robbing")&&robberSpot==null){
+			getView().startDrop(PieceType.ROBBER, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), false);
+			//getRobView().showModal();
 		}
 		
 		if (!haveInitializedHexes) {

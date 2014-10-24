@@ -1,5 +1,7 @@
 package client.data;
 
+import java.util.Comparator;
+
 /**
  * Used to pass player information into the rob view<br>
  * <br>
@@ -13,7 +15,7 @@ package client.data;
  * </ul>
  * 
  */
-public class RobPlayerInfo extends PlayerInfo
+public class RobPlayerInfo extends PlayerInfo implements Comparable
 {
 	
 	private int numCards;
@@ -21,6 +23,9 @@ public class RobPlayerInfo extends PlayerInfo
 	public RobPlayerInfo()
 	{
 		super();
+	}
+	public RobPlayerInfo(int cards){
+		numCards=cards;
 	}
 	
 	public int getNumCards()
@@ -31,6 +36,27 @@ public class RobPlayerInfo extends PlayerInfo
 	public void setNumCards(int numCards)
 	{
 		this.numCards = numCards;
+	}
+	public static Comparator<RobPlayerInfo> RobPlayerInfoComparator 
+	= new Comparator<RobPlayerInfo>() {
+
+		@Override
+		public int compare(RobPlayerInfo arg0, RobPlayerInfo arg1) {
+			String name1 = arg0.getName().toUpperCase();
+			String name2 = arg1.getName().toUpperCase();
+	 
+			//ascending order
+			return name1.compareTo(name2);
+		}
+
+	};
+
+	@Override
+	public int compareTo(Object o) {
+		int compareQuantity = ((RobPlayerInfo) o).getNumCards(); 
+		 
+		//ascending order
+		return this.getNumCards() - compareQuantity;
 	}
 	
 }

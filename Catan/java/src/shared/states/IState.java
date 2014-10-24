@@ -83,7 +83,7 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 
 	public void playMonopolyCard(IPresenter presenter, ResourceType resource);
 
-	public void playSoldierCard(IPresenter presenter, int victimIndex, HexLocation location);
+	public void playSoldierCard(IPresenter presenter, int playerIndex, int victimIndex, HexLocation location);
 
 	public void playMonumentCard(IPresenter presenter);
 

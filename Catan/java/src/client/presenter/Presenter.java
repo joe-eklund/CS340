@@ -383,8 +383,8 @@ public class Presenter extends Observable implements IPresenter {
 	}
 
 	@Override
-	public void playSoldierCard(int victimIndex, HexLocation location) {
-		this.state.playSoldierCard(this, victimIndex, location);
+	public void playSoldierCard(int playerIndex, int victimIndex, HexLocation location) {
+		this.state.playSoldierCard(this, playerIndex, victimIndex, location);
 	}
 
 	@Override

@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
 import client.model.*;
 
 /**
@@ -290,5 +294,43 @@ public class ServerModel {
 				return player.getPlayerIndex();
 		}
 		return -1;
+	}
+
+	public RobPlayerInfo[] getVictims(int player,HexLocation spot) {
+		VertexLocation []vertices={new VertexLocation(spot,VertexDirection.NorthEast),new VertexLocation(spot,VertexDirection.NorthWest),
+								new VertexLocation(new HexLocation(spot.getX()-1,spot.getY()+1),VertexDirection.NorthEast),new VertexLocation(new HexLocation(spot.getX()+1,spot.getY()),VertexDirection.NorthWest),
+								new VertexLocation(new HexLocation(spot.getX(),spot.getY()+1),VertexDirection.NorthEast),new VertexLocation(new HexLocation(spot.getX(),spot.getY()+1),VertexDirection.NorthWest)};
+
+		SortedSet<RobPlayerInfo> vics=new TreeSet<RobPlayerInfo>();
+		VertexLocation building;
+		int owner;
+		for(int i=0;i<vertices.length;i++){
+			System.out.println(">"+vertices[i].toString());
+			for(int s=0;s<map.getSettlements().size();s++){
+				building=map.getSettlements().get(s).getLocation().getNormalizedLocation();
+				owner=map.getSettlements().get(s).getOwnerIndex();
+				if(building.equals(vertices[i]) && owner!=player && players.get(owner).getResources().totalResourcesCount()>0){
+					RobPlayerInfo ri=new RobPlayerInfo();
+					ri.setNumCards(players.get(owner).getResources().totalResourcesCount());
+					ri.setName(players.get(owner).getName());
+					ri.setPlayerIndex(owner);
+					vics.add(ri);
+				}
+			}
+			System.out.println("*******");
+			for(int c=0;c<map.getCities().size();c++){
+				building=map.getCities().get(c).getLocation();
+				owner=map.getCities().get(c).getOwnerIndex();
+				if(building.equals(vertices[i]) && owner!=player && players.get(owner).getResources().totalResourcesCount()>0){
+					RobPlayerInfo ri=new RobPlayerInfo();
+					ri.setNumCards(players.get(owner).getResources().totalResourcesCount());
+					ri.setName(players.get(owner).getName());
+					ri.setPlayerIndex(owner);
+					vics.add(ri);
+				}
+			}
+		}
+		
+		return vics.toArray(new RobPlayerInfo[vics.size()]);
 	}
 }

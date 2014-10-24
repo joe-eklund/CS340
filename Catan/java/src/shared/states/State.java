@@ -221,7 +221,7 @@ public abstract class State implements IState {
 	}
 
 	@Override
-	public void playSoldierCard(IPresenter presenter, int victimIndex,
+	public void playSoldierCard(IPresenter presenter, int playerIndex, int victimIndex,
 			HexLocation location) {
 		// TODO Auto-generated method stub
 		

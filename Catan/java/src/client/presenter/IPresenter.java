@@ -144,7 +144,7 @@ public interface IPresenter extends Runnable {
 
 	public void playMonopolyCard( ResourceType resource);
 
-	public void playSoldierCard( int victimIndex, HexLocation location);
+	public void playSoldierCard(int playerIndex, int victimIndex, HexLocation location);
 
 	public void playMonumentCard();
 
