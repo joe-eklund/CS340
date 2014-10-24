@@ -1,5 +1,6 @@
 package client.model;
 
+import shared.definitions.Location;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -11,8 +12,9 @@ import client.exceptions.ClientModelException;
  * @author Joe Eklund
  */
 public class City {
-	private int ownerIndex;
-	private VertexLocation location;
+	private int owner;
+	private VertexLocation verLocation;
+	private Location location;
 	
 	/**
 	 * Class constructor
@@ -23,8 +25,8 @@ public class City {
 	 * @throws ClientModelException
 	 */
 	public City(int ownerIndex, int x, int y, String direction) throws ClientModelException {
-		this.ownerIndex = ownerIndex;
-		this.location = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
+		this.owner = ownerIndex;
+		this.verLocation = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
 	}
 	
 	/**
@@ -33,7 +35,7 @@ public class City {
 	 * @post returns the index of the player that owns the city.
 	 */
 	public int getOwnerIndex() {
-		return ownerIndex;
+		return owner;
 	}
 
 	/**
@@ -43,7 +45,7 @@ public class City {
 	 * @post The Owner Index is set to the value given as a parameter
 	 */
 	public void setOwnerIndex(int ownerIndex) {
-		this.ownerIndex = ownerIndex;
+		this.owner = ownerIndex;
 	}
 
 	/**
@@ -52,7 +54,7 @@ public class City {
 	 * @post Returns the vertex location of the city
 	 */
 	public VertexLocation getLocation() {
-		return location;
+		return verLocation;
 	}
 
 	/**
@@ -61,8 +63,8 @@ public class City {
 	 * @pre none
 	 * @post The Vertex Locaion of the city is set to the value given as a parameter
 	 */
-	public void setLocation(VertexLocation location) {
-		this.location = location;
+	public void setLocation(VertexLocation verLocation) {
+		this.verLocation = verLocation;
 	}
 	
 	/**
@@ -74,6 +76,10 @@ public class City {
 	 * @post The Vertex Locaion of the city is set to the vertex location that corresponds to the parameters given
 	 */
 	public void setLocation(int x, int y, String direction) throws ClientModelException{
-		this.location = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
+		this.verLocation = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
+	}
+	
+	public void initializeLocation() throws ClientModelException{
+		setLocation(location.getX(), location.getY(), location.getDirection());
 	}
 }

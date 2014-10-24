@@ -188,7 +188,7 @@ public class MapController extends Controller implements IMapController, Observe
 		
 		for (City city : cities) {
 			CatanColor cityColor = CatanColor.valueOf(model.getServerModel().getPlayers().get(city.getOwnerIndex()).getColor().toUpperCase());
-			getView().placeSettlement(city.getLocation(), cityColor);
+			getView().placeCity(city.getLocation(), cityColor);
 		}
 		
 		ArrayList<Port> ports = model.getServerModel().getMap().getPorts();

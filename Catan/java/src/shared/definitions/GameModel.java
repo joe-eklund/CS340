@@ -34,6 +34,7 @@ public class GameModel {
 		ArrayList<Hex> hexes = serverModel.getMap().getHexes();
 		ArrayList<Road> roads = serverModel.getMap().getRoads();
 		ArrayList<Settlement> settlements = serverModel.getMap().getSettlements();
+		ArrayList<City> cities = serverModel.getMap().getCities();
 		
 		for (Road road : roads) {
 			try {
@@ -47,6 +48,15 @@ public class GameModel {
 		for (Settlement settlement : settlements) {
 			try {
 				settlement.initializeLocation();
+			}
+			catch(Exception e) {
+				System.err.print(e);
+			}
+		}
+		
+		for (City city : cities) {
+			try {
+				city.initializeLocation();
 			}
 			catch(Exception e) {
 				System.err.print(e);
