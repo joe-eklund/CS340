@@ -40,7 +40,49 @@ public class Playing extends GamePlay {
 			System.err.println("Error building settlement in playing state");
 		}
 	}
+	@Override
+	public void playMonumentCard(IPresenter presenter) {
+		MoveResponse response=presenter.getProxy().playMonumentCard(presenter.getPlayerInfo().getIndex(), presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error playing monument in playing state");
+		}
+	}
+	@Override
+	public void playYearOfPlentyCard(IPresenter presenter,ResourceType resource1, ResourceType resource2) {
+			MoveResponse response=presenter.getProxy().playYearOfPlentyCard(presenter.getPlayerInfo().getIndex(), resource1, resource2, presenter.getCookie());
+			if(response != null && response.isSuccessful()) {			
+				presenter.updateServerModel(response.getGameModel());
+			}
+			else {
+				System.err.println("Error playing year of plenty in playing state");
+			}
+	}
 
+	@Override
+	public void playRoadBuildingCard(IPresenter presenter, EdgeLocation spot1,
+			EdgeLocation spot2) {
+		MoveResponse response=presenter.getProxy().playRoadBuildingCard(presenter.getPlayerInfo().getIndex(), spot1, spot2, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error playing road building in playing state");
+		}
+	}
+
+	@Override
+	public void playMonopolyCard(IPresenter presenter, ResourceType resource) {
+		MoveResponse response=presenter.getProxy().playMonopolyCard(presenter.getPlayerInfo().getIndex(), resource, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error playing monopoly in playing state");
+		}
+	}
 	@Override
 	public void playSoldierCard(IPresenter presenter, int playerIndex, int victimIndex,
 			HexLocation location) {
@@ -49,7 +91,7 @@ public class Playing extends GamePlay {
 			presenter.updateServerModel(response.getGameModel());
 		}
 		else {
-			System.err.println("Error robbing/soldier during play state");
+			System.err.println("Error playing soldier during play state");
 		}
 	}
 	

@@ -141,8 +141,9 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void playRoadBuildingCard() {
-		//look at line 212 on MapView for potential change
-		getView().roadBuildingPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
+		if(presenter.isPlayersTurn()){
+			getView().roadBuildingPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
+		}
 	}
 	
 	public void robPlayer(RobPlayerInfo victim) {
