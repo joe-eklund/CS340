@@ -177,6 +177,24 @@ public class OverlayView extends PanelView implements IOverlayView
 			this.overlayPanel = overlayPanel;
 		}
 	}
-	
+
+	public static void closePlayerWaitingModal() {
+		assert overlayStack.size() > 0;
+		assert window.getGlassPane() == overlayStack.peek().getOverlayPanel();
+
+		if (overlayStack.size() > 0) {
+
+			overlayStack.pop().getOverlayPanel().setVisible(false);
+
+			if (overlayStack.size() > 0) {
+
+				window.setGlassPane(overlayStack.peek().getOverlayPanel());
+				overlayStack.peek().getOverlayPanel().setVisible(true);
+			} else {
+				window.setGlassPane(defaultGlassPane);
+				window.getGlassPane().setVisible(false);
+			}
+		}
+	}
 }
 

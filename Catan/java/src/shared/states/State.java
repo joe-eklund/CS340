@@ -21,6 +21,7 @@ import shared.definitions.ServerLogLevel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.base.OverlayView;
 import client.model.Log;
 import client.model.Player;
 import client.presenter.IPresenter;
@@ -252,6 +253,9 @@ public abstract class State implements IState {
 				List<Player> players = response.getGameModel().getPlayers();
 				players.removeAll(Collections.singleton(null));
 				if(players.size() == 4) {
+					if(presenter.getState().getStatus().equals("PlayerWaiting")){
+						OverlayView.closePlayerWaitingModal();
+					}
 					presenter.setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
 				}
 				
