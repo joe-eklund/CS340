@@ -49,7 +49,7 @@ public class Playing extends GamePlay {
 			presenter.updateServerModel(response.getGameModel());
 		}
 		else {
-			System.err.println("Error robbing during play state");
+			System.err.println("Error robbing/soldier during play state");
 		}
 	}
 	

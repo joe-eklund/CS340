@@ -88,6 +88,12 @@ public class DevCardController extends Controller implements IDevCardController 
 	@Override
 	public void startPlayCard() {
 		if(presenter.isPlayersTurn()&&presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getOldDevCards().getTotalDevCardCount()>0){
+			DevCards d=presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getOldDevCards();
+			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, d.getMonopoly());
+			getPlayCardView().setCardAmount(DevCardType.MONUMENT, d.getMonument());
+			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, d.getRoadBuilding());
+			getPlayCardView().setCardAmount(DevCardType.SOLDIER, d.getSoldier());
+			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, d.getYearOfPlenty());
 			getPlayCardView().showModal();
 		}
 	}
