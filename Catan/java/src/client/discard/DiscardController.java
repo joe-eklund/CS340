@@ -132,7 +132,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	@Override
 	public void update(Observable o, Object arg) {
 		if (presenter.getState().getStatus().equals("Discarding")){
-			Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getID()).getResources();
+			Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getResources();
 			totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
 			discardView.setResourceMaxAmount(ResourceType.BRICK, r.brick);
 			discardView.setResourceMaxAmount(ResourceType.ORE, r.ore);
