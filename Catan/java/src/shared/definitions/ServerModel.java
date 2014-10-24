@@ -243,14 +243,14 @@ public class ServerModel {
 				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthEast);
 				v4=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()+1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("NW")){
-				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthEast);
+				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()+1),VertexDirection.NorthEast);
 				v2=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.NorthWest);
 				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()),VertexDirection.SouthEast);
 				v4=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("SW")){
-				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthEast);
-				v2=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthWest);
-				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()),VertexDirection.SouthEast);
+				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()+1),VertexDirection.NorthEast);
+				v2=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()+1),VertexDirection.NorthWest);
+				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthEast);
 				v4=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("SE")){
 				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthEast);

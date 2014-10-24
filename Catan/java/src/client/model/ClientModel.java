@@ -770,7 +770,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	 * @return
 	 */
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		if(hexLoc.equals(serverModel.getMap().getRobber().getLocation()))
+		if(hexLoc.equals(serverModel.getMap().getRobber().getLocation()) || gameModel.getBoard().get(hexLoc).getType() == HexType.WATER)
 			return false;
 		return true;
 	}	

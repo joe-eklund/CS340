@@ -102,7 +102,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		
 		return presenter.canPlaceRobber(hexLoc);
 	}
 

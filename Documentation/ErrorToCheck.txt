@@ -5,3 +5,20 @@ When two logged in players create a game, the nubmers of the listed game get out
 Playing a game with one person and 3 AI often skips the rolling state
 
 Top bar should be color of the player, I think (TurnTracker.java initFromModel())
+
+Password length for registering
+
+Game freezes when an AI robs
+
+
+Robber on water
+
+
+Bugs Left:
+Discarding
+Largest army and road symbols
+turn tracker
+**when I couldn't rob anyone can't continue playing.**
+Maritime trade 3 for 1 doesn't work
+When I have eight cards it is asking me to discard 4 cards instead of 1
+
