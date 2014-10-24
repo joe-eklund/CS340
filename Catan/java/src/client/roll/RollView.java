@@ -77,9 +77,7 @@ public class RollView extends OverlayView implements IRollView {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource() == rollButton) {
-				
 				closeModal();
-				
 				getController().rollDice();
 			}
 			if(e.getSource() == timer){
@@ -87,6 +85,7 @@ public class RollView extends OverlayView implements IRollView {
 				countDownLabel.setText("Rolling automatically in " + (elapsedSeconds+1000)/1000 + " seconds");
 		        if(elapsedSeconds == 0){
 		            timer.stop();
+		            elapsedSeconds = 5000;
 		            getController().rollDice();
 		        }
 			}
