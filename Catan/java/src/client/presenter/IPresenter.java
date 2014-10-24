@@ -151,4 +151,6 @@ public interface IPresenter extends Runnable {
 	public void setStateBasedOffString(String status);
 
 	public void setVersion(int version);
+
+	public boolean canPlaceRobber(HexLocation hexLoc);
 }

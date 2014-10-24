@@ -103,7 +103,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
 		
-		return true;
+		return presenter.canPlaceRobber(hexLoc);
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {

@@ -764,7 +764,16 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 			return false;
 		}
 	}
-	
+	/**
+	 * Determines if robber can be placed in specified location.
+	 * @param hexLoc
+	 * @return
+	 */
+	public boolean canPlaceRobber(HexLocation hexLoc) {
+		if(hexLoc.equals(serverModel.getMap().getRobber().getLocation()))
+			return false;
+		return true;
+	}	
 	/**
 	 * Determines if the specified player can play the Monument development card
 	 * @param playerIndex
@@ -860,5 +869,6 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	public List<CommsLogEntry> getGameLog() {
 		return log;
 	}
+
 }
 

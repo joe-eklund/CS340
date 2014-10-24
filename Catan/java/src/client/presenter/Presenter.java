@@ -226,6 +226,10 @@ public class Presenter extends Observable implements IPresenter {
 		state.buildSettlement(this, vertLoc);
 	}
 	
+	public boolean canPlaceRobber(HexLocation hexLoc){
+		return clientModel.canPlaceRobber(hexLoc);
+	}
+	
 	public boolean canPlaceCity(VertexLocation vertLoc) {
 		//TESTING BUILDING ROAD, SETTLEMENT, CITY
 //		clientModel.getServerModel().getPlayers().get(0).setBrick(5);
