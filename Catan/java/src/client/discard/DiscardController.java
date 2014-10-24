@@ -198,6 +198,22 @@ public class DiscardController extends Controller implements IDiscardController,
 		updateButtons(woodDiscardAmount,woodMax,ResourceType.WOOD);
 	}
 	
+	private void resetAllDiscardValues() {
+		brickDiscardAmount = 0;
+		oreDiscardAmount = 0;
+		sheepDiscardAmount = 0;
+		wheatDiscardAmount = 0;
+		woodDiscardAmount = 0;
+		totalDiscardSelected = 0;
+		
+		discardView.setStateMessage(totalDiscardSelected + "/" + totalResources/2);
+		discardView.setResourceDiscardAmount(ResourceType.BRICK, 0);
+		discardView.setResourceDiscardAmount(ResourceType.ORE, 0);
+		discardView.setResourceDiscardAmount(ResourceType.SHEEP, 0);
+		discardView.setResourceDiscardAmount(ResourceType.WHEAT, 0);
+		discardView.setResourceDiscardAmount(ResourceType.WOOD, 0);
+	}
+	
 	private void initDiscardValues(){
 		Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getResources();
 		totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
@@ -211,5 +227,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		this.sheepMax = r.sheep;
 		this.wheatMax = r.wheat;
 		this.woodMax = r.wood;
+		
+		resetAllDiscardValues();
 	}
 }
