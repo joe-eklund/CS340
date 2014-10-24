@@ -226,6 +226,13 @@ public abstract class State implements IState {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void robPlayer(IPresenter presenter, int playerIndex, int victimIndex,
+			HexLocation location) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void playMonumentCard(IPresenter presenter) {

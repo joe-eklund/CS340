@@ -392,6 +392,11 @@ public class Presenter extends Observable implements IPresenter {
 	}
 
 	@Override
+	public void robPlayer(int playerIndex, int victimIndex, HexLocation location){
+		this.state.robPlayer(this, playerIndex, victimIndex, location);
+	}
+	
+	@Override
 	public void playMonumentCard() {
 		this.state.playMonumentCard(this);
 	}

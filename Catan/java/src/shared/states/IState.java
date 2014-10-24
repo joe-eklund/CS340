@@ -91,4 +91,7 @@ public LoginUserResponse login(IPresenter presenter, String user,String pass);
 
 	public void update(IPresenter presenter);
 
+	void robPlayer(IPresenter presenter, int playerIndex, int victimIndex,
+			HexLocation location);
+
 }
