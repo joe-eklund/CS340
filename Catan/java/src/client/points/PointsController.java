@@ -45,11 +45,15 @@ public class PointsController extends Controller implements IPointsController, O
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		getPointsView().setPoints(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getVictoryPoints());
-		for(Player p : presenter.getClientModel().getServerModel().getPlayers()){
-			if(p.getVictoryPoints()==10){
-				getFinishedView().setWinner(p.getName(), presenter.isPlayersTurn());
-				getFinishedView().showModal();
+		if (presenter.getState().getStatus().equals("Playing")) {
+			getPointsView().setPoints(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getVictoryPoints());
+			if (presenter.isPlayersTurn()) {
+				for(Player p : presenter.getClientModel().getServerModel().getPlayers()){
+					if(p.getVictoryPoints()==10){
+						getFinishedView().setWinner(p.getName(), presenter.isPlayersTurn());
+						getFinishedView().showModal();
+					}
+				}
 			}
 		}
 	}

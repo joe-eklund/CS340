@@ -1,5 +1,8 @@
 package client.turntracker;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -47,10 +50,17 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	public void update(Observable o, Object arg) {
 		boolean la=false;
 		boolean lr=false;
+		
 		if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null){
 			getView().setLocalPlayerColor(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
-			for(Player p : presenter.getClientModel().getServerModel().getPlayers()){
-				getView().initializePlayer(p.getPlayerIndex(), p.getName(), CatanColor.valueOf(p.getColor().toUpperCase()));
+			
+			List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
+			players.removeAll(Collections.singleton(null));
+			
+			for(Player p : players){
+				getView().initializePlayer(p.getPlayerIndex(), 
+						p.getName(), 
+						CatanColor.valueOf(p.getColor().toUpperCase()));
 				if(presenter.getClientModel().getServerModel().getTurnTracker().getLongestRoad()>0&&presenter.isPlayersTurn())
 					lr=true;
 				else
