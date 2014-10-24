@@ -131,25 +131,29 @@ public class DiscardController extends Controller implements IDiscardController,
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getID()).getResources();
-		totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
-		discardView.setResourceMaxAmount(ResourceType.BRICK, r.brick);
-		discardView.setResourceMaxAmount(ResourceType.ORE, r.ore);
-		discardView.setResourceMaxAmount(ResourceType.SHEEP, r.sheep);
-		discardView.setResourceMaxAmount(ResourceType.WHEAT, r.wheat);
-		discardView.setResourceMaxAmount(ResourceType.WOOD, r.wood);	
-		this.brickMax = r.brick;
-		this.oreMax = r.ore;
-		this.sheepMax = r.sheep;
-		this.wheatMax = r.wheat;
-		this.woodMax = r.wood;
-		totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
-		if (presenter.getState().getStatus().equals("Discarding") && totalResources>=7) {
-			discardView.showModal();
-			updateResourceValues();
+		if (presenter.getState().getStatus().equals("Discarding")){
+			Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getID()).getResources();
+			totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
+			discardView.setResourceMaxAmount(ResourceType.BRICK, r.brick);
+			discardView.setResourceMaxAmount(ResourceType.ORE, r.ore);
+			discardView.setResourceMaxAmount(ResourceType.SHEEP, r.sheep);
+			discardView.setResourceMaxAmount(ResourceType.WHEAT, r.wheat);
+			discardView.setResourceMaxAmount(ResourceType.WOOD, r.wood);	
+			this.brickMax = r.brick;
+			this.oreMax = r.ore;
+			this.sheepMax = r.sheep;
+			this.wheatMax = r.wheat;
+			this.woodMax = r.wood;
+			totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
+			if(totalResources>=7) {
+				discardView.showModal();
+				updateResourceValues();
+			}
 		}
-		else if(presenter.getState().getStatus().equals("Discarding") && totalResources<7){
-			waitView.showModal();
+		else if(presenter.getState().getStatus().equals("Discarding")){
+			if(totalResources<7){
+				waitView.showModal();
+			}
 		}
 	}
 
