@@ -32,6 +32,7 @@ public class RollView extends OverlayView implements IRollView {
 	private JPanel buttonPanel;
 	private Timer timer;
 	private int elapsedSeconds;
+	private int seconds;
 
 	public RollView() {
 		
@@ -68,7 +69,8 @@ public class RollView extends OverlayView implements IRollView {
 		buttonPanel.add(countDownLabel);
 		this.add(buttonPanel, BorderLayout.SOUTH);   
 				
-		timer = new Timer(0, actionListener);
+		//timer = new Timer(0, actionListener);
+		timer = new Timer(1000, actionListener);
 	}
 
 	private ActionListener actionListener = new ActionListener() {
@@ -83,12 +85,20 @@ public class RollView extends OverlayView implements IRollView {
 				getController().rollDice();
 			}
 			if(e.getSource() == timer){
-				elapsedSeconds--;
+				/*elapsedSeconds--;
 				countDownLabel.setText("Rolling automatically in " + (elapsedSeconds+100000)/100000 + " seconds");
 		        if(elapsedSeconds <= 0){
 		            timer.stop();
 		            getController().rollDice();
+		        }*/
+
+				countDownLabel.setText("Rolling automatically in " + seconds + " seconds");
+				seconds--;
+				if(seconds < 0){
+		            timer.stop();
+		            getController().rollDice();
 		        }
+				
 			}
 		}	
 	};
@@ -107,6 +117,7 @@ public class RollView extends OverlayView implements IRollView {
 	@Override
 	public void startTimer(){
 		elapsedSeconds = 500000;
+		seconds=5;
 		timer.start(); 
 	}
 
