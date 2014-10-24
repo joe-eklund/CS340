@@ -7,11 +7,11 @@ package shared.definitions;
  * 
  */
 public class ResourceHand {
-	private int Brick;
-	private int Wood;
-	private int Sheep; 
-	private int Wheat; 
-	private int Ore;
+	private int brick;
+	private int wood;
+	private int sheep; 
+	private int wheat; 
+	private int ore;
 	
 	/**
 	 * Class constructor
@@ -22,77 +22,77 @@ public class ResourceHand {
 	 * @param ore
 	 */
 	public ResourceHand(int brick, int wood, int sheep, int wheat, int ore) {
-		Brick = brick;
-		Wood = wood;
-		Sheep = sheep;
-		Wheat = wheat;
-		Ore = ore;
+		this.brick = brick;
+		this.wood = wood;
+		this.sheep = sheep;
+		this.wheat = wheat;
+		this.ore = ore;
 	}
 	
 	/**
 	 * @obvious
 	 */
 	public int getBrick() {
-		return Brick;
+		return brick;
 	}
 	/**
 	 * @obvious
 	 */
 	public int getWood() {
-		return Wood;
+		return wood;
 	}
 	/**
 	 * @obvious
 	 */
 	public int getSheep() {
-		return Sheep;
+		return sheep;
 	}
 	/**
 	 * @obvious
 	 */
 	public int getWheat() {
-		return Wheat;
+		return wheat;
 	}
 	/**
 	 * @obvious
 	 */
 	public int getOre() {
-		return Ore;
+		return ore;
 	}
 	/**
 	 * @obvious
 	 * @param brick
 	 */
 	public void setBrick(int brick) {
-		Brick = brick;
+		this.brick = brick;
 	}
 	/**
 	 * @obvious
 	 * @param wood
 	 */
 	public void setWood(int wood) {
-		Wood = wood;
+		this.wood = wood;
 	}
 	/**
 	 * @obvious
 	 * @param sheep
 	 */
 	public void setSheep(int sheep) {
-		Sheep = sheep;
+		this.sheep = sheep;
 	}
 	/**
 	 * @obvious
 	 * @param wheat
 	 */
 	public void setWheat(int wheat) {
-		Wheat = wheat;
+		this.wheat = wheat;
 	}
 	/**
 	 * @obvious
 	 * @param ore
 	 */
 	public void setOre(int ore) {
-		Ore = ore;
+		this.ore = ore;
 	}
 
 	/**
@@ -102,11 +102,11 @@ public class ResourceHand {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Brick;
-		result = prime * result + Ore;
-		result = prime * result + Sheep;
-		result = prime * result + Wheat;
-		result = prime * result + Wood;
+		result = prime * result + brick;
+		result = prime * result + ore;
+		result = prime * result + sheep;
+		result = prime * result + wheat;
+		result = prime * result + wood;
 		return result;
 	}
 
@@ -122,15 +122,15 @@ public class ResourceHand {
 		if (getClass() != obj.getClass())
 			return false;
 		ResourceHand other = (ResourceHand) obj;
-		if (Brick != other.Brick)
+		if (brick != other.brick)
 			return false;
-		if (Ore != other.Ore)
+		if (ore != other.ore)
 			return false;
-		if (Sheep != other.Sheep)
+		if (sheep != other.sheep)
 			return false;
-		if (Wheat != other.Wheat)
+		if (wheat != other.wheat)
 			return false;
-		if (Wood != other.Wood)
+		if (wood != other.wood)
 			return false;
 		return true;
 	}

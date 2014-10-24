@@ -2,6 +2,7 @@ package shared.states;
 
 import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.MoveResponse;
+import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
@@ -66,6 +67,31 @@ public class Playing extends GamePlay {
 		}
 		else {
 			System.err.println("Error with ending turn in playing state");
+		}
+	}
+	
+	@Override
+	public void offerTrade(IPresenter presenter, ResourceHand offer,
+			int receiver) {
+		MoveResponse response = presenter.getProxy().offerTrade(presenter.getPlayerInfo().getIndex(), offer, receiver, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+			presenter.setVersion(presenter.getVersion());
+		}
+		else {
+			System.err.println("Error with offering trade in playing state");
+		}
+	}
+	
+	@Override
+	public void acceptTrade(IPresenter presenter, boolean willAccept) {
+		MoveResponse response = presenter.getProxy().acceptTrade(presenter.getPlayerInfo().getIndex(), willAccept, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+			presenter.setVersion(presenter.getVersion());
+		}
+		else {
+			System.err.println("Error with accepting trade in playing state");
 		}
 	}
 }

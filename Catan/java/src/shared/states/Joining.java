@@ -41,7 +41,7 @@ public class Joining extends State {
 	@Override
 	public void joinGame(IPresenter presenter, CatanColor color, int gameID) {
 		JoinGameResponse joinResponse = presenter.getProxy().joinGame(color, gameID, presenter.getCookie());
-		
+		presenter.setPlayerDescriptionsForGame(presenter.getGames().get(gameID).getPlayerDescriptions());
 		presenter.setCookie(joinResponse.getCookie());
 		GetGameModelResponse modelResponse = presenter.getProxy().getGameModel(-1, presenter.getCookie());
 		if(modelResponse.isNeedToUpdate()) {

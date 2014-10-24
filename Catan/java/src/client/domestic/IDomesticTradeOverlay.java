@@ -1,8 +1,8 @@
 package client.domestic;
 
-import client.base.*;
-import client.data.*;
-import shared.definitions.*;
+import shared.definitions.PlayerDescription;
+import shared.definitions.ResourceType;
+import client.base.IOverlayView;
 
 /**
  * Implementation of the domestic trade overlay, which allows the user to
@@ -20,10 +20,10 @@ public interface IDomesticTradeOverlay extends IOverlayView
 	 * Sets the opponents the local player may trade with. This should be called
 	 * on initializing the controller, and only called once.
 	 * 
-	 * @param value
+	 * @param playerDescriptions
 	 *            Information about the players that can be traded with
 	 */
-	void setPlayers(PlayerInfo[] value);
+	void setPlayers(PlayerDescription[] playerDescriptions);
 	
 	/**
 	 * Enables or disables the ability to select a player to trade with.

@@ -1,12 +1,14 @@
 package client.domestic;
 
+import java.util.Observer;
+
 import client.base.*;
 import shared.definitions.*;
 
 /**
  * Interface for the domestic trade controller
  */
-public interface IDomesticTradeController extends IController
+public interface IDomesticTradeController extends IController, Observer
 {
 	
 	/**

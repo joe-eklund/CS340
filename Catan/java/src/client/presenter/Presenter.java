@@ -1,13 +1,11 @@
 package client.presenter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import proxy.IServer;
-import shared.ServerMethodResponses.AddAIResponse;
 import shared.ServerMethodResponses.ChangeLogLevelResponse;
 import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameCommandsResponse;
@@ -37,7 +35,6 @@ import shared.states.Rolling;
 import shared.states.SecondRound;
 import client.model.ClientModel;
 import client.model.Log;
-import client.model.Player;
 
 /**
  * A class that holds a proxy and clientModel and acts upon those objects
@@ -52,6 +49,7 @@ public class Presenter extends Observable implements IPresenter {
 	private PlayerDescription playerInfo;
 	private ArrayList<GameDescription> games;
 	private IState state;
+	private List<PlayerDescription> gamePlayerDescriptons;
 	
 	
 	/**
@@ -430,6 +428,19 @@ public class Presenter extends Observable implements IPresenter {
 	@Override
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	@Override
+	public PlayerDescription[] getPlayerInfoArray() {
+		PlayerDescription[] result = new PlayerDescription[4];
+		result = (PlayerDescription[])gamePlayerDescriptons.toArray(result);
+		return result;
+	}
+
+	@Override
+	public void setPlayerDescriptionsForGame(
+			List<PlayerDescription> playerInfoList) {
+		this.gamePlayerDescriptons = playerInfoList;
 	}
 	
 }
