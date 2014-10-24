@@ -232,6 +232,12 @@ public class MapView extends PanelView implements IMapView
 			overlay.cancelDrop();
 			overlay.closeModal();
 		}
+
+		@Override
+		public void resumePlaying() {
+			// TODO Auto-generated method stub
+			
+		}
 	};
 	
 	private static class MapOverlay extends OverlayView

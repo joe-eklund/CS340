@@ -144,15 +144,20 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().roadBuildingPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
 	}
 	
-	public void robPlayer(RobPlayerInfo victim) {	
+	public void robPlayer(RobPlayerInfo victim) {
 		
+	}
+	public void resumePlaying(){
+		presenter.setStateBasedOffString("Playing");
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		ClientModel model = presenter.getClientModel();
 		Map<HexLocation, IHex> board = model.getGameModel().getBoard();
-		
+		if(presenter.getState().getStatus().equals("Robbing")){
+			getRobView().showModal();
+		}
 		
 		if (!haveInitializedHexes) {
 			for (HexLocation hexLoc : board.keySet()) {
