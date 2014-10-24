@@ -156,7 +156,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public void update(Observable o, Object arg) {
 		ClientModel model = presenter.getClientModel();
 		Map<HexLocation, IHex> board = model.getGameModel().getBoard();
-		if(presenter.getState().getStatus().equals("Robbing")&&robberSpot==null&&presenter.isPlayersTurn()){
+		if(presenter.getState().getStatus().equals("Robbing")&&robberSpot==null){
 			getView().startDrop(PieceType.ROBBER, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), false);
 		}
 		
