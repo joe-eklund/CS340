@@ -774,4 +774,8 @@ public interface IServer {
 	 *  @param cookie: catan cookie as set by server
 	 */
 	public MoveResponse playMonumentCard(int playerIndex, String cookie);
+
+
+	public MoveResponse robPlayer(int playerIndex, int victimIndex,
+			HexLocation location, String cookie);
 }
