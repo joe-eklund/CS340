@@ -13,12 +13,15 @@ Game freezes when an AI robs
 
 Robber on water
 
+Try building on all ports and make sure ratios work
+
+when couldn't rob anyone can't continue playing
 
 Bugs Left:
 Discarding
 Largest army and road symbols
 turn tracker
-**when I couldn't rob anyone can't continue playing.**
+
 Maritime trade 3 for 1 doesn't work
 When I have eight cards it is asking me to discard 4 cards instead of 1
 
