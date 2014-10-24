@@ -7,7 +7,7 @@ import shared.locations.HexLocation;
  * 
  * @Domain
  *    <ul>
- *      <li>type: "Soldier"</li>
+ *      <li>type: "Robber"</li>
  *      <li>playerIndex: 0,1,2,3 denoting the player's game index</li>
  *      <li>location: valid hexLocation to which robber can be moved</li>
  *      <li>victimIndex: 0,1,2,3 denoting the victim player's game index<li>
@@ -26,7 +26,7 @@ public class RobPlayerRequest {
 	 * 
 	 * @post
 	 *   <ul>
-	 *     <li>this.type = "Soldier"</li>
+	 *     <li>this.type = "Robber"</li>
 	 *     <li>this.playerIndex = playerIndex param</li>
 	 *     <li>this.victimIndex = victimIndex param</li>
 	 *     <li>this.location = location param</li>
@@ -38,7 +38,7 @@ public class RobPlayerRequest {
 	 */
 	public RobPlayerRequest(int playerIndex, int victimIndex,
 			HexLocation location) {
-		this.type = "Soldier";
+		this.type = "robPlayer";
 		this.playerIndex = playerIndex;
 		this.victimIndex = victimIndex;
 		this.location = location;
