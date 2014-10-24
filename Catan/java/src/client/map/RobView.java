@@ -83,6 +83,9 @@ public class RobView extends OverlayView implements IRobView {
 						if(i < victims.length) {
 							getController().robPlayer(victims[i]);
 						}
+						else {
+							getController().robPlayer(null);
+						}
 					}
 				}
 				
