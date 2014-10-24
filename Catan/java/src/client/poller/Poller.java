@@ -46,7 +46,7 @@ public class Poller implements IPoller {
 	public void start() {
 		if(!polling) {
 			//timer.schedule(timedTask, 0, pollingInterval * 1000);
-			timer.scheduleWithFixedDelay(timedTask, 0, pollingInterval, TimeUnit.SECONDS);
+			timer.scheduleWithFixedDelay(timedTask, 0, pollingInterval, TimeUnit.MILLISECONDS);
 		}
 		polling = true;
 	}
