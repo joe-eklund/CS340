@@ -127,31 +127,22 @@ public class DiscardController extends Controller implements IDiscardController,
 		ResourceHand resourceHand = new ResourceHand(brickDiscardAmount, woodDiscardAmount, sheepDiscardAmount, wheatDiscardAmount, oreDiscardAmount);
 		presenter.discardCards(resourceHand);
 		getDiscardView().closeModal();
+		brickDiscardAmount=0;
+		woodDiscardAmount=0;
+		sheepDiscardAmount=0;
+		wheatDiscardAmount=0;
+		oreDiscardAmount=0;
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		if (presenter.getState().getStatus().equals("Discarding")){
-			Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getResources();
-			totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
-			discardView.setResourceMaxAmount(ResourceType.BRICK, r.brick);
-			discardView.setResourceMaxAmount(ResourceType.ORE, r.ore);
-			discardView.setResourceMaxAmount(ResourceType.SHEEP, r.sheep);
-			discardView.setResourceMaxAmount(ResourceType.WHEAT, r.wheat);
-			discardView.setResourceMaxAmount(ResourceType.WOOD, r.wood);	
-			this.brickMax = r.brick;
-			this.oreMax = r.ore;
-			this.sheepMax = r.sheep;
-			this.wheatMax = r.wheat;
-			this.woodMax = r.wood;
-			totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
+			initDiscardValues();
 			if(totalResources>=7) {
 				discardView.showModal();
 				updateResourceValues();
 			}
-		}
-		else if(presenter.getState().getStatus().equals("Discarding")){
-			if(totalResources<7){
+			else if(totalResources<7){
 				waitView.showModal();
 			}
 		}
@@ -202,5 +193,20 @@ public class DiscardController extends Controller implements IDiscardController,
 		updateButtons(sheepDiscardAmount,sheepMax,ResourceType.SHEEP);
 		updateButtons(wheatDiscardAmount,wheatMax,ResourceType.WHEAT);
 		updateButtons(woodDiscardAmount,woodMax,ResourceType.WOOD);
+	}
+	
+	private void initDiscardValues(){
+		Resources r = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getResources();
+		totalResources = r.brick+r.ore+r.sheep+r.wheat+r.wood;
+		discardView.setResourceMaxAmount(ResourceType.BRICK, r.brick);
+		discardView.setResourceMaxAmount(ResourceType.ORE, r.ore);
+		discardView.setResourceMaxAmount(ResourceType.SHEEP, r.sheep);
+		discardView.setResourceMaxAmount(ResourceType.WHEAT, r.wheat);
+		discardView.setResourceMaxAmount(ResourceType.WOOD, r.wood);	
+		this.brickMax = r.brick;
+		this.oreMax = r.ore;
+		this.sheepMax = r.sheep;
+		this.wheatMax = r.wheat;
+		this.woodMax = r.wood;
 	}
 }
