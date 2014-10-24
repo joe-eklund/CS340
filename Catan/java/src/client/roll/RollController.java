@@ -50,7 +50,7 @@ public class RollController extends Controller implements IRollController, Obser
 		Random randomGenerator2 = new Random();
 		int dice1 = randomGenerator1.nextInt(6) + 1;
 		int dice2 = randomGenerator2.nextInt(6) + 1;
-		int diceRoll = 7;//dice1 + dice2;
+		int diceRoll = dice1 + dice2;
 //		System.out.println("dice1 " + dice1 + " dice2 " + dice2);
 		getResultView().setRollValue(diceRoll);
 		rollView.closeModal();
