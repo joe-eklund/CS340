@@ -290,7 +290,6 @@ public class ServerModel {
 		VertexLocation v3=new VertexLocation();
 		VertexLocation v4=new VertexLocation();
 		for(int i=0;i<map.getPorts().size();i++){
-			System.out.println("port:"+map.getPorts().get(i).getResourceType()+" "+map.getPorts().get(i).getLocation().toString()+" "+map.getPorts().get(i).getDirection());
 			if(map.getPorts().get(i).getDirection().equals("N")){
 				v1=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.NorthEast);
 				v2=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.NorthWest);
@@ -322,7 +321,6 @@ public class ServerModel {
 				v3=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.SouthEast);
 				v4=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()+1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthWest);
 			}
-			System.out.println(v1.getHexLoc().toString()+" "+v2.getHexLoc().toString());
 			for(int j=0;j<map.getCities().size();j++){
 				if(map.getCities().get(j).getOwnerIndex()==playerIndex&&(map.getCities().get(j).getLocation().equals(v1)||
 						map.getCities().get(j).getLocation().equals(v2)||map.getCities().get(j).getLocation().equals(v3)||
@@ -331,7 +329,6 @@ public class ServerModel {
 				}
 			}
 			for(int j=0;j<map.getSettlements().size();j++){
-				System.out.println("settlement"+map.getSettlements().get(j).getLocation().toString());
 				if(map.getSettlements().get(j).getOwnerIndex()==playerIndex&&(map.getSettlements().get(j).getLocation().equals(v1)||
 						map.getSettlements().get(j).getLocation().equals(v2)||map.getSettlements().get(j).getLocation().equals(v3)||
 						map.getSettlements().get(j).getLocation().equals(v4))){
