@@ -47,7 +47,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	public void update(Observable o, Object arg) {
 		boolean la=false;
 		boolean lr=false;
-		if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null){
+		if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null&&presenter.isPlayersTurn()){
 			getView().setLocalPlayerColor(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
 			for(Player p : presenter.getClientModel().getServerModel().getPlayers()){
 				getView().initializePlayer(p.getPlayerIndex(), p.getName(), CatanColor.valueOf(p.getColor().toUpperCase()));
@@ -59,7 +59,21 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					la=true;
 				else
 					la=false;
-				getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), presenter.isPlayersTurn(), la, lr);
+				getView().updatePlayer(presenter.getPlayerInfo().getIndex(), p.getVictoryPoints(), presenter.isPlayersTurn(), la, lr);
+			}
+		}else if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null&&!presenter.isPlayersTurn()){
+			getView().setLocalPlayerColor(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
+			for(Player p : presenter.getClientModel().getServerModel().getPlayers()){
+				getView().initializePlayer(p.getPlayerIndex(), p.getName(), CatanColor.valueOf(p.getColor().toUpperCase()));
+				if(presenter.getClientModel().getServerModel().getTurnTracker().getLongestRoad()>0&&presenter.isPlayersTurn())
+					lr=true;
+				else
+					lr=false;
+				if(presenter.getClientModel().getServerModel().getTurnTracker().getLargestArmy()>0&&presenter.isPlayersTurn())
+					la=true;
+				else
+					la=false;
+				getView().updatePlayer(presenter.getClientModel().getServerModel().getTurnTracker().getCurrentTurn(), p.getVictoryPoints(), presenter.isPlayersTurn(), la, lr);
 			}
 		}
 		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {
