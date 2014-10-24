@@ -20,9 +20,9 @@ import client.presenter.IPresenter;
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController, Observer {
 	
 	static IPresenter presenter;
-	
+	int playerCount;
 	public PlayerWaitingController(IPlayerWaitingView view) {
-
+		
 		super(view);
 		presenter = Catan.getPresenter();
 		presenter.addObserverToModel(this);
@@ -36,7 +36,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 	@Override
 	public void start() {
-		
+		playerCount = 1;
 		PlayerInfo[] pInfo = getPlayerInfoArray();
 		if (pInfo.length < 4) {
 			getView().setPlayers(pInfo);
@@ -48,6 +48,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void addAI() {
 		presenter.addAI(getView().getSelectedAI());
+		playerCount++;
+		if(playerCount == 4){
+			getView().closeModal();
+		}
 	}
 
 	@Override
@@ -57,9 +61,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			
 			PlayerInfo[] pInfo = getPlayerInfoArray();
 			getView().setPlayers(pInfo);
-		}
-		else if (getView().isModalShowing()) {
-			getView().closeModal();
 		}
 	}
 	

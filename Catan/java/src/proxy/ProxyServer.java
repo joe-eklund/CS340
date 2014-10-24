@@ -270,10 +270,11 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public AddAIResponse addAI(String aiToAdd, String cookie) {
+		AddAIRequest request = new AddAIRequest(aiToAdd);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
-		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/addAI", aiToAdd, String.class);
+		ICommandResponse response = this.clientCommunicator.executeCommand(RequestType.POST, requestHeaders, "game/addAI", request, String.class);
 		return new AddAIResponse(response.getResponseCode() == 200);
 	}
 
