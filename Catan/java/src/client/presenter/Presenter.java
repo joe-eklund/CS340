@@ -243,7 +243,7 @@ public class Presenter extends Observable implements IPresenter {
 	
 	public void buildCity(VertexLocation vertLoc) {
 		
-		proxy.buildCity(playerInfo.getIndex(), vertLoc, cookie);
+		state.buildCity(this, vertLoc);
 	}
 	
 	public void rollNumber(int diceRoll) {
