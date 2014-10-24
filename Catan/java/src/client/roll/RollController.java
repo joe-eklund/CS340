@@ -55,7 +55,7 @@ public class RollController extends Controller implements IRollController, Obser
 		getResultView().setRollValue(diceRoll);
 		rollView.closeModal();
 		getResultView().showModal();	
-		presenter.rollNumber(diceRoll);
+		presenter.rollNumber(7);
 	}
 
 	@Override
