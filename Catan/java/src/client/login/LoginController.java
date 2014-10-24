@@ -103,7 +103,7 @@ public class LoginController extends Controller implements ILoginController {
 		String password1=this.getLoginView().getRegisterPassword();
 		String password2=this.getLoginView().getRegisterPasswordRepeat();
 		
-		if(username.length()>=3&&username.length()<=7&&password1.equals(password2)&&password1.length()>=3) {
+		if(username.length()>=3&&username.length()<=7&&password1.equals(password2)&&password1.length()>4) {
 			RegisterUserResponse response=this.presenter.register(username, password1);
 			if(response.isSuccessful()) {
 				// If register succeeded
@@ -123,8 +123,8 @@ public class LoginController extends Controller implements ILoginController {
 			messageView.setMessage("Passwords don't match.");
 			messageView.showModal();
 		} else {
-			//passwords length has to be greater than 3
-			messageView.setMessage("Password has to be greater than 3.");
+			//passwords length has to be greater than 4
+			messageView.setMessage("Password has to be greater than 4.");
 			messageView.showModal();
 		}
 		
