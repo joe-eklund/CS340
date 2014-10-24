@@ -1,7 +1,5 @@
 package client.discard;
 
-import java.util.Observable;
-
 import client.base.*;
 import shared.definitions.*;
 
@@ -32,8 +30,6 @@ public interface IDiscardController extends IController
 	 * This method is called when the user clicks the discard button.
 	 */
 	void discard();
-
-	void update(Observable o, Object arg);
 	
 }
 

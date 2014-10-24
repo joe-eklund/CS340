@@ -24,7 +24,9 @@ public class RollController extends Controller implements IRollController, Obser
 	 * @param resultView Roll result view
 	 */
 	public RollController(IRollView view, IRollResultView resultView) {
+
 		super(view);
+		
 		rollView = view;
 		setResultView(resultView);
 		presenter = Catan.getPresenter();
@@ -49,13 +51,11 @@ public class RollController extends Controller implements IRollController, Obser
 		int dice1 = randomGenerator1.nextInt(6) + 1;
 		int dice2 = randomGenerator2.nextInt(6) + 1;
 		int diceRoll = dice1 + dice2;
-		
-		getResultView().setRollValue(7); //For Testing
-//		getResultView().setRollValue(diceRoll);
+//		System.out.println("dice1 " + dice1 + " dice2 " + dice2);
+		getResultView().setRollValue(diceRoll);
 		rollView.closeModal();
 		getResultView().showModal();	
-		presenter.rollNumber(7); //For Testing
-//		presenter.rollNumber(diceRoll);
+		presenter.rollNumber(diceRoll);
 	}
 
 	@Override
@@ -65,5 +65,6 @@ public class RollController extends Controller implements IRollController, Obser
 			rollView.startTimer();
 		}
 	}
+
 }
 

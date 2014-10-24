@@ -259,6 +259,7 @@ public class DiscardView extends OverlayView implements IDiscardView
 	@Override
 	public void setResourceMaxAmount(ResourceType resource, int maxAmount)
 	{   
+
 		resources.get(resource).setMaxAmount(maxAmount);
 		this.update();
 	}
