@@ -31,6 +31,7 @@ public class RollView extends OverlayView implements IRollView {
 	private JButton rollButton;
 	private JPanel buttonPanel;
 	private Timer timer;
+	private int elapsedSeconds;
 
 	public RollView() {
 		
@@ -71,7 +72,6 @@ public class RollView extends OverlayView implements IRollView {
 	}
 
 	private ActionListener actionListener = new ActionListener() {
-		int elapsedSeconds = 5000;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -84,7 +84,7 @@ public class RollView extends OverlayView implements IRollView {
 			}
 			if(e.getSource() == timer){
 				elapsedSeconds--;
-				countDownLabel.setText("Rolling automatically in " + (elapsedSeconds+1000)/1000 + " seconds");
+				countDownLabel.setText("Rolling automatically in " + (elapsedSeconds+100000)/100000 + " seconds");
 		        if(elapsedSeconds <= 0){
 		            timer.stop();
 		            getController().rollDice();
@@ -106,6 +106,7 @@ public class RollView extends OverlayView implements IRollView {
 	
 	@Override
 	public void startTimer(){
+		elapsedSeconds = 500000;
 		timer.start(); 
 	}
 
