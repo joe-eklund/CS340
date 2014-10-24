@@ -75,28 +75,36 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			getTradeOverlay().setTradeEnabled(false);
 			Set<Port> ports = presenter.getClientModel().getServerModel().getRatios(presenter.getPlayerInfo().getIndex());
 			//Get port ratios and set local variables
-			for(Port p : ports){
-				switch(p.getResourceType()){
-				case "WOOD":	woodRatio = p.getRatio();
-								break;
-				case "BRICK":	brickRatio = p.getRatio();
-								break;
-				case "SHEEP":	sheepRatio = p.getRatio();
-								break;
-				case "WHEAT":	wheatRatio = p.getRatio();
-								break;
-				case "ORE":		oreRatio = p.getRatio();
-								break;
-				default:	generalRatio = 3;//No resource type so its a general port
+			for (Port p : ports) {
+				if(p.getResourceType() == null){
+					generalRatio = 3;
+				}
+				if (p.getResourceType() != null) {
+					switch (p.getResourceType()) {
+					case "wood":
+						woodRatio = p.getRatio();
+						break;
+					case "brick":
+						brickRatio = p.getRatio();
+						break;
+					case "sheep":
+						sheepRatio = p.getRatio();
+						break;
+					case "wheat":
+						wheatRatio = p.getRatio();
+						break;
+					case "ore":
+						oreRatio = p.getRatio();
+						break;
+					default:
+						generalRatio = 3;// No resource type so its a general
+											// port
+					}
 				}
 			}
+			
 			//Grab player and check all resources against current ratios
 			Player player = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex());
-			player.setBrick(4);
-			player.setWood(1);
-			player.setSheep(1);
-			player.setWheat(1);
-			player.setOre(1);
 			List<ResourceType> tempResourceList = new ArrayList<ResourceType>();
 			if (player.getWood() >= woodRatio) {
 				tempResourceList.add(ResourceType.WOOD);
