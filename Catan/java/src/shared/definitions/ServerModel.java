@@ -216,38 +216,55 @@ public class ServerModel {
 	 */
 	public Set<Port> getRatios(int playerIndex){
 		Set<Port> ratios=new HashSet<Port>();
-		
+		//northern dir
 		VertexLocation v1=new VertexLocation();
 		VertexLocation v2=new VertexLocation();
+		//southern dir
+		VertexLocation v3=new VertexLocation();
+		VertexLocation v4=new VertexLocation();
 		for(int i=0;i<map.getPorts().size();i++){
 			if(map.getPorts().get(i).getDirection().equals("N")){
 				v1=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.NorthEast);
 				v2=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.NorthWest);
+				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthEast);
+				v4=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("S")){
 				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()+1),VertexDirection.NorthEast);
 				v2=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()+1),VertexDirection.NorthWest);
+				v3=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.SouthEast);
+				v4=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("NE")){
 				v1=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.NorthEast);
 				v2=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()+1,map.getPorts().get(i).getLocation().getY()),VertexDirection.NorthWest);
+				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthEast);
+				v4=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()+1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("NW")){
 				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthEast);
 				v2=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.NorthWest);
+				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()),VertexDirection.SouthEast);
+				v4=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("SW")){
 				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthEast);
 				v2=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthWest);
+				v3=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()-1,map.getPorts().get(i).getLocation().getY()),VertexDirection.SouthEast);
+				v4=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.SouthWest);
 			}else if(map.getPorts().get(i).getDirection().equals("SE")){
 				v1=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX(),map.getPorts().get(i).getLocation().getY()-1),VertexDirection.NorthEast);
 				v2=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()+1,map.getPorts().get(i).getLocation().getY()),VertexDirection.NorthWest);
+				v3=new VertexLocation(map.getPorts().get(i).getLocation(),VertexDirection.SouthEast);
+				v4=new VertexLocation(new HexLocation(map.getPorts().get(i).getLocation().getX()+1,map.getPorts().get(i).getLocation().getY()-1),VertexDirection.SouthWest);
 			}
 			for(int j=0;j<map.getCities().size();j++){
-				if(map.getCities().get(j).getOwnerIndex()==playerIndex&&(map.getCities().get(j).getLocation().getNormalizedLocation().equals(v1)||
-						map.getCities().get(j).getLocation().getNormalizedLocation().equals(v2))){
+				if(map.getCities().get(j).getOwnerIndex()==playerIndex&&(map.getCities().get(j).getLocation().equals(v1)||
+						map.getCities().get(j).getLocation().equals(v2)||map.getCities().get(j).getLocation().equals(v3)||
+						map.getCities().get(j).getLocation().equals(v4))){
 					ratios.add(map.getPorts().get(i));
 				}
 			}
 			for(int j=0;j<map.getSettlements().size();j++){
-				if(map.getSettlements().get(j).getOwnerIndex()==playerIndex&&(map.getSettlements().get(j).getLocation().getNormalizedLocation().equals(v1)||
-						map.getSettlements().get(j).getLocation().getNormalizedLocation().equals(v2))){
+				if(map.getSettlements().get(j).getOwnerIndex()==playerIndex&&(map.getSettlements().get(j).getLocation().equals(v1)||
+						map.getSettlements().get(j).getLocation().equals(v2)||map.getSettlements().get(j).getLocation().equals(v3)||
+						map.getSettlements().get(j).getLocation().equals(v4))){
 					ratios.add(map.getPorts().get(i));
 				}
 			}
