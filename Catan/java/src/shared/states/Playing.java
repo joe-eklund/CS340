@@ -40,6 +40,17 @@ public class Playing extends GamePlay {
 			System.err.println("Error building settlement in playing state");
 		}
 	}
+	
+	@Override
+	public void buildCity(IPresenter presenter, VertexLocation vertLoc) {
+		MoveResponse response = presenter.getProxy().buildCity(presenter.getPlayerInfo().getIndex(), vertLoc, presenter.getCookie());
+		if(response != null && response.isSuccessful()) {			
+			presenter.updateServerModel(response.getGameModel());
+		}
+		else {
+			System.err.println("Error building City in playing state");
+		}
+	}
 
 	@Override
 	public void buyDevCard(IPresenter presenter) {
