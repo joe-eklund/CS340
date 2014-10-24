@@ -314,10 +314,10 @@ public class ServerModel {
 					ri.setNumCards(players.get(owner).getResources().totalResourcesCount());
 					ri.setName(players.get(owner).getName());
 					ri.setPlayerIndex(owner);
+					ri.setColor(CatanColor.valueOf(players.get(owner).getColor().toUpperCase()));
 					vics.add(ri);
 				}
 			}
-			System.out.println("*******");
 			for(int c=0;c<map.getCities().size();c++){
 				building=map.getCities().get(c).getLocation();
 				owner=map.getCities().get(c).getOwnerIndex();
@@ -326,6 +326,7 @@ public class ServerModel {
 					ri.setNumCards(players.get(owner).getResources().totalResourcesCount());
 					ri.setName(players.get(owner).getName());
 					ri.setPlayerIndex(owner);
+					ri.setColor(CatanColor.valueOf(players.get(owner).getColor().toUpperCase()));
 					vics.add(ri);
 				}
 			}
