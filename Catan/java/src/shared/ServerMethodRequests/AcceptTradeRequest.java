@@ -27,7 +27,7 @@ public class AcceptTradeRequest {
 	 * @param willAccept
 	 */
 	public AcceptTradeRequest(int playerIndex, boolean willAccept) {
-		this.type = "willAccept";
+		this.type = "acceptTrade";
 		this.willAccept = willAccept;
 		this.playerIndex = playerIndex;
 	}

@@ -330,6 +330,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			increase = (this.sheepState == 1) ? (this.availableSheep > 0) : (19 - this.availableSheep > this.desiredSheep);
 			decrease = (this.sheepState == 1) ? (this.offeredSheep > 0) : (this.desiredSheep > 0);
 			getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.SHEEP, increase, decrease);
+			break;
 		case "wood":
 			if(this.availableWood > 0 && this.woodState == 1) {
 				this.offeredWood++;
@@ -606,8 +607,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 		}
 		else {
-			if(this.getAcceptOverlay().isModalShowing()) {
-				this.getAcceptOverlay().closeModal();
+			if(this.getWaitOverlay().isModalShowing()) {
+				this.getWaitOverlay().closeModal();
 			}
 		}
 		
