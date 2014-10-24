@@ -87,7 +87,7 @@ public class DevCardController extends Controller implements IDevCardController 
 
 	@Override
 	public void startPlayCard() {
-		if(presenter.getClientModel().getServerModel().getPlayerByID(presenter.getPlayerInfo().getIndex()).getOldDevCards().getTotalDevCardCount()>0){
+		if(presenter.isPlayersTurn()&&presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getOldDevCards().getTotalDevCardCount()>0){
 			getPlayCardView().showModal();
 		}
 	}

@@ -69,7 +69,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					la=true;
 				else
 					la=false;
-				getView().updatePlayer(presenter.getClientModel().getServerModel().getTurnTracker().getCurrentTurn(), p.getVictoryPoints(), presenter.isPlayersTurn(), la, lr);
+				getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), presenter.isPlayersTurn(), la, lr);
 			}
 		}
 		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {
