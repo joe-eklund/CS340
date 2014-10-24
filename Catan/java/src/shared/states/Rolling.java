@@ -11,11 +11,11 @@ public class Rolling extends GamePlay {
 	@Override
 	public void rollNumber(IPresenter presenter, int diceRoll) {
 		presenter.getProxy().rollNumber(presenter.getPlayerInfo().getIndex(), diceRoll, presenter.getCookie());
-//		if(diceRoll==7){
-//			presenter.setState(new Discarding());
-//		}
-//		else{
-//			presenter.setState(new Playing());
-//		}
+		if(diceRoll==7){
+			presenter.setState(new Discarding());
+		}
+		else{
+			presenter.setState(new Playing());
+		}
 	}
 }
