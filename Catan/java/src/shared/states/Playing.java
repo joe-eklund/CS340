@@ -44,7 +44,7 @@ public class Playing extends GamePlay {
 	@Override
 	public void playSoldierCard(IPresenter presenter, int playerIndex, int victimIndex,
 			HexLocation location) {
-		MoveResponse response=presenter.getProxy().robPlayer(playerIndex, victimIndex, location, presenter.getCookie());
+		MoveResponse response=presenter.getProxy().playSoldierCard(playerIndex, victimIndex, location, presenter.getCookie());
 		if(response != null && response.isSuccessful()) {			
 			presenter.updateServerModel(response.getGameModel());
 		}
