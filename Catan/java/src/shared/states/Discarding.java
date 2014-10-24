@@ -4,6 +4,7 @@ import shared.definitions.ResourceHand;
 import client.presenter.IPresenter;
 
 public class Discarding extends GamePlay {
+	
 	public Discarding() {
 		super("Discarding");
 	}

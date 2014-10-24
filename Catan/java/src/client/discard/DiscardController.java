@@ -146,6 +146,9 @@ public class DiscardController extends Controller implements IDiscardController,
 				waitView.showModal();
 			}
 		}
+		if(!presenter.getState().getStatus().equals("Discarding")){
+			waitView.closeModal();
+		}
 	}
 
 	public void updateButtons(int discardAmount, int totalAmount, ResourceType resource){
