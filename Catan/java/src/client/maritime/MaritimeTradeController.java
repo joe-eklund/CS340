@@ -69,10 +69,12 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			getTradeOverlay().setStateMessage("Not your turn.");
 			getTradeOverlay().setTradeEnabled(false);
 			getTradeOverlay().disableGiveResources();
+			getTradeOverlay().hideGetOptions();
 		}
 		else{
 			getTradeOverlay().setStateMessage("Trade!");
 			getTradeOverlay().setTradeEnabled(false);
+			getTradeOverlay().hideGetOptions();
 			Set<Port> ports = presenter.getClientModel().getServerModel().getRatios(presenter.getPlayerInfo().getIndex());
 			//Get port ratios and set local variables
 			for (Port p : ports) {
@@ -98,7 +100,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 						break;
 					default:
 						generalRatio = 3;// No resource type so its a general
-											// port
+						break;
 					}
 				}
 			}
@@ -106,31 +108,31 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			//Grab player and check all resources against current ratios
 			Player player = presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex());
 			List<ResourceType> tempResourceList = new ArrayList<ResourceType>();
-			if (player.getWood() >= woodRatio) {
+			if (player.getWood() >= woodRatio && (generalRatio == 4 || woodRatio == 2)) {
 				tempResourceList.add(ResourceType.WOOD);
 			} else if (player.getWood() >= generalRatio) {
 				woodRatio = generalRatio;
 				tempResourceList.add(ResourceType.WOOD);
 			}
-			if (player.getBrick() >= brickRatio) {
+			if (player.getBrick() >= brickRatio && (generalRatio == 4 || brickRatio == 2)) {
 				tempResourceList.add(ResourceType.BRICK);
 			} else if (player.getBrick() >= generalRatio) {
 				brickRatio = generalRatio;
 				tempResourceList.add(ResourceType.BRICK);
 			}
-			if (player.getSheep() >= sheepRatio) {
+			if (player.getSheep() >= sheepRatio && (generalRatio == 4 || sheepRatio == 2)) {
 				tempResourceList.add(ResourceType.SHEEP);
 			} else if (player.getSheep() >= generalRatio) {
 				sheepRatio = generalRatio;
 				tempResourceList.add(ResourceType.SHEEP);
 			}
-			if (player.getWheat() >= wheatRatio) {
+			if (player.getWheat() >= wheatRatio && (generalRatio == 4 || wheatRatio == 2)) {
 				tempResourceList.add(ResourceType.WHEAT);
 			} else if (player.getWheat() >= generalRatio) {
 				wheatRatio = generalRatio;
 				tempResourceList.add(ResourceType.WHEAT);
 			}
-			if (player.getOre() >= oreRatio) {
+			if (player.getOre() >= oreRatio && (generalRatio == 4 || oreRatio == 2)) {
 				tempResourceList.add(ResourceType.ORE);
 			} else if (player.getOre() >= generalRatio) {
 				oreRatio = generalRatio;
@@ -165,23 +167,22 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void setGiveResource(ResourceType resource) {
 		giveResource = resource;
-		int amount;
 		//Grab resource ratio
 		switch(resource){
-			case WOOD:	amount = woodRatio;
+			case WOOD:	currentRatio = woodRatio;
 						break;
-			case BRICK:	amount = brickRatio;
+			case BRICK:	currentRatio = brickRatio;
 						break;
-			case SHEEP:	amount = sheepRatio;
+			case SHEEP:	currentRatio = sheepRatio;
 						break;
-			case WHEAT:	amount = wheatRatio;
+			case WHEAT:	currentRatio = wheatRatio;
 						break;
-			case ORE:	amount = oreRatio;
+			case ORE:	currentRatio = oreRatio;
 						break;
-			default:	amount = -1;
+			default:	currentRatio = -1;
+						break;
 		}
-		currentRatio = amount;
-		getTradeOverlay().selectGiveOption(resource, amount);
+		getTradeOverlay().selectGiveOption(resource, currentRatio);
 		getTradeOverlay().showGetOptions(allResources);
 	}
 

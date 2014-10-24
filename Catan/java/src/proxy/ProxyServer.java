@@ -279,7 +279,7 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public ChangeLogLevelResponse changeLogLevel(ServerLogLevel logLevel, String cookie) {
-		ChangeLogLevelRequest request = new ChangeLogLevelRequest(logLevel.name());
+		ChangeLogLevelRequest request = new ChangeLogLevelRequest(logLevel.name().toLowerCase());
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
@@ -374,7 +374,7 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public MoveResponse maritimeTrade(int playerIndex, int ratio, ResourceType inputResource, ResourceType outputResource, String cookie) {
-		MaritimeTradeRequest request = new MaritimeTradeRequest(playerIndex, ratio, inputResource.name(), outputResource.name());
+		MaritimeTradeRequest request = new MaritimeTradeRequest(playerIndex, ratio, inputResource.name().toLowerCase(), outputResource.name().toLowerCase());
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
@@ -405,7 +405,7 @@ public class ProxyServer implements IServer{
 	@Override
 	public MoveResponse playYearOfPlentyCard(int playerIndex, ResourceType resource1,
 			ResourceType resource2, String cookie) {
-		YearOfPlentyDevRequest request = new YearOfPlentyDevRequest(playerIndex, resource1.name(), resource2.name());
+		YearOfPlentyDevRequest request = new YearOfPlentyDevRequest(playerIndex, resource1.name().toLowerCase(), resource2.name().toLowerCase());
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
@@ -425,7 +425,7 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public MoveResponse playMonopolyCard(int playerIndex, ResourceType resource, String cookie) {
-		MonopolyDevRequest request = new MonopolyDevRequest(playerIndex, resource.name());
+		MonopolyDevRequest request = new MonopolyDevRequest(playerIndex, resource.name().toLowerCase());
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));
