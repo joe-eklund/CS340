@@ -52,7 +52,7 @@ public class RollController extends Controller implements IRollController, Obser
 		int dice2 = randomGenerator2.nextInt(6) + 1;
 		int diceRoll = dice1 + dice2;
 //		System.out.println("dice1 " + dice1 + " dice2 " + dice2);
-		getResultView().setRollValue(7);
+		getResultView().setRollValue(diceRoll);
 		rollView.closeModal();
 		getResultView().showModal();	
 		presenter.rollNumber(diceRoll);
