@@ -122,15 +122,9 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		//presenter.playSoldierCard(victimIndex, hexLoc);
-		//getView().placeRobber(hexLoc);
-		
-		//System.out.println("*****should update players"+hexLoc.toString());
-		//presenter.getClientModel().getServerModel().getVictims();
 		getRobView().setPlayers(presenter.getClientModel().getServerModel().getVictims(presenter.getPlayerInfo().getIndex(),hexLoc));
 		getRobView().showModal();
 		robberSpot=hexLoc;
-		//presenter.playSoldierCard(victimIndex, hexLoc);
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
@@ -142,9 +136,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void playSoldierCard() {	
-		RobView rob=new RobView();
-		//look at line 256 on MapView-for further ideas
-		rob.showModal();
+		getView().startDrop(PieceType.ROBBER, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), false);
 	}
 	
 	public void playRoadBuildingCard() {
@@ -166,7 +158,6 @@ public class MapController extends Controller implements IMapController, Observe
 		Map<HexLocation, IHex> board = model.getGameModel().getBoard();
 		if(presenter.getState().getStatus().equals("Robbing")&&robberSpot==null){
 			getView().startDrop(PieceType.ROBBER, CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()), false);
-			//getRobView().showModal();
 		}
 		
 		if (!haveInitializedHexes) {
