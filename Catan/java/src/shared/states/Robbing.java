@@ -11,7 +11,7 @@ public class Robbing extends GamePlay {
 	
 	@Override
 	public void robPlayer(IPresenter presenter, int playerIndex, int victimIndex,HexLocation location) {
-		MoveResponse response=presenter.getProxy().playSoldierCard(playerIndex, victimIndex, location, presenter.getCookie());
+		MoveResponse response=presenter.getProxy().robPlayer(playerIndex, victimIndex, location, presenter.getCookie());
 		if(response != null && response.isSuccessful()) {
 			presenter.updateServerModel(response.getGameModel());
 			presenter.setState(new Playing());
