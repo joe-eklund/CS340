@@ -146,7 +146,7 @@ public class DiscardController extends Controller implements IDiscardController,
 				waitView.showModal();
 			}
 		}
-		if(!presenter.getState().getStatus().equals("Discarding")){
+		if(presenter.getState().getStatus().equals("Robbing")){
 			waitView.closeModal();
 		}
 	}
