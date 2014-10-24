@@ -15,8 +15,6 @@ public class Rolling extends GamePlay {
 //			presenter.setState(new Discarding());
 //		}
 //		else{
-//			//update resouce count for player
-//			//SaveGameResponse response = presenter.getProxy().saveGame(gameId, name, presenter.getCookie());
 //			presenter.setState(new Playing());
 //		}
 	}
