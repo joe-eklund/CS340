@@ -14,7 +14,11 @@ public class Robbing extends GamePlay {
 		MoveResponse response=presenter.getProxy().robPlayer(playerIndex, victimIndex, location, presenter.getCookie());
 		if(response != null && response.isSuccessful()) {
 			presenter.updateServerModel(response.getGameModel());
-			presenter.setState(new Playing());
+			try {
+			    Thread.sleep(1000); //Don't even ask
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
 		}
 		else {
 			System.err.println("Error robbing player in Robbing state.");
