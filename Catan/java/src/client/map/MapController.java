@@ -122,6 +122,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
+		setRobView(new RobView());
 		getRobView().setPlayers(presenter.getClientModel().getServerModel().getVictims(presenter.getPlayerInfo().getIndex(),hexLoc));
 		getRobView().showModal();
 		robberSpot=hexLoc;

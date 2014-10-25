@@ -20,11 +20,15 @@ import client.presenter.IPresenter;
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController, Observer {
 	
 	static IPresenter presenter;
+	
+	private int numOfWaiting;
 	public PlayerWaitingController(IPlayerWaitingView view) {
 		
 		super(view);
 		presenter = Catan.getPresenter();
 		presenter.addObserverToModel(this);
+		
+		numOfWaiting = 0;
 	}
 
 	@Override
@@ -55,6 +59,13 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			
 			PlayerInfo[] pInfo = getPlayerInfoArray();
 			getView().setPlayers(pInfo);
+
+			
+			if (numOfWaiting < pInfo.length) {
+				//getView().showModal();  //for some reason this freezes the game
+				numOfWaiting = pInfo.length;
+			}
+			
 		}
 	}
 	

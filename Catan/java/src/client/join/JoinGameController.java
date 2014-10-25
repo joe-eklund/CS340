@@ -166,12 +166,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameDescription game) {
 		//presenter.setSystemState(SystemState.JOINING);
 		currentGame = game;
-		
+		getSelectColorView().resetEnabled();
 		for (PlayerDescription p : game.getPlayerDescriptions()) {
 			if (p.getColor() != null && !p.getName().equals(presenter.getPlayerInfo().getName())) {
 				getSelectColorView().setColorEnabled(CatanColor.valueOf(p.getColor().toUpperCase()), false);
 			}
-		}
+		}		
+
 		getSelectColorView().showModal();
 	}
 
