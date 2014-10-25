@@ -386,7 +386,6 @@ public class SelectColorView extends OverlayView implements ISelectColorView {
 		}
 	}
 	
-	
 	@Override
 	public void resetEnabled() {
 		btnBlue.setEnabled(true);
