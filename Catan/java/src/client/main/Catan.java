@@ -10,6 +10,7 @@ import proxy.TranslatorJSON;
 import shared.states.LoggingIn;
 import client.base.IAction;
 import client.catan.CatanPanel;
+import client.join.IJoinGameController;
 import client.join.JoinGameController;
 import client.join.JoinGameView;
 import client.join.NewGameView;
@@ -33,6 +34,12 @@ public class Catan extends JFrame
 {
 	private static Presenter presenter;
 	private static Poller poller;
+	
+	private static JoinGameController joinController;
+	
+	public static IJoinGameController getJoin(){
+		return joinController;
+	}
 	
 	public static IPresenter getPresenter() {
 		return presenter;
@@ -83,8 +90,8 @@ public class Catan extends JFrame
 			public void run()
 			{
 				TranslatorJSON translator = new TranslatorJSON();
-//				ClientCommunicator communicator=new ClientCommunicator("localhost",8081,translator);
-				ClientCommunicator communicator=new ClientCommunicator("107.170.212.54",8081,translator);
+				ClientCommunicator communicator=new ClientCommunicator("localhost",8081,translator);
+//				ClientCommunicator communicator=new ClientCommunicator("107.170.212.54",8081,translator);
 				ProxyServer.setSingleton(communicator, translator, "UTF-8");
 				ProxyServer proxy = ProxyServer.getSingleton();
 				ClientModel clientmodel = new ClientModel(null);
@@ -103,11 +110,11 @@ public class Catan extends JFrame
 				NewGameView newGameView = new NewGameView();
 				SelectColorView selectColorView = new SelectColorView();
 				MessageView joinMessageView = new MessageView();
-				final JoinGameController joinController = new JoinGameController(joinView,
-																				 newGameView,
-																				 selectColorView,
-																				 joinMessageView,
-																				 presenter);
+				joinController = new JoinGameController(joinView,
+														newGameView,
+														selectColorView,
+														joinMessageView,
+														presenter);
 				//Adding joinController as observer
 				presenter.addObserver(joinController);
 				

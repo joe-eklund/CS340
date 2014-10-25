@@ -1,7 +1,11 @@
 package shared.states;
 
+import java.util.ArrayList;
+
 import shared.ServerMethodResponses.GetGameModelResponse;
+import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.MoveResponse;
+import shared.definitions.GameDescription;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -28,6 +32,13 @@ public class Playing extends GamePlay {
 		else {
 			System.err.println("Error building road in playing state");
 		}
+	}
+	
+	@Override
+	public ListGamesResponse listGames(IPresenter presenter) {
+		ListGamesResponse response =  presenter.getProxy().listGames(presenter.getCookie());
+		presenter.setGames((ArrayList<GameDescription>) response.getGameDescriptions());
+		return response;
 	}
 	
 	@Override

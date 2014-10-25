@@ -305,7 +305,6 @@ public class ServerModel {
 		VertexLocation building;
 		int owner;
 		for(int i=0;i<vertices.length;i++){
-			System.out.println(">"+vertices[i].toString());
 			for(int s=0;s<map.getSettlements().size();s++){
 				building=map.getSettlements().get(s).getLocation().getNormalizedLocation();
 				owner=map.getSettlements().get(s).getOwnerIndex();
@@ -319,7 +318,7 @@ public class ServerModel {
 				}
 			}
 			for(int c=0;c<map.getCities().size();c++){
-				building=map.getCities().get(c).getLocation();
+				building=map.getCities().get(c).getLocation().getNormalizedLocation();
 				owner=map.getCities().get(c).getOwnerIndex();
 				if(building.equals(vertices[i]) && owner!=player && players.get(owner).getResources().totalResourcesCount()>0){
 					RobPlayerInfo ri=new RobPlayerInfo();

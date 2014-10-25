@@ -57,6 +57,13 @@ public class PointsController extends Controller implements IPointsController, O
 			}
 		}
 	}
+
+	@Override
+	public void returnToJoinGame() {
+		presenter.listGames();
+		Catan.getJoin().start();
+		//getJoinGameView().showModal();
+	}
 	
 }
 
