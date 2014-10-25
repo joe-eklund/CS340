@@ -48,29 +48,20 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		boolean largestArmy=false;
-		boolean longestRoad=false;
 		
 		if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null){
 			getView().setLocalPlayerColor(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
 			
-			List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
+
+		}	
+		
+		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
 			players.removeAll(Collections.singleton(null));
 			
 			for(Player p : players){
 				getView().initializePlayer(p.getPlayerIndex(), p.getName(), CatanColor.valueOf(p.getColor().toUpperCase()));
-//				if(presenter.getClientModel().getServerModel().getTurnTracker().getLongestRoad()>0&&presenter.isPlayersTurn())
-//					longestRoad=true;
-//				else
-//					longestRoad=false;
-//				if(presenter.getClientModel().getServerModel().getTurnTracker().getLargestArmy()>0&&presenter.isPlayersTurn())
-//					largestArmy=true;
-//				else
-//					largestArmy=false;
-				
 				
 				getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), isPlayersTurn(p), ifLargestArmy(p), ifLongestRoad(p));									
-			}
 		}
 		
 		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {

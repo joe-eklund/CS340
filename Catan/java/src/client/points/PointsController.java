@@ -50,7 +50,7 @@ public class PointsController extends Controller implements IPointsController, O
 			getPointsView().setPoints(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getVictoryPoints());
 			if (presenter.isPlayersTurn()) {
 				for(Player p : presenter.getClientModel().getServerModel().getPlayers()){
-					if(p.getVictoryPoints()==10){
+					if(p.getVictoryPoints()>=10){ //You can force the points here
 						getFinishedView().setWinner(p.getName(), presenter.isPlayersTurn());
 						getFinishedView().showModal();
 					}
@@ -63,7 +63,7 @@ public class PointsController extends Controller implements IPointsController, O
 	public void returnToJoinGame() {
 		presenter.resetGame();
 		Catan.getJoin().start();
-		getFinishedView().closeModal();
+//		getFinishedView().closeModal();
 	}
 	
 }
