@@ -48,8 +48,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void update(Observable o, Object arg) {
-		boolean la=false;
-		boolean lr=false;
+		boolean largestArmy=false;
+		boolean longestRoad=false;
 		
 		if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null){
 			getView().setLocalPlayerColor(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
@@ -62,14 +62,15 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 						p.getName(), 
 						CatanColor.valueOf(p.getColor().toUpperCase()));
 				if(presenter.getClientModel().getServerModel().getTurnTracker().getLongestRoad()>0&&presenter.isPlayersTurn())
-					lr=true;
+					longestRoad=true;
 				else
-					lr=false;
+					longestRoad=false;
 				if(presenter.getClientModel().getServerModel().getTurnTracker().getLargestArmy()>0&&presenter.isPlayersTurn())
-					la=true;
+					largestArmy=true;
 				else
-					la=false;
-				getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), presenter.isPlayersTurn(), la, lr);
+					largestArmy=false;
+				
+				getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), isPlayersTurn(p), ifLargestArmy(p), ifLongestRoad(p));									
 			}
 		}
 		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {
@@ -82,6 +83,27 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			getView().updateGameState("Waiting for other Players", false);
 		}
 	}
+	
+	private boolean isPlayersTurn(Player p){
+		if(p.getPlayerIndex() == presenter.getPlayerInfo().getIndex())
+		{
+			return true;
+		}
+		else return false;
+	}
 
+	private boolean ifLargestArmy(Player p){
+		if(p.getPlayerIndex() == presenter.getClientModel().getServerModel().getTurnTracker().getLargestArmy()){
+			return true;
+		}
+		else return false;
+	}
+	
+	private boolean ifLongestRoad(Player p){
+		if(p.getPlayerIndex() == presenter.getClientModel().getServerModel().getTurnTracker().getLongestRoad()){
+			return true;
+		}
+		else return false;
+	}
 }
 

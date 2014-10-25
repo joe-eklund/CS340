@@ -132,6 +132,7 @@ public class DiscardController extends Controller implements IDiscardController,
 		sheepDiscardAmount=0;
 		wheatDiscardAmount=0;
 		oreDiscardAmount=0;
+		discardView.setDiscardButtonEnabled(false);
 	}
 	
 	@Override
