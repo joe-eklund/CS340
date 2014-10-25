@@ -406,6 +406,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 			}
 		}
 		
+		ArrayList<City> cities = serverModel.getMap().getCities();
 		ArrayList<Settlement> settlements = serverModel.getMap().getSettlements();
 		
 		for (Settlement settlement : settlements) {
@@ -438,15 +439,15 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 	
 		switch(normVerLoc.getDir()) {
 		case NorthEast:
-			return checkNorthEastVertex(normVerLoc, settlements, player, roads);
+			return checkNorthEastVertex(normVerLoc, settlements, cities, player, roads);
 		case NorthWest:
-			return checkNorthWestVertex(normVerLoc, settlements, player, roads);
+			return checkNorthWestVertex(normVerLoc, settlements, cities, player, roads);
 		default:
 			return false;
 		}
 	}
 	
-	private boolean checkNorthEastVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player, ArrayList<Road> roads) {
+	private boolean checkNorthEastVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, ArrayList<City> cities, Player player, ArrayList<Road> roads) {
 		
 		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthEast), VertexDirection.NorthWest);
 		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.NorthWest);
@@ -457,6 +458,15 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 			if (settlement.getLocation().getNormalizedLocation().equals(vertex1) ||
 				settlement.getLocation().getNormalizedLocation().equals(vertex2) ||
 				settlement.getLocation().getNormalizedLocation().equals(vertex3)) {
+				
+				return false;
+			}
+		}
+		for (City city : cities) {
+			
+			if (city.getLocation().getNormalizedLocation().equals(vertex1) ||
+				city.getLocation().getNormalizedLocation().equals(vertex2) ||
+				city.getLocation().getNormalizedLocation().equals(vertex3)) {
 				
 				return false;
 			}
@@ -477,7 +487,7 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 		return false;
 	}
 	
-	private boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, Player player, ArrayList<Road> roads) {
+	private boolean checkNorthWestVertex(VertexLocation normVerLoc, ArrayList<Settlement> settlements, ArrayList<City> cities, Player player, ArrayList<Road> roads) {
 		
 		VertexLocation vertex1 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.NorthWest), VertexDirection.NorthEast);
 		VertexLocation vertex2 = new VertexLocation(normVerLoc.getHexLoc().getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast);
@@ -488,6 +498,16 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 			if (settlement.getLocation().getNormalizedLocation().equals(vertex1) ||
 				settlement.getLocation().getNormalizedLocation().equals(vertex2) ||
 				settlement.getLocation().getNormalizedLocation().equals(vertex3)) {
+				
+				return false;
+			}
+		}
+
+		for (City city : cities) {
+			
+			if (city.getLocation().getNormalizedLocation().equals(vertex1) ||
+				city.getLocation().getNormalizedLocation().equals(vertex2) ||
+				city.getLocation().getNormalizedLocation().equals(vertex3)) {
 				
 				return false;
 			}
