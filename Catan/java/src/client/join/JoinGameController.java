@@ -28,7 +28,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	
 	private IPresenter presenter;
 	private int numGames;
-	private ArrayList<Integer> gameSizes;
+	private int numPlayers;
 	private ArrayList<CatanColor> currentColors;
 	
 	/**
@@ -49,7 +49,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setMessageView(messageView);
 		
 		numGames = 0;
-		gameSizes = new ArrayList<Integer>();
+		numPlayers = 0;
 	}
 	
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
@@ -184,18 +184,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
-//		presenter.setSystemState(SystemState.PLAYERWAITING); //important that this does not move
 		joinAction.execute();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (presenter.getGames().size() > numGames) {
+		if (presenter.getGames().size() > numGames || getNewNumberOfPlayers() > numPlayers) {
 			this.getJoinGameView().setGames(presenter.getGames(), presenter.getPlayerInfo());
 			numGames = presenter.getGames().size();
-//			addGameSizes();
+			numPlayers = getNewNumberOfPlayers();
 		}
-		
 		
 		if (currentGame != null) {
 			GameDescription newGame = presenter.getGames().get(currentGame.getId());
@@ -213,13 +211,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 	}
 	
-//	private void addGameSizes() {
-//		int diff = presenter.getGames().size() - gameSizes.size();
-//		
-//		for (int i = presenter.getGames().size()-diff; i < presenter.getGames().size(); i++) {
-//			gameSizes.add(presenter.getGames().get(i).getPlayerDescriptions().size());
-//		}
-//	}
-
+	public int getNewNumberOfPlayers() {
+		int newNumPlayers = 0;
+		for (int i = 0; i < presenter.getGames().size(); i++) {
+			newNumPlayers += presenter.getGames().get(i).getPlayerDescriptions().size();
+		}
+		
+		return newNumPlayers;
+	}
 }
 
