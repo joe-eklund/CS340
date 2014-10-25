@@ -1,3 +1,3 @@
 Bugs:
 sometimes-atleast with AI, click 'finish turn' a round goes and roll doesn't show up-during this the state is playing but player can't build anything
-3:1 trade not working
+if rob only self/noone shows past ppl

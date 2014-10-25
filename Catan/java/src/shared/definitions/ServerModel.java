@@ -314,7 +314,8 @@ public class ServerModel {
 				}
 			}
 		}
-		
+		if(vics.size()==0)
+			return null;
 		return vics.toArray(new RobPlayerInfo[vics.size()]);
 	}
 }
