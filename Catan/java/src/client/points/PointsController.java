@@ -3,7 +3,6 @@ package client.points;
 import java.util.Observable;
 import java.util.Observer;
 
-import shared.states.Joining;
 import client.base.*;
 import client.join.IJoinGameView;
 import client.main.Catan;
@@ -62,11 +61,7 @@ public class PointsController extends Controller implements IPointsController, O
 
 	@Override
 	public void returnToJoinGame() {
-		presenter.setState(new Joining());
 		presenter.resetGame();
-		//OverlayView.overlayViewRepaint();
-		//ComponentView.componentViewRepaint();
-		//PanelView.panelViewRepaint();
 		Catan.getJoin().start();
 //		getFinishedView().closeModal();
 	}

@@ -196,8 +196,5 @@ public class OverlayView extends PanelView implements IOverlayView
 			}
 		}
 	}
-	public static void overlayViewRepaint(){
-		window.repaint();
-	}
 }
 
