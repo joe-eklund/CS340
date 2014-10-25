@@ -20,9 +20,6 @@ import client.presenter.IPresenter;
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController, Observer {
 	
 	static IPresenter presenter;
-	
-	private int numOfWaiting = 0;
-	
 	public PlayerWaitingController(IPlayerWaitingView view) {
 		
 		super(view);
@@ -58,12 +55,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			
 			PlayerInfo[] pInfo = getPlayerInfoArray();
 			getView().setPlayers(pInfo);
-			
-			if (numOfWaiting < pInfo.length) {
-				getView().showModal();
-				numOfWaiting = pInfo.length;
-			}
-			
 		}
 	}
 	
