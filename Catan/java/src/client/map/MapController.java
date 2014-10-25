@@ -9,6 +9,7 @@ import client.data.*;
 import client.main.Catan;
 import client.model.City;
 import client.model.ClientModel;
+import client.model.Player;
 import client.model.Port;
 import client.model.Road;
 import client.model.Settlement;
@@ -142,6 +143,9 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void playRoadBuildingCard() {
 		if(presenter.isPlayersTurn()){
+			Player p=presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex());
+			p.setBrick(p.getBrick()+2);
+			p.setWood(p.getWood()+2);
 			getView().roadBuildingPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
 		}
 	}
