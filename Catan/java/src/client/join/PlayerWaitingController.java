@@ -60,7 +60,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			getView().setPlayers(pInfo);
 			
 			if (numOfWaiting < pInfo.length) {
-				getView().showModal();
+				//getView().showModal();  //for some reason this freezes the game
 				numOfWaiting = pInfo.length;
 			}
 			

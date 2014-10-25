@@ -25,3 +25,12 @@ turn tracker
 Maritime trade 3 for 1 doesn't work
 When I have eight cards it is asking me to discard 4 cards instead of 1
 
+
+build road
+monopoly
+double click on road
+listing numbers in correct order
+
+never reseting names in domestic trades
+
+color updater

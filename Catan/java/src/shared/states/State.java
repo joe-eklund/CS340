@@ -97,6 +97,7 @@ public abstract class State implements IState {
 	public GetGameModelResponse getGameModel(IPresenter presenter) {
 		// TODO Auto-generated method stub
 		GetGameModelResponse response = presenter.getProxy().getGameModel(presenter.getClientModel().getServerModel().getVersion(), presenter.getCookie());
+		//GetGameModelResponse response = presenter.getProxy().getGameModel(-1, presenter.getCookie());
 		return response;
 	}
 	
