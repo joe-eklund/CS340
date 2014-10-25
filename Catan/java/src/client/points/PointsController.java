@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import client.base.*;
+import client.join.IJoinGameView;
 import client.main.Catan;
 import client.model.Player;
 import client.presenter.IPresenter;
@@ -60,9 +61,9 @@ public class PointsController extends Controller implements IPointsController, O
 
 	@Override
 	public void returnToJoinGame() {
-		presenter.listGames();
+		presenter.resetGame();
 		Catan.getJoin().start();
-		//getJoinGameView().showModal();
+		getFinishedView().closeModal();
 	}
 	
 }

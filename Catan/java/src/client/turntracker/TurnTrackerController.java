@@ -58,21 +58,21 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			players.removeAll(Collections.singleton(null));
 			
 			for(Player p : players){
-				getView().initializePlayer(p.getPlayerIndex(), 
-						p.getName(), 
-						CatanColor.valueOf(p.getColor().toUpperCase()));
-				if(presenter.getClientModel().getServerModel().getTurnTracker().getLongestRoad()>0&&presenter.isPlayersTurn())
-					longestRoad=true;
-				else
-					longestRoad=false;
-				if(presenter.getClientModel().getServerModel().getTurnTracker().getLargestArmy()>0&&presenter.isPlayersTurn())
-					largestArmy=true;
-				else
-					largestArmy=false;
+				getView().initializePlayer(p.getPlayerIndex(), p.getName(), CatanColor.valueOf(p.getColor().toUpperCase()));
+//				if(presenter.getClientModel().getServerModel().getTurnTracker().getLongestRoad()>0&&presenter.isPlayersTurn())
+//					longestRoad=true;
+//				else
+//					longestRoad=false;
+//				if(presenter.getClientModel().getServerModel().getTurnTracker().getLargestArmy()>0&&presenter.isPlayersTurn())
+//					largestArmy=true;
+//				else
+//					largestArmy=false;
+				
 				
 				getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), isPlayersTurn(p), ifLargestArmy(p), ifLongestRoad(p));									
 			}
 		}
+		
 		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {
 			getView().updateGameState("Finish Turn", true);
 		}

@@ -122,7 +122,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 			playerPanel[playerIndex].setBorder(BorderFactory.createLineBorder(new Color(0,0,0), 3));
 		else
 			playerPanel[playerIndex].setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-		
+		this.repaint(); //May need to get ride of this
 	}
 
 	@Override

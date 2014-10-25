@@ -10,6 +10,5 @@ public interface IPointsController extends IController
 
 	void returnToJoinGame();   
 	
-	// EMPTY
 }
 
