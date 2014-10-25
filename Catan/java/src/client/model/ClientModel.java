@@ -414,6 +414,11 @@ public class ClientModel extends Observable /*implements IClientModel*/{
 				return false;
 			}
 		}
+		for (City city : cities) {
+			if (city.getLocation().getNormalizedLocation().equals(normVerLoc)) {
+				return false;
+			}
+		}
 		
 		Map<HexLocation, IHex> board = gameModel.getBoard();
 		
