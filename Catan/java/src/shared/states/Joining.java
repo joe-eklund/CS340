@@ -8,6 +8,7 @@ import shared.ServerMethodResponses.CreateGameResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
 import client.model.Player;
@@ -17,7 +18,11 @@ public class Joining extends State {
 	public Joining() {
 		super("Joining");
 	}
-	
+	@Override
+	public ResetGameResponse resetGame(IPresenter presenter) {
+		ResetGameResponse response = presenter.getProxy().resetGame(presenter.getCookie());
+		return response;
+	}
 	@Override
 	public CreateGameResponse createGame(IPresenter presenter, boolean randTiles, boolean randNums,
 			boolean randPorts, String name) {

@@ -130,7 +130,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		presenter.listGames();
 		//this.getJoinGameView().setGames(response.getGameDescriptions(), presenter.getPlayerInfo());
 		getJoinGameView().showModal();
-		Catan.getPoller().stop();
+		//Catan.getPoller().stop();
 		Catan.getPoller().start();
 	}
 

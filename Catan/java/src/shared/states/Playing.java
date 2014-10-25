@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import shared.ServerMethodResponses.GetGameModelResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.ServerMethodResponses.MoveResponse;
+import shared.ServerMethodResponses.ResetGameResponse;
 import shared.definitions.GameDescription;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
@@ -16,6 +17,11 @@ import client.presenter.IPresenter;
 public class Playing extends GamePlay {
 	public Playing() {
 		super("Playing");
+	}
+	@Override
+	public ResetGameResponse resetGame(IPresenter presenter) {
+		ResetGameResponse response = presenter.getProxy().resetGame(presenter.getCookie());
+		return response;
 	}
 	@Override 
 	public GetGameModelResponse getGameModel(IPresenter presenter) {
