@@ -10,6 +10,7 @@ import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import client.base.Controller;
 import client.base.IAction;
+import client.base.OverlayView;
 import client.main.Catan;
 import client.misc.IMessageView;
 import client.presenter.IPresenter;
@@ -30,6 +31,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private int numGames;
 	private int numPlayers;
 	private ArrayList<CatanColor> currentColors;
+	private boolean closedForGood;
 	
 	/**
 	 * JoinGameController constructor
@@ -50,6 +52,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		numGames = 0;
 		numPlayers = 0;
+		closedForGood = false;
 	}
 	
 	public JoinGameController(IJoinGameView view, INewGameView newGameView, 
@@ -169,6 +172,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				getSelectColorView().setColorEnabled(CatanColor.valueOf(p.getColor().toUpperCase()), false);
 			}
 		}
+		getSelectColorView().resetEnabled();
 		getSelectColorView().showModal();
 	}
 
@@ -183,6 +187,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
+		closedForGood = true;
 		presenter.joinGame(getSelectColorView().getSelectedColor(), currentGame.getId());
 		joinAction.execute();
 	}
@@ -193,7 +198,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			this.getJoinGameView().setGames(presenter.getGames(), presenter.getPlayerInfo());
 			numGames = presenter.getGames().size();
 			numPlayers = getNewNumberOfPlayers();
+			if (!this.getNewGameView().isModalShowing() && 
+					!this.getSelectColorView().isModalShowing() && 
+					presenter.getState().getStatus().equals("Joining")) {
+				
+				if (!closedForGood)
+					this.getJoinGameView().showModal();
+				
+			}
 		}
+		
+		
 		
 		if (currentGame != null) {
 			GameDescription newGame = presenter.getGames().get(currentGame.getId());

@@ -48,12 +48,12 @@ public class Joining extends State {
 			// Can we start playing?
 			List<Player> players = new ArrayList<Player>(modelResponse.getGameModel().getPlayers());
 			players.removeAll(Collections.singleton(null));
-			if(players.size() == 4) {
-				presenter.setStateBasedOffString(modelResponse.getGameModel().getTurnTracker().getStatus());
-			}
-			else {
+//			if(players.size() == 4) {
+//				presenter.setStateBasedOffString(modelResponse.getGameModel().getTurnTracker().getStatus());
+//			}
+//			else {
 				presenter.setState(new PlayerWaiting());
-			}
+//			}
 			
 			presenter.getPlayerInfo().setIndex(modelResponse.getGameModel().getPlayerIndexByID(presenter.getPlayerInfo().getID()));
 			presenter.updateServerModel(modelResponse.getGameModel());

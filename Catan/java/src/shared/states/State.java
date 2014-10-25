@@ -263,6 +263,7 @@ public abstract class State implements IState {
 					if(presenter.getState().getStatus().equals("PlayerWaiting")){
 						OverlayView.closePlayerWaitingModal();
 					}
+					
 					presenter.setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
 				}
 				
