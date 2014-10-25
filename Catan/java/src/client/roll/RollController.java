@@ -40,6 +40,7 @@ public class RollController extends Controller implements IRollController, Obser
 		this.resultView = resultView;
 	}
 
+	@Override
 	public IRollView getRollView() {
 		return (IRollView)getView();
 	}

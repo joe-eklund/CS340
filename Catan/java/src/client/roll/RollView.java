@@ -105,7 +105,10 @@ public class RollView extends OverlayView implements IRollView {
 	public void setMessage(String message) {
 		label.setText(message);
 	}
-	
+	@Override
+	public void reset(){
+		seconds=5;
+	}
 	@Override
 	public void startTimer(){
 		seconds=5;
