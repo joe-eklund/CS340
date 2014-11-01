@@ -93,9 +93,26 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		getView().setElementAmount(ResourceBarElement.SOLDIERS, player.getSoldiers());
 		
 		if(presenter.isPlayersTurn()) {
-			getView().setElementEnabled(ResourceBarElement.CITY, true);
-			getView().setElementEnabled(ResourceBarElement.ROAD, true);
-			getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+			if(player.canBuildCity()){
+				getView().setElementEnabled(ResourceBarElement.CITY, true);
+			}else{
+				getView().setElementEnabled(ResourceBarElement.CITY, false);
+			}
+			if(player.canBuildRoad()){
+				getView().setElementEnabled(ResourceBarElement.ROAD, true);
+			}else{
+				getView().setElementEnabled(ResourceBarElement.ROAD, false);
+			}
+			if(player.canBuildSettlement()){
+				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);
+			}else{
+				getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
+			}
+			if(model.getDeck().getTotalDevCardCount()>0&&player.canBuyDevCard()){
+				getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
+			}else{
+				getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+			}
 		}
 		else {
 			getView().setElementEnabled(ResourceBarElement.CITY, false);

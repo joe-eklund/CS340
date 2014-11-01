@@ -438,6 +438,15 @@ public class Player {
 		return false;
 	}
 	/**
+	 * 
+	 */
+	public boolean canBuyDevCard(){
+		if(resources.getOre()>0&&resources.getSheep()>0&&resources.getWheat()>0){
+			return true;
+		}
+		return false;
+	}
+	/**
 	 * Checks to see if a player has at least specific number of a specific type of resource.
 	 * @param resource
 	 * @param amount
