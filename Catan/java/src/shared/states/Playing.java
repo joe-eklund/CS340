@@ -151,8 +151,8 @@ public class Playing extends GamePlay {
 			int receiver) {
 		MoveResponse response = presenter.getProxy().offerTrade(presenter.getPlayerInfo().getIndex(), offer, receiver, presenter.getCookie());
 		if(response != null && response.isSuccessful()) {			
-			presenter.updateServerModel(response.getGameModel());
-			presenter.setVersion(presenter.getVersion());
+			//presenter.updateServerModel(response.getGameModel());
+			//presenter.setVersion(presenter.getVersion());
 		}
 		else {
 			System.err.println("Error with offering trade in playing state");
