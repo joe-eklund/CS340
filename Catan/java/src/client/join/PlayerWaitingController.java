@@ -22,6 +22,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	static IPresenter presenter;
 	
 	private int numOfWaiting;
+	private int oldNumOfWaiting;
 	public PlayerWaitingController(IPlayerWaitingView view) {
 		
 		super(view);
@@ -29,6 +30,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		presenter.addObserverToModel(this);
 		
 		numOfWaiting = 0;
+		oldNumOfWaiting = 0;
 	}
 
 	@Override
@@ -66,6 +68,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				numOfWaiting = pInfo.length;
 			}
 			
+			if(oldNumOfWaiting < numOfWaiting) {
+				getView().closeModal();
+				getView().showModal();
+				oldNumOfWaiting = numOfWaiting;
+			}
 		}
 	}
 	

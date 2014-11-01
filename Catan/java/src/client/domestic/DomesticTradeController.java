@@ -568,6 +568,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 		presenter.acceptTrade(willAccept);
 		getAcceptOverlay().closeModal();
+		getAcceptOverlay().reset();
 	}
 	
 	private boolean checkForValidTradeValues() {
