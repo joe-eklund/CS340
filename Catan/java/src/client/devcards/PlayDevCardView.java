@@ -234,18 +234,28 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView, Ob
 		DevCards dev=presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getOldDevCards();
 		if(dev.getMonopoly()==0){
 			devCards.setCardEnabled(DevCardType.MONOPOLY, false);
+		}else{
+			devCards.setCardEnabled(DevCardType.MONOPOLY, true);
 		}
 		if(dev.getMonument()==0){
 			devCards.setCardEnabled(DevCardType.MONUMENT, false);
+		}else{
+			devCards.setCardEnabled(DevCardType.MONUMENT, true);
 		}
 		if(dev.getRoadBuilding()==0){
 			devCards.setCardEnabled(DevCardType.ROAD_BUILD, false);
+		}else{
+			devCards.setCardEnabled(DevCardType.ROAD_BUILD, true);
 		}
 		if(dev.getSoldier()==0){
 			devCards.setCardEnabled(DevCardType.SOLDIER, false);
+		}else{
+			devCards.setCardEnabled(DevCardType.SOLDIER, true);
 		}
 		if(dev.getYearOfPlenty()==0){
 			devCards.setCardEnabled(DevCardType.YEAR_OF_PLENTY, false);
+		}else{
+			devCards.setCardEnabled(DevCardType.YEAR_OF_PLENTY, true);
 		}
 	}
 }
