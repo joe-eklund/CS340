@@ -103,7 +103,34 @@ public class LoginController extends Controller implements ILoginController {
 		String password1=this.getLoginView().getRegisterPassword();
 		String password2=this.getLoginView().getRegisterPasswordRepeat();
 		
-		if(username.length()>=3&&username.length()<=7&&password1.equals(password2)&&password1.length()>4) {
+		String usernameError = "The username must be between three and seven characters: letters, digits, _ , and -";
+		String passwordError = "The password must be five or more characters: letters, digits, _ , and -";
+		String validCharsRegex = "[0-9]*[A-z]*[_]*[-]*";
+		
+		if(username.length()<3||username.length()>7){
+			//username isn't valid
+			messageView.setMessage(usernameError);
+			messageView.showModal();
+		}  
+		else if(!username.matches(validCharsRegex)) {
+			messageView.setMessage(usernameError);
+			messageView.showModal();
+		}  
+		else if (!password1.equals(password2)) {
+			//passwords don't match
+			messageView.setMessage("Passwords must match.");
+			messageView.showModal();
+		}  
+		else if(!password1.matches(validCharsRegex)) {
+			messageView.setMessage(passwordError);
+			messageView.showModal();
+		}
+		else if(password1.length() < 5){
+			//passwords length has to be greater than 4
+			messageView.setMessage(passwordError);
+			messageView.showModal();
+		}
+		else {
 			RegisterUserResponse response=this.presenter.register(username, password1);
 			if(response.isSuccessful()) {
 				// If register succeeded
@@ -114,21 +141,7 @@ public class LoginController extends Controller implements ILoginController {
 				messageView.setMessage(response.getMessage());
 				messageView.showModal();
 			}
-		} else if(username.length()<3||username.length()>7){
-			//username isn't valid
-			messageView.setMessage("Username length should be between 3 and 7.");
-			messageView.showModal();
-		} else if (!password1.equals(password2)) {
-			//passwords don't match
-			messageView.setMessage("Passwords don't match.");
-			messageView.showModal();
-		} else {
-			//passwords length has to be greater than 4
-			messageView.setMessage("Password has to be greater than 4.");
-			messageView.showModal();
-		}
-		
-		
+		}	
 	}
 
 }

@@ -31,6 +31,9 @@ public class DiscardController extends Controller implements IDiscardController,
 	private int totalResources;
 	private int totalDiscardSelected = 0;
 	
+	//issue 209 fix
+	private boolean hasDiscarded;
+	
 	/**
 	 * DiscardController constructor
 	 * 
@@ -44,6 +47,9 @@ public class DiscardController extends Controller implements IDiscardController,
 		this.waitView = waitView;
 		this.discardView = view;	
 		discardView.setDiscardButtonEnabled(false);
+		
+		//issue 209 fix
+		hasDiscarded = false;
 	}
 
 	public IDiscardView getDiscardView() {
@@ -133,13 +139,16 @@ public class DiscardController extends Controller implements IDiscardController,
 		wheatDiscardAmount=0;
 		oreDiscardAmount=0;
 		discardView.setDiscardButtonEnabled(false);
+		
+		//issue 209 fix
+		hasDiscarded = true;
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		if (presenter.getState().getStatus().equals("Discarding")){
 			initDiscardValues();
-			if(totalResources>=7) {
+			if(totalResources>=7 && !hasDiscarded) { // !hasDiscarded = issue 209 fix
 				discardView.showModal();
 				updateResourceValues();
 			}
@@ -149,6 +158,9 @@ public class DiscardController extends Controller implements IDiscardController,
 		}
 		if(presenter.getState().getStatus().equals("Robbing")){
 			waitView.closeModal();
+			
+			//issue 209 fix
+			hasDiscarded = false;
 		}
 	}
 

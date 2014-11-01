@@ -3,10 +3,13 @@ package client.domestic;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import shared.definitions.*;
-import client.base.*;
+import shared.definitions.PlayerDescription;
+import shared.definitions.ResourceHand;
+import shared.definitions.ResourceType;
+import shared.definitions.ServerModel;
+import client.base.Controller;
 import client.main.Catan;
-import client.misc.*;
+import client.misc.IWaitView;
 import client.model.Player;
 import client.model.Resources;
 import client.model.TradeOffer;
@@ -178,20 +181,16 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		
 			ArrayList<PlayerDescription> otherPlayersList = new ArrayList<PlayerDescription>();
 			//PlayerDescription[] gamePlayers = presenter.getPlayerInfoArray();
-			
 			ArrayList<Player> gamePlayers = (ArrayList<Player>) presenter.getClientModel().getServerModel().getPlayers();
-			
-			for(Player p : gamePlayers) {
-				if(p.getPlayerIndex() != presenter.getPlayerInfo().getIndex()) {
+			for (Player p : gamePlayers) {
+				if (p.getPlayerIndex() != presenter.getPlayerInfo().getIndex()) {
 					PlayerDescription temp = new PlayerDescription(p.getColor(), p.getPlayerID(), p.getName());
-					temp.setIndex(p.getPlayerIndex());
-					otherPlayersList.add(temp);
+						temp.setIndex(p.getPlayerIndex());
+						otherPlayersList.add(temp);
+					}
 				}
-			}
-			
 			PlayerDescription[] otherPlayers = new PlayerDescription[3];
 			otherPlayers = otherPlayersList.toArray(otherPlayers);
-			
 			getTradeOverlay().setPlayers(otherPlayers);
 			getTradeOverlay().showModal();
 		}
@@ -361,6 +360,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			presenter.offerTrade(offer, receiverIndex);
 		}
 		getTradeOverlay().closeModal();
+		getTradeOverlay().reset();
 		getWaitOverlay().showModal();
 	}
 
@@ -380,41 +380,62 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
 		Player player = presenter.getClientModel().getServerModel().getPlayerByID(presenter.getPlayerInfo().getID());
+		
 		switch(resource.name().toLowerCase()) {
 		case "brick":
+			if (this.brickState != -1) {
 				this.brickState = -1;
 				this.offeredBrick = 0;
 				this.availableBrick = player.getBrick();
 				getTradeOverlay().setResourceAmount(ResourceType.BRICK, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.BRICK, 19 - this.availableBrick > 0, this.desiredBrick > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.BRICK, 19 - this.availableBrick > 0,
+						this.desiredBrick > 0);
+			}
 			break;
 		case "ore":
+			if (this.oreState != -1) {
 				this.oreState = -1;
 				this.offeredOre = 0;
 				this.availableOre = player.getOre();
 				getTradeOverlay().setResourceAmount(ResourceType.ORE, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.ORE, 19 - this.availableOre > 0, this.desiredOre > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.ORE, 19 - this.availableOre > 0,
+						this.desiredOre > 0);
+			}
 			break;
 		case "wheat":
+			if (this.wheatState != -1) {
 				this.wheatState = -1;
 				this.offeredWheat = 0;
 				this.availableWheat = player.getWheat();
 				getTradeOverlay().setResourceAmount(ResourceType.WHEAT, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.WHEAT, 19 - this.availableWheat > 0, this.desiredWheat > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.WHEAT, 19 - this.availableWheat > 0,
+						this.desiredWheat > 0);
+			}
 			break;
 		case "sheep":
+			if (this.sheepState != -1) {
 				this.sheepState = -1;
 				this.offeredSheep = 0;
 				this.availableSheep = player.getSheep();
 				getTradeOverlay().setResourceAmount(ResourceType.SHEEP, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.SHEEP, 19 - this.availableSheep > 0, this.desiredSheep > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.SHEEP, 19 - this.availableSheep > 0,
+						this.desiredSheep > 0);
+			}
 			break;
 		case "wood":
+			if (this.woodState != -1) {
 				this.woodState = -1;
 				this.offeredWood = 0;
 				this.availableWood = player.getWood();
 				getTradeOverlay().setResourceAmount(ResourceType.WOOD, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.WOOD, 19 - this.availableWood > 0, this.desiredWood > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.WOOD, 19 - this.availableWood > 0,
+						this.desiredWood > 0);
+			}
 			break;
 			default:
 				System.err.println("Error in set resource to receive in offer trade");
@@ -427,44 +448,64 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		Player player = presenter.getClientModel().getServerModel().getPlayerByID(presenter.getPlayerInfo().getID());
 		switch(resource.name().toLowerCase()) {
 		case "brick":
+			if (this.brickState != 1) {
 				this.brickState = 1;
 				this.desiredBrick = 0;
 				this.offeredBrick = 0;
 				this.availableBrick = player.getBrick();
 				getTradeOverlay().setResourceAmount(ResourceType.BRICK, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.BRICK, this.availableBrick > 0, this.offeredBrick > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.BRICK, this.availableBrick > 0,
+						this.offeredBrick > 0);
+			}
 			break;
 		case "ore":
+			if (this.oreState != 1) {
 				this.oreState = 1;
 				this.desiredOre = 0;
 				this.offeredOre = 0;
 				this.availableOre = player.getOre();
 				getTradeOverlay().setResourceAmount(ResourceType.ORE, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.ORE, this.availableOre > 0, this.offeredOre > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.ORE, this.availableOre > 0,
+						this.offeredOre > 0);
+			}
 			break;
 		case "wheat":
+			if (this.wheatState != 1) {
 				this.wheatState = 1;
 				this.desiredWheat = 0;
 				this.offeredWheat = 0;
 				this.availableWheat = player.getWheat();
 				getTradeOverlay().setResourceAmount(ResourceType.WHEAT, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.WHEAT, this.availableWheat > 0, this.offeredWheat > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.WHEAT, this.availableWheat > 0,
+						this.offeredWheat > 0);
+			}
 			break;
 		case "sheep":
+			if (this.sheepState != 1) {
 				this.sheepState = 1;
 				this.desiredSheep = 0;
 				this.offeredSheep = 0;
 				this.availableSheep = player.getSheep();
 				getTradeOverlay().setResourceAmount(ResourceType.SHEEP, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.SHEEP, this.availableSheep > 0, this.offeredSheep > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.SHEEP, this.availableSheep > 0,
+						this.offeredSheep > 0);
+			}
 			break;
 		case "wood":
+			if (this.woodState != 1) {
 				this.woodState = 1;
 				this.desiredWood = 0;
 				this.offeredWood = 0;
 				this.availableWood = player.getWood();
 				getTradeOverlay().setResourceAmount(ResourceType.WOOD, "0");
-				getTradeOverlay().setResourceAmountChangeEnabled(ResourceType.WOOD, this.availableWood > 0, this.offeredWood > 0);
+				getTradeOverlay().setResourceAmountChangeEnabled(
+						ResourceType.WOOD, this.availableWood > 0,
+						this.offeredWood > 0);
+			}
 			break;
 			default:
 				System.err.println("Error in set resource to send in offer trade");
@@ -520,6 +561,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void cancelTrade() {
 		getTradeOverlay().closeModal();
+		getTradeOverlay().reset();
 	}
 
 	@Override
