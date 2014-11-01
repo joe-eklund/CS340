@@ -10,6 +10,9 @@ import javax.swing.event.ChangeListener;
 
 import shared.definitions.*;
 import client.base.*;
+import client.main.Catan;
+import client.model.DevCards;
+import client.presenter.IPresenter;
 import client.utils.*;
 
 import java.util.*;
@@ -18,7 +21,7 @@ import java.util.*;
  * "Play dev card" view implementation
  */
 @SuppressWarnings("serial")
-public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
+public class PlayDevCardView extends OverlayView implements IPlayDevCardView, Observer {
 	
 	private final int LABEL_TEXT_SIZE = 40;
 	private final int BUTTON_TEXT_SIZE = 20;
@@ -34,10 +37,15 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 	// Action buttons
 	private JButton useButton;
 	private JButton cancelButton;
+	
+	private static IPresenter presenter;
 
 	public PlayDevCardView() {
 		this.setOpaque(true);
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
+		
+		presenter = Catan.getPresenter();
+		presenter.addObserverToModel(this);
 		
 		this.setLayout(new BorderLayout());
 
@@ -220,6 +228,26 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 			}
 		}		
 	};
+
+	@Override
+	public void update(Observable o, Object arg) {
+		DevCards dev=presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getOldDevCards();
+		if(dev.getMonopoly()==0){
+			devCards.setCardEnabled(DevCardType.MONOPOLY, false);
+		}
+		if(dev.getMonument()==0){
+			devCards.setCardEnabled(DevCardType.MONUMENT, false);
+		}
+		if(dev.getRoadBuilding()==0){
+			devCards.setCardEnabled(DevCardType.ROAD_BUILD, false);
+		}
+		if(dev.getSoldier()==0){
+			devCards.setCardEnabled(DevCardType.SOLDIER, false);
+		}
+		if(dev.getYearOfPlenty()==0){
+			devCards.setCardEnabled(DevCardType.YEAR_OF_PLENTY, false);
+		}
+	}
 }
 
 
