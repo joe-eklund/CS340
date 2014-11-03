@@ -14,6 +14,8 @@ public interface IRollController extends IController
 	void rollDice();
 
 	IRollView getRollView();
+
+	void sendRoll();
 	
 }
 

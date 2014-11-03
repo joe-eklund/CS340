@@ -136,7 +136,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startCreateNewGame() {
-		
+
 		getNewGameView().showModal();
 	}
 
@@ -156,7 +156,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		CreateGameResponse response=this.presenter.createGame(randNums,randTiles,randPorts,name);
 		if(response.isSuccessful()) {
 			getNewGameView().closeModal();
-			this.getJoinGameView().showModal();
+			getJoinGameView().closeModal();
+			getJoinGameView().showModal();
 		}else {
 			messageView.setMessage("Creating a game failed.");
 			messageView.showModal();

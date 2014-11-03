@@ -16,6 +16,7 @@ public class RollController extends Controller implements IRollController, Obser
 	private IRollView rollView;
 	private IRollResultView resultView;
 	private IPresenter presenter;
+	private int rollValue;
 	
 	/**
 	 * RollController constructor
@@ -56,7 +57,8 @@ public class RollController extends Controller implements IRollController, Obser
 		getResultView().setRollValue(diceRoll);
 		rollView.closeModal();
 		getResultView().showModal();	
-		presenter.rollNumber(diceRoll);
+		//presenter.rollNumber(diceRoll);
+		rollValue = diceRoll;
 	}
 
 	@Override
@@ -65,6 +67,12 @@ public class RollController extends Controller implements IRollController, Obser
 			rollView.showModal();
 			rollView.startTimer();
 		}
+	}
+
+	@Override
+	public void sendRoll() {
+		// TODO Auto-generated method stub
+		presenter.rollNumber(rollValue);
 	}
 
 }

@@ -98,7 +98,7 @@ public class Catan extends JFrame
 				presenter = new Presenter(clientmodel,proxy,"");
 				presenter.setState(new LoggingIn());
 				clientmodel.setPresenter(presenter);
-				poller = new Poller(presenter, 100);
+				poller = new Poller(presenter, 1000);
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);
