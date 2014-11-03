@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import shared.definitions.ResourceType;
 import client.discard.DiscardController;
 import client.discard.DiscardView;
+import client.join.JoinGameController;
 import client.misc.WaitView;
 import client.presenter.IPresenter;
 import client.roll.RollController;
@@ -32,14 +33,14 @@ public class CatanPanel extends JPanel
 	private RollResultView rollResultView;
 	private RollController rollController;
 	
-	public CatanPanel()
+	public CatanPanel(JoinGameController joinController)
 	{
 		this.setLayout(new BorderLayout());
 		
 		titlePanel = new TitlePanel();
 		midPanel = new MidPanel();
 		leftPanel = new LeftPanel(titlePanel, midPanel.getGameStatePanel());
-		rightPanel = new RightPanel(midPanel.getMapController());
+		rightPanel = new RightPanel(midPanel.getMapController(), joinController);
 		
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(leftPanel, BorderLayout.WEST);

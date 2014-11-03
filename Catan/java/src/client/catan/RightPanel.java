@@ -9,6 +9,7 @@ import shared.definitions.PieceType;
 import client.points.*;
 import client.resources.*;
 import client.base.*;
+import client.join.JoinGameController;
 import client.main.Catan;
 import client.map.*;
 import client.devcards.*;
@@ -26,7 +27,7 @@ public class RightPanel extends JPanel implements Observer
 	private ResourceBarView resourceView;
 	private ResourceBarController resourceController;
 	
-	public RightPanel(final IMapController mapController)
+	public RightPanel(final IMapController mapController, JoinGameController joinController)
 	{
 		Catan.getPresenter().addObserverToModel(this);
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -57,7 +58,7 @@ public class RightPanel extends JPanel implements Observer
 		// Initialize victory point view and controller
 		//
 		pointsView = new PointsView();
-		finishedView = new GameFinishedView();
+		finishedView = new GameFinishedView(joinController);
 		pointsController = new PointsController(pointsView, finishedView);
 		pointsView.setController(pointsController);
 		

@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import client.base.*;
 import client.join.IJoinGameView;
+import client.join.JoinGameController;
 import client.main.Catan;
 import client.model.Player;
 import client.presenter.IPresenter;
@@ -46,23 +47,26 @@ public class PointsController extends Controller implements IPointsController, O
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (presenter.getState().getStatus().equals("Playing")) {
+		if (presenter.getState().isInAnyPlayingState()) {
 			getPointsView().setPoints(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getVictoryPoints());
-			if (presenter.isPlayersTurn()) {
-				for(Player p : presenter.getClientModel().getServerModel().getPlayers()){
-					if(p.getVictoryPoints()>=10){ //You can force the points here
-						getFinishedView().setWinner(p.getName(), presenter.isPlayersTurn());
-						getFinishedView().showModal();
-					}
+			if (presenter.getClientModel().getServerModel().getWinner() > -1) {
+				if (presenter.getPlayerInfo().getIndex() == presenter.getClientModel().getServerModel().getWinner()) {
+					getFinishedView().setWinner(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getName(), true);
+					getFinishedView().showModal();
+				}
+				else {
+					getFinishedView().setWinner(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getName(), false);
+					getFinishedView().showModal();
 				}
 			}
 		}
 	}
+	
 
 	@Override
 	public void returnToJoinGame() {
-		presenter.resetGame();
-		Catan.getJoin().start();
+//		presenter.resetGame();
+//		Catan.getJoin().start();
 //		getFinishedView().closeModal();
 	}
 	

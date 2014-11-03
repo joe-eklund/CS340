@@ -6,7 +6,12 @@ import java.awt.image.*;
 
 import javax.swing.*;
 
+import shared.states.Joining;
 import client.base.*;
+import client.join.JoinGameController;
+import client.main.Catan;
+import client.presenter.IPresenter;
+import client.presenter.Presenter;
 import client.utils.*;
 
 
@@ -28,9 +33,12 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 	private JLabel image;
 	private JButton okButton;
 	private JPanel buttonPanel;
+	private JoinGameController joinController;
+	private IPresenter presenter;
 
-	public GameFinishedView() {
+	public GameFinishedView(JoinGameController joinController) {
 		
+		this.presenter = Catan.getPresenter();
 		this.setOpaque(true);
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
@@ -70,6 +78,7 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 		okButton.setFont(buttonFont);
 		okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(okButton, BorderLayout.PAGE_END);
+		this.joinController = joinController;
 	}
 
 	private ActionListener actionListener = new ActionListener() {
@@ -78,7 +87,8 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 			
 			if (e.getSource() == okButton) {
 				closeModal();
-				getController().returnToJoinGame();
+				presenter.setState(new Joining());
+				joinController.showView();
 			}
 		}	
 	};

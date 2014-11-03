@@ -226,5 +226,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		
 		return newNumPlayers;
 	}
+	
+	public void showView() {
+		getJoinGameView().showModal();
+	}
 }
 
