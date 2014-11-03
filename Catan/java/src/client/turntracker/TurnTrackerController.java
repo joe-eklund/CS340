@@ -18,7 +18,7 @@ import client.presenter.IPresenter;
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
 	private IPresenter presenter;
-	private boolean initialized;
+	private int numPlayers;
 	
 	public TurnTrackerController(ITurnTrackerView view) {
 		
@@ -26,7 +26,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		
 		presenter = Catan.getPresenter();
 		presenter.addObserverToModel(this);
-		initialized = false;
+		numPlayers = 0;
 		initFromModel();
 	}
 	
@@ -57,18 +57,20 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
 		players.removeAll(Collections.singleton(null));
 			
-		boolean executed = false;
-		for(Player p : players){
-			if (!initialized) {
-				getView().initializePlayer(p.getPlayerIndex(), p.getName(), CatanColor.valueOf(p.getColor().toUpperCase()));
-				executed = true;
+		if (numPlayers < players.size()) {
+			for (int i = numPlayers; i < players.size(); i++) {
+				getView().initializePlayer(players.get(i).getPlayerIndex(), 
+						players.get(i).getName(), 
+						CatanColor.valueOf(players.get(i).getColor().toUpperCase()));
 			}
 			
-			getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), isPlayersTurn(p), ifLargestArmy(p), ifLongestRoad(p));									
+			numPlayers = players.size();
 		}
 		
-		if (executed)
-			initialized = true;
+		for(Player p : players){
+			getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), isPlayersTurn(p), ifLargestArmy(p), ifLongestRoad(p));									
+		}
+
 		
 		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {
 			getView().updateGameState("Finish Turn", true);
