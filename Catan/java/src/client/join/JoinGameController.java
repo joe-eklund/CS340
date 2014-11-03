@@ -217,6 +217,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				}
 			}
 		}
+		
+		if(presenter.getState().getStatus().equals("Playing")) {
+			if(getJoinGameView().isModalShowing()) {
+				getJoinGameView().closeModal();
+			}
+		}
 	}
 	
 	public int getNewNumberOfPlayers() {
