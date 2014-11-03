@@ -1,16 +1,20 @@
 package client.catan;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.swing.*;
 
 import shared.definitions.PieceType;
 import client.points.*;
 import client.resources.*;
 import client.base.*;
+import client.main.Catan;
 import client.map.*;
 import client.devcards.*;
 
 @SuppressWarnings("serial")
-public class RightPanel extends JPanel
+public class RightPanel extends JPanel implements Observer
 {
 	
 	private PlayDevCardView playCardView;
@@ -24,7 +28,7 @@ public class RightPanel extends JPanel
 	
 	public RightPanel(final IMapController mapController)
 	{
-		
+		Catan.getPresenter().addObserverToModel(this);
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		
 		// Initialize development card views and controller
@@ -90,7 +94,10 @@ public class RightPanel extends JPanel
 		
 		this.add(pointsView);
 		this.add(resourceView);
+		
 	}
+	
+	
 	
 	private IAction createStartMoveAction(final IMapController mapController,
 										  final PieceType pieceType)
@@ -106,6 +113,14 @@ public class RightPanel extends JPanel
 				mapController.startMove(pieceType, isFree, allowDisconnected);
 			}
 		};
+	}
+
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.repaint();
+		
 	}
 	
 }
