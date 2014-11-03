@@ -26,7 +26,10 @@ public class MapController extends Controller implements IMapController, Observe
 	private IRobView robView;
 	private static IPresenter presenter;
 	private boolean haveInitializedHexes;
-	
+	private boolean playingRoadBuildingCard;
+	private int numRoadsPlaced;
+	private EdgeLocation edgeLoc1;
+	private EdgeLocation edgeLoc2;
 	private HexLocation robberSpot;
 	
 	public MapController(IMapView view, IRobView robView) {
@@ -41,6 +44,7 @@ public class MapController extends Controller implements IMapController, Observe
 		initFromModel();
 		
 		haveInitializedHexes = false;
+		playingRoadBuildingCard = false;
 		robberSpot=null;
 	}
 	
@@ -82,8 +86,26 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		
-		return presenter.canPlaceRoad(edgeLoc);
+		if (!playingRoadBuildingCard) {
+			if (presenter.getState().getStatus().equals("FirstRound") || presenter.getState().getStatus().equals("SecondRound")) {
+				return presenter.canPlaceRoad(edgeLoc, true);
+			}
+			else {
+				return presenter.canPlaceRoad(edgeLoc, false);
+			}
+		}
+		else {
+			if (numRoadsPlaced == 0) {
+				return presenter.canPlaceRoad(edgeLoc, true);
+			}
+			else {
+				if (edgeLoc.getHexLoc().getX() == 1 && edgeLoc.getHexLoc().getY() == -2)
+					return presenter.getClientModel().canPlayRoadBuilding(presenter.getPlayerInfo().getIndex(), edgeLoc1, edgeLoc);
+				else
+					return presenter.getClientModel().canPlayRoadBuilding(presenter.getPlayerInfo().getIndex(), edgeLoc1, edgeLoc);
+			}
+		}
+			
 	}
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc) {
@@ -107,8 +129,19 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		presenter.buildRoad(edgeLoc);
-//		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		if (!playingRoadBuildingCard)
+			presenter.buildRoad(edgeLoc);
+		else {
+			if (numRoadsPlaced == 0) {
+				numRoadsPlaced++;
+				edgeLoc1 = edgeLoc;
+			} 
+			else {
+				presenter.playRoadBuildingCard(edgeLoc1, edgeLoc);
+				numRoadsPlaced = 0;
+				playingRoadBuildingCard = false;
+			}
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
@@ -144,9 +177,11 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void playRoadBuildingCard() {
 		if(presenter.isPlayersTurn()){
-			Player p=presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex());
-			p.setBrick(p.getBrick()+2);
-			p.setWood(p.getWood()+2);
+			playingRoadBuildingCard = true;
+			numRoadsPlaced = 0;
+//			Player p=presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex());
+//			p.setBrick(p.getBrick()+2);
+//			p.setWood(p.getWood()+2);
 			getView().roadBuildingPhase(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
 		}
 	}

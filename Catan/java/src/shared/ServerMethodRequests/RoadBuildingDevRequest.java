@@ -1,5 +1,6 @@
 package shared.ServerMethodRequests;
 
+import shared.definitions.RoadLocation;
 import shared.locations.EdgeLocation;
 
 /**
@@ -17,8 +18,8 @@ import shared.locations.EdgeLocation;
 public class RoadBuildingDevRequest {
 	private String type;
 	private int playerIndex;
-	private EdgeLocation spot1;
-	private EdgeLocation spot2;
+	private RoadLocation spot1;
+	private RoadLocation spot2;
 	
 	/**
 	 * Constructor
@@ -34,7 +35,7 @@ public class RoadBuildingDevRequest {
 	 * @param spot1
 	 * @param spot2
 	 */
-	public RoadBuildingDevRequest(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
+	public RoadBuildingDevRequest(int playerIndex, RoadLocation spot1, RoadLocation spot2) {
 		this.type = "Road_Building";
 		this.playerIndex = playerIndex;
 		this.spot1 = spot1;
@@ -58,14 +59,14 @@ public class RoadBuildingDevRequest {
 	/**
 	 * @obvious
 	 */
-	public EdgeLocation getSpot1() {
+	public RoadLocation getSpot1() {
 		return spot1;
 	}
 
 	/**
 	 * @obvious
 	 */
-	public EdgeLocation getSpot2() {
+	public RoadLocation getSpot2() {
 		return spot2;
 	}
 
@@ -86,14 +87,14 @@ public class RoadBuildingDevRequest {
 	/**
 	 * @obvious
 	 */
-	public void setSpot1(EdgeLocation spot1) {
+	public void setSpot1(RoadLocation spot1) {
 		this.spot1 = spot1;
 	}
 
 	/**
 	 * @obvious
 	 */
-	public void setSpot2(EdgeLocation spot2) {
+	public void setSpot2(RoadLocation spot2) {
 		this.spot2 = spot2;
 	}
 

@@ -80,7 +80,7 @@ public interface IPresenter extends Runnable {
 	
 	public void buildRoad(EdgeLocation roadLocation);
 	
-	public Boolean canPlaceRoad(EdgeLocation edgeLoc);
+	public Boolean canPlaceRoad(EdgeLocation edgeLoc, boolean free);
 
 	public boolean canPlaceSettlement(VertexLocation vertLoc);
 
