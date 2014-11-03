@@ -152,12 +152,18 @@ public class DiscardController extends Controller implements IDiscardController,
 				discardView.showModal();
 				updateResourceValues();
 			}
-			else if(totalResources<7){
+			else if(totalResources<7 || hasDiscarded){
 				waitView.showModal();
 			}
 		}
-		if(presenter.getState().getStatus().equals("Robbing")){
-			waitView.closeModal();
+		else {
+			if(waitView.isModalShowing()) {
+				waitView.closeModal();
+			}
+			
+			if(this.getDiscardView().isModalShowing()) {
+				this.getDiscardView().closeModal();
+			}
 			
 			//issue 209 fix
 			hasDiscarded = false;
