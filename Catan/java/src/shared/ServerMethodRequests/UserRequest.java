@@ -58,5 +58,10 @@ public class UserRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public boolean validatePreConditions() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
