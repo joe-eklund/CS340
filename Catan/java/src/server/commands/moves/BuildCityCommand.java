@@ -2,6 +2,10 @@ package server.commands.moves;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of building cities
+ *
+ */
 public class BuildCityCommand extends ACommand {
 
 	public BuildCityCommand() {

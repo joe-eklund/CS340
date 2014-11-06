@@ -2,6 +2,10 @@ package server.commands.game;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of reseting a game
+ *
+ */
 public class ResetCommand extends ACommand {
 
 	public ResetCommand() {

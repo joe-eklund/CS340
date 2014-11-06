@@ -2,6 +2,10 @@ package server.commands.moves;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of robbing a player
+ *
+ */
 public class RobPlayerCommand extends ACommand {
 
 	public RobPlayerCommand() {

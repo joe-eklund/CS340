@@ -2,6 +2,11 @@ package server.commands.moves;
 
 import server.commands.ACommand;
 
+
+/**
+ * The command class in charge of playing the soldier development card for a player
+ *
+ */
 public class SoldierCommand extends ACommand {
 
 	public SoldierCommand() {

@@ -2,6 +2,10 @@ package server.commands.util;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of changing the servers log level
+ *
+ */
 public class ChangeLogLevelCommand extends ACommand {
 
 	public ChangeLogLevelCommand() {

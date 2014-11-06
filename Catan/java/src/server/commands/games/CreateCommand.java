@@ -2,6 +2,10 @@ package server.commands.games;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of creating a new game
+ *
+ */
 public class CreateCommand extends ACommand {
 
 	public CreateCommand() {
