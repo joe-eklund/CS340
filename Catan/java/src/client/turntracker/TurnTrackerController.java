@@ -18,14 +18,15 @@ import client.presenter.IPresenter;
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
 	private IPresenter presenter;
-
+	private int numPlayers;
+	
 	public TurnTrackerController(ITurnTrackerView view) {
 		
 		super(view);
 		
 		presenter = Catan.getPresenter();
 		presenter.addObserverToModel(this);
-		
+		numPlayers = 0;
 		initFromModel();
 	}
 	
@@ -51,18 +52,25 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		
 		if(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor()!=null){
 			getView().setLocalPlayerColor(CatanColor.valueOf(presenter.getClientModel().getServerModel().getPlayers().get(presenter.getPlayerInfo().getIndex()).getColor().toUpperCase()));
-			
-
 		}	
 		
 		List<Player> players = presenter.getClientModel().getServerModel().getPlayers();
-			players.removeAll(Collections.singleton(null));
+		players.removeAll(Collections.singleton(null));
 			
-			for(Player p : players){
-				getView().initializePlayer(p.getPlayerIndex(), p.getName(), CatanColor.valueOf(p.getColor().toUpperCase()));
-				
-				getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), isPlayersTurn(p), ifLargestArmy(p), ifLongestRoad(p));									
+		if (numPlayers < players.size()) {
+			for (int i = numPlayers; i < players.size(); i++) {
+				getView().initializePlayer(players.get(i).getPlayerIndex(), 
+						players.get(i).getName(), 
+						CatanColor.valueOf(players.get(i).getColor().toUpperCase()));
+			}
+			
+			numPlayers = players.size();
 		}
+		
+		for(Player p : players){
+			getView().updatePlayer(p.getPlayerIndex(), p.getVictoryPoints(), isPlayersTurn(p), ifLargestArmy(p), ifLongestRoad(p));									
+		}
+
 		
 		if(presenter.getState().getStatus().equals("Playing") && presenter.isPlayersTurn()) {
 			getView().updateGameState("Finish Turn", true);
@@ -73,10 +81,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		else {
 			getView().updateGameState("Waiting for other Players", false);
 		}
+		
 	}
 	
 	private boolean isPlayersTurn(Player p){
-		if(p.getPlayerIndex() == presenter.getPlayerInfo().getIndex())
+		if(p.getPlayerIndex() == presenter.getClientModel().getServerModel().getTurnTracker().getCurrentTurn())
 		{
 			return true;
 		}

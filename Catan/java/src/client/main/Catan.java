@@ -51,7 +51,7 @@ public class Catan extends JFrame
 	
 	private CatanPanel catanPanel;
 	
-	public Catan()
+	public Catan(JoinGameController joinController)
 	{
 		
 		client.base.OverlayView.setWindow(this);
@@ -59,7 +59,7 @@ public class Catan extends JFrame
 		this.setTitle("Settlers of Catan");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		catanPanel = new CatanPanel();
+		catanPanel = new CatanPanel(joinController);
 		this.setContentPane(catanPanel);
 		
 		display();
@@ -104,7 +104,7 @@ public class Catan extends JFrame
 				final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);
 				playerWaitingView.setController(playerWaitingController);
 				
-				new Catan();
+				
 				
 				JoinGameView joinView = new JoinGameView();
 				NewGameView newGameView = new NewGameView();
@@ -115,6 +115,9 @@ public class Catan extends JFrame
 														selectColorView,
 														joinMessageView,
 														presenter);
+				
+				new Catan(joinController);
+				
 				//Adding joinController as observer
 				presenter.addObserver(joinController);
 				

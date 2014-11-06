@@ -416,7 +416,9 @@ public class ProxyServer implements IServer{
 
 	@Override
 	public MoveResponse playRoadBuildingCard(int playerIndex, EdgeLocation spot1, EdgeLocation spot2, String cookie) {
-		RoadBuildingDevRequest request = new RoadBuildingDevRequest(playerIndex, spot1, spot2);
+		RoadLocation roadLocationRequest1 = new RoadLocation(spot1.getHexLoc().getX(), spot1.getHexLoc().getY(), spot1.getDir());
+		RoadLocation roadLocationRequest2 = new RoadLocation(spot2.getHexLoc().getX(), spot2.getHexLoc().getY(), spot2.getDir());
+		RoadBuildingDevRequest request = new RoadBuildingDevRequest(playerIndex, roadLocationRequest1, roadLocationRequest2);
 		ArrayList<Pair<String,String>> requestHeaders = new ArrayList<Pair<String,String>>();
 		requestHeaders.add(new Pair<String,String>(COOKIE_STR, cookie));
 		requestHeaders.add(new Pair<String,String>(CONTENT_TYPE_STR, APP_JSON_STR));

@@ -16,6 +16,8 @@ public class RollController extends Controller implements IRollController, Obser
 	private IRollView rollView;
 	private IRollResultView resultView;
 	private IPresenter presenter;
+	private int rollValue;
+	private boolean timerStarted;
 	
 	/**
 	 * RollController constructor
@@ -31,6 +33,7 @@ public class RollController extends Controller implements IRollController, Obser
 		setResultView(resultView);
 		presenter = Catan.getPresenter();
 		presenter.addObserverToModel(this);
+		timerStarted = false;
 	}
 	
 	public IRollResultView getResultView() {
@@ -56,15 +59,24 @@ public class RollController extends Controller implements IRollController, Obser
 		getResultView().setRollValue(diceRoll);
 		rollView.closeModal();
 		getResultView().showModal();	
-		presenter.rollNumber(diceRoll);
+		//presenter.rollNumber(diceRoll);
+		rollValue = diceRoll;
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (presenter.getState().getStatus().equals("Rolling") && presenter.isPlayersTurn()) {
+		if (presenter.getState().getStatus().equals("Rolling") && presenter.isPlayersTurn() && !timerStarted) {
 			rollView.showModal();
 			rollView.startTimer();
+			timerStarted = true;
 		}
+	}
+
+	@Override
+	public void sendRoll() {
+		// TODO Auto-generated method stub
+		presenter.rollNumber(rollValue);
+		timerStarted = false;
 	}
 
 }

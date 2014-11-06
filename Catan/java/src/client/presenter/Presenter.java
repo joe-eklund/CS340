@@ -178,22 +178,8 @@ public class Presenter extends Observable implements IPresenter {
 	public void setGameStateAccordingToModelState() {
 		
 	}
-	public Boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		if (state.getStatus().equals("FirstRound") || state.getStatus().equals("SecondRound")) {
-				return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, true);
-		}
-		else {
-			//TESTING BUILDING ROAD, SETTLEMENT, CITY
-//			clientModel.getServerModel().getPlayers().get(0).setBrick(5);
-//			clientModel.getServerModel().getPlayers().get(0).setWood(5);
-//			clientModel.getServerModel().getPlayers().get(0).setWheat(5);
-//			clientModel.getServerModel().getPlayers().get(0).setSheep(5);
-//			clientModel.getServerModel().getPlayers().get(0).setOre(5);
-//			clientModel.getServerModel().getTurnTracker().setStatus("Playing");
-			//end test setup
-			
-			return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, false);
-		}
+	public Boolean canPlaceRoad(EdgeLocation edgeLoc, boolean free) {
+		return clientModel.canBuildRoad(playerInfo.getIndex(), edgeLoc, free);
 	}
 	
 	public void buildRoad(EdgeLocation roadLocation) {

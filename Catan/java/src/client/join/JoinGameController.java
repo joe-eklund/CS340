@@ -136,7 +136,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void startCreateNewGame() {
-		
+
 		getNewGameView().showModal();
 	}
 
@@ -156,6 +156,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		CreateGameResponse response=this.presenter.createGame(randNums,randTiles,randPorts,name);
 		if(response.isSuccessful()) {
 			getNewGameView().closeModal();
+			getJoinGameView().closeModal();
+			getJoinGameView().showModal();
 		}else {
 			messageView.setMessage("Creating a game failed.");
 			messageView.showModal();
@@ -197,6 +199,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			this.getJoinGameView().setGames(presenter.getGames(), presenter.getPlayerInfo());
 			numGames = presenter.getGames().size();
 			numPlayers = getNewNumberOfPlayers();
+			this.getJoinGameView().closeModal();
+			this.getJoinGameView().showModal();
 		}
 		
 		if (currentGame != null) {
@@ -213,6 +217,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				}
 			}
 		}
+		
+		if(presenter.getState().getStatus().equals("Playing")) {
+			if(getJoinGameView().isModalShowing()) {
+				getJoinGameView().closeModal();
+			}
+		}
 	}
 	
 	public int getNewNumberOfPlayers() {
@@ -222,6 +232,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 		
 		return newNumPlayers;
+	}
+	
+	public void showView() {
+		getJoinGameView().showModal();
 	}
 }
 

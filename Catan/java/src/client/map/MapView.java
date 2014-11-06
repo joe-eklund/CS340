@@ -125,8 +125,8 @@ public class MapView extends PanelView implements IMapView
 	
 	@Override
 	public void roadBuildingPhase(CatanColor pieceColor) {
-		startDrop(PieceType.ROAD, pieceColor, false);	
-		startDrop(PieceType.ROAD, pieceColor, false);	
+		startDrop(PieceType.ROAD, pieceColor, true);	
+		startDrop(PieceType.ROAD, pieceColor, true);	
 	}
 	
 	private IMapController overlayController = new IMapController() {

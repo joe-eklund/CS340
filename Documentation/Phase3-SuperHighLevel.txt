@@ -1,0 +1,18 @@
+Server
+	HttpServer
+		(handlers)
+		(cookie parsing and creation)
+
+	Facades
+		user
+		games (pre-joining)
+		game (post-join)
+		moves
+		util (server logging)
+	
+	Models
+		users
+
+		games
+			gameModels
+	
