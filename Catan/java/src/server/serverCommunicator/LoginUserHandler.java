@@ -12,6 +12,11 @@ import shared.ServerMethodRequests.UserRequest;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+/**
+ * Handler for the LoginUser command
+ * @author Chad
+ *
+ */
 class LoginUserHandler implements HttpHandler {
 	
 	private ITranslator translator;
@@ -22,6 +27,12 @@ class LoginUserHandler implements HttpHandler {
 		this.usersFacade = usersFacade;
 	}
 	
+	/**
+	 * Handles Login User. 
+	 * @param exchange: the exchange to be handled. 
+	 * @pre The handler will be given the proper values to carry out the exchange.
+	 * @post no post as there is no return value. 
+	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		UserRequest request = (UserRequest) translator.translateFrom(exchange.getRequestBody().toString(), UserRequest.class);

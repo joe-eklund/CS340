@@ -9,16 +9,18 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 /**
- * AcceptTradeHandler: Handler for accepttrade command
+ * Handler for YearOfPlenty command
+ * @author Chad
+ *
  */
-public class AcceptTradeHandler implements HttpHandler {
+public class YearOfPlentyHandler implements HttpHandler {
 
-	public AcceptTradeHandler(ITranslator translator, IMovesFacade movesFacade) {
+	public YearOfPlentyHandler(ITranslator translator, IMovesFacade movesFacade) {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * Handles the Accepting a trade. 
+	 * Handles Year of Plenty Card. 
 	 * @param exchange: the exchange to be handled. 
 	 * @pre The handler will be given the proper values to carry out the exchange.
 	 * @post no post as there is no return value. 

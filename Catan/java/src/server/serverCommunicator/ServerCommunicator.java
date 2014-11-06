@@ -12,6 +12,10 @@ import server.util.IUtilFacade;
 
 import com.sun.net.httpserver.HttpServer;
 
+/**
+ * This is the server control class. Can be used to start up the server, stop the server, etc. 
+ * @author Chad
+ */
 public class ServerCommunicator {
 	
 	private static final int MAX_WAITING_CONNECTION = 10;
@@ -36,6 +40,9 @@ public class ServerCommunicator {
     	this.utilFacade = utilFacade;
     }
     
+    /**
+     * Starts up the server and initializes all the handlers. 
+     */
     public void run() {
 		try {
 			server = HttpServer.create(new InetSocketAddress(portNumber), MAX_WAITING_CONNECTION);
@@ -74,7 +81,7 @@ public class ServerCommunicator {
         server.createContext("/moves/robPlayer", new RobPlayerHandler(translator, movesFacade));
         server.createContext("/moves/finishTurn", new FinishTurnHandler(translator, movesFacade));
         server.createContext("/moves/buyDevCard", new BuyDevCardHandler(translator, movesFacade));
-        server.createContext("/moves/Year_Of_Plenty", new YearOfPlentHandler(translator, movesFacade));
+        server.createContext("/moves/Year_Of_Plenty", new YearOfPlentyHandler(translator, movesFacade));
         server.createContext("/moves/Road_Building", new RoadBuildingHandler(translator, movesFacade));
         server.createContext("/moves/Soldier", new SoldierHandler(translator, movesFacade));
         server.createContext("/moves/Monopoly", new MonopolyHandler(translator, movesFacade));
@@ -93,6 +100,9 @@ public class ServerCommunicator {
         server.start();
 	}
 	
+    /**
+     * Used to stop the server.
+     */
     public static void terminate() {
 		server.stop(1);
 	}
