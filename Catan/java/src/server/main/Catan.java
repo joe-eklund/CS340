@@ -1,8 +1,12 @@
 package server.main;
 
 import proxy.TranslatorJSON;
+import server.game.GameFacade;
+import server.games.GamesFacade;
 import server.httpServer.ServerCommunicator;
+import server.moves.MovesFacade;
 import server.users.UsersFacade;
+import server.util.UtilFacade;
 
 public class Catan {
 	private final static int MAX_PORT = 65535;
@@ -20,15 +24,20 @@ public class Catan {
 			if(portNumber >= MIN_PORT && portNumber <= MAX_PORT) {
 				TranslatorJSON translator = new TranslatorJSON();
 				UsersFacade usersFacade = new UsersFacade();
-				ServerCommunicator serverHandler = new ServerCommunicator(portNumber, translator, usersFacade);
+				GamesFacade gamesFacade = new GamesFacade();
+				GameFacade gameFacade = new GameFacade();
+				MovesFacade movesFacade = new MovesFacade();
+				UtilFacade utilFacade = new UtilFacade();
+				ServerCommunicator serverHandler = new ServerCommunicator(portNumber, translator, usersFacade, gamesFacade, gameFacade, movesFacade, utilFacade);
 				serverHandler.run();
+				System.out.println("Catan server listening on port: " + portNumber);
 			}
 			else {
 				System.err.println("Invalid port number; port must be >= " + MIN_PORT + " && port must be <= " + MAX_PORT);
 			}
     	}	
     	else {
-			System.err.println("USAGE: java Server <port>");
+			System.err.println("USAGE: java Catan <port>");
 		}
 	}
 	

@@ -10,8 +10,9 @@ Server
 		moves
 		util (server logging)
 	
-	Model
+	Models
 		users
+
 		games
 			gameModels
 	
