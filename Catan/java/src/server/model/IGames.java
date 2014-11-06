@@ -7,6 +7,8 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 public interface IGames {
+	
+	
 	public boolean canBuildCity(int gameID, int playerIndex, VertexLocation location);
 	
 	/**
