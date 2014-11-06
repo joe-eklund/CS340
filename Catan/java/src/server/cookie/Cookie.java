@@ -1,5 +1,5 @@
 package server.cookie;
 
-public class Cookie implements ICookie {
+public class Cookie {
 
 }
