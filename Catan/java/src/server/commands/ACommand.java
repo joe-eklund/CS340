@@ -1,12 +1,12 @@
 package server.commands;
 
-public abstract class Command implements ICommand{
+public abstract class ACommand implements ICommand{
 	private String name;
 
 	/**
 	 * @param name
 	 */
-	public Command(String name) {
+	public ACommand(String name) {
 		this.name = name;
 	}
 
