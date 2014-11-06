@@ -1,20 +1,24 @@
 package server.cookie;
 
-public class LoggedInCookieParams {
+public class JoinedGameCookieParams {
 	private String username;
 	private String password;
 	private int userID;
+	private int gameID;
 	
 	/**
 	 * @param username
 	 * @param password
 	 * @param userID
+	 * @param gameID
 	 */
-	public LoggedInCookieParams(String username, String password, int userID) {
+	public JoinedGameCookieParams(String username, String password, int userID,
+			int gameID) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.userID = userID;
+		this.gameID = gameID;
 	}
 
 	/**
@@ -39,6 +43,13 @@ public class LoggedInCookieParams {
 	}
 
 	/**
+	 * @return the gameID
+	 */
+	public int getGameID() {
+		return gameID;
+	}
+
+	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
@@ -58,5 +69,12 @@ public class LoggedInCookieParams {
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
-	
+
+	/**
+	 * @param gameID the gameID to set
+	 */
+	public void setGameID(int gameID) {
+		this.gameID = gameID;
+	}
+		
 }
