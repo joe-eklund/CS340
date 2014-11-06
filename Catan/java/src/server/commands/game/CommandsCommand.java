@@ -2,6 +2,10 @@ package server.commands.game;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of getting the current list of game commands
+ *
+ */
 public class CommandsCommand extends ACommand {
 
 	public CommandsCommand() {

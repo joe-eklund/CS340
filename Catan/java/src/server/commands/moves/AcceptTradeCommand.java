@@ -2,6 +2,10 @@ package server.commands.moves;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of accepting trades
+ *
+ */
 public class AcceptTradeCommand extends ACommand {
 
 	public AcceptTradeCommand() {

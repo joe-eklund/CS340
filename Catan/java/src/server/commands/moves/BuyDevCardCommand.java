@@ -2,6 +2,10 @@ package server.commands.moves;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of buying development cards
+ *
+ */
 public class BuyDevCardCommand extends ACommand {
 
 	public BuyDevCardCommand() {

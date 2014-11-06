@@ -2,6 +2,10 @@ package server.commands.games;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of loading a game
+ *
+ */
 public class LoadCommand extends ACommand{
 
 	public LoadCommand() {

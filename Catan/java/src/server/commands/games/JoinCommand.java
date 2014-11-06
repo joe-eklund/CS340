@@ -2,6 +2,10 @@ package server.commands.games;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of joining a player to a game
+ *
+ */
 public class JoinCommand extends ACommand {
 
 	public JoinCommand() {

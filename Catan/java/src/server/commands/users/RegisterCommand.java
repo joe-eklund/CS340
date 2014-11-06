@@ -2,6 +2,10 @@ package server.commands.users;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge registering a player to the system
+ *
+ */
 public class RegisterCommand extends ACommand{
 
 	public RegisterCommand() {

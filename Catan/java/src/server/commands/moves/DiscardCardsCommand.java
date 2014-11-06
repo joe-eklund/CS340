@@ -2,6 +2,10 @@ package server.commands.moves;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of discarding cards
+ *
+ */
 public class DiscardCardsCommand extends ACommand{
 
 	public DiscardCardsCommand() {

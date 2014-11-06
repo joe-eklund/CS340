@@ -2,6 +2,10 @@ package server.commands.moves;
 
 import server.commands.ACommand;
 
+/**
+ * The command class in charge of playing the road building development card for a player
+ *
+ */
 public class RoadBuildingCommand extends ACommand {
 
 	public RoadBuildingCommand() {
