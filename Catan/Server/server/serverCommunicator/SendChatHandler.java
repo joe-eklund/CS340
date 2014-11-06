@@ -15,8 +15,12 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class SendChatHandler implements HttpHandler {
 
+	private ITranslator translator;
+	private IMovesFacade movesFacade;
+
 	public SendChatHandler(ITranslator translator, IMovesFacade movesFacade) {
-		// TODO Auto-generated constructor stub
+		this.translator = translator;
+		this.movesFacade = movesFacade;
 	}
 
 	/**

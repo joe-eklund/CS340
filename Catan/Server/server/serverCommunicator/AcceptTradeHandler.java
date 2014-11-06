@@ -13,8 +13,12 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class AcceptTradeHandler implements HttpHandler {
 
+	private ITranslator translator;
+	private IMovesFacade movesFacade;
+	
 	public AcceptTradeHandler(ITranslator translator, IMovesFacade movesFacade) {
-		// TODO Auto-generated constructor stub
+		this.translator = translator;
+		this.movesFacade = movesFacade;
 	}
 
 	/**

@@ -11,14 +11,14 @@ public interface IUsersFacade {
 	/*
 	 * Takes a username and password and checks if they are valid.
 	 * @pre		request		UserRequest object containing a username and password
-	 * @post 	boolean		true if the username and password are valid, false otherwise
+	 * @post 	int			-1 if invalid credentials; otherwise userID for validated user (userID >= 0)
 	 */
-	boolean loginUser(UserRequest request);
+	public int loginUser(UserRequest request);
 
 	/*
 	 * Takes a username and password and checks if they are valid to register.
 	 * @pre		request		UserRequest object containing a username and password
-	 * @post 	boolean		true if the username and password are valid, false otherwise
-	 */	
-	boolean registerUser(UserRequest request);
+	 * @post 	int			-1 if invalid credentials; otherwise userID for validated user (userID >= 0)
+	 */
+	public int registerUser(UserRequest request);
 }

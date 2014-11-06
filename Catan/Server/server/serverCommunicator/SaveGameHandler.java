@@ -15,8 +15,12 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class SaveGameHandler implements HttpHandler {
 
+	private ITranslator translator;
+	private IGamesFacade gamesFacade;
+
 	public SaveGameHandler(ITranslator translator, IGamesFacade gamesFacade) {
-		// TODO Auto-generated constructor stub
+		this.translator = translator;
+		this.gamesFacade = gamesFacade;
 	}
 
 	/**

@@ -15,8 +15,12 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class ListAIHandler implements HttpHandler {
 
+	private IGameFacade gameFacade;
+	private ITranslator translator;
+
 	public ListAIHandler(ITranslator translator, IGameFacade gameFacade) {
-		// TODO Auto-generated constructor stub
+		this.translator = translator;
+		this.gameFacade = gameFacade;
 	}
 
 	/**

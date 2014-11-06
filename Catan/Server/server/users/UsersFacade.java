@@ -11,12 +11,12 @@ public class UsersFacade implements IUsersFacade{
 	/*
 	 * Takes a username and password and checks if they are valid.
 	 * @pre		request		UserRequest object containing a username and password
-	 * @post 	boolean		true if the username and password are valid, false otherwise
+	 * @post 	int			-1 if invalid credentials; otherwise userID for validated user (userID >= 0)
 	 */
 	@Override
-	public boolean loginUser(UserRequest request) {
+	public int loginUser(UserRequest request) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 
 	/*
@@ -25,9 +25,9 @@ public class UsersFacade implements IUsersFacade{
 	 * @post 	boolean		true if the username and password are valid, false otherwise
 	 */	
 	@Override
-	public boolean registerUser(UserRequest request) {
+	public int registerUser(UserRequest request) {
 		// TODO Auto-generated method stub
-		return false;
+		return -1;
 	}
 	
 }

@@ -37,7 +37,8 @@ class LoginUserHandler implements HttpHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		UserRequest request = (UserRequest) translator.translateFrom(exchange.getRequestBody().toString(), UserRequest.class);
 		exchange.getRequestBody().close();
-		if(request.validatePreConditions() && usersFacade.loginUser(request)) {
+		int userID = usersFacade.loginUser(request);
+		if(request.validatePreConditions() && userID > -1) {
 			// create cookie for user
 			List<String> cookies = new ArrayList<String>();
 			// send success response

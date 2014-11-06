@@ -15,8 +15,12 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class RegisterUserHandler implements HttpHandler {
 
+	private ITranslator translator;
+	private IUsersFacade usersFacade;
+
 	public RegisterUserHandler(ITranslator translator, IUsersFacade usersFacade) {
-		// TODO Auto-generated constructor stub
+		this.translator = translator;
+		this.usersFacade = usersFacade;
 	}
 
 	/**
