@@ -3,7 +3,7 @@ package server.main;
 import proxy.TranslatorJSON;
 import server.game.GameFacade;
 import server.games.GamesFacade;
-import server.httpServer.ServerCommunicator;
+import server.serverCommunicator.ServerCommunicator;
 import server.moves.MovesFacade;
 import server.users.UsersFacade;
 import server.util.UtilFacade;
@@ -28,8 +28,8 @@ public class Catan {
 				GameFacade gameFacade = new GameFacade();
 				MovesFacade movesFacade = new MovesFacade();
 				UtilFacade utilFacade = new UtilFacade();
-				ServerCommunicator serverHandler = new ServerCommunicator(portNumber, translator, usersFacade, gamesFacade, gameFacade, movesFacade, utilFacade);
-				serverHandler.run();
+				ServerCommunicator serverCommunicator = new ServerCommunicator(portNumber, translator, usersFacade, gamesFacade, gameFacade, movesFacade, utilFacade);
+				serverCommunicator.run();
 				System.out.println("Catan server listening on port: " + portNumber);
 			}
 			else {
