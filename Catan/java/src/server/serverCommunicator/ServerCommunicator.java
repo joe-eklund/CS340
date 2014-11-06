@@ -4,15 +4,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import proxy.ITranslator;
-import server.game.GameFacade;
 import server.game.IGameFacade;
-import server.games.GamesFacade;
 import server.games.IGamesFacade;
 import server.moves.IMovesFacade;
-import server.moves.MovesFacade;
 import server.users.IUsersFacade;
 import server.util.IUtilFacade;
-import server.util.UtilFacade;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -50,7 +46,9 @@ public class ServerCommunicator {
         
         server.setExecutor(null);
         
-        // handlers
+        // 
+        // create handlers
+        //
         
         // user: operations for users (pre-login)
         server.createContext("/user/login", new LoginUserHandler(translator, usersFacade));
@@ -58,39 +56,39 @@ public class ServerCommunicator {
         
         // games: operations for games list (pre-joining)
         server.createContext("/games/list", new ListGameshandler(gamesFacade));
-        server.createContext("/games/create", new CreateGameHandler());
-        server.createContext("/games/join", new JoinGameHandler());
-        server.createContext("/games/save", new SaveGameHandler());
-        server.createContext("/games/load", new LoadGameHandler());
+        server.createContext("/games/create", new CreateGameHandler(translator, gamesFacade));
+        server.createContext("/games/join", new JoinGameHandler(translator, gamesFacade));
+        server.createContext("/games/save", new SaveGameHandler(translator, gamesFacade));
+        server.createContext("/games/load", new LoadGameHandler(translator, gamesFacade));
         
         // game: current game setup operations (requires cookie)
-        server.createContext("/game/model", new GetGameModelHandler());
-        server.createContext("/game/reset", new ResetGameHandler());
-        server.createContext("/game/commands", new GameCommandsHandler());
-        server.createContext("/game/addAI", new AddAIHandler());
-        server.createContext("/game/listAI", new ListAIHandler());
+        server.createContext("/game/model", new GetGameModelHandler(translator, gameFacade));
+        server.createContext("/game/reset", new ResetGameHandler(translator, gameFacade));
+        server.createContext("/game/commands", new GameCommandsHandler(translator, gameFacade));
+        server.createContext("/game/addAI", new AddAIHandler(translator, gameFacade));
+        server.createContext("/game/listAI", new ListAIHandler(translator, gameFacade));
         
         // game: mid game actions--moves (requires cookie)
-        server.createContext("/moves/sendChat", new SendChatHandler());
-        server.createContext("/moves/rollNumber", new RollNumberHandler());
-        server.createContext("/moves/robPlayer", new RobPlayerHandler());
-        server.createContext("/moves/finishTurn", new FinishTurnHandler());
-        server.createContext("/moves/buyDevCard", new BuyDevCardHandler());
-        server.createContext("/moves/Year_Of_Plenty", new YearOfPlentHandler());
-        server.createContext("/moves/Road_Building", new RoadBuildingHandler());
-        server.createContext("/moves/Soldier", new SoldierHandler());
-        server.createContext("/moves/Monopoly", new MonopolyHandler());
-        server.createContext("/moves/Monument", new Monumenthandler());
-        server.createContext("/moves/buildRoad", new BuildRoadHandler());
-        server.createContext("/moves/buildSettlement", new BuildSettlementHandler());
-        server.createContext("/moves/buildCity", new BuildCityHandler());
-        server.createContext("/moves/offerTrade", new OfferTradeHandler());
-        server.createContext("/moves/acceptTrade", new AcceptTradeHandler());
-        server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler());
-        server.createContext("/moves/discardCards", new DiscardCardshandler());
+        server.createContext("/moves/sendChat", new SendChatHandler(translator, movesFacade));
+        server.createContext("/moves/rollNumber", new RollNumberHandler(translator, movesFacade));
+        server.createContext("/moves/robPlayer", new RobPlayerHandler(translator, movesFacade));
+        server.createContext("/moves/finishTurn", new FinishTurnHandler(translator, movesFacade));
+        server.createContext("/moves/buyDevCard", new BuyDevCardHandler(translator, movesFacade));
+        server.createContext("/moves/Year_Of_Plenty", new YearOfPlentHandler(translator, movesFacade));
+        server.createContext("/moves/Road_Building", new RoadBuildingHandler(translator, movesFacade));
+        server.createContext("/moves/Soldier", new SoldierHandler(translator, movesFacade));
+        server.createContext("/moves/Monopoly", new MonopolyHandler(translator, movesFacade));
+        server.createContext("/moves/Monument", new Monumenthandler(translator, movesFacade));
+        server.createContext("/moves/buildRoad", new BuildRoadHandler(translator, movesFacade));
+        server.createContext("/moves/buildSettlement", new BuildSettlementHandler(translator, movesFacade));
+        server.createContext("/moves/buildCity", new BuildCityHandler(translator, movesFacade));
+        server.createContext("/moves/offerTrade", new OfferTradeHandler(translator, movesFacade));
+        server.createContext("/moves/acceptTrade", new AcceptTradeHandler(translator, movesFacade));
+        server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(translator, movesFacade));
+        server.createContext("/moves/discardCards", new DiscardCardshandler(translator, movesFacade));
         
         // util: change how the server runs
-        server.createContext("/util/changeLogLevel", new ChangeLogLevelHandler());
+        server.createContext("/util/changeLogLevel", new ChangeLogLevelHandler(translator, utilFacade));
         
         server.start();
 	}
