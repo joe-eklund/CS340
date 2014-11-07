@@ -1,0 +1,39 @@
+Josh
+LoginUserHandler(translator, usersFacade));
+RegisterUserHandler(translator, usersFacade));
+ListGameshandler
+CreateGameHandler(translator, gamesFacade)
+JoinGameHandler(translator, gamesFacade)
+Joe
+SaveGameHandler(translator, gamesFacade)
+LoadGameHandler(translator, gamesFacade)
+gamesFacade
+GetGameModelHandler(translator, gameFacade));
+ResetGameHandler(translator, gameFacade));
+new GameCommandsHandler(translator, gameFacade));
+AddAIHandler(translator, gameFacade));
+Epper
+new ListAIHandler(translator, gameFacade));
+gameFacade
+SendChatHandler(translator, movesFacade));
+RollNumberHandler(translator, movesFacade));
+RobPlayerHandler(translator, movesFacade));
+FinishTurnHandler(translator, movesFacade));
+BuyDevCardHandler(translator, movesFacade));
+Chad
+YearOfPlentyHandler(translator, movesFacade));
+RoadBuildingHandler(translator, movesFacade));
+SoldierHandler(translator, movesFacade));
+MonopolyHandler(translator, movesFacade));
+Monumenthandler(translator, movesFacade));
+BuildRoadHandler(translator, movesFacade));
+BuildSettlementHandler(translator, movesFacade));
+Taylor
+BuildCityHandler(translator, movesFacade));
+OfferTradeHandler(translator, movesFacade));
+AcceptTradeHandler(translator, movesFacade));
+MaritimeTradeHandler(translator, movesFacade));
+DiscardCardshandler(translator, movesFacade));
+movesFacade
+
+in addition to each handler you also program the command and stub
