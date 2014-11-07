@@ -37,8 +37,7 @@ public class Cookie {
 	 * @return The completed cookie in string form
 	 */
 	public static String createLoginCookie(String username, String password, int userID) {
-		// to do
-		return null;
+		return "catan.user=%7B%22name%22%3A%22" + username + "%22%2C%22password%22%3A%22" + password + "%22%2C%22playerID%22%3A" + userID + "%7D;Path=/";
 	}
 	
 	/**

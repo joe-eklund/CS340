@@ -6,6 +6,7 @@ import server.games.GamesFacade;
 import server.serverCommunicator.ServerCommunicator;
 import server.moves.MovesFacade;
 import server.users.UsersFacade;
+import server.users.UsersFacadeStub;
 import server.util.UtilFacade;
 
 public class Catan {
@@ -23,7 +24,8 @@ public class Catan {
 			
 			if(portNumber >= MIN_PORT && portNumber <= MAX_PORT) {
 				TranslatorJSON translator = new TranslatorJSON();
-				UsersFacade usersFacade = new UsersFacade();
+				//UsersFacade usersFacade = new UsersFacade();
+				UsersFacadeStub usersFacade = new UsersFacadeStub();
 				GamesFacade gamesFacade = new GamesFacade();
 				GameFacade gameFacade = new GameFacade();
 				MovesFacade movesFacade = new MovesFacade();
