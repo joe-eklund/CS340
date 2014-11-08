@@ -39,7 +39,7 @@ public class RobPlayerHandler implements HttpHandler {
 		RobPlayerRequest request = (RobPlayerRequest) translator.translateFrom(exchange.getRequestBody().toString(), RobPlayerRequest.class);
 		exchange.getRequestBody().close();
 		int userID = movesFacade.robPlayer(request);
-		if(request.validatePreConditions() && userID > -1) {
+		if(/*request.validatePreConditions() &&*/ userID > -1) {
 			// create cookie for user
 			List<String> cookies = new ArrayList<String>();
 			// send success response

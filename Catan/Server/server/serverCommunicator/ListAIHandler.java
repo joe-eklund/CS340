@@ -39,7 +39,7 @@ public class ListAIHandler implements HttpHandler {
 		ArrayList<String> response = new ArrayList<String>();
         exchange.sendResponseHeaders(200, response.size());
         OutputStream os = exchange.getResponseBody();
-        os.write(response.toArray());
+        //os.write(response.toArray());
         os.close();
 		/*UserRequest request = (UserRequest) translator.translateFrom(exchange.getRequestBody().toString(), UserRequest.class);
 		exchange.getRequestBody().close();

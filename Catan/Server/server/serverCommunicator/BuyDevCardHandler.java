@@ -39,7 +39,7 @@ public class BuyDevCardHandler implements HttpHandler {
 		BuyDevCardRequest request = (BuyDevCardRequest) translator.translateFrom(exchange.getRequestBody().toString(), BuyDevCardRequest.class);
 		exchange.getRequestBody().close();
 		int userID = movesFacade.buyDevCard(request);
-		if(request.validatePreConditions() && userID > -1) {
+		if(/*request.validatePreConditions() &&*/ userID > -1) {
 			// create cookie for user
 			List<String> cookies = new ArrayList<String>();
 			// send success response

@@ -39,7 +39,7 @@ public class FinishTurnHandler implements HttpHandler {
 		FinishTurnRequest request = (FinishTurnRequest) translator.translateFrom(exchange.getRequestBody().toString(), FinishTurnRequest.class);
 		exchange.getRequestBody().close();
 		int userID = movesFacade.finishTurn(request);
-		if(request.validatePreConditions() && userID > -1) {
+		if(/*request.validatePreConditions() &&*/ userID > -1) {
 			// create cookie for user
 			List<String> cookies = new ArrayList<String>();
 			// send success response

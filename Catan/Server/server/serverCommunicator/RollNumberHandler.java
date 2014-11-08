@@ -39,7 +39,7 @@ public class RollNumberHandler implements HttpHandler {
 		RollNumberRequest request = (RollNumberRequest) translator.translateFrom(exchange.getRequestBody().toString(), RollNumberRequest.class);
 		exchange.getRequestBody().close();
 		int userID = movesFacade.rollNumber(request);
-		if(request.validatePreConditions() && userID > -1) {
+		if(/*request.validatePreConditions() &&*/ userID > -1) {
 			// create cookie for user
 			List<String> cookies = new ArrayList<String>();
 			// send success response
