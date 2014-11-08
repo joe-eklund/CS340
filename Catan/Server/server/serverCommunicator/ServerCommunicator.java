@@ -62,7 +62,7 @@ public class ServerCommunicator {
         server.createContext("/user/register", new RegisterUserHandler(translator, usersFacade));
         
         // games: operations for games list (pre-joining)
-        server.createContext("/games/list", new ListGameshandler(gamesFacade));
+        server.createContext("/games/list", new ListGamesHandler(gamesFacade));
         server.createContext("/games/create", new CreateGameHandler(translator, gamesFacade));
         server.createContext("/games/join", new JoinGameHandler(translator, gamesFacade));
         server.createContext("/games/save", new SaveGameHandler(translator, gamesFacade));
@@ -85,14 +85,14 @@ public class ServerCommunicator {
         server.createContext("/moves/Road_Building", new RoadBuildingHandler(translator, movesFacade));
         server.createContext("/moves/Soldier", new SoldierHandler(translator, movesFacade));
         server.createContext("/moves/Monopoly", new MonopolyHandler(translator, movesFacade));
-        server.createContext("/moves/Monument", new Monumenthandler(translator, movesFacade));
+        server.createContext("/moves/Monument", new MonumentHandler(translator, movesFacade));
         server.createContext("/moves/buildRoad", new BuildRoadHandler(translator, movesFacade));
         server.createContext("/moves/buildSettlement", new BuildSettlementHandler(translator, movesFacade));
         server.createContext("/moves/buildCity", new BuildCityHandler(translator, movesFacade));
         server.createContext("/moves/offerTrade", new OfferTradeHandler(translator, movesFacade));
         server.createContext("/moves/acceptTrade", new AcceptTradeHandler(translator, movesFacade));
         server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(translator, movesFacade));
-        server.createContext("/moves/discardCards", new DiscardCardshandler(translator, movesFacade));
+        server.createContext("/moves/discardCards", new DiscardCardsHandler(translator, movesFacade));
         
         // util: change how the server runs
         server.createContext("/util/changeLogLevel", new ChangeLogLevelHandler(translator, utilFacade));

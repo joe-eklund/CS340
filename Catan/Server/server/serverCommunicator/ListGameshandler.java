@@ -12,11 +12,11 @@ import com.sun.net.httpserver.HttpHandler;
  * @author Chad
  *
  */
-public class ListGameshandler implements HttpHandler {
+public class ListGamesHandler implements HttpHandler {
 
 	private IGamesFacade gamesFacade;
 
-	public ListGameshandler(IGamesFacade gamesFacade) {
+	public ListGamesHandler(IGamesFacade gamesFacade) {
 		this.gamesFacade = gamesFacade;
 	}
 

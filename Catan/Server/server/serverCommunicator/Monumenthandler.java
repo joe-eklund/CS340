@@ -13,12 +13,12 @@ import com.sun.net.httpserver.HttpHandler;
  * @author Chad
  *
  */
-public class Monumenthandler implements HttpHandler {
+public class MonumentHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IMovesFacade movesFacade;
 
-	public Monumenthandler(ITranslator translator, IMovesFacade movesFacade) {
+	public MonumentHandler(ITranslator translator, IMovesFacade movesFacade) {
 		this.translator = translator;
 		this.movesFacade = movesFacade;
 	}

@@ -13,12 +13,12 @@ import com.sun.net.httpserver.HttpHandler;
  * @author Chad
  *
  */
-public class DiscardCardshandler implements HttpHandler {
+public class DiscardCardsHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IMovesFacade movesFacade;
 
-	public DiscardCardshandler(ITranslator translator, IMovesFacade movesFacade) {
+	public DiscardCardsHandler(ITranslator translator, IMovesFacade movesFacade) {
 		this.translator = translator;
 		this.movesFacade = movesFacade;
 	}
