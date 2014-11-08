@@ -15,7 +15,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Handler for RobPlayer command
- * @author Chad
+ * @author Epper
  *
  */
 public class RobPlayerHandler implements HttpHandler {

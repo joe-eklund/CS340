@@ -15,7 +15,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Handler for finish turn command
- * @author Chad
+ * @author Epper
  *
  */
 public class FinishTurnHandler implements HttpHandler {

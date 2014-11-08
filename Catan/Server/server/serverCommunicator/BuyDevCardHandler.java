@@ -15,7 +15,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Handler for buydevcard command
- * @author Chad
+ * @author Epper
  *
  */
 public class BuyDevCardHandler implements HttpHandler {
