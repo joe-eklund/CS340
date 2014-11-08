@@ -38,7 +38,22 @@ public interface IGamesFacade {
 	 */	
 	public GameDescription createGame(CreateGameRequest request);
 	
-	
+	/**
+	 * @pre
+	 *  none
+	 * 
+	 * @param request
+	 * @param username
+	 * @param userID
+	 * 
+	 * @post
+	 * 	if (game associated with request.id is not full and request.color is not taken by another player in the same game) or username is already joined to full game
+	 * 	  -player is added to game with requested color (or in the case the player is already in game, his color is updated)
+	 *    -returns true
+	 *  else
+	 *    -no change in game
+	 *    -returns false
+	 */
 	public boolean joinGame(JoinGameRequest request, String username, int userID);
 	
 }
