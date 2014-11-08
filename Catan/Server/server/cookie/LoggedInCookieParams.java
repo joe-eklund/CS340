@@ -1,9 +1,9 @@
 package server.cookie;
 
 public class LoggedInCookieParams {
-	private String username;
+	private String name;
 	private String password;
-	private int userID;
+	private int playerID;
 	
 	/**
 	 * @param username
@@ -12,51 +12,99 @@ public class LoggedInCookieParams {
 	 */
 	public LoggedInCookieParams(String username, String password, int userID) {
 		super();
-		this.username = username;
+		this.name = username;
 		this.password = password;
-		this.userID = userID;
+		this.playerID = userID;
 	}
-
+	
+	
 	/**
-	 * @return the username
+	 * Gets player name associated with logged in player
+	 * @pre
+	 *   None
+	 *   
+	 * @post 
+	 *   returns player's name
 	 */
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
-
+	
 	/**
-	 * @return the password
+	 * Gets player password associated with logged in player
+	 * @pre
+	 *   None
+	 *   
+	 * @post
+	 *   returns the player's password
 	 */
 	public String getPassword() {
 		return password;
 	}
-
+	
 	/**
-	 * @return the userID
+	 * Gets player ID (catan user id) associated with logged in player
+	 * @pre
+	 *   None
+	 *   
+	 * @return
+	 *   returns the player's catan user id
 	 */
-	public int getUserID() {
-		return userID;
+	public int getPlayerID() {
+		return playerID;
 	}
-
+	
 	/**
-	 * @param username the username to set
+	 * sets player name
+	 * @pre
+	 *   None
+	 * 
+	 * @post
+	 *   name is set to provided name parameter
+	 * 
+	 * @param name
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
-
+	
 	/**
-	 * @param password the password to set
+	 * sets player password
+	 * @pre
+	 *   None
+	 *   
+	 * @post
+	 *   password is set to provided password parameter
+	 * 
+	 * @param password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	/**
-	 * @param userID the userID to set
+	 * sets player id
+	 * 
+	 * @pre
+	 *  None
+	 *  
+	 * @post
+	 *   playerID is set to provided playerID parameter
+	 * 
+	 * @param playerID
+	 * 
 	 */
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
+	}
+
+
+	public boolean validate() {
+		boolean result = false;
+		if(this.name != null && this.password != null) {
+			result = true;
+		}
+		return result;
 	}
 	
 }

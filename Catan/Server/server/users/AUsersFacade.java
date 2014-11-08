@@ -6,7 +6,7 @@ import shared.ServerMethodRequests.UserRequest;
 
 public abstract class AUsersFacade implements IUsersFacade {
 
-	ArrayList<IUser> users;
+	protected ArrayList<IUser> users;
 	
 	@Override
 	public int loginUser(UserRequest request) {

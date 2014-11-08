@@ -62,7 +62,7 @@ public class ServerCommunicator {
         server.createContext("/user/register", new RegisterUserHandler(translator, usersFacade));
         
         // games: operations for games list (pre-joining)
-        server.createContext("/games/list", new ListGamesHandler(gamesFacade));
+        server.createContext("/games/list", new ListGamesHandler(translator, gamesFacade));
         server.createContext("/games/create", new CreateGameHandler(translator, gamesFacade));
         server.createContext("/games/join", new JoinGameHandler(translator, gamesFacade));
         server.createContext("/games/save", new SaveGameHandler(translator, gamesFacade));

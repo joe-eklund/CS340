@@ -1,6 +1,6 @@
 package server.users;
 
-public class User implements IUser {
+class User implements IUser {
 	private String username;
 	private String password;
 	
@@ -33,7 +33,6 @@ public class User implements IUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	@Override
 	public int hashCode() {

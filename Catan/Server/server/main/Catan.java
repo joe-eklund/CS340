@@ -1,15 +1,20 @@
 package server.main;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import proxy.TranslatorJSON;
 import server.game.GameFacade;
 import server.game.IGameFacade;
 import server.games.GamesFacade;
+import server.games.GamesFacadeStub;
 import server.games.IGamesFacade;
-import server.serverCommunicator.ServerCommunicator;
 import server.moves.IMovesFacade;
 import server.moves.MovesFacade;
+import server.serverCommunicator.ServerCommunicator;
 import server.users.IUsersFacade;
 import server.users.UsersFacade;
 import server.users.UsersFacadeStub;
@@ -50,6 +55,7 @@ public class Catan {
 				
 				// set stubs here
 				usersFacade = new UsersFacadeStub();
+				gamesFacade = new GamesFacadeStub();
 			}
 			
 			int portNumber = 8081;

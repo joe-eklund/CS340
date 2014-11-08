@@ -11,6 +11,7 @@ public class GameDescription {
 	private String title;
 	private int id;
 	private List<PlayerDescription> players;
+	private int nextIndex;
 	//private List<PlayerDescription> playerDescriptions;
 
 	
@@ -25,6 +26,7 @@ public class GameDescription {
 		this.title = title;
 		this.id = id;
 		this.players = players;
+		nextIndex = 0;
 	}
 	
 	public GameDescription(GameDescription game) {
@@ -134,8 +136,9 @@ public class GameDescription {
 				+ players + "]";
 	}
 
-
-
-	
-	
+	public void add(PlayerDescription newPlayer) {
+		this.players.remove(nextIndex);
+		this.players.add(nextIndex, newPlayer);
+		nextIndex++;
+	}	
 }

@@ -1,7 +1,7 @@
 Josh
-LoginUserHandler(translator, usersFacade));
-RegisterUserHandler(translator, usersFacade));
-ListGameshandler
+LoginUserHandler(translator, usersFacade));	ready for testing
+RegisterUserHandler(translator, usersFacade));	ready for testing
+ListGameshandler				ready for testing
 CreateGameHandler(translator, gamesFacade)
 JoinGameHandler(translator, gamesFacade)
 Joe

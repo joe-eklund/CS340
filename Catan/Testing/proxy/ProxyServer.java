@@ -103,10 +103,10 @@ public class ProxyServer implements IServer{
 			int index = cookie.lastIndexOf(";Path=/");
 			cookie = cookie.substring(0, index);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			PlayerCookie playerCookie = null;
+			PlayerLoginCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
-				playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
+				playerCookie = (PlayerLoginCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerLoginCookie.class);
 				playerID = playerCookie.getPlayerID();
 				playerName = playerCookie.getName();
 			} catch (UnsupportedEncodingException e) {
@@ -132,10 +132,10 @@ public class ProxyServer implements IServer{
 			int index = cookie.lastIndexOf(";Path=/");
 			cookie = cookie.substring(0, index);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			PlayerCookie playerCookie = null;
+			PlayerLoginCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
-				playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
+				playerCookie = (PlayerLoginCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerLoginCookie.class);
 				playerID = playerCookie.getPlayerID();
 				playerName = playerCookie.getName();
 			} catch (UnsupportedEncodingException e) {

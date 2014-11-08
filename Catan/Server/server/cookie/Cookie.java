@@ -1,5 +1,7 @@
 package server.cookie;
 
+import proxy.ITranslator;
+
 /**
  * This class will be used to help with handling the cookie used with the server
  * @author Chad
@@ -11,12 +13,18 @@ public class Cookie {
 	
 	/**
 	 * Makes sure the login cookie is correctly formated.
-	 * @param cookie - the cookie to be checked
+	 * @param cookie - the decoded cookie JSON to be checked
 	 * @return
+	 * @throws InvalidCookieException 
 	 */
-	public static LoggedInCookieParams verifyLoginCookie(String cookie) {
-		// to do
-		return null;
+	public static LoggedInCookieParams verifyLoginCookie(String cookieJSON, ITranslator translator) throws InvalidCookieException {
+		System.out.println("verifying login cookie: " + cookieJSON);
+		LoggedInCookieParams result = (LoggedInCookieParams) translator.translateFrom(cookieJSON, LoggedInCookieParams.class);
+		if(result == null || !result.validate()) {
+			System.out.println("Bad cookie");
+			throw new InvalidCookieException("Error: You either did not provide a cookie or the provided cookie is invalid");
+		}
+		return result;
 	}
 	
 	/**

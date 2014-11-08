@@ -1,4 +1,4 @@
-package proxy;
+package shared.definitions;
 
 /**
  * A class that represents the information stored in the player cookie as set by the server; used for decoding server cookie header response
@@ -10,12 +10,12 @@ package proxy;
  *  </ul> 
  *
  */
-public class PlayerCookie {
+public class PlayerLoginCookie {
 	private String name;
 	private String password;
 	private int playerID;
 	
-	public PlayerCookie(String name, String password, int playerID) {
+	public PlayerLoginCookie(String name, String password, int playerID) {
 		this.name = name;
 		this.password = password;
 		this.playerID = playerID;
@@ -99,6 +99,5 @@ public class PlayerCookie {
 	 */
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
-	}
-	
+	}	
 }

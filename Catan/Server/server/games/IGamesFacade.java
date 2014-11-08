@@ -1,9 +1,44 @@
 package server.games;
 
+import java.util.List;
+
+import shared.ServerMethodRequests.CreateGameRequest;
+import shared.ServerMethodRequests.JoinGameRequest;
+import shared.definitions.GameDescription;
+
 /**
  * This interface defines a Facade containing the list, create, join, save, and load commands
  *
  */
 public interface IGamesFacade {
 
+	/**
+	 * @post returns a list of GameDescriptions representing all games hosted on this Catan Server
+	 */
+	public List<GameDescription> listGames();
+	
+	/**
+	 * Creates an empty game on the server
+	 * 
+	 * @pre
+	 * 	none
+	 * 
+	 * @param randomTiles : create game with randomized game tiles
+	 * @param randomNumbers : create game with randomized numbers ("chits")
+	 * @param randomPorts : create game with randomized ports
+	 * @param name : the name which the created game will have
+	 * 
+	 * 
+	 * @post
+	 * 	creates an empty game on server according to parameter booleans "randomTiles", "randomNumbers", and "Random Ports"; the parameter name settings are default if the given parameter is false otherwise the setting (i.e. ports) is randomized</li>
+	 * 	returns a gameDescription for the just created game
+	 * 		"title" field is set to provided name parameter
+	 * 		"id" field is set to the server assigned unique id for the game</li>
+	 * 
+	 */	
+	public GameDescription createGame(CreateGameRequest request);
+	
+	
+	public boolean joinGame(JoinGameRequest request, String username, int userID);
+	
 }
