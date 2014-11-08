@@ -18,4 +18,22 @@ public class GameFacadeStub implements IGameFacade {
 		return 0;
 	}
 
+	@Override
+	public int getGameModel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int gameCommands() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int listAI() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
