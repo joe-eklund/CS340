@@ -4,16 +4,9 @@ import java.util.ArrayList;
 
 import shared.ServerMethodRequests.UserRequest;
 
-public class UsersFacadeStub implements IUsersFacade {
+public abstract class AUsersFacade implements IUsersFacade {
 
 	ArrayList<IUser> users;
-	
-	@SuppressWarnings("serial")
-	public UsersFacadeStub() {
-		users = new ArrayList<IUser>() {{
-			add(new User("Bobby", "bobby"));
-		}};
-	}
 	
 	@Override
 	public int loginUser(UserRequest request) {
