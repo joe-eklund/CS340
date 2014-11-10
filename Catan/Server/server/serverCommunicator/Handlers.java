@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import org.apache.commons.io.FileUtils;;
+//import org.apache.commons.io.FileUtils;;
 
 public class Handlers {
 	public abstract static class BaseFile implements HttpHandler {
@@ -25,9 +25,9 @@ public class Handlers {
 		protected void sendFile(HttpExchange exchange, String filepath) throws IOException{
 			try {
 				LOGGER.log(Level.FINE, "Requesting " + filepath);
-				byte[] response = FileUtils.readFileToByteArray(new File(filepath));
+				byte[] response = FileUtils.readFile(filepath);
 				ArrayList<String> mimetypes = new ArrayList<String>();
-				mimetypes.add(URLConnection.guessContentTypeFromName(filepath));//FileUtils.getMimeType(filepath));
+				mimetypes.add(FileUtils.getMimeType(filepath));
 				exchange.getResponseHeaders().put("Content­type", mimetypes);
 				exchange.sendResponseHeaders(200,response.length);
 				OutputStream os = exchange.getResponseBody();
