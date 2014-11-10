@@ -7,12 +7,9 @@
 	<classpathentry kind="lib" path="java/lib/gson-2.2.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/joshuabgrigg/Desktop/CS 340/Catan/Catan/java/lib/commons-cli-1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/joshuabgrigg/Desktop/CS 340/Catan/Catan/java/lib/commons-cli-1.2-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/joshuabgrigg/Downloads/commons-cli-1.2/commons-cli-1.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-cli-1.2-sources.jar"/>
-	<classpathentry kind="lib" path="C:/code/CS340/Catan/java/lib/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="C:/code/CS340/Catan/java/lib/commons-io-2.4-sources.jar"/>
+	<classpathentry kind="lib" path="Catan/java/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="Catan/java/lib/commons-io-2.4-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
