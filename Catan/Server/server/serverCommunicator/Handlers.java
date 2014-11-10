@@ -1,3 +1,5 @@
+package server.serverCommunicator;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;

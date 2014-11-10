@@ -16,7 +16,7 @@ import shared.definitions.ServerModel;
 public interface IGameFacade {
 	public ServerModel getGameModel();
 	public int resetGame(ResetGameRequest request);
-	//public int gameCommands();
+	public int gameCommands();
 	public int addAI(AddAIRequest request);
 	
 	/**

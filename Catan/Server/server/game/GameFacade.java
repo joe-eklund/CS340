@@ -29,11 +29,11 @@ public class GameFacade implements IGameFacade {
 		return null;
 	}
 
-	/*@Override
+	@Override
 	public int gameCommands() {
 		// TODO Auto-generated method stub
 		return 0;
-	}*/
+	}
 
 	@Override
 	public List<String> listAI() {
