@@ -97,6 +97,10 @@ public class ServerCommunicator {
         // util: change how the server runs
         server.createContext("/util/changeLogLevel", new ChangeLogLevelHandler(translator, utilFacade));
         
+        //swagger?
+        server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+        server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+        
         server.start();
 	}
 	

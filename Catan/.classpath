@@ -12,5 +12,7 @@
 	<classpathentry kind="lib" path="/Users/joshuabgrigg/Downloads/commons-cli-1.2/commons-cli-1.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-cli-1.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/code/CS340/Catan/java/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/code/CS340/Catan/java/lib/commons-io-2.4-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
