@@ -1,7 +1,10 @@
 package server.game;
 
+import java.util.List;
+
 import shared.ServerMethodRequests.AddAIRequest;
 import shared.ServerMethodRequests.ResetGameRequest;
+import shared.definitions.ServerModel;
 
 /**
  * This Facade implements the model, reset, commands, addAI, listAI commands 
@@ -21,21 +24,21 @@ public class GameFacade implements IGameFacade {
 	}
 
 	@Override
-	public int getGameModel() {
+	public ServerModel getGameModel() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
-	@Override
+	/*@Override
 	public int gameCommands() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
 	@Override
-	public int listAI() {
+	public List<String> listAI() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 }
