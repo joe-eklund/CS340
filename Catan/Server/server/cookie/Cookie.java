@@ -1,5 +1,8 @@
 package server.cookie;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import proxy.ITranslator;
 
 /**
@@ -17,12 +20,31 @@ public class Cookie {
 	 * @return
 	 * @throws InvalidCookieException 
 	 */
-	public static LoggedInCookieParams verifyLoginCookie(String cookieJSON, ITranslator translator) throws InvalidCookieException {
-		System.out.println("verifying login cookie: " + cookieJSON);
-		LoggedInCookieParams result = (LoggedInCookieParams) translator.translateFrom(cookieJSON, LoggedInCookieParams.class);
-		if(result == null || !result.validate()) {
-			System.out.println("Bad cookie");
-			throw new InvalidCookieException("Error: You either did not provide a cookie or the provided cookie is invalid");
+	public static LoggedInCookieParams verifyLoginCookie(String cookie, ITranslator translator) throws InvalidCookieException {
+		System.out.println("verifying login cookie: " + cookie);
+		
+		int userCookieIndex = cookie.indexOf("catan.user=");
+		
+		LoggedInCookieParams result;
+		
+		if (userCookieIndex != -1) {
+			cookie = cookie.replaceFirst("catan.user=", "");
+			try {
+				String cookieJSON = URLDecoder.decode(cookie, "UTF-8");
+				result = (LoggedInCookieParams) translator.translateFrom(
+						cookieJSON, LoggedInCookieParams.class);
+				if (result == null || !result.validate()) {
+					throw new InvalidCookieException(
+							"Error: You either did not provide a cookie or the cookie provided is invalid");
+				}
+			} catch (UnsupportedEncodingException e) {
+				throw new InvalidCookieException(
+						"Error: the provided cookie is encoded in an unrecognized format.  Please use UTF-8 encoding.");
+			}
+		}
+		else {
+			throw new InvalidCookieException(
+					"Error: You either did not provide a cookie or the cookie provided is invalid");
 		}
 		return result;
 	}
@@ -55,7 +77,7 @@ public class Cookie {
 	 */
 	public static String createJoinCookie(int gameID) {
 		// to do
-		return null;		
+		return "catan.game=" + gameID + "%7D;Path=/";		
 	}
 	
 }

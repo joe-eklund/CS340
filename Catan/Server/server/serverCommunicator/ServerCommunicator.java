@@ -48,6 +48,7 @@ public class ServerCommunicator {
 			server = HttpServer.create(new InetSocketAddress(portNumber), MAX_WAITING_CONNECTION);
 		} catch (IOException e) {
 			//could not initialize server -- already running
+			System.err.println("Error: Port " + portNumber + " is already in use!");
 			return;
 		}
         

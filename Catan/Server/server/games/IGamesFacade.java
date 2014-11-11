@@ -27,6 +27,7 @@ public interface IGamesFacade {
 	 * @param randomNumbers : create game with randomized numbers ("chits")
 	 * @param randomPorts : create game with randomized ports
 	 * @param name : the name which the created game will have
+	 * @throws InvalidCreateGameRequest 
 	 * 
 	 * 
 	 * @post
@@ -36,7 +37,7 @@ public interface IGamesFacade {
 	 * 		"id" field is set to the server assigned unique id for the game</li>
 	 * 
 	 */	
-	public GameDescription createGame(CreateGameRequest request);
+	public GameDescription createGame(CreateGameRequest request) throws InvalidCreateGameRequest;
 	
 	/**
 	 * @pre
@@ -45,6 +46,7 @@ public interface IGamesFacade {
 	 * @param request
 	 * @param username
 	 * @param userID
+	 * @throws InvalidJoinGameRequest 
 	 * 
 	 * @post
 	 * 	if (game associated with request.id is not full and request.color is not taken by another player in the same game) or username is already joined to full game
@@ -54,6 +56,6 @@ public interface IGamesFacade {
 	 *    -no change in game
 	 *    -returns false
 	 */
-	public boolean joinGame(JoinGameRequest request, String username, int userID);
+	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest;
 	
 }

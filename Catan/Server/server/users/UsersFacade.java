@@ -9,13 +9,6 @@ import java.util.ArrayList;
 public class UsersFacade extends AUsersFacade {
 	
 	public UsersFacade() {
-		users = new ArrayList<IUser>() {/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-		{
-			add(new User("Bobby", "bobby"));
-		}};
+		users = new ArrayList<IUser>();
 	}	
 }

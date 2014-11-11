@@ -1,23 +1,16 @@
 package server.serverCommunicator;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
 import server.cookie.Cookie;
 import server.cookie.InvalidCookieException;
-import server.cookie.LoggedInCookieParams;
 import server.games.IGamesFacade;
-import shared.ServerMethodRequests.UserRequest;
 import shared.definitions.GameDescription;
-import shared.definitions.PlayerLoginCookie;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -55,7 +48,7 @@ public class ListGamesHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		System.out.println("In list games user handler");
+		System.out.println("In list games handler");
 		
 		/*
 		BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
@@ -75,21 +68,17 @@ public class ListGamesHandler implements HttpHandler {
 		if(exchange.getRequestMethod().toLowerCase().equals("get")) {
 			String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 			System.out.println(unvalidatedCookie);
-			String subCookie = unvalidatedCookie.replaceFirst("catan.user=", "");
 			try {  // check user login cookie and if valid get params
-				String cookieJSON = URLDecoder.decode(subCookie, "UTF-8");
-				System.out.println(cookieJSON);
-				LoggedInCookieParams cookie = Cookie.verifyLoginCookie(cookieJSON, translator);
-				System.out.println(cookie.getName() + " " + cookie.getPassword() + " " + cookie.getPlayerID());
-				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				List<GameDescription> gameDescriptions = this.gamesFacade.listGames();
-				responseMessage = this.translator.translateTo(gameDescriptions.toArray());
 				
-			} catch (UnsupportedEncodingException | InvalidCookieException e) { // else send error message
+				Cookie.verifyLoginCookie(unvalidatedCookie, translator);
+				List<GameDescription> gameDescriptions = this.gamesFacade.listGames();
+				responseMessage = this.translator.translateTo(gameDescriptions.toArray());			
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+			} catch (InvalidCookieException e) { // else send error message
 				responseMessage = "Error: You either did not provide a cookie or the provided cookie is invalid";
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}
-			
 		}
 		else {
 			// unsupported request method
@@ -97,7 +86,7 @@ public class ListGamesHandler implements HttpHandler {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
 		
-		//set "Content-Type: text/plain" header
+		//set "Content-Type: application/json" header
 		List<String> contentTypes = new ArrayList<String>();
 		String appJson = "application/json";
 		contentTypes.add(appJson);

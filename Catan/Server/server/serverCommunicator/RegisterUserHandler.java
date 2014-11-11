@@ -41,39 +41,44 @@ public class RegisterUserHandler implements HttpHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		System.out.println("In register user handler");
 		
-		BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
-		String inputLine;
-		StringBuffer requestJson = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			requestJson.append(inputLine);
-		}
-		in.close();
-		
-		UserRequest request = (UserRequest) translator.translateFrom(requestJson.toString(), UserRequest.class);
-		exchange.getRequestBody().close();
-		
 		String responseMessage = "";
 		boolean successfulRequest = false;
+		
+		if (exchange.getRequestMethod().toLowerCase().equals("post")) {
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					exchange.getRequestBody()));
+			String inputLine;
+			StringBuffer requestJson = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				requestJson.append(inputLine);
+			}
+			in.close();
+			UserRequest request = (UserRequest) translator.translateFrom(
+					requestJson.toString(), UserRequest.class);
+			exchange.getRequestBody().close();
+			if (request.validatePreConditions()) {
+				int userID = usersFacade.registerUser(request);
+				if (userID > -1) {
+					// create cookie for user
+					List<String> cookies = new ArrayList<String>();
+					String cookie = Cookie.createLoginCookie(
+							request.getUsername(), request.getPassword(),
+							userID);
+					cookies.add(cookie);
 
-		if (request.validatePreConditions()) {
-			int userID = usersFacade.registerUser(request);
-			if (userID > -1) {
-				// create cookie for user
-				List<String> cookies = new ArrayList<String>();
-				String cookie = Cookie.createLoginCookie(request.getUsername(),
-						request.getPassword(), userID);
-				cookies.add(cookie);
-
-				// send success response headers
-				exchange.getResponseHeaders().put("Set-cookie", cookies);
-				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				successfulRequest = true;
+					// send success response headers
+					exchange.getResponseHeaders().put("Set-cookie", cookies);
+					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+					successfulRequest = true;
+				} else {
+					responseMessage = "Registration failed - duplicate username";
+				}
 			} else {
-				responseMessage = "Registration failed - duplicate username";
+				responseMessage = "Don't trust your client -- they have violated the server API contract: invalid username and/or password configuration.";
 			}
 		}
 		else {
-			responseMessage = "Don't trust your client -- they have violated the server API contract: invalid username and/or password configuration.";
+			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
 		}
 		
 		if(!successfulRequest) {

@@ -58,5 +58,9 @@ public class JoinGameRequest {
 	public void setColor(String color) {
 		this.color = color.toLowerCase();
 	}
+
+	public boolean validate() {
+		return (this.color != null);
+	}
 	
 }

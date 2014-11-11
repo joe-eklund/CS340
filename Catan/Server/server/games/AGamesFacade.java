@@ -35,7 +35,10 @@ public abstract class AGamesFacade implements IGamesFacade {
 	}
 	
 	@Override
-	public GameDescription createGame(CreateGameRequest request) {
+	public GameDescription createGame(CreateGameRequest request) throws InvalidCreateGameRequest {
+		if(request == null || !request.validate()) {
+			throw new InvalidCreateGameRequest("Error: invalid create game request");
+		}
 		GameDescription newGameDescription = new GameDescription(request.getName(), this.gameDescriptionsList.size(), new ArrayList<PlayerDescription>(4));
 		gameDescriptionsList.add(newGameDescription);
 		
@@ -45,7 +48,11 @@ public abstract class AGamesFacade implements IGamesFacade {
 	}
 	
 	@Override
-	public boolean joinGame(JoinGameRequest request, String username, int userID) {
+	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest {
+		if(request == null || !request.validate()) {
+			throw new InvalidJoinGameRequest("Error: invalid join game request");
+		}
+		
 		boolean result = true;
 		
 		boolean validColor = true;
