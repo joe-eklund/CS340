@@ -1,5 +1,6 @@
 package server.moves;
 
+import server.commands.moves.YearOfPlentyCommand;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;
@@ -17,6 +18,7 @@ import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.GameModel;
 
 /**
  * This Facade implements the sendChat,
@@ -27,6 +29,11 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
  */
 public class MovesFacade implements IMovesFacade {
 
+	private YearOfPlentyCommand yearOfPlentyCommand = new YearOfPlentyCommand();
+	private GameModel gameModel;
+	
+	public MovesFacade(){}
+	
 	@Override
 	public int sendChat(SendChatRequest request) {
 		// TODO Auto-generated method stub
@@ -59,7 +66,8 @@ public class MovesFacade implements IMovesFacade {
 
 	@Override
 	public int yearOfPlenty(YearOfPlentyDevRequest request) {
-		// TODO Auto-generated method stub
+		yearOfPlentyCommand.setGameModel(gameModel);
+		yearOfPlentyCommand.execute();
 		return 0;
 	}
 

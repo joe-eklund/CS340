@@ -1,9 +1,13 @@
 package server.serverCommunicator;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import proxy.ITranslator;
 import server.moves.IMovesFacade;
+import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -31,8 +35,19 @@ public class YearOfPlentyHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
-
+		YearOfPlentyDevRequest request = (YearOfPlentyDevRequest) translator.translateFrom(exchange.getRequestBody().toString(), YearOfPlentyDevRequest.class);
+		exchange.getRequestBody().close();
+		int userID = movesFacade.yearOfPlenty(request);
+		if(userID > -1) {
+			List<String> cookies = new ArrayList<String>();
+			exchange.getResponseHeaders().put("Set-cookie", cookies);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		}
+		else {
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+		}
+		exchange.getResponseBody().close();
+		
 	}
 
 }
