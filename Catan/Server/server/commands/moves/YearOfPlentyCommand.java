@@ -19,7 +19,12 @@ public class YearOfPlentyCommand extends ACommand {
 
 	@Override
 	public void execute() {
-		model.getServerModel().getDeck().setYearOfPlenty(model.getServerModel().getDeck().getYearOfPlenty()-1);
+		if(model.getServerModel().getDeck().getYearOfPlenty()>0) {
+			model.getServerModel().getDeck().setYearOfPlenty(model.getServerModel().getDeck().getYearOfPlenty()-1);	
+		}
+		else {
+			
+		}
 	}
 
 	public void getRequestItem(YearOfPlentyDevRequest request){
