@@ -51,7 +51,7 @@ public class Catan {
 			IUsersFacade usersFacade = new UsersFacade();
 			IGamesFacade gamesFacade = new GamesFacade(serverModels);
 			IGameFacade gameFacade = new GameFacade(serverModels);
-			IMovesFacade movesFacade = new MovesFacade();
+			IMovesFacade movesFacade = new MovesFacade(serverModels);
 			IUtilFacade utilFacade = new UtilFacade();
 			
 			CommandLine line = parser.parse(options, args);

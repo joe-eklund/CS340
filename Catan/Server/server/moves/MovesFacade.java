@@ -1,5 +1,7 @@
 package server.moves;
 
+import java.util.ArrayList;
+
 import server.commands.moves.YearOfPlentyCommand;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
@@ -19,6 +21,7 @@ import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.GameModel;
+import shared.definitions.ServerModel;
 
 /**
  * This Facade implements the sendChat,
@@ -30,9 +33,11 @@ import shared.definitions.GameModel;
 public class MovesFacade implements IMovesFacade {
 
 	private YearOfPlentyCommand yearOfPlentyCommand = new YearOfPlentyCommand();
-	private GameModel gameModel;
+	private ArrayList<ServerModel> serverModels;
 	
-	public MovesFacade(){}
+	public MovesFacade(ArrayList<ServerModel> serverModels){
+		this.serverModels = serverModels;
+	}
 	
 	@Override
 	public int sendChat(SendChatRequest request) {
@@ -66,7 +71,12 @@ public class MovesFacade implements IMovesFacade {
 
 	@Override
 	public int yearOfPlenty(YearOfPlentyDevRequest request) {
-		yearOfPlentyCommand.setGameModel(gameModel);
+		yearOfPlentyCommand.setRequestItem(request);
+		//grab the join game cookie to get the game id.
+		int gameId = 0;
+		//use the gameId to grab the right server will need to change this probably
+		ServerModel serverGameModel = serverModels.get(gameId);
+		yearOfPlentyCommand.setServerGameModel(serverGameModel);
 		yearOfPlentyCommand.execute();
 		return 0;
 	}
