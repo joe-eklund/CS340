@@ -153,7 +153,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		boolean randPorts=this.getNewGameView().getUseRandomPorts();
 		String name=this.getNewGameView().getTitle();
 		//i think the request is broken-in wrong order-getting random ports doesn't seem to work(ports are random when hex are random
-		CreateGameResponse response=this.presenter.createGame(randNums,randTiles,randPorts,name);
+		CreateGameResponse response=this.presenter.createGame(randTiles, randNums, randPorts,name);
 		if(response.isSuccessful()) {
 			getNewGameView().closeModal();
 			getJoinGameView().closeModal();

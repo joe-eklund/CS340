@@ -1,17 +1,20 @@
 package server.games;
 
-import static server.games.ModelDefaults.*;
+import static server.games.ModelDefaults.VALID_COLORS;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import proxy.ITranslator;
+import proxy.TranslatorJSON;
 import shared.ServerMethodRequests.CreateGameRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerModel;
+import shared.locations.HexLocation;
 import shared.model.Hex;
 import shared.model.Map;
 import shared.model.Player;
@@ -35,16 +38,34 @@ public abstract class AGamesFacade implements IGamesFacade {
 		if(request == null || !request.validate()) {
 			throw new InvalidCreateGameRequest("Error: invalid create game request");
 		}
+		
+		//
+		// Update gameDescriptionsList
+		//
+		
 		GameDescription newGameDescription = new GameDescription(request.getName(), this.gameDescriptionsList.size(), new ArrayList<PlayerDescription>(4));
 		gameDescriptionsList.add(newGameDescription);
 		
-		//TODO: change gson serializer to hide desert and other info
-		ArrayList<Hex> hexes = (ArrayList<Hex>) ((request.isRandomTiles()) ? this.getRandomTiles(DEFAULT_HEXES) : new ArrayList<Hex>(DEFAULT_HEXES));
+		
+		//
+		// Update gameModelsList
+		//
+		
+		// Randomize as Requested
+		ArrayList<Hex> hexes = (ArrayList<Hex>) ((request.isRandomTiles()) ? this.getRandomTiles(ModelDefaults.getDefualtHexes()) : ModelDefaults.getDefualtHexes());
 		hexes = (ArrayList<Hex>) ((request.isRandomNumbers()) ? this.getRandomChits(hexes) : hexes);
+		ArrayList<Port> ports = (ArrayList<Port>) ((request.isRandomPorts()) ? this.getRandomPorts(ModelDefaults.getDefaultPorts()) : ModelDefaults.getDefaultPorts());
+
+		// Update Robber Location
+		HexLocation robberLocation = new HexLocation(0, -2);
+		for(Hex h: hexes) {
+			if(h.getResourceType() == null) {
+				robberLocation = new HexLocation(h.getLocation().getX(), h.getLocation().getY());
+				break;
+			}
+		}
 		
-		ArrayList<Port> ports = (ArrayList<Port>) ((request.isRandomPorts()) ? this.getRandomPorts(DEFAULT_PORTS) : DEFAULT_PORTS);
-		
-		Map newGameMap = new Map(hexes, ports);
+		Map newGameMap = new Map(hexes, ports, robberLocation.getX(), robberLocation.getY());
 		ArrayList<Player> newGamePlayers = new ArrayList<Player>(4) {{
 			add(null);
 			add(null);
@@ -53,6 +74,13 @@ public abstract class AGamesFacade implements IGamesFacade {
 		}};
 		
 		this.gameModelsList.add(new ServerModel(newGameMap, newGamePlayers));
+		
+		/*
+		System.out.println("\n");
+		ITranslator translator = new TranslatorJSON();
+		System.out.println(translator.translateTo(gameModelsList.get(gameModelsList.size() -1)));
+		System.out.println("\n");
+		*/
 		
 		return newGameDescription;
 	}
@@ -205,7 +233,7 @@ public abstract class AGamesFacade implements IGamesFacade {
 	private List<Hex> getRandomTiles(List<Hex> defaultHexes) {
 		ArrayList<Hex> randomResources = new ArrayList<Hex>(defaultHexes);
 	
-		ArrayList<String> randomNames = new ArrayList<String>(RESOURCE_NAMES);
+		List<String> randomNames = ModelDefaults.getDefaultResourceNames();
 		randomizeList(randomNames);
 		
 		int desertIndex = randomNames.indexOf("desert");
@@ -216,29 +244,46 @@ public abstract class AGamesFacade implements IGamesFacade {
 		
 		for(int i = 0; i < randomResources.size(); i++) {
 			randomResources.get(i).setResourceType(randomNames.get(i));
+			if(randomNames.get(i).equals("desert")) {
+				HexLocation location = randomResources.get(i).getLocation();
+				randomResources.set(i, new Hex(new HexLocation(location.getX(), location.getY())));
+			}
 		}
 		
-		randomResources.get(desertIndex).setChit(-1);
-		randomResources.get(0).setChit(oldDesertChitValue);
+		if(desertIndex != 0) {
+			randomResources.get(0).setChit(oldDesertChitValue);
+		}
 		return randomResources;
 	}
 	
 	private List<Hex> getRandomChits(List<Hex> defaultHexes) {
 		ArrayList<Hex> randomChits = new ArrayList<Hex>(defaultHexes);
-		ArrayList<Integer> randomValues = new ArrayList<Integer>(CHIT_VALUES);
+		List<Integer> randomValues = ModelDefaults.getDefaultNumbers();
 		randomizeList(randomValues);
 		int chitIndex = 0;
 		for(Hex hex : randomChits) {
-			if(!hex.getResourceType().equals("desert")) {
+			if(hex.getResourceType() != null) {
 				hex.setChit(randomValues.get(chitIndex++));
 			}
 		}
 		return randomChits;
 	}
 	
-	private List<Port> getRandomPorts(ArrayList<Port> defaultPorts) {
+	private List<Port> getRandomPorts(List<Port> defaultPorts) {
 		ArrayList<Port> randomPorts = new ArrayList<Port>(defaultPorts);
-		randomizeList(randomPorts);
+		List<String> randomPortNames = ModelDefaults.getDefaultPortNames();
+		randomizeList(randomPortNames);
+		for(int i = 0; i < randomPorts.size(); i++) {
+			String name = randomPortNames.get(i);
+			Port port = randomPorts.get(i);
+			HexLocation portLocation = port.getLocation();
+			if(name == null) {
+				randomPorts.set(i, new Port(null, portLocation.getX(), portLocation.getY(), port.getDirection(), 3));
+			}
+			else {
+				randomPorts.set(i, new Port(name, portLocation.getX(), portLocation.getY(), port.getDirection(), 2));
+			}
+		}
 		return randomPorts;
 	}
 	

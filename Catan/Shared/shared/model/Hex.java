@@ -12,7 +12,7 @@ import client.model.interfaces.IHex;
 public class Hex extends IHex{
 	private HexLocation location;
 	private String resource;
-	private int number;
+	private Integer number;
 	
 	/**
 	 * Class constructor.
@@ -20,7 +20,7 @@ public class Hex extends IHex{
 	public Hex(int x, int y, String resource, int chit){
 		location = new HexLocation(x, y);
 		this.resource = resource;
-		
+		this.number = new Integer(chit);
 	}
 	
 	/**
@@ -94,7 +94,8 @@ public class Hex extends IHex{
 	 */
 	@Override
 	public int getChit() {
-		return number;
+		System.out.println(number);
+		return number.intValue();
 	}
 	
 	/**

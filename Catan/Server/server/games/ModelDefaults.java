@@ -1,6 +1,7 @@
 package server.games;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import shared.locations.HexLocation;
 import shared.model.Hex;
@@ -23,11 +24,10 @@ final class ModelDefaults {
 	};
 
 	@SuppressWarnings("serial")
-	public static final ArrayList<Hex> DEFAULT_HEXES = new ArrayList<Hex>() {
+	public static List<Hex> getDefualtHexes() {
+		return new ArrayList<Hex>() {
 		{
-			Hex desertHex = new Hex(new HexLocation(0, -2));
-			desertHex.setChit(-1);
-			add(desertHex);
+			add(new Hex(new HexLocation(0, -2)));
 			add(new Hex(1, -2, "brick", 4));
 			add(new Hex(2, -2, "wood", 11));
 			add(new Hex(-1, -1, "brick", 8));
@@ -46,11 +46,12 @@ final class ModelDefaults {
 			add(new Hex(-2, 2, "wood", 6));
 			add(new Hex(-1, 2, "ore", 3));
 			add(new Hex(0, 2, "wheat", 8));
-		}
-	};
+		}};
+	}
 
 	@SuppressWarnings("serial")
-	public static final ArrayList<Integer> CHIT_VALUES = new ArrayList<Integer>() {
+	public static List<Integer> getDefaultNumbers() {
+		return new ArrayList<Integer>() {
 		{
 			add(4);
 			add(11);
@@ -70,11 +71,12 @@ final class ModelDefaults {
 			add(6);
 			add(3);
 			add(8);
-		}
-	};
+		}};
+	}
 
 	@SuppressWarnings("serial")
-	public static final ArrayList<String> RESOURCE_NAMES = new ArrayList<String>() {
+	public static List<String> getDefaultResourceNames() {
+		return new ArrayList<String>() {
 		{
 			add("desert");
 			add("brick");
@@ -95,11 +97,12 @@ final class ModelDefaults {
 			add("wood");
 			add("ore");
 			add("wheat");
-		}
-	};
+		}};
+	}
 
 	@SuppressWarnings("serial")
-	public static final ArrayList<Port> DEFAULT_PORTS = new ArrayList<Port>() {
+	public static List<Port> getDefaultPorts() {
+		return new ArrayList<Port>() {
 		{
 			add(new Port("ore", 1, -3, "S", 2));
 			add(new Port(null, 3, -3, "SW", 3));
@@ -110,6 +113,21 @@ final class ModelDefaults {
 			add(new Port("sheep", 3, -1, "NW", 2));
 			add(new Port("wheat", -1, -2, "S", 2));
 			add(new Port("brick", -2, 3, "NE", 2));
-		}
-	};
+		}};
+	}
+	
+	@SuppressWarnings("serial")
+	public static List<String> getDefaultPortNames() {
+		return new ArrayList<String>() {{
+			add("ore");
+			add(null);
+			add("wood");
+			add(null);
+			add(null);
+			add(null);
+			add("sheep");
+			add("wheat");
+			add("brick");
+		}};
+	}
 }

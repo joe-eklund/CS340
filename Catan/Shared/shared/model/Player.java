@@ -41,11 +41,29 @@ public class Player {
 		this.monuments = 0;
 		this.name = name;
 		this.playerIndex = playerIndex;
-		resources = new Resources();
+		this.resources = new Resources();
 		this.playedDevCard = false;
 		this.soldiers = 0;
 		this.victoryPoints = 0;
 	}
+	
+	public Player(String color, String name, int playerIndex, int playerID) {
+		super();
+		this.cities = 4;
+		this.settlements = 5;
+		this.roads = 15;
+		this.color = color;
+		this.discarded = false;
+		this.monuments = 0;
+		this.name = name;
+		this.playerIndex = playerIndex;
+		this.resources = new Resources();
+		this.playedDevCard = false;
+		this.soldiers = 0;
+		this.victoryPoints = 0;
+		this.playerID = playerID;
+	}
+	
 	/**
 	 * Getter for the list of cities
 	 * @pre none

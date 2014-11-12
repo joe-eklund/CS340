@@ -58,6 +58,7 @@ public class CreateGameHandler implements HttpHandler {
 				}
 				in.close();
 				
+				System.out.println(requestJson.toString());
 				CreateGameRequest request = (CreateGameRequest) translator.translateFrom(requestJson.toString(), CreateGameRequest.class);
 				exchange.getRequestBody().close();
 				

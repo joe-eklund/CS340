@@ -25,15 +25,15 @@ import client.data.RobPlayerInfo;
  * The ServerModel class holds all the information necessary for a game. Such as a chat, bank, log, etc.
  */
 public class ServerModel {
-	private Chat chat;
-	private Bank bank;
-	private Log log;
+	private DevCards deck;
 	private Map map;
 	private List<Player> players;
+	private Log log;
+	private Chat chat;
+	private Bank bank;
 	private TradeOffer tradeOffer;
 	private TurnTracker turnTracker;
 	private int winner;
-	private DevCards deck;
 	private int version;
 	
 	/**
@@ -300,6 +300,16 @@ public class ServerModel {
 	
 	public void addPlayerByIndex(int index, Player player) {
 		this.players.set(index, player);
+	}
+	
+	public void addPlayer(Player player) {
+		for(int i = 0; i < players.size(); i++) {
+			Player p = players.get(i);
+			if(p == null) {
+				players.set(i, player);
+				break;
+			}
+		}
 	}
 
 	public RobPlayerInfo[] getVictims(int player,HexLocation spot) {

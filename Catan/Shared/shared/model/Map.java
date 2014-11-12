@@ -9,11 +9,11 @@ import java.util.ArrayList;
  */
 public class Map {
 	private ArrayList<Hex> hexes;
-	private ArrayList<Port> ports;
 	private ArrayList<Road> roads;
-	private ArrayList<Settlement> settlements;
 	private ArrayList<City> cities;
+	private ArrayList<Settlement> settlements;
 	private int radius;
+	private ArrayList<Port> ports;
 	private Robber robber;
 	
 	/**
@@ -23,9 +23,14 @@ public class Map {
 		radius=3;
 	}
 	
-	public Map(ArrayList<Hex> hexes, ArrayList<Port> ports) {
+	public Map(ArrayList<Hex> hexes, ArrayList<Port> ports, int robberX, int robberY) {
 		this.hexes = hexes;
+		this.roads = new ArrayList<Road>();
+		this.cities = new ArrayList<City>();
+		this.settlements = new ArrayList<Settlement>();
 		this.ports = ports;
+		radius = 3;
+		this.robber = new Robber(robberX, robberY);
 	}
 	
 	/**
