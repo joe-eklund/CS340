@@ -1,4 +1,4 @@
-package client.model;
+package shared.model;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,11 @@ public class Map {
 	 */
 	public Map(){
 		radius=3;
+	}
+	
+	public Map(ArrayList<Hex> hexes, ArrayList<Port> ports) {
+		this.hexes = hexes;
+		this.ports = ports;
 	}
 	
 	/**

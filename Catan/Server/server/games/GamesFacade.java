@@ -1,8 +1,10 @@
 package server.games;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import shared.definitions.GameDescription;
+import shared.definitions.ServerModel;
 
 
 /**
@@ -14,8 +16,8 @@ public class GamesFacade extends AGamesFacade {
 	/**
 	 * 
 	 */
-	public GamesFacade() {
-		super();
+	public GamesFacade(List<ServerModel> serverModels) {
+		super(serverModels);
 		this.gameDescriptionsList = new ArrayList<GameDescription>();
 	}
 

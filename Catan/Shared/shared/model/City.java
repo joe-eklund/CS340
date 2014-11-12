@@ -1,4 +1,4 @@
-package client.model;
+package shared.model;
 
 import shared.definitions.Location;
 import shared.locations.HexLocation;

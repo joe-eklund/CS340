@@ -45,7 +45,7 @@ import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import client.model.LogEntry;
+import shared.model.LogEntry;
 
 /**
  * @author Chad

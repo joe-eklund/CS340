@@ -25,9 +25,9 @@ import shared.definitions.ServerModel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.ClientModel;
+import shared.model.Log;
 import shared.states.IState;
-import client.model.ClientModel;
-import client.model.Log;
 
 /**
  * The interface that defines a class that holds a proxy and clientModel

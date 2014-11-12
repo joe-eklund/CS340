@@ -1,9 +1,7 @@
-package client.model;
+package shared.model;
 
-import client.model.interfaces.IHex;
 import shared.locations.HexLocation;
-import shared.definitions.HexType;
-import shared.definitions.ResourceType;
+import client.model.interfaces.IHex;
 
 /**
  * The hex class represents a hex on the map. It has a location, resource type, 
@@ -107,6 +105,6 @@ public class Hex extends IHex{
 	 */
 	@Override
 	public void setChit(int chit) {
-		this.number = number;
+		this.number = chit;
 	}	
 }

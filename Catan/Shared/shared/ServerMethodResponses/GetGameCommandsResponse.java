@@ -1,6 +1,6 @@
 package shared.ServerMethodResponses;
 
-import client.model.Log;
+import shared.model.Log;
 
 /**
  * A class to encapsulate the servers response for GetGameCommands request

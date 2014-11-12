@@ -12,7 +12,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import client.model.Log;
+import shared.model.Log;
 
 /**
  * A class made for testing constraints on the proxy, client communicator, translator, and server

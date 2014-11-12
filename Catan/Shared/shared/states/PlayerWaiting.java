@@ -5,7 +5,7 @@ import java.util.List;
 
 import shared.ServerMethodResponses.AddAIResponse;
 import shared.ServerMethodResponses.GetGameModelResponse;
-import client.model.Player;
+import shared.model.Player;
 import client.presenter.IPresenter;
 
 public class PlayerWaiting extends State {

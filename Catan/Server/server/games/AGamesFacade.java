@@ -1,33 +1,29 @@
 package server.games;
 
+import static server.games.ModelDefaults.*;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import shared.ServerMethodRequests.CreateGameRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerModel;
+import shared.model.Hex;
+import shared.model.Map;
+import shared.model.Player;
+import shared.model.Port;
 
 public abstract class AGamesFacade implements IGamesFacade {
 	protected ArrayList<GameDescription> gameDescriptionsList;
-	protected ArrayList<ServerModel> gameModelsList;
-	private static final ArrayList<String> VALID_COLORS = new ArrayList<String>(9){
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -8194941010612096541L;
-	{
-		add("red");
-		add("green");
-		add("blue"); 
-		add("yellow");
-		add("puce");
-		add("brown");
-		add("white");
-		add("purple");
-		add("orange");
-	}};
+	private List<ServerModel> gameModelsList;
+	
+	public AGamesFacade(List<ServerModel> gameModels) {
+		this.gameModelsList = gameModels;
+	}
 	
 	@Override
 	public List<GameDescription> listGames() {
@@ -42,7 +38,21 @@ public abstract class AGamesFacade implements IGamesFacade {
 		GameDescription newGameDescription = new GameDescription(request.getName(), this.gameDescriptionsList.size(), new ArrayList<PlayerDescription>(4));
 		gameDescriptionsList.add(newGameDescription);
 		
-		//TODO Initialize new serverModel to represent the newly created game according to request random params
+		//TODO: change gson serializer to hide desert and other info
+		ArrayList<Hex> hexes = (ArrayList<Hex>) ((request.isRandomTiles()) ? this.getRandomTiles(DEFAULT_HEXES) : new ArrayList<Hex>(DEFAULT_HEXES));
+		hexes = (ArrayList<Hex>) ((request.isRandomNumbers()) ? this.getRandomChits(hexes) : hexes);
+		
+		ArrayList<Port> ports = (ArrayList<Port>) ((request.isRandomPorts()) ? this.getRandomPorts(DEFAULT_PORTS) : DEFAULT_PORTS);
+		
+		Map newGameMap = new Map(hexes, ports);
+		ArrayList<Player> newGamePlayers = new ArrayList<Player>(4) {{
+			add(null);
+			add(null);
+			add(null);
+			add(null);
+		}};
+		
+		this.gameModelsList.add(new ServerModel(newGameMap, newGamePlayers));
 		
 		return newGameDescription;
 	}
@@ -190,5 +200,50 @@ public abstract class AGamesFacade implements IGamesFacade {
 			}
 		}
 		return colorTaken;
+	}
+	
+	private List<Hex> getRandomTiles(List<Hex> defaultHexes) {
+		ArrayList<Hex> randomResources = new ArrayList<Hex>(defaultHexes);
+	
+		ArrayList<String> randomNames = new ArrayList<String>(RESOURCE_NAMES);
+		randomizeList(randomNames);
+		
+		int desertIndex = randomNames.indexOf("desert");
+		int oldDesertChitValue = -1;
+		if(desertIndex != 0) {
+			oldDesertChitValue = randomResources.get(desertIndex).getChit();
+		}
+		
+		for(int i = 0; i < randomResources.size(); i++) {
+			randomResources.get(i).setResourceType(randomNames.get(i));
+		}
+		
+		randomResources.get(desertIndex).setChit(-1);
+		randomResources.get(0).setChit(oldDesertChitValue);
+		return randomResources;
+	}
+	
+	private List<Hex> getRandomChits(List<Hex> defaultHexes) {
+		ArrayList<Hex> randomChits = new ArrayList<Hex>(defaultHexes);
+		ArrayList<Integer> randomValues = new ArrayList<Integer>(CHIT_VALUES);
+		randomizeList(randomValues);
+		int chitIndex = 0;
+		for(Hex hex : randomChits) {
+			if(!hex.getResourceType().equals("desert")) {
+				hex.setChit(randomValues.get(chitIndex++));
+			}
+		}
+		return randomChits;
+	}
+	
+	private List<Port> getRandomPorts(ArrayList<Port> defaultPorts) {
+		ArrayList<Port> randomPorts = new ArrayList<Port>(defaultPorts);
+		randomizeList(randomPorts);
+		return randomPorts;
+	}
+	
+	private void randomizeList(List<?> list) {
+		long seed = System.nanoTime();
+		Collections.shuffle(list, new Random(seed));
 	}
 }

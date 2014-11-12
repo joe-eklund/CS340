@@ -3,11 +3,11 @@ package client.points;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.model.Player;
 import client.base.*;
 import client.join.IJoinGameView;
 import client.join.JoinGameController;
 import client.main.Catan;
-import client.model.Player;
 import client.presenter.IPresenter;
 
 

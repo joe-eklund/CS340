@@ -1,6 +1,6 @@
 package proxy;
 
-import client.model.ClientModel;
+import shared.model.ClientModel;
 
 import com.google.gson.*;
 /**

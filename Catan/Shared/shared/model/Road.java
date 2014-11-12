@@ -1,4 +1,4 @@
-package client.model;
+package shared.model;
 
 import client.exceptions.ClientModelException;
 import shared.definitions.Location;

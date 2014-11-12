@@ -1,4 +1,4 @@
-package client.model;
+package shared.model;
 
 /**
  * Message class will be used for the messages in the chat feature.

@@ -24,8 +24,8 @@ import shared.ServerMethodResponses.ResetGameResponse;
 import shared.ServerMethodResponses.UserResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.ServerLogLevel;
+import shared.model.Log;
 import static shared.definitions.TestingConstants.*;
-import client.model.Log;
 /**
  * A class for testin ability of proxy to transmit parameter information to the client communicator and return response information back to presenter
  * -the mock communicator is used to verify that testing constants are send and received correctly

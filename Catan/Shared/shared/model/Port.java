@@ -1,6 +1,5 @@
-package client.model;
+package shared.model;
 
-import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
 
 /**Represents a Port on the port, which contains a specific ratio on a specified location on the board. 

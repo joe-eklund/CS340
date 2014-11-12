@@ -7,10 +7,10 @@ import javax.swing.*;
 
 import client.base.*;
 import client.data.*;
-import client.model.Player;
 import client.presenter.IPresenter;
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.Player;
 
 /**
  * Implementation for the map view

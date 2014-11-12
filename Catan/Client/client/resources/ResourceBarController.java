@@ -3,9 +3,9 @@ package client.resources;
 import java.util.*;
 
 import shared.definitions.ServerModel;
+import shared.model.Player;
 import client.base.*;
 import client.main.Catan;
-import client.model.Player;
 import client.presenter.IPresenter;
 
 

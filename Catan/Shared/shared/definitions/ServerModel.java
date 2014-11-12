@@ -1,7 +1,6 @@
 package shared.definitions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,9 +10,16 @@ import java.util.TreeSet;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
-import client.data.PlayerInfo;
+import shared.model.Bank;
+import shared.model.Chat;
+import shared.model.DevCards;
+import shared.model.Log;
+import shared.model.Map;
+import shared.model.Player;
+import shared.model.Port;
+import shared.model.TradeOffer;
+import shared.model.TurnTracker;
 import client.data.RobPlayerInfo;
-import client.model.*;
 
 /**
  * The ServerModel class holds all the information necessary for a game. Such as a chat, bank, log, etc.
@@ -55,6 +61,18 @@ public class ServerModel {
 		this.tradeOffer = tradeOffer;
 		this.turnTracker = turnTracker;
 		this.winner = winner;
+		this.deck = new DevCards();
+	}
+	
+	public ServerModel(Map map, List<Player> players) {
+		this.bank = new Bank();
+		this.chat = new Chat();
+		this.log = new Log();
+		this.map = map;
+		this.players = players;
+		this.tradeOffer = null;
+		this.turnTracker = new TurnTracker("FirstRound", 0, -1, -1);
+		this.winner = -1;
 		this.deck = new DevCards();
 	}
 	
@@ -278,6 +296,10 @@ public class ServerModel {
 				return player.getPlayerIndex();
 		}
 		return -1;
+	}
+	
+	public void addPlayerByIndex(int index, Player player) {
+		this.players.set(index, player);
 	}
 
 	public RobPlayerInfo[] getVictims(int player,HexLocation spot) {

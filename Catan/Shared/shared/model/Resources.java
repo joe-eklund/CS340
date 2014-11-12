@@ -1,4 +1,4 @@
-package client.model;
+package shared.model;
 /**
  * 
  * Keeps track of the number of each resource a player has.

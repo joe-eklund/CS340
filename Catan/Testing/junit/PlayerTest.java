@@ -6,7 +6,7 @@ import proxy.ITranslator;
 import proxy.TranslatorJSON;
 import static org.junit.Assert.*;
 import shared.definitions.ResourceType;
-import client.model.Player;
+import shared.model.Player;
 
 public class PlayerTest {
 	private Player test; 

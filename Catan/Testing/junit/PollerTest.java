@@ -13,7 +13,7 @@ import proxy.ITranslator;
 import proxy.MockCommunicator;
 import proxy.ProxyServer;
 import proxy.TranslatorJSON;
-import client.model.ClientModel;
+import shared.model.ClientModel;
 import client.poller.IPoller;
 import client.poller.Poller;
 import client.presenter.IPresenter;

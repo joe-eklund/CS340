@@ -1,4 +1,4 @@
-package client.model;
+package shared.model;
 
 /**
  * The TradeOffer class will be used in trades between players and the bank. 

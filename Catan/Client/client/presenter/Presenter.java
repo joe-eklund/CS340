@@ -26,6 +26,8 @@ import shared.definitions.ServerModel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.ClientModel;
+import shared.model.Log;
 import shared.states.Discarding;
 import shared.states.FirstRound;
 import shared.states.IState;
@@ -33,8 +35,6 @@ import shared.states.Playing;
 import shared.states.Robbing;
 import shared.states.Rolling;
 import shared.states.SecondRound;
-import client.model.ClientModel;
-import client.model.Log;
 
 /**
  * A class that holds a proxy and clientModel and acts upon those objects

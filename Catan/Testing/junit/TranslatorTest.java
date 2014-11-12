@@ -10,18 +10,18 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-import client.model.Bank;
-import client.model.Chat;
-import client.model.Log;
-import client.model.Map;
-import client.model.Player;
-import client.model.TradeOffer;
-import client.model.TurnTracker;
 import proxy.ITranslator;
 import proxy.TranslatorJSON;
 import shared.definitions.GameDescription;
 import shared.definitions.ServerModel;
 import shared.definitions.PlayerIndex;
+import shared.model.Bank;
+import shared.model.Chat;
+import shared.model.Log;
+import shared.model.Map;
+import shared.model.Player;
+import shared.model.TradeOffer;
+import shared.model.TurnTracker;
 /**
  * 
  * @author Epper Marshall

@@ -21,9 +21,9 @@ import shared.definitions.ServerLogLevel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.Log;
+import shared.model.Player;
 import client.base.OverlayView;
-import client.model.Log;
-import client.model.Player;
 import client.presenter.IPresenter;
 
 public abstract class State implements IState {

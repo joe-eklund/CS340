@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import client.model.Log;
-import client.model.LogEntry;
 import client.communication.CommsLogEntry;
 import shared.ServerMethodRequests.*;
 import shared.ServerMethodResponses.*;
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.Log;
+import shared.model.LogEntry;
 
 /**
  * A Server Proxy class that implements the Server Interface

@@ -7,12 +7,12 @@ import shared.definitions.PlayerDescription;
 import shared.definitions.ResourceHand;
 import shared.definitions.ResourceType;
 import shared.definitions.ServerModel;
+import shared.model.Player;
+import shared.model.Resources;
+import shared.model.TradeOffer;
 import client.base.Controller;
 import client.main.Catan;
 import client.misc.IWaitView;
-import client.model.Player;
-import client.model.Resources;
-import client.model.TradeOffer;
 import client.presenter.IPresenter;
 
 

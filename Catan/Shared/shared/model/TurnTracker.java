@@ -1,4 +1,4 @@
-package client.model;
+package shared.model;
 
 /**
  * Tracks whose turn it currently is, and changes the possession of the Longest road and largest army cards each turn if neccessary.
@@ -18,6 +18,13 @@ public class TurnTracker {
 		currentTurn = 0;
 		longestRoad=-1;
 		largestArmy=-1;
+	}
+	
+	public TurnTracker(String status, int currentTurn, int longestRoad, int largestArmy) {
+		this.status = status;
+		this.currentTurn = currentTurn;
+		this.longestRoad = longestRoad;
+		this.largestArmy = largestArmy;
 	}
 	
 	/**

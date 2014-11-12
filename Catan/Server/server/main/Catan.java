@@ -1,5 +1,7 @@
 package server.main;
 
+import java.util.ArrayList;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -20,6 +22,7 @@ import server.users.UsersFacade;
 import server.users.UsersFacadeStub;
 import server.util.IUtilFacade;
 import server.util.UtilFacade;
+import shared.definitions.ServerModel;
 
 public class Catan {
 	private final static int MAX_PORT = 65535;
@@ -41,10 +44,13 @@ public class Catan {
 		options.addOption("p", "port", true, "port on which server will listen");
 		
 		try {
+			// serverModels will be shared by GamesFacade, GameFacade, and MovesFacade
+			ArrayList<ServerModel> serverModels = new ArrayList<ServerModel>();
+			
 			TranslatorJSON translator = new TranslatorJSON();
 			IUsersFacade usersFacade = new UsersFacade();
-			IGamesFacade gamesFacade = new GamesFacade();
-			IGameFacade gameFacade = new GameFacade();
+			IGamesFacade gamesFacade = new GamesFacade(serverModels);
+			IGameFacade gameFacade = new GameFacade(serverModels);
 			IMovesFacade movesFacade = new MovesFacade();
 			IUtilFacade utilFacade = new UtilFacade();
 			
@@ -55,7 +61,7 @@ public class Catan {
 				
 				// set stubs here
 				usersFacade = new UsersFacadeStub();
-				gamesFacade = new GamesFacadeStub();
+				gamesFacade = new GamesFacadeStub(serverModels);
 			}
 			
 			int portNumber = 8081;

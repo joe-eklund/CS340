@@ -9,7 +9,7 @@ import org.junit.*;
 import proxy.*;
 import shared.definitions.*;
 import shared.locations.*;
-import client.model.*;
+import shared.model.*;
 
 public class ClientModelUnitTest {
 	private ClientModel clientModel;

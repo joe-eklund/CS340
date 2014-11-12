@@ -4,10 +4,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.*;
+import shared.model.Resources;
 import client.base.*;
 import client.main.Catan;
 import client.misc.*;
-import client.model.Resources;
 import client.presenter.IPresenter;
 
 /**
