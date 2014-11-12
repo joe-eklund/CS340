@@ -1,20 +1,22 @@
 package server.cookie;
 
-public class LoggedInCookieParams {
+public class CookieParams {
 	private String name;
 	private String password;
 	private int playerID;
+	private transient int game;
 	
 	/**
 	 * @param username
 	 * @param password
 	 * @param userID
 	 */
-	public LoggedInCookieParams(String username, String password, int userID) {
+	public CookieParams(String username, String password, int userID, int gameID) {
 		super();
 		this.name = username;
 		this.password = password;
 		this.playerID = userID;
+		this.game = gameID;
 	}
 	
 	
@@ -52,6 +54,16 @@ public class LoggedInCookieParams {
 	 */
 	public int getPlayerID() {
 		return playerID;
+	}
+	
+	/**
+	 * @pre
+	 *  none
+	 * @return
+	 * 	returns the gameID of the game the player is playing currently (null if not yet playing in a game)
+	 */
+	public int getGameID() {
+		return game;
 	}
 	
 	/**
@@ -99,12 +111,25 @@ public class LoggedInCookieParams {
 	}
 
 
-	public boolean validate() {
+	public boolean validateLoggedIn() {
 		boolean result = false;
 		if(this.name != null && this.password != null) {
 			result = true;
 		}
 		return result;
+	}
+	
+	public boolean validateJoined() {
+		boolean result = false;
+		if(this.name != null && this.password != null && this.game != -1) {
+			result = true;
+		}
+		return result;
+	}
+
+
+	public void setGameID(int gameID) {
+		this.game = gameID;
 	}
 	
 }

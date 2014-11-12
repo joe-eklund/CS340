@@ -11,7 +11,7 @@ import java.util.List;
 import proxy.ITranslator;
 import server.cookie.Cookie;
 import server.cookie.InvalidCookieException;
-import server.cookie.LoggedInCookieParams;
+import server.cookie.CookieParams;
 import server.games.IGamesFacade;
 import server.games.InvalidCreateGameRequest;
 import server.games.InvalidJoinGameRequest;
@@ -59,7 +59,7 @@ public class JoinGameHandler implements HttpHandler {
 		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
 			try {  // check user login cookie and if valid get params
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
-				LoggedInCookieParams cookie = Cookie.verifyLoginCookie(unvalidatedCookie, translator);
+				CookieParams cookie = Cookie.verifyLoginCookie(unvalidatedCookie, translator);
 				
 				BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 				String inputLine;
@@ -68,6 +68,8 @@ public class JoinGameHandler implements HttpHandler {
 					requestJson.append(inputLine);
 				}
 				in.close();
+				
+				System.out.println(requestJson);
 				
 				JoinGameRequest request = (JoinGameRequest) translator.translateFrom(requestJson.toString(), JoinGameRequest.class);
 				exchange.getRequestBody().close();
@@ -85,6 +87,7 @@ public class JoinGameHandler implements HttpHandler {
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				}
 				else {
+					System.out.println("join game request had invalid color (duplicate or unrecognized)");
 					responseMessage = "Unable to join game b/c invalid color and/or color is already taken and/or game is full";
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				}
@@ -92,6 +95,7 @@ public class JoinGameHandler implements HttpHandler {
 				// TODO join game in gameModels list
 
 			} catch (InvalidCookieException | InvalidJoinGameRequest e) { // else send error message
+				System.out.println("unrecognized / invalid join game request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}

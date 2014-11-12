@@ -20,20 +20,38 @@ public class Cookie {
 	 * @return
 	 * @throws InvalidCookieException 
 	 */
-	public static LoggedInCookieParams verifyLoginCookie(String cookie, ITranslator translator) throws InvalidCookieException {
+	public static CookieParams verifyLoginCookie(String cookie, ITranslator translator) throws InvalidCookieException {
 		System.out.println("verifying login cookie: " + cookie);
 		
 		int userCookieIndex = cookie.indexOf("catan.user=");
 		
-		LoggedInCookieParams result;
+		CookieParams result;
 		
 		if (userCookieIndex != -1) {
 			cookie = cookie.replaceFirst("catan.user=", "");
+			cookie = cookie.trim();
+			cookie = cookie.replaceFirst(";", "");
+			int gameID = -1;
+			if(cookie.contains("catan.game=")) {
+				String gameCookie = cookie.split("catan.game=")[0];
+				if(gameCookie.contains("%7d")) {
+					try {
+						gameID = Integer.parseInt(gameCookie.split("%7d")[0]);
+					} catch (NumberFormatException e) {
+						throw new InvalidCookieException(
+								"Error: the cookie catan.game value is invalid");
+					}
+				}
+				cookie = cookie.split("catan.game=")[0];
+			}
 			try {
 				String cookieJSON = URLDecoder.decode(cookie, "UTF-8");
-				result = (LoggedInCookieParams) translator.translateFrom(
-						cookieJSON, LoggedInCookieParams.class);
-				if (result == null || !result.validate()) {
+				System.out.println(cookieJSON);
+				result = (CookieParams) translator.translateFrom(
+						cookieJSON, CookieParams.class);
+				result.setGameID(gameID);
+				if (result == null || !result.validateLoggedIn()) {
+					System.out.println("could not translate json: " + cookieJSON);
 					throw new InvalidCookieException(
 							"Error: You either did not provide a cookie or the cookie provided is invalid");
 				}
@@ -54,7 +72,7 @@ public class Cookie {
 	 * @param cookie - the cookie to be checked
 	 * @return
 	 */
-	public static JoinedGameCookieParams verifyJoinCookie(String cookie) {
+	public static CookieParams verifyJoinCookie(String cookie) {
 		// to do
 		return null;
 	}
@@ -77,7 +95,7 @@ public class Cookie {
 	 */
 	public static String createJoinCookie(int gameID) {
 		// to do
-		return "catan.game=" + gameID + "%7D;Path=/";		
+		return "catan.game=" + gameID + "%7D;Path=/;";		
 	}
 	
 }

@@ -49,6 +49,8 @@ public abstract class AGamesFacade implements IGamesFacade {
 	
 	@Override
 	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest {
+		System.out.println("request: color = " + request.getColor() + "; gameID = " + request.getID());
+		
 		if(request == null || !request.validate()) {
 			throw new InvalidJoinGameRequest("Error: invalid join game request");
 		}
@@ -57,35 +59,43 @@ public abstract class AGamesFacade implements IGamesFacade {
 		
 		boolean validColor = true;
 		if(VALID_COLORS.indexOf(request.getColor().toLowerCase()) == -1) { // invalid color option
+			System.out.println("unrecognized color option!");
 			validColor = false;
 			result = false;
 		}
 		
 		
 		if (validColor) {
+			System.out.println("recognized color option...");
 			List<PlayerDescription> players = gameDescriptionsList.get(request.getID()).getPlayerDescriptions();
 			
 			int playerGameIndex = getPlayerIndexInGame(username, players);
 			
 			if (players.size() < 4) {
+				System.out.println("room in game...");
 				result = !isColorTaken(request, players, playerGameIndex);
 				if(result) {
 					if(playerGameIndex != -1) { // update player's color
+						System.out.println("changing color in game with space...");
 						updatePlayerColor(request.getID(), playerGameIndex, request.getColor());
 					}
 					else { // add new player to game
+						System.out.println("adding new player to game...");
 						addPlayerToGameDescription(request.getID(), username, request.getColor(), userID);
 					}
 				}
 			} else { // game is full
 				if(playerGameIndex != -1 && !isColorTaken(request, players, playerGameIndex)) { // player wants to change color in full game they already joined
+					System.out.println("changing color in full game...");
 					updatePlayerColor(request.getID(), playerGameIndex, request.getColor());
 				}
 				else {
+					System.out.println("no room in game!");
 					result = false;
 				}
 			}
 		}
+		System.out.println(result);
 		return result;
 	}
 	
@@ -106,7 +116,10 @@ public abstract class AGamesFacade implements IGamesFacade {
 	 */
 	private void addPlayerToGameDescription(int gameID, String username, String color, int userID) {
 		PlayerDescription newPlayer = new PlayerDescription(color.toLowerCase(), userID, username);
+		System.out.println("New Player Description Created: adding " + newPlayer.getName() + " to game...");
+		System.out.println(gameDescriptionsList.get(gameID).getTitle());
 		gameDescriptionsList.get(gameID).add(newPlayer);
+		System.out.println(gameDescriptionsList.get(gameID).getPlayerDescriptions().isEmpty());
 	}
 
 	/* 

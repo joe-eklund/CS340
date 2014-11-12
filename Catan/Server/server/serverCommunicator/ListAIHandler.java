@@ -12,7 +12,7 @@ import java.util.List;
 import proxy.ITranslator;
 import server.cookie.Cookie;
 import server.cookie.InvalidCookieException;
-import server.cookie.LoggedInCookieParams;
+import server.cookie.CookieParams;
 import server.game.IGameFacade;
 import shared.ServerMethodRequests.UserRequest;
 import shared.definitions.GameDescription;
@@ -43,7 +43,7 @@ public class ListAIHandler implements HttpHandler {
 	 *  <valid logged in cookie> ::= as defined in CS 340 webpage cookie specification
 	 * @post 
 	 *  the exchange response code will be set to HTTP 200 Success
-	 *  the exchange response headers include Content­Type: application/json
+	 *  the exchange response headers include Contentï¿½Type: application/json
 	 * 	the exchange response body will contain a json formatted list of Strings(AIs)
 	 *  
 	 */
@@ -58,7 +58,7 @@ public class ListAIHandler implements HttpHandler {
 			try {  // check user login cookie and if valid get params
 				String cookieJSON = URLDecoder.decode(subCookie, "UTF-8");
 				System.out.println(cookieJSON);
-				LoggedInCookieParams cookie = Cookie.verifyLoginCookie(cookieJSON, translator);
+				CookieParams cookie = Cookie.verifyLoginCookie(cookieJSON, translator);
 				System.out.println(cookie.getName() + " " + cookie.getPassword() + " " + cookie.getPlayerID());
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				List<String> AIs = this.gameFacade.listAI();
