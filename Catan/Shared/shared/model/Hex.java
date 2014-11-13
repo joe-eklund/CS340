@@ -94,7 +94,6 @@ public class Hex extends IHex{
 	 */
 	@Override
 	public int getChit() {
-		System.out.println(number);
 		return number.intValue();
 	}
 	

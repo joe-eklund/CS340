@@ -1,8 +1,5 @@
 package shared.model;
 
-import java.util.Random;
-
-import shared.definitions.DevCardType;
 
 /**
  * Contains information relevant to the Development Card Deck and player Development Cards.
@@ -24,6 +21,14 @@ public class DevCards {
 		roadBuilding = 2;
 		soldier = 14;
 		yearOfPlenty = 2;
+	}
+	
+	public void reset() {
+		yearOfPlenty = 0;
+		monopoly = 0;
+		soldier = 0;
+		roadBuilding = 0;
+		monument = 0;
 	}
 	
 	/**

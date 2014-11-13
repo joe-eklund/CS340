@@ -9,21 +9,21 @@ import shared.definitions.ResourceType;
  *
  */
 public class Player {
+	private Resources resources;
+	private DevCards oldDevCards;
+	private DevCards newDevCards;
+	private int roads;
 	private int cities;
 	private int settlements;
-	private int roads;
-	private String color;
-	private boolean discarded;
-	private int monuments;
-	private String name;
-	private DevCards newDevCards;
-	private DevCards oldDevCards;
-	private int playerIndex;
-	private boolean playedDevCard;
-	private int playerID;
-	private Resources resources;
 	private int soldiers;
 	private int victoryPoints;
+	private int monuments;
+	private boolean playedDevCard;
+	private boolean discarded;
+	private int playerID;
+	private int playerIndex;
+	private String name;
+	private String color;
 	
 	/** 
 	 * Class constructor
@@ -62,6 +62,10 @@ public class Player {
 		this.soldiers = 0;
 		this.victoryPoints = 0;
 		this.playerID = playerID;
+		this.oldDevCards = new DevCards();
+		this.oldDevCards.reset();
+		this.newDevCards = new DevCards();
+		this.newDevCards.reset();
 	}
 	
 	/**

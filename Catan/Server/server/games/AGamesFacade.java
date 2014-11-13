@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import proxy.ITranslator;
 import proxy.TranslatorJSON;
 import shared.ServerMethodRequests.CreateGameRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
@@ -22,7 +21,7 @@ import shared.model.Port;
 
 public abstract class AGamesFacade implements IGamesFacade {
 	protected ArrayList<GameDescription> gameDescriptionsList;
-	private List<ServerModel> gameModelsList;
+	protected List<ServerModel> gameModelsList;
 	
 	public AGamesFacade(List<ServerModel> gameModels) {
 		this.gameModelsList = gameModels;
@@ -66,6 +65,7 @@ public abstract class AGamesFacade implements IGamesFacade {
 		}
 		
 		Map newGameMap = new Map(hexes, ports, robberLocation.getX(), robberLocation.getY());
+		@SuppressWarnings("serial")
 		ArrayList<Player> newGamePlayers = new ArrayList<Player>(4) {{
 			add(null);
 			add(null);
@@ -75,20 +75,11 @@ public abstract class AGamesFacade implements IGamesFacade {
 		
 		this.gameModelsList.add(new ServerModel(newGameMap, newGamePlayers));
 		
-		/*
-		System.out.println("\n");
-		ITranslator translator = new TranslatorJSON();
-		System.out.println(translator.translateTo(gameModelsList.get(gameModelsList.size() -1)));
-		System.out.println("\n");
-		*/
-		
 		return newGameDescription;
 	}
 	
 	@Override
-	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest {
-		System.out.println("request: color = " + request.getColor() + "; gameID = " + request.getID());
-		
+	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest {		
 		if(request == null || !request.validate()) {
 			throw new InvalidJoinGameRequest("Error: invalid join game request");
 		}
@@ -97,44 +88,52 @@ public abstract class AGamesFacade implements IGamesFacade {
 		
 		boolean validColor = true;
 		if(VALID_COLORS.indexOf(request.getColor().toLowerCase()) == -1) { // invalid color option
-			System.out.println("unrecognized color option!");
 			validColor = false;
 			result = false;
 		}
 		
 		
 		if (validColor) {
-			System.out.println("recognized color option...");
 			List<PlayerDescription> players = gameDescriptionsList.get(request.getID()).getPlayerDescriptions();
 			
 			int playerGameIndex = getPlayerIndexInGame(username, players);
 			
 			if (players.size() < 4) {
-				System.out.println("room in game...");
 				result = !isColorTaken(request, players, playerGameIndex);
 				if(result) {
 					if(playerGameIndex != -1) { // update player's color
-						System.out.println("changing color in game with space...");
-						updatePlayerColor(request.getID(), playerGameIndex, request.getColor());
+						updatePlayerColorDescription(request.getID(), playerGameIndex, request.getColor());
+						updatePlayerColorModel(request.getID(), playerGameIndex, request.getColor());
 					}
 					else { // add new player to game
-						System.out.println("adding new player to game...");
 						addPlayerToGameDescription(request.getID(), username, request.getColor(), userID);
+						addPlayerToGameModel(request.getID(), username, request.getColor(), userID);
 					}
 				}
 			} else { // game is full
 				if(playerGameIndex != -1 && !isColorTaken(request, players, playerGameIndex)) { // player wants to change color in full game they already joined
-					System.out.println("changing color in full game...");
-					updatePlayerColor(request.getID(), playerGameIndex, request.getColor());
+					updatePlayerColorDescription(request.getID(), playerGameIndex, request.getColor());
+					updatePlayerColorModel(request.getID(), playerGameIndex, request.getColor());
 				}
 				else {
-					System.out.println("no room in game!");
 					result = false;
 				}
 			}
 		}
-		System.out.println(result);
+		if(result) {
+			TranslatorJSON translator = new TranslatorJSON();
+			System.out.println(translator.translateTo(this.gameModelsList.get(request.getID())));
+		}
 		return result;
+	}
+	
+	protected void addPlayerToGameModel(int gameID, String username, String color, int userID) {
+		Player newPlayer = new Player(color, username, -1, userID);
+		this.gameModelsList.get(gameID).addPlayer(newPlayer);
+	}
+	
+	private void updatePlayerColorModel(int gameID, int playerIndexInGame, String newColor) {
+		this.gameModelsList.get(gameID).changePlayerColor(playerIndexInGame, newColor);
 	}
 	
 	/*
@@ -154,10 +153,8 @@ public abstract class AGamesFacade implements IGamesFacade {
 	 */
 	private void addPlayerToGameDescription(int gameID, String username, String color, int userID) {
 		PlayerDescription newPlayer = new PlayerDescription(color.toLowerCase(), userID, username);
-		System.out.println("New Player Description Created: adding " + newPlayer.getName() + " to game...");
-		System.out.println(gameDescriptionsList.get(gameID).getTitle());
+		newPlayer.setIndex(gameDescriptionsList.get(gameID).getPlayerDescriptions().size());
 		gameDescriptionsList.get(gameID).add(newPlayer);
-		System.out.println(gameDescriptionsList.get(gameID).getPlayerDescriptions().isEmpty());
 	}
 
 	/* 
@@ -177,7 +174,7 @@ public abstract class AGamesFacade implements IGamesFacade {
 	 * @post
 	 *  player color is changed to specified color
 	 */
-	private void updatePlayerColor(int gameID, int playerIndexInGame, String newColor) {
+	private void updatePlayerColorDescription(int gameID, int playerIndexInGame, String newColor) {
 		gameDescriptionsList.get(gameID).getPlayerDescriptions().get(playerIndexInGame).setColor(newColor.toLowerCase());
 	}
 	

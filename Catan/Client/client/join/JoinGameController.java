@@ -29,7 +29,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IPresenter presenter;
 	private int numGames;
 	private int numPlayers;
-	private ArrayList<CatanColor> currentColors;
 	
 	/**
 	 * JoinGameController constructor

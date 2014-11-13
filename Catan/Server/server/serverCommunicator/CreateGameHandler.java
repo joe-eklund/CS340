@@ -74,9 +74,11 @@ public class CreateGameHandler implements HttpHandler {
 		}
 		else {
 			// unsupported request method
-			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
+			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is not supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
+		
+		System.out.println(responseMessage + "\n\n");
 		
 		//set "Content-Type: application/json" header
 		List<String> contentTypes = new ArrayList<String>();

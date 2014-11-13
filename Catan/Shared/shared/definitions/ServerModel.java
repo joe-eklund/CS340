@@ -303,13 +303,18 @@ public class ServerModel {
 	}
 	
 	public void addPlayer(Player player) {
-		for(int i = 0; i < players.size(); i++) {
-			Player p = players.get(i);
+		for(int i = 0; i < this.players.size(); i++) {
+			Player p = this.players.get(i);
 			if(p == null) {
+				player.setPlayerIndex(i);
 				players.set(i, player);
 				break;
 			}
 		}
+	}
+	
+	public void changePlayerColor(int playerIndexInGame, String newColor) {
+		this.players.get(playerIndexInGame).setColor(newColor);
 	}
 
 	public RobPlayerInfo[] getVictims(int player,HexLocation spot) {
