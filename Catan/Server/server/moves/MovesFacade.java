@@ -3,6 +3,7 @@ package server.moves;
 import java.util.ArrayList;
 
 import server.commands.moves.YearOfPlentyCommand;
+import server.cookie.CookieParams;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;
@@ -70,12 +71,11 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public int yearOfPlenty(YearOfPlentyDevRequest request) {
+	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
 		yearOfPlentyCommand.setRequestItem(request);
 		//grab the join game cookie to get the game id.
-		int gameId = 0;
 		//use the gameId to grab the right server will need to change this probably
-		ServerModel serverGameModel = serverModels.get(gameId);
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		yearOfPlentyCommand.setServerGameModel(serverGameModel);
 		yearOfPlentyCommand.execute();
 		return 0;

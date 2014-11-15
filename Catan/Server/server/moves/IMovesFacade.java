@@ -1,5 +1,6 @@
 package server.moves;
 
+import server.cookie.CookieParams;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;
@@ -31,7 +32,7 @@ public interface IMovesFacade {
 	public int robPlayer(RobPlayerRequest request);
 	public int finishTurn(FinishTurnRequest request);
 	public int buyDevCard(BuyDevCardRequest request);
-	public int yearOfPlenty(YearOfPlentyDevRequest request);
+	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie);
 	public int roadBuilding(RoadBuildingDevRequest request);
 	public int soldier(SoldierDevRequest request);
 	public int monopoly(MonopolyDevRequest request);
