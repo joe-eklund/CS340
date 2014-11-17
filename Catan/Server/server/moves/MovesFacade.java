@@ -124,9 +124,9 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public int buildRoad(BuildRoadRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest {
+		
+		return true;
 	}
 
 	@Override

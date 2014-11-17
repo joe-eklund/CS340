@@ -86,7 +86,7 @@ public class BuildCityHandler implements HttpHandler {
 				// TODO join game in gameModels list
 
 			} catch (InvalidCookieException | InvalidMovesRequest | ClientModelException e) { // else send error message
-				System.out.println("unrecognized / invalid join game request");
+				System.out.println("unrecognized / invalid build city request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}
