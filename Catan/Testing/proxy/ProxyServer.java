@@ -188,6 +188,7 @@ public class ProxyServer implements IServer{
 			String gameCookieExtension = response.getResponseHeaders().get("Set-cookie").get(0);
 			int index = gameCookieExtension.lastIndexOf(";Path=/;");
 			gameCookieExtension = gameCookieExtension.substring(0, index);
+			gameCookieExtension = gameCookieExtension.replace("%7D", "");
 			cookie = cookie + "; " + gameCookieExtension;
 			resultCookie = cookie;
 		}

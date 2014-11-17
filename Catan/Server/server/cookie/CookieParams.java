@@ -4,7 +4,7 @@ public class CookieParams {
 	private String name;
 	private String password;
 	private int playerID;
-	private transient int game;
+	private int game;
 	
 	/**
 	 * @param username

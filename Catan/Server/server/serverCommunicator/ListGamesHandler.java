@@ -70,7 +70,7 @@ public class ListGamesHandler implements HttpHandler {
 			System.out.println(unvalidatedCookie);
 			try {  // check user login cookie and if valid get params
 				
-				Cookie.verifyLoginCookie(unvalidatedCookie, translator);
+				Cookie.verifyCookie(unvalidatedCookie, translator);
 				System.out.println("good cookie");
 				List<GameDescription> gameDescriptions = this.gamesFacade.listGames();
 				responseMessage = this.translator.translateTo(gameDescriptions.toArray());			
