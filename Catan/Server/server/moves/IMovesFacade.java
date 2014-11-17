@@ -1,5 +1,6 @@
 package server.moves;
 
+import client.exceptions.ClientModelException;
 import server.cookie.CookieParams;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
@@ -8,6 +9,7 @@ import shared.ServerMethodRequests.BuildSettlementRequest;
 import shared.ServerMethodRequests.BuyDevCardRequest;
 import shared.ServerMethodRequests.DiscardCardsRequest;
 import shared.ServerMethodRequests.FinishTurnRequest;
+import shared.ServerMethodRequests.JoinGameRequest;
 import shared.ServerMethodRequests.MaritimeTradeRequest;
 import shared.ServerMethodRequests.MonopolyDevRequest;
 import shared.ServerMethodRequests.MonumentDevRequest;
@@ -39,9 +41,9 @@ public interface IMovesFacade {
 	public int monument(MonumentDevRequest request);
 	public int buildRoad(BuildRoadRequest request);
 	public int buildSettlement(BuildSettlementRequest request);
-	public int buildCity(BuildCityRequest request);
-	public int offerTrade(OfferTradeRequest request);
-	public int acceptTrade(AcceptTradeRequest request);
-	public int maritime(MaritimeTradeRequest request);
-	public int discardCards(DiscardCardsRequest request);
+	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidBuildCityRequest, ClientModelException; 
+	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidOfferTradeRequest;
+	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidAcceptTradeRequest;
+	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMaritimeTradeRequest;
+	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidDiscardCardsRequest;
 }

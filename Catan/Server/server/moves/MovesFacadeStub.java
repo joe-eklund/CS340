@@ -1,5 +1,6 @@
 package server.moves;
 
+import server.cookie.CookieParams;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;
@@ -51,7 +52,7 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public int yearOfPlenty(YearOfPlentyDevRequest request) {
+	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -93,33 +94,33 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public int buildCity(BuildCityRequest request) {
+	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidBuildCityRequest{
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public int offerTrade(OfferTradeRequest request) {
+	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidOfferTradeRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public int acceptTrade(AcceptTradeRequest request) {
+	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidAcceptTradeRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public int maritime(MaritimeTradeRequest request) {
+	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMaritimeTradeRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public int discardCards(DiscardCardsRequest request) {
+	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidDiscardCardsRequest{
 		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 
 }
