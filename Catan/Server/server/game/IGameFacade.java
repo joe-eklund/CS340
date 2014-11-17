@@ -14,11 +14,11 @@ import shared.definitions.ServerModel;
  *
  */
 public interface IGameFacade {
-	public ServerModel getGameModel();
+	public ServerModel getGameModel(int id);
 	public int resetGame(ResetGameRequest request);
 	public int gameCommands();
 	public int addAI(AddAIRequest request);
-	
+	public boolean validGameID(int id);
 	/**
 	 * @post returns a list of Strings representing all AIs hosted on this Catan Server
 	 */

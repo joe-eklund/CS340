@@ -26,9 +26,8 @@ public abstract class AGameFacade implements IGameFacade {
 	}
 
 	@Override
-	public ServerModel getGameModel() {
-		// TODO Auto-generated method stub
-		return null;
+	public ServerModel getGameModel(int id) {
+		return gameModels.get(id);
 	}
 
 	@Override
@@ -43,6 +42,14 @@ public abstract class AGameFacade implements IGameFacade {
 		return null;
 	}
 
+	@Override
+	public boolean validGameID(int id){
+		if(id >= 0 && id < gameModels.size()){
+			return true;
+		}
+		else return false;
+	}
+	
 	private ServerModel getGameByID(int gameID) {
 		ServerModel result = null;
 		try {

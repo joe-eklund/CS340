@@ -37,7 +37,7 @@ public class GameFacadeStub implements IGameFacade {
 	}
 
 	@Override
-	public ServerModel getGameModel() {
+	public ServerModel getGameModel(int id) {
 		// TODO Auto-generated method stub
 		return game;
 	}
@@ -51,6 +51,12 @@ public class GameFacadeStub implements IGameFacade {
 	public int gameCommands() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean validGameID(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
