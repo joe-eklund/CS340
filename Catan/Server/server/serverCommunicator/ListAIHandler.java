@@ -58,7 +58,7 @@ public class ListAIHandler implements HttpHandler {
 			try {  // check user login cookie and if valid get params
 				String cookieJSON = URLDecoder.decode(subCookie, "UTF-8");
 				System.out.println(cookieJSON);
-				CookieParams cookie = Cookie.verifyLoginCookie(cookieJSON, translator);
+				CookieParams cookie = Cookie.verifyCookie(cookieJSON, translator);
 				System.out.println(cookie.getName() + " " + cookie.getPassword() + " " + cookie.getPlayerID());
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				List<String> AIs = this.gameFacade.listAI();

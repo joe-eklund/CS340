@@ -47,7 +47,7 @@ public class AcceptTradeHandler implements HttpHandler {
 		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
 			try { 
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
-				CookieParams cookie = Cookie.verifyLoginCookie(unvalidatedCookie, translator);
+				CookieParams cookie = Cookie.verifyCookie(unvalidatedCookie, translator);
 				
 				BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 				String inputLine;

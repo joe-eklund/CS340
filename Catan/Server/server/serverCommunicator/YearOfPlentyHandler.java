@@ -43,7 +43,7 @@ public class YearOfPlentyHandler implements HttpHandler {
 		String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
 			try {
-				CookieParams cookie = Cookie.verifyLoginCookie(unvalidatedCookie, translator);
+				CookieParams cookie = Cookie.verifyCookie(unvalidatedCookie, translator);
 				YearOfPlentyDevRequest request = (YearOfPlentyDevRequest) translator.translateFrom(exchange.getRequestBody().toString(), YearOfPlentyDevRequest.class);
 				exchange.getRequestBody().close();
 				int userID = movesFacade.yearOfPlenty(request,cookie);
