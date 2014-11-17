@@ -14,6 +14,7 @@ import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
 import server.moves.InvalidMaritimeTradeRequest;
+import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.MaritimeTradeRequest;
 
@@ -81,7 +82,7 @@ public class MaritimeTradeHandler implements HttpHandler {
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				}
 
-			} catch (InvalidCookieException | InvalidMaritimeTradeRequest e) { // else send error message
+			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid maritime trade request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

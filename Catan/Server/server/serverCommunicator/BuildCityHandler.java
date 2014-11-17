@@ -14,7 +14,7 @@ import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.games.InvalidJoinGameRequest;
 import server.moves.IMovesFacade;
-import server.moves.InvalidBuildCityRequest;
+import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 import client.exceptions.ClientModelException;
@@ -85,7 +85,7 @@ public class BuildCityHandler implements HttpHandler {
 				
 				// TODO join game in gameModels list
 
-			} catch (InvalidCookieException | InvalidBuildCityRequest | ClientModelException e) { // else send error message
+			} catch (InvalidCookieException | InvalidMovesRequest | ClientModelException e) { // else send error message
 				System.out.println("unrecognized / invalid join game request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

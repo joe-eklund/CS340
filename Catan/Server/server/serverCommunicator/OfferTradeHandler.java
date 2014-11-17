@@ -13,7 +13,7 @@ import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
-import server.moves.InvalidOfferTradeRequest;
+import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.OfferTradeRequest;
 import client.exceptions.ClientModelException;
@@ -82,7 +82,7 @@ public class OfferTradeHandler implements HttpHandler {
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				}
 
-			} catch (InvalidCookieException | InvalidOfferTradeRequest e) { // else send error message
+			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid offer trade request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

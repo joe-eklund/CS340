@@ -10,9 +10,14 @@ import java.util.List;
 
 import proxy.ITranslator;
 import server.cookie.Cookie;
+import server.cookie.CookieParams;
+import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
+import server.moves.InvalidMovesRequest;
+import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.UserRequest;
+import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -42,41 +47,65 @@ public class SendChatHandler implements HttpHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		System.out.println("In send chat handler");
 		
-		BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
-		String inputLine;
-		StringBuffer requestJson = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			requestJson.append(inputLine);
-		}
-		in.close();
+		String responseMessage = "";
 		
-		SendChatRequest request = (SendChatRequest) translator.translateFrom(requestJson.toString(), SendChatRequest.class);
-		exchange.getRequestBody().close();
+		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
+			try { 
+				//TODO verify cookie method
+				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
+				CookieParams cookie = Cookie.verifyCookie(unvalidatedCookie, translator);
+				
+				BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+				String inputLine;
+				StringBuffer requestJson = new StringBuffer();
+				while ((inputLine = in.readLine()) != null) {
+					requestJson.append(inputLine);
+				}
+				in.close();
+				
+				System.out.println(requestJson);
+				
+				SendChatRequest request = (SendChatRequest) translator.translateFrom(requestJson.toString(), SendChatRequest.class);
+				exchange.getRequestBody().close();
+				
+				if(this.movesFacade.sendChat(request, cookie)) {
+					System.out.println("Request Accepted!");
+					// create cookie for user
+					List<String> cookies = new ArrayList<String>();
 
-		int userID = movesFacade.sendChat(request);
-		
-		if(userID > -1) {
-			// create cookie for user
-			List<String> cookies = new ArrayList<String>();
-			//String cookie = Cookie.createLoginCookie(request.getUsername(), request.getPassword(), userID);
-			//cookies.add(cookie);
-			
-			// send success response
-			exchange.getResponseHeaders().put("Set-cookie", cookies);
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+					// send success response headers
+					exchange.getResponseHeaders().put("Set-cookie", cookies);
+					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				}
+				else {
+					System.out.println("send chat request invalid");
+					responseMessage = "Unable to send chat";
+					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+				}
+
+			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
+				System.out.println("unrecognized / invalid join game request");
+				responseMessage = e.getMessage();
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			}
 		}
 		else {
-			//set "Content-Type: text/plain" header
-			List<String> contentTypes = new ArrayList<String>();
-			String textPlain = "text/plain";
-			contentTypes.add(textPlain);
-			exchange.getResponseHeaders().put("Content-type", contentTypes);
-			
-			//send failure response
+			// unsupported request method
+			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-	
-			OutputStreamWriter writer = new OutputStreamWriter(exchange.getResponseBody());
-			writer.write("Send chat failed"); 
+		}
+		
+		//set "Content-Type: text/plain" header
+		List<String> contentTypes = new ArrayList<String>();
+		String type = "text/plain";
+		contentTypes.add(type);
+		exchange.getResponseHeaders().put("Content-type", contentTypes);
+		
+		if (!responseMessage.isEmpty()) {
+			//send failure response message
+			OutputStreamWriter writer = new OutputStreamWriter(
+					exchange.getResponseBody());
+			writer.write(responseMessage);
 			writer.flush();
 			writer.close();
 		}

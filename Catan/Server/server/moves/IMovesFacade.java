@@ -29,7 +29,7 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
  *
  */
 public interface IMovesFacade {
-	public int sendChat(SendChatRequest request);
+	public boolean sendChat(SendChatRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public int rollNumber(RollNumberRequest request);
 	public int robPlayer(RobPlayerRequest request);
 	public int finishTurn(FinishTurnRequest request);
@@ -41,9 +41,9 @@ public interface IMovesFacade {
 	public int monument(MonumentDevRequest request);
 	public int buildRoad(BuildRoadRequest request);
 	public int buildSettlement(BuildSettlementRequest request);
-	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidBuildCityRequest, ClientModelException; 
-	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidOfferTradeRequest;
-	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidAcceptTradeRequest;
-	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMaritimeTradeRequest;
-	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidDiscardCardsRequest;
+	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException; 
+	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest;
 }

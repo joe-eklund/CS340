@@ -47,9 +47,21 @@ public class MovesFacade implements IMovesFacade {
 	}
 	
 	@Override
-	public int sendChat(SendChatRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid send chat request");
+		} 
+		
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		
+		//execute
+		int playerIndex = request.getPlayerIndex();
+		String playerName = serverGameModel.getPlayers().get(playerIndex).getName();
+		String message = request.getContent();
+		
+		serverGameModel.getChat().addMessage(playerName, message);
+		//set version?
+		return true;
 	}
 
 	@Override
@@ -124,9 +136,9 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidBuildCityRequest, ClientModelException {
+	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException {
 		if(request == null) {
-			throw new InvalidBuildCityRequest("Error: invalid build city request");
+			throw new InvalidMovesRequest("Error: invalid build city request");
 		} 
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
@@ -143,9 +155,9 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidOfferTradeRequest {
+	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
-			throw new InvalidOfferTradeRequest("Error: invalid offer trade request");
+			throw new InvalidMovesRequest("Error: invalid offer trade request");
 		} 
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
@@ -163,9 +175,9 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidAcceptTradeRequest {
+	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
-			throw new InvalidAcceptTradeRequest("Error: invalid accept trade request");
+			throw new InvalidMovesRequest("Error: invalid accept trade request");
 		} 
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
@@ -207,9 +219,9 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMaritimeTradeRequest {
+	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
-			throw new InvalidMaritimeTradeRequest("Error: invalid maritime trade request");
+			throw new InvalidMovesRequest("Error: invalid maritime trade request");
 		} 
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
@@ -270,9 +282,9 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidDiscardCardsRequest{
+	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
 		if(request == null) {
-			throw new InvalidDiscardCardsRequest("Error: invalid discard cards request");
+			throw new InvalidMovesRequest("Error: invalid discard cards request");
 		} 
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());

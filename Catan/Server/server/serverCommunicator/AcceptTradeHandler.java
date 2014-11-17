@@ -13,7 +13,7 @@ import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
-import server.moves.InvalidAcceptTradeRequest;
+import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.OfferTradeRequest;
 
@@ -79,7 +79,7 @@ public class AcceptTradeHandler implements HttpHandler {
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				}
 
-			} catch (InvalidCookieException | InvalidAcceptTradeRequest e) { // else send error message
+			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid accept trade request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

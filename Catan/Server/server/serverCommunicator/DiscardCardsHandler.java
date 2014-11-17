@@ -13,7 +13,7 @@ import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
-import server.moves.InvalidDiscardCardsRequest;
+import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.DiscardCardsRequest;
 import shared.ServerMethodRequests.MaritimeTradeRequest;
 
@@ -81,7 +81,7 @@ public class DiscardCardsHandler implements HttpHandler {
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				}
 
-			} catch (InvalidCookieException | InvalidDiscardCardsRequest e) { // else send error message
+			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid discard cards request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
