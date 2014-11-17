@@ -13,8 +13,6 @@ import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
-import server.moves.InvalidBuildCityRequest;
-import server.moves.InvalidOfferTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.OfferTradeRequest;
 import client.exceptions.ClientModelException;
