@@ -28,6 +28,7 @@ import shared.definitions.GameModel;
 import shared.definitions.ServerModel;
 import shared.model.City;
 import shared.model.Player;
+import shared.model.Road;
 import shared.model.TradeOffer;
 
 /**
@@ -125,6 +126,20 @@ public class MovesFacade implements IMovesFacade {
 
 	@Override
 	public boolean buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest {
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid build city request");
+		} 
+		
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		
+		//execute
+		int playerIndex = request.getPlayerIndex();
+		int x = request.getRoadLocation().getX();
+		int y = request.getRoadLocation().getY(); 
+		String direction = request.getRoadLocation().getDirection().name();
+		Road road = new Road(playerIndex, x, y , direction);
+		serverGameModel.getMap().getRoads().add(road);
+		//set version?
 		
 		return true;
 	}
