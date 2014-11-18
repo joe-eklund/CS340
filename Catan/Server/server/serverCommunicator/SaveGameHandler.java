@@ -3,7 +3,10 @@ package server.serverCommunicator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import proxy.ITranslator;
 import server.games.GamesFacade;
@@ -66,8 +69,32 @@ public class SaveGameHandler implements HttpHandler {
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				}
 			}
+			else{
+				System.out.println("Bad game id.");
+				responseMessage = "Error: Bad game id";
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			}
 		}
-
+		else {
+			// unsupported request method
+			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+		}
+		//set "Content-Type: text/plain" header
+				List<String> contentTypes = new ArrayList<String>();
+				String type = "text/plain";
+				contentTypes.add(type);
+				exchange.getResponseHeaders().put("Content-type", contentTypes);
+				
+				if (!responseMessage.isEmpty()) {
+					//send failure response message
+					OutputStreamWriter writer = new OutputStreamWriter(
+							exchange.getResponseBody());
+					writer.write(responseMessage);
+					writer.flush();
+					writer.close();
+				}
+				exchange.getResponseBody().close();
 	}
 
 }
