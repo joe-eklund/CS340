@@ -128,7 +128,6 @@ public class GetGameModelHandler implements HttpHandler {
 		contentTypes.add(type);
 		exchange.getResponseHeaders().put("Content-type", contentTypes);
 
-		System.out.println("GET GAME MODEL RESPONSE: " + responseMessage);
 		if (!responseMessage.isEmpty()) {
 			System.out.println(responseMessage);
 			// send failure response message
