@@ -189,8 +189,10 @@ public class MovesFacade implements IMovesFacade {
 			player.setSheep(player.getSheep()+1);
 			target.setSheep(target.getSheep()-1);
 		}
+
 		serverGameModel.incrementVersion();
 		serverGameModel.getTurnTracker().setStatus("Playing");
+		
 		return serverGameModel;
 	}
 
@@ -541,6 +543,13 @@ public class MovesFacade implements IMovesFacade {
 		player.setSheep(playerSheep);
 		player.setWheat(playerWheat);
 		player.setWood(playerWood);
+		
+		Player p1 = serverGameModel.getPlayers().get(0);
+		Player p2 = serverGameModel.getPlayers().get(1);
+		Player p3 = serverGameModel.getPlayers().get(2);
+		Player p4 = serverGameModel.getPlayers().get(3);
+		
+//		if (p1.)
 	
 		return serverGameModel;
 	}
