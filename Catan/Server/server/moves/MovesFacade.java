@@ -71,7 +71,7 @@ public class MovesFacade implements IMovesFacade {
 		String message = request.getContent();
 		
 		serverGameModel.getChat().addMessage(playerName, message);
-		//set version?
+		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
 
@@ -84,6 +84,12 @@ public class MovesFacade implements IMovesFacade {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 
 		int number=request.getNumber();
+		
+		if(number==7){
+			serverGameModel.getTurnTracker().setStatus("Discarding");
+			serverGameModel.incrementVersion();
+			return serverGameModel;
+		}
 		
 		List<City> cities = serverGameModel.getMap().getCities();
 		List<Settlement> settlements = serverGameModel.getMap().getSettlements();
@@ -183,6 +189,8 @@ public class MovesFacade implements IMovesFacade {
 			player.setSheep(player.getSheep()+1);
 			target.setSheep(target.getSheep()-1);
 		}
+		serverGameModel.incrementVersion();
+		serverGameModel.getTurnTracker().setStatus("Playing");
 		return serverGameModel;
 	}
 
@@ -217,6 +225,7 @@ public class MovesFacade implements IMovesFacade {
 		}else{
 			serverGameModel.getPlayers().get(owner).getNewDevCards().setYearOfPlenty(serverGameModel.getPlayers().get(owner).getNewDevCards().getYearOfPlenty()+1);
 		}
+		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
 
