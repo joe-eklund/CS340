@@ -94,7 +94,6 @@ public class GetGameModelHandler implements HttpHandler {
 							exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 						}
 						else{//Missing version number
-							System.out.println("DDD");
 							responseMessage = "Invalid URL format. Missing valid version number.";
 							exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 						}

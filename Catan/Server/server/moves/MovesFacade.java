@@ -82,9 +82,10 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public int finishTurn(FinishTurnRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) {
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		serverGameModel.getTurnTracker().nextTurn();
+		return serverGameModel;
 	}
 
 	@Override

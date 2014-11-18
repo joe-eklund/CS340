@@ -78,6 +78,9 @@ public class Presenter extends Observable implements IPresenter {
 	public void run() {
 		state.update(this);
 		System.out.println("CURRENT STATE IS: " + state.getStatus());
+		if (clientModel != null && clientModel.getServerModel() != null) {
+			System.out.println("Current turn is: " + clientModel.getServerModel().getTurnTracker().getCurrentTurn());
+		}
 		pollCycleCount++;
 	}
 	

@@ -46,7 +46,7 @@ public class BuildSettlementHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-System.out.println("In build city handler");
+System.out.println("In build settlement handler");
 		
 		String responseMessage = "";
 		
@@ -84,7 +84,7 @@ System.out.println("In build city handler");
 				// TODO join game in gameModels list
 
 			} catch (InvalidCookieException | InvalidMovesRequest | ClientModelException e) { // else send error message
-				System.out.println("unrecognized / invalid build city request");
+				System.out.println("unrecognized / invalid build settlement request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}

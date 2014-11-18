@@ -41,9 +41,9 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public int finishTurn(FinishTurnRequest request) {
+	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override

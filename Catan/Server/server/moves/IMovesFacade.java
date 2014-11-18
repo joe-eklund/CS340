@@ -33,7 +33,7 @@ public interface IMovesFacade {
 	public boolean sendChat(SendChatRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public int rollNumber(RollNumberRequest request);
 	public int robPlayer(RobPlayerRequest request);
-	public int finishTurn(FinishTurnRequest request);
+	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public int buyDevCard(BuyDevCardRequest request);
 	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie);
 	public int roadBuilding(RoadBuildingDevRequest request);

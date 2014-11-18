@@ -13,7 +13,7 @@ import client.exceptions.ClientModelException;
  */
 public class City {
 	private int owner;
-	private VertexLocation verLocation;
+	private transient VertexLocation verLocation;
 	private Location location;
 	
 	/**
@@ -27,6 +27,10 @@ public class City {
 	public City(int ownerIndex, int x, int y, String direction) throws ClientModelException {
 		this.owner = ownerIndex;
 		this.verLocation = new VertexLocation(new HexLocation(x, y), VertexDirection.determineDirection(direction));
+		this.location = new Location();
+		location.setX(x);
+		location.setY(y);
+		location.setDirection(direction);
 	}
 	
 	/**

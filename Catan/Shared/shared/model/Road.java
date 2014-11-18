@@ -14,7 +14,7 @@ import shared.locations.HexLocation;
 public class Road {
 	
 	private int owner;
-	private EdgeLocation edgeLocation;
+	private transient EdgeLocation edgeLocation;
 	public Location location;
 	
 	/**
@@ -28,6 +28,10 @@ public class Road {
 	public Road(int ownerIndex, int x, int y, String direction) {
 		this.owner = ownerIndex;
 		this.edgeLocation = new EdgeLocation(new HexLocation(x, y), EdgeDirection.determineDirection(direction));
+		this.location = new Location();
+		location.setX(x);
+		location.setY(y);
+		location.setDirection(direction);
 	}
 	
 	/**

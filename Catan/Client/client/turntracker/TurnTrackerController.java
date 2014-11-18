@@ -38,6 +38,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
+		
 		presenter.finishTurn();
 	}
 	

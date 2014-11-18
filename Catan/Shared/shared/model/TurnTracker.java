@@ -103,7 +103,19 @@ public class TurnTracker {
 	}
 	
 	public void nextTurn() {
-		if (currentTurn < 3) {
+		if (currentTurn == 0 && status.equals("SecondRound")) {
+			status = "Rolling";
+		} 
+		else if (currentTurn > 0 && currentTurn < 3 && status.equals("SecondRound")) {
+			currentTurn--;
+		}
+		else if (currentTurn == 3 && status.equals("FirstRound")) {
+			status = "SecondRound";
+		}
+		else if (currentTurn == 3 && status.equals("SecondRound")) {
+			currentTurn = 2;
+		}
+		else if (currentTurn < 3) {
 			currentTurn++;
 		}
 		else {

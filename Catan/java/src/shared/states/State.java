@@ -252,27 +252,32 @@ public abstract class State implements IState {
 	
 	@Override
 	public void update(IPresenter presenter) {
-		
-		GetGameModelResponse response = getGameModel(presenter);
-		if(response != null && response.isSuccessful()) {
-			if(response.isNeedToUpdate()) {
-				System.out.println("UPDATING MODEL");
-				
-				List<Player> players = response.getGameModel().getPlayers();
-				players.removeAll(Collections.singleton(null));
-				if(players.size() == 4) {
-					if(presenter.getState().getStatus().equals("PlayerWaiting")){
-						OverlayView.closePlayerWaitingModal();
+		try {
+			GetGameModelResponse response = getGameModel(presenter);
+			if(response != null && response.isSuccessful()) {
+				if(response.isNeedToUpdate()) {
+					System.out.println("UPDATING MODEL");
+					
+					List<Player> players = response.getGameModel().getPlayers();
+					players.removeAll(Collections.singleton(null));
+					if(players.size() == 4) {
+						if(presenter.getState().getStatus().equals("PlayerWaiting")){
+							OverlayView.closePlayerWaitingModal();
+						}
+						presenter.setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
 					}
-					presenter.setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
+					
+					presenter.setVersion(response.getGameModel().getVersion());
+					presenter.getClientModel().updateServerModel(response.getGameModel());
 				}
-				
-				presenter.setVersion(response.getGameModel().getVersion());
-				presenter.getClientModel().updateServerModel(response.getGameModel());
+			}
+			else {
+				System.err.println("Error: Unable to process update game model request!");
 			}
 		}
-		else {
-			System.err.println("Error: Unable to process update game model request!");
+		catch(Exception e) {
+			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 }
