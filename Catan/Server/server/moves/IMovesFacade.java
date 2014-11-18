@@ -30,11 +30,13 @@ import shared.definitions.ServerModel;
  *
  */
 public interface IMovesFacade {
-	public boolean sendChat(SendChatRequest request, CookieParams cookie) throws InvalidMovesRequest;
-	public int rollNumber(RollNumberRequest request);
-	public int robPlayer(RobPlayerRequest request);
+
+	public ServerModel sendChat(SendChatRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel rollNumber(RollNumberRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel robPlayer(RobPlayerRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) throws InvalidMovesRequest;
-	public int buyDevCard(BuyDevCardRequest request);
+	public ServerModel buyDevCard(BuyDevCardRequest request, CookieParams cookie) throws InvalidMovesRequest;
+
 	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie);
 	public int roadBuilding(RoadBuildingDevRequest request);
 	public int soldier(SoldierDevRequest request);

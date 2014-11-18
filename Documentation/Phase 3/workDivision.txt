@@ -15,11 +15,11 @@ AddAIHandler(translator, gameFacade));
 Epper
 new ListAIHandler(translator, gameFacade));
 gameFacade
-SendChatHandler(translator, movesFacade));
-RollNumberHandler(translator, movesFacade));
-RobPlayerHandler(translator, movesFacade));
+SendChatHandler(translator, movesFacade));	ready for testing
+RollNumberHandler(translator, movesFacade));	ready for testing
+RobPlayerHandler(translator, movesFacade));	ready for testing
 FinishTurnHandler(translator, movesFacade));
-BuyDevCardHandler(translator, movesFacade));
+BuyDevCardHandler(translator, movesFacade));	ready for testing
 Chad
 YearOfPlentyHandler(translator, movesFacade));
 RoadBuildingHandler(translator, movesFacade));

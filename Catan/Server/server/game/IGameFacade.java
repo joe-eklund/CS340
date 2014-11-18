@@ -19,9 +19,6 @@ public interface IGameFacade {
 	public int gameCommands();
 	public int addAI(AddAIRequest request);
 	public boolean validGameID(int id);
-	/**
-	 * @post returns a list of Strings representing all AIs hosted on this Catan Server
-	 */
 	public List<String> listAI();
 
 }

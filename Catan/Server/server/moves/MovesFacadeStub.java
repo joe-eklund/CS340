@@ -23,33 +23,34 @@ import shared.definitions.ServerModel;
 public class MovesFacadeStub implements IMovesFacade {
 
 	@Override
-	public boolean sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
+	public ServerModel sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public int rollNumber(RollNumberRequest request) {
+	public ServerModel rollNumber(RollNumberRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int robPlayer(RobPlayerRequest request) {
+	public ServerModel robPlayer(RobPlayerRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
+
 	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int buyDevCard(BuyDevCardRequest request) {
+	public ServerModel buyDevCard(BuyDevCardRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override

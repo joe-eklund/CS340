@@ -2,6 +2,7 @@ package server.moves;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import client.exceptions.ClientModelException;
 import server.commands.moves.BuildCityCommand;
@@ -25,8 +26,14 @@ import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.DevCardType;
 import shared.definitions.GameModel;
 import shared.definitions.ServerModel;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import shared.model.City;
+import shared.model.Hex;
+import shared.model.Player;
 import shared.model.Bank;
 import shared.model.City;
 import shared.model.DevCards;
@@ -52,7 +59,7 @@ public class MovesFacade implements IMovesFacade {
 	}
 	
 	@Override
-	public boolean sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
+	public ServerModel sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid send chat request");
 		} 
@@ -66,19 +73,116 @@ public class MovesFacade implements IMovesFacade {
 		
 		serverGameModel.getChat().addMessage(playerName, message);
 		//set version?
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public int rollNumber(RollNumberRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel rollNumber(RollNumberRequest request,CookieParams cookie) throws InvalidMovesRequest{
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid send chat request");
+		} 
+		
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+
+		int number=request.getNumber();
+		
+		List<City> cities = serverGameModel.getMap().getCities();
+		List<Settlement> settlements = serverGameModel.getMap().getSettlements();
+		List<Hex> hexes = serverGameModel.getMap().getHexes();
+		List<Hex> withNumber=new ArrayList<Hex>();
+		VertexLocation NE,E,SE,SW,W,NW,loc;
+		int owner;
+		String resource;
+		
+		//execute
+		for(int i=0;i<hexes.size();i++){
+			if(hexes.get(i).getChit()==number)
+				withNumber.add(hexes.get(i));
+		}
+		
+		for(int i=0;i<withNumber.size();i++){
+			NE=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.NorthEast).getNormalizedLocation();
+			E=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.East).getNormalizedLocation();
+			SE=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.SouthEast).getNormalizedLocation();
+			SW=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.SouthWest).getNormalizedLocation();
+			W=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.West).getNormalizedLocation();
+			NW=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.NorthWest).getNormalizedLocation();
+			resource=withNumber.get(i).getResourceType();
+			for(int c=0;c<cities.size();c++){
+				loc=cities.get(c).getLocation().getNormalizedLocation();
+				owner=cities.get(c).getOwnerIndex();
+				if(loc.equals(NE)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(E)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(SE)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(SW)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(W)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(NW)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+			}
+			for(int s=0;s<settlements.size();s++){
+				loc=settlements.get(s).getLocation().getNormalizedLocation();
+				owner=settlements.get(s).getOwnerIndex();
+				if(loc.equals(NE)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(E)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(SE)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(SW)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(W)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(NW)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+			}
+		}
+		
+		return serverGameModel;
 	}
 
 	@Override
-	public int robPlayer(RobPlayerRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel robPlayer(RobPlayerRequest request, CookieParams cookie) throws InvalidMovesRequest {
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid rob player request");
+		} 
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		Player player=serverGameModel.getPlayers().get(request.getPlayerIndex());
+		Player target=serverGameModel.getPlayers().get(request.getVictimIndex());
+		String loot=request.getType();
+		if(loot.equals("wood")){
+			player.setWood(player.getWood()+1);
+			target.setWood(target.getWood()-1);
+		}else if(loot.equals("wheat")){
+			player.setWheat(player.getWheat()+1);
+			target.setWheat(target.getWheat()-1);
+		}else if(loot.equals("ore")){
+			player.setOre(player.getOre()+1);
+			target.setOre(target.getOre()-1);
+		}else if(loot.equals("brick")){
+			player.setBrick(player.getBrick()+1);
+			target.setBrick(target.getBrick()-1);
+		}else if(loot.equals("sheep")){
+			player.setSheep(player.getSheep()+1);
+			target.setSheep(target.getSheep()-1);
+		}
+		return serverGameModel;
 	}
 
 	@Override
@@ -89,9 +193,28 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public int buyDevCard(BuyDevCardRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel buyDevCard(BuyDevCardRequest request, CookieParams cookie) throws InvalidMovesRequest {
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid buy dev card request");
+		} 
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		int owner=request.getPlayerIndex();
+
+		DevCards card=serverGameModel.getDeck();
+		Random rand=new Random();
+		int c=rand.nextInt(card.getTotalDevCardCount());
+		if(c<card.getSoldier()){
+			serverGameModel.getPlayers().get(owner).getNewDevCards().setSoldier(serverGameModel.getPlayers().get(owner).getNewDevCards().getSoldier()+1);
+		}else if(c<card.getSoldier()+card.getMonument()){
+			serverGameModel.getPlayers().get(owner).getNewDevCards().setMonument(serverGameModel.getPlayers().get(owner).getNewDevCards().getMonument()+1);
+		}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()){
+			serverGameModel.getPlayers().get(owner).getNewDevCards().setMonopoly(serverGameModel.getPlayers().get(owner).getNewDevCards().getMonopoly()+1);
+		}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()+card.getRoadBuilding()){
+			serverGameModel.getPlayers().get(owner).getNewDevCards().setRoadBuilding(serverGameModel.getPlayers().get(owner).getNewDevCards().getRoadBuilding()+1);
+		}else{
+			serverGameModel.getPlayers().get(owner).getNewDevCards().setYearOfPlenty(serverGameModel.getPlayers().get(owner).getNewDevCards().getYearOfPlenty()+1);
+		}
+		return serverGameModel;
 	}
 
 	@Override
@@ -387,5 +510,19 @@ public class MovesFacade implements IMovesFacade {
 		player.setWood(playerWood);
 	
 		return serverGameModel;
+	}
+	
+	private void incrementResources(ServerModel game,int owner,String resource,int amount){
+		if(resource.equals("wood")){
+			game.getPlayers().get(owner).setWood(game.getPlayers().get(owner).getWood()+amount);
+		}else if(resource.equals("sheep")){
+			game.getPlayers().get(owner).setSheep(game.getPlayers().get(owner).getSheep()+amount);
+		}else if(resource.equals("ore")){
+			game.getPlayers().get(owner).setOre(game.getPlayers().get(owner).getOre()+amount);
+		}else if(resource.equals("wheat")){
+			game.getPlayers().get(owner).setWheat(game.getPlayers().get(owner).getWheat()+amount);
+		}else if(resource.equals("brick")){
+			game.getPlayers().get(owner).setBrick(game.getPlayers().get(owner).getBrick()+amount);
+		}
 	}
 }
