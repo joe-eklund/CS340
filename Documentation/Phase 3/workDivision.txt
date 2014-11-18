@@ -13,7 +13,7 @@ ResetGameHandler(translator, gameFacade));
 new GameCommandsHandler(translator, gameFacade));
 AddAIHandler(translator, gameFacade));
 Epper
-new ListAIHandler(translator, gameFacade));
+new ListAIHandler(translator, gameFacade));	ready for testing
 gameFacade
 SendChatHandler(translator, movesFacade));	ready for testing
 RollNumberHandler(translator, movesFacade));	ready for testing
