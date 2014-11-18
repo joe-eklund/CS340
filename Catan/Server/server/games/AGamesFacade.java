@@ -3,18 +3,12 @@ package server.games;
 import static server.games.ModelDefaults.VALID_COLORS;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import org.apache.commons.io.FileUtils;
 
 import com.thoughtworks.xstream.XStream;
 

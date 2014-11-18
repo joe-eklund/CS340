@@ -11,7 +11,6 @@ import java.util.List;
 import proxy.ITranslator;
 import server.games.IGamesFacade;
 import shared.ServerMethodRequests.LoadGameRequest;
-import shared.ServerMethodRequests.SaveGameRequest;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -39,7 +38,7 @@ public class LoadGameHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-System.out.println("In Load Game handler.");
+		System.out.println("In Load Game handler.");
 		
 		String responseMessage = "";
 		
@@ -61,14 +60,14 @@ System.out.println("In Load Game handler.");
 					responseMessage = "Successfully loaded game: " + request.getName() + " with id " + id;
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				}catch(IOException e){
-					System.out.println("Error reading file.");
+					System.out.println("Error reading file. IOException");
 					responseMessage = e.getMessage();
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 				}
 		}
 		else {
 			// unsupported request method
-			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
+			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is not supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
 		//set "Content-Type: text/plain" header
@@ -86,7 +85,5 @@ System.out.println("In Load Game handler.");
 					writer.close();
 				}
 				exchange.getResponseBody().close();
-
 	}
-
 }

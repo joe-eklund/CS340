@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
-import server.games.GamesFacade;
 import server.games.IGamesFacade;
-import shared.ServerMethodRequests.JoinGameRequest;
 import shared.ServerMethodRequests.SaveGameRequest;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -77,7 +75,7 @@ public class SaveGameHandler implements HttpHandler {
 		}
 		else {
 			// unsupported request method
-			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
+			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is not supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
 		//set "Content-Type: text/plain" header
