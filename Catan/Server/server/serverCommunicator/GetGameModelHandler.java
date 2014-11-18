@@ -11,7 +11,6 @@ import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.game.IGameFacade;
-import server.games.InvalidJoinGameRequest;
 import shared.definitions.ServerModel;
 
 import com.sun.net.httpserver.HttpExchange;

@@ -12,7 +12,6 @@ import proxy.ITranslator;
 import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
-import server.games.InvalidJoinGameRequest;
 import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;

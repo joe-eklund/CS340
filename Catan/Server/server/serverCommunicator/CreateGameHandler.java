@@ -12,7 +12,7 @@ import proxy.ITranslator;
 import server.cookie.Cookie;
 import server.cookie.InvalidCookieException;
 import server.games.IGamesFacade;
-import server.games.InvalidCreateGameRequest;
+import server.games.InvalidGamesRequest;
 import shared.ServerMethodRequests.CreateGameRequest;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -67,7 +67,7 @@ public class CreateGameHandler implements HttpHandler {
 				// TODO Create empty game model and add to gameModels list
 				
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			} catch (InvalidCookieException | InvalidCreateGameRequest e) { // else send error message
+			} catch (InvalidCookieException | InvalidGamesRequest e) { // else send error message
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}

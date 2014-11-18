@@ -38,7 +38,7 @@ public interface IGamesFacade {
 	 * 		"id" field is set to the server assigned unique id for the game</li>
 	 * 
 	 */	
-	public GameDescription createGame(CreateGameRequest request) throws InvalidCreateGameRequest;
+	public GameDescription createGame(CreateGameRequest request) throws InvalidGamesRequest;
 	
 	/**
 	 * @pre
@@ -57,7 +57,7 @@ public interface IGamesFacade {
 	 *    -no change in game
 	 *    -returns false
 	 */
-	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest;
+	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidGamesRequest;
 	
 	/**
 	 * Saves the id to disk as the name.

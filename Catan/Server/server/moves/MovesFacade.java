@@ -8,7 +8,6 @@ import client.exceptions.ClientModelException;
 import server.commands.moves.BuildCityCommand;
 import server.commands.moves.YearOfPlentyCommand;
 import server.cookie.CookieParams;
-import server.games.InvalidCreateGameRequest;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;

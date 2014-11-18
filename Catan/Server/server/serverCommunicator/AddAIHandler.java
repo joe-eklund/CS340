@@ -10,7 +10,6 @@ import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.game.IGameFacade;
-import server.games.InvalidJoinGameRequest;
 import shared.ServerMethodRequests.AddAIRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 

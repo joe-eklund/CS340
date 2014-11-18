@@ -13,8 +13,7 @@ import server.cookie.Cookie;
 import server.cookie.InvalidCookieException;
 import server.cookie.CookieParams;
 import server.games.IGamesFacade;
-import server.games.InvalidCreateGameRequest;
-import server.games.InvalidJoinGameRequest;
+import server.games.InvalidGamesRequest;
 import shared.ServerMethodRequests.CreateGameRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 
@@ -94,7 +93,7 @@ public class JoinGameHandler implements HttpHandler {
 				
 				// TODO join game in gameModels list
 
-			} catch (InvalidCookieException | InvalidJoinGameRequest e) { // else send error message
+			} catch (InvalidCookieException | InvalidGamesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid join game request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

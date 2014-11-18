@@ -161,7 +161,7 @@ public class GamesFacadeStub extends AGamesFacade {
 			this.addPlayerToGameModel(1, "Sandy", "green", 2);
 			this.addPlayerToGameModel(1, "Cathy", "yellow", 3);
 			*/
-		} catch (InvalidCreateGameRequest | InvalidJoinGameRequest e) {
+		} catch (InvalidGamesRequest e) {
 			e.printStackTrace();
 		}
 	}

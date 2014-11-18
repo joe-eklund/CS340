@@ -38,9 +38,9 @@ public abstract class AGamesFacade implements IGamesFacade {
 	}
 	
 	@Override
-	public GameDescription createGame(CreateGameRequest request) throws InvalidCreateGameRequest {
+	public GameDescription createGame(CreateGameRequest request) throws InvalidGamesRequest {
 		if(request == null || !request.validate()) {
-			throw new InvalidCreateGameRequest("Error: invalid create game request");
+			throw new InvalidGamesRequest("Error: invalid create game request");
 		}
 		
 		//
@@ -84,9 +84,9 @@ public abstract class AGamesFacade implements IGamesFacade {
 	}
 	
 	@Override
-	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest {		
+	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidGamesRequest {		
 		if(request == null || !request.validate()) {
-			throw new InvalidJoinGameRequest("Error: invalid join game request");
+			throw new InvalidGamesRequest("Error: invalid join game request");
 		}
 		
 		boolean result = true;
