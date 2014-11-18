@@ -148,6 +148,7 @@ public class GamesFacadeStub extends AGamesFacade {
 				
 				//Giving player 0 resources
 				serverModel.getPlayers().get(0).setResources(new Resources(10, 10, 10, 10, 10));
+				serverModel.getPlayers().get(1).setResources(new Resources(5, 5, 5, 5, 5));
 				
 			} catch (ClientModelException e) {
 				// TODO Auto-generated catch block

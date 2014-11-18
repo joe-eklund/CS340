@@ -190,6 +190,8 @@ public class MovesFacade implements IMovesFacade {
 	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		serverGameModel.getTurnTracker().nextTurn();
+		serverGameModel.incrementVersion();
+		serverGameModel.getTurnTracker().setStatus("Rolling");
 		return serverGameModel;
 	}
 
@@ -312,13 +314,16 @@ public class MovesFacade implements IMovesFacade {
 		
 		//execute
 		int playerIndex = request.getPlayerIndex();
+		Player player = serverGameModel.getPlayers().get(playerIndex);
 		int x = request.getRoadLocation().getX();
 		int y = request.getRoadLocation().getY(); 
 		String direction = request.getRoadLocation().getDirection().name();
 		Road road = new Road(playerIndex, x, y , direction);
 		serverGameModel.getMap().getRoads().add(road);
 		serverGameModel.incrementVersion();
-		serverGameModel.getPlayers().get(playerIndex).decrementRoads();
+		player.decrementRoads();
+		player.decrementBrick();
+		player.decrementWood();
 		return serverGameModel;
 	}
 
@@ -332,13 +337,20 @@ public class MovesFacade implements IMovesFacade {
 		
 		//execute
 		int playerIndex = request.getPlayerIndex();
+		Player player = serverGameModel.getPlayers().get(playerIndex);
 		int x = request.getVertexLocation().getX();
 		int y = request.getVertexLocation().getY(); 
 		String direction = request.getVertexLocation().getDirection().name();
 		Settlement settlement = new Settlement(playerIndex, x, y , direction);
 		serverGameModel.getMap().getSettlements().add(settlement);
 		serverGameModel.incrementVersion();
-		serverGameModel.getPlayers().get(playerIndex).decrementSettlements();
+		player.decrementSettlements();
+		player.incrementVictoryPoints();
+		player.decrementBrick();
+		player.decrementSheep();
+		player.decrementWheat();
+		player.decrementWood();
+		
 		return serverGameModel;
 	}
 
@@ -352,6 +364,7 @@ public class MovesFacade implements IMovesFacade {
 		
 		//execute
 		int playerIndex = request.getPlayerIndex();
+		Player player = serverGameModel.getPlayers().get(playerIndex);
 		int x = request.getCityLocation().getX();
 		int y = request.getCityLocation().getY(); 
 		String direction = request.getCityLocation().getDirection().name();
@@ -359,7 +372,15 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.getMap().getCities().add(city);
 		serverGameModel.incrementVersion();
 		serverGameModel.getTurnTracker().nextTurn();
-		serverGameModel.getPlayers().get(playerIndex).decrementCities();
+		player.decrementCities();
+		player.incrementVictoryPoints();
+		player.incrementSettlements();
+		//3 ore 2wheat
+		int newOre = player.getResources().getOre() - 3;
+		int newWheat = player.getResources().getWheat() - 2;
+		player.getResources().setOre(newOre);
+		player.getResources().setWheat(newWheat);
+		
 		return serverGameModel;
 	}
 
@@ -380,6 +401,7 @@ public class MovesFacade implements IMovesFacade {
 		
 		TradeOffer tradeOffer = new TradeOffer(request.getPlayerIndex(), request.getReceiver(), brick, ore, sheep, wheat, wood);
 		serverGameModel.setTradeOffer(tradeOffer);
+		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
 
@@ -400,11 +422,11 @@ public class MovesFacade implements IMovesFacade {
 		int wheat = serverGameModel.getTradeOffer().getOffer().getWheat();
 		int wood = serverGameModel.getTradeOffer().getOffer().getWood();
 		
-		int senderBrick = serverGameModel.getPlayers().get(sender).getBrick() + brick;
-		int senderOre = serverGameModel.getPlayers().get(sender).getOre() + ore;
-		int senderSheep = serverGameModel.getPlayers().get(sender).getSheep() + sheep;
-		int senderWheat = serverGameModel.getPlayers().get(sender).getWheat() + wheat;
-		int senderWood = serverGameModel.getPlayers().get(sender).getWood() + wood;
+		int senderBrick = serverGameModel.getPlayers().get(sender).getBrick() - brick;
+		int senderOre = serverGameModel.getPlayers().get(sender).getOre() - ore;
+		int senderSheep = serverGameModel.getPlayers().get(sender).getSheep() - sheep;
+		int senderWheat = serverGameModel.getPlayers().get(sender).getWheat() - wheat;
+		int senderWood = serverGameModel.getPlayers().get(sender).getWood() - wood;
 		
 		serverGameModel.getPlayers().get(sender).setBrick(senderBrick);
 		serverGameModel.getPlayers().get(sender).setOre(senderOre);
@@ -412,18 +434,19 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.getPlayers().get(sender).setWheat(senderWheat);
 		serverGameModel.getPlayers().get(sender).setWood(senderWood);
 		
-		int receiverBrick = serverGameModel.getPlayers().get(receiver).getBrick() - brick;
-		int receiverOre = serverGameModel.getPlayers().get(receiver).getOre() - ore;
-		int receiverSheep = serverGameModel.getPlayers().get(receiver).getSheep() - sheep;
-		int receiverWheat = serverGameModel.getPlayers().get(receiver).getWheat() - wheat;
-		int receiverWood = serverGameModel.getPlayers().get(receiver).getWood() - wood;
+		int receiverBrick = serverGameModel.getPlayers().get(receiver).getBrick() + brick;
+		int receiverOre = serverGameModel.getPlayers().get(receiver).getOre() + ore;
+		int receiverSheep = serverGameModel.getPlayers().get(receiver).getSheep() + sheep;
+		int receiverWheat = serverGameModel.getPlayers().get(receiver).getWheat() + wheat;
+		int receiverWood = serverGameModel.getPlayers().get(receiver).getWood() + wood;
 		
 		serverGameModel.getPlayers().get(receiver).setBrick(receiverBrick);	
 		serverGameModel.getPlayers().get(receiver).setOre(receiverOre);
 		serverGameModel.getPlayers().get(receiver).setSheep(receiverSheep);
 		serverGameModel.getPlayers().get(receiver).setWheat(receiverWheat);
-		serverGameModel.getPlayers().get(receiver).setWood(receiverWood);	
-		
+		serverGameModel.getPlayers().get(receiver).setWood(receiverWood);
+		serverGameModel.incrementVersion();
+		serverGameModel.setTradeOffer(null);
 		return serverGameModel;
 	}
 

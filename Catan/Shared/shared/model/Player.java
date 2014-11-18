@@ -516,9 +516,37 @@ public class Player {
 		}
 	}
 	
+	public void incrementSettlements() {
+		settlements++;
+	}
+	
 	public void decrementCities() {
 		if (cities > 0) {
 			cities--;
 		}
+	}
+	
+	public void incrementVictoryPoints() {
+		victoryPoints++;
+	}
+	
+	public void decrementBrick() {
+		resources.brick--;
+	}
+	
+	public void decrementOre() {
+		resources.ore--;
+	}
+	
+	public void decrementSheep() {
+		resources.sheep--;
+	}
+	
+	public void decrementWheat() {
+		resources.wheat--;
+	}
+	
+	public void decrementWood() {
+		resources.wood--;
 	}
 }
