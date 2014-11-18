@@ -16,6 +16,7 @@ import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.OfferTradeRequest;
+import shared.definitions.ServerModel;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -64,20 +65,16 @@ public class AcceptTradeHandler implements HttpHandler {
 				AcceptTradeRequest request = (AcceptTradeRequest) translator.translateFrom(requestJson.toString(), AcceptTradeRequest.class);
 				exchange.getRequestBody().close();
 				
-				if(this.movesFacade.acceptTrade(request, cookie)) {
-					System.out.println("Request Accepted!");
-					// create cookie for user
-					List<String> cookies = new ArrayList<String>();
+				ServerModel serverModel = this.movesFacade.acceptTrade(request, cookie);
+				System.out.println("Request Accepted!");
+				// create cookie for user
+				List<String> cookies = new ArrayList<String>();
 
-					// send success response headers
-					exchange.getResponseHeaders().put("Set-cookie", cookies);
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				}
-				else {
-					System.out.println("Accept trade request insvalid");
-					responseMessage = "Unable to accept trade";
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				}
+				// send success response headers
+				exchange.getResponseHeaders().put("Set-cookie", cookies);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+				responseMessage = translator.translateTo(serverModel);
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid accept trade request");

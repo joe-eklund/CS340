@@ -70,6 +70,7 @@ public class ServerCommunicator {
         server.createContext("/games/load", new LoadGameHandler(translator, gamesFacade));
         
         // game: current game setup operations (requires cookie)
+//        server.createContext("/game/model?version=[0-9]*", new GetGameModelHandler(translator, gameFacade));
         server.createContext("/game/model", new GetGameModelHandler(translator, gameFacade));
         server.createContext("/game/reset", new ResetGameHandler(translator, gameFacade));
         server.createContext("/game/commands", new GameCommandsHandler(translator, gameFacade));

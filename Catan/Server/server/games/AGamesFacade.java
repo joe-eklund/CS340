@@ -2,10 +2,15 @@ package server.games;
 
 import static server.games.ModelDefaults.VALID_COLORS;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import com.thoughtworks.xstream.XStream;
 
 import proxy.TranslatorJSON;
 import shared.ServerMethodRequests.CreateGameRequest;
@@ -125,6 +130,32 @@ public abstract class AGamesFacade implements IGamesFacade {
 			System.out.println(translator.translateTo(this.gameModelsList.get(request.getID())));
 		}
 		return result;
+	}
+	
+	@Override
+	public void saveGame(int id, String name) throws IOException{
+		XStream xstream = new XStream();
+		ServerModel game = gameModelsList.get(id);
+		String xml = xstream.toXML(game);
+		FileWriter fw = new FileWriter("/saves/" + name + ".xml");
+		fw.write(xml);
+		fw.close();
+	}
+	
+	@Override
+	public int loadGame(String name) throws IOException{
+		XStream xstream = new XStream();
+		File file = new File("/saves/" + name + ".xml");
+		ServerModel game = (ServerModel) xstream.fromXML(file);
+		gameModelsList.add(game);
+		return gameModelsList.size() - 1;
+	}
+	
+	public boolean validateGameID(int id){
+		if(id >= 0 && id < gameModelsList.size()){
+			return true;
+		}
+		else return false;
 	}
 	
 	protected void addPlayerToGameModel(int gameID, String username, String color, int userID) {

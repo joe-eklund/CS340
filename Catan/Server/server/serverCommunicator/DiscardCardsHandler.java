@@ -16,6 +16,7 @@ import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.DiscardCardsRequest;
 import shared.ServerMethodRequests.MaritimeTradeRequest;
+import shared.definitions.ServerModel;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -66,20 +67,16 @@ public class DiscardCardsHandler implements HttpHandler {
 				DiscardCardsRequest request = (DiscardCardsRequest) translator.translateFrom(requestJson.toString(), DiscardCardsRequest.class);
 				exchange.getRequestBody().close();
 				
-				if(this.movesFacade.discardCards(request, cookie)) {
-					System.out.println("Request Accepted!");
-					// create cookie for user
-					List<String> cookies = new ArrayList<String>();
+				ServerModel serverModel = this.movesFacade.discardCards(request, cookie);
+				System.out.println("Request Accepted!");
+				// create cookie for user
+				List<String> cookies = new ArrayList<String>();
 
-					// send success response headers
-					exchange.getResponseHeaders().put("Set-cookie", cookies);
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				}
-				else {
-					System.out.println("Discard cards request insvalid");
-					responseMessage = "Unable to discard cards";
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				}
+				// send success response headers
+				exchange.getResponseHeaders().put("Set-cookie", cookies);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+				responseMessage = translator.translateTo(serverModel);
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid discard cards request");

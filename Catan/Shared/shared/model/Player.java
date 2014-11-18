@@ -503,4 +503,22 @@ public class Player {
 		
 		return hasResource;
 	}
+	
+	public void decrementRoads() {
+		if (roads > 0) {
+			roads--;
+		}
+	}
+	
+	public void decrementSettlements() {
+		if (settlements > 0) {
+			settlements--;
+		}
+	}
+	
+	public void decrementCities() {
+		if (cities > 0) {
+			cities--;
+		}
+	}
 }

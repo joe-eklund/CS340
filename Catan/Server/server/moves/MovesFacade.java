@@ -32,6 +32,11 @@ import shared.locations.VertexLocation;
 import shared.model.City;
 import shared.model.Hex;
 import shared.model.Player;
+import shared.model.Bank;
+import shared.model.City;
+import shared.model.DevCards;
+import shared.model.Player;
+import shared.model.Road;
 import shared.model.Settlement;
 import shared.model.TradeOffer;
 
@@ -184,12 +189,61 @@ public class MovesFacade implements IMovesFacade {
 
 	@Override
 	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
-		yearOfPlentyCommand.setRequestItem(request);
-		//grab the join game cookie to get the game id.
-		//use the gameId to grab the right server will need to change this probably
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
-		yearOfPlentyCommand.setServerGameModel(serverGameModel);
-		yearOfPlentyCommand.execute();
+		DevCards deck = serverGameModel.getDeck();
+		Bank bank = serverGameModel.getBank();
+		
+		if(deck.getYearOfPlenty()>0){
+			deck.setYearOfPlenty(deck.getYearOfPlenty()-1);			
+		}
+		else{
+			//throw no more of that resource error
+		}
+		
+		String resource1 = request.getResource1();
+		String resource2 = request.getResource2();
+		List<String> resources = new ArrayList<String>();
+		resources.add(resource1);
+		resources.add(resource2);
+		for(String resource : resources){	
+			switch(resource){
+			case "brick":
+				if(bank.getBrick()>0){
+					bank.setBrick(bank.getBrick()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			case "ore":
+				if(bank.getOre()>0){
+					bank.setOre(bank.getOre()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}			
+			case "wood":
+				if(bank.getWood()>0){
+					bank.setWood(bank.getWood()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			case "sheep":
+				if(bank.getSheep()>0){
+					bank.setSheep(bank.getSheep()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			case "wheat":
+				if(bank.getWheat()>0){
+					bank.setWheat(bank.getWheat()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			}
+		}
 		return 0;
 	}
 
@@ -218,19 +272,47 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public int buildRoad(BuildRoadRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest {
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid build city request");
+		} 
+		
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		
+		//execute
+		int playerIndex = request.getPlayerIndex();
+		int x = request.getRoadLocation().getX();
+		int y = request.getRoadLocation().getY(); 
+		String direction = request.getRoadLocation().getDirection().name();
+		Road road = new Road(playerIndex, x, y , direction);
+		serverGameModel.getMap().getRoads().add(road);
+		serverGameModel.incrementVersion();
+		serverGameModel.getPlayers().get(playerIndex).decrementRoads();
+		return serverGameModel;
 	}
 
 	@Override
-	public int buildSettlement(BuildSettlementRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel buildSettlement(BuildSettlementRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException {
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid build city request");
+		} 
+		
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		
+		//execute
+		int playerIndex = request.getPlayerIndex();
+		int x = request.getVertexLocation().getX();
+		int y = request.getVertexLocation().getY(); 
+		String direction = request.getVertexLocation().getDirection().name();
+		Settlement settlement = new Settlement(playerIndex, x, y , direction);
+		serverGameModel.getMap().getSettlements().add(settlement);
+		serverGameModel.incrementVersion();
+		serverGameModel.getPlayers().get(playerIndex).decrementSettlements();
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException {
+	public ServerModel buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid build city request");
 		} 
@@ -244,12 +326,14 @@ public class MovesFacade implements IMovesFacade {
 		String direction = request.getCityLocation().getDirection().name();
 		City city = new City(playerIndex, x, y , direction);
 		serverGameModel.getMap().getCities().add(city);
-		//set version?
-		return true;
+		serverGameModel.incrementVersion();
+		serverGameModel.getTurnTracker().nextTurn();
+		serverGameModel.getPlayers().get(playerIndex).decrementCities();
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid offer trade request");
 		} 
@@ -265,11 +349,11 @@ public class MovesFacade implements IMovesFacade {
 		
 		TradeOffer tradeOffer = new TradeOffer(request.getPlayerIndex(), request.getReceiver(), brick, ore, sheep, wheat, wood);
 		serverGameModel.setTradeOffer(tradeOffer);
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid accept trade request");
 		} 
@@ -309,11 +393,11 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.getPlayers().get(receiver).setWheat(receiverWheat);
 		serverGameModel.getPlayers().get(receiver).setWood(receiverWood);	
 		
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid maritime trade request");
 		} 
@@ -372,11 +456,11 @@ public class MovesFacade implements IMovesFacade {
 			break;
 		}
 		
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
+	public ServerModel discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid discard cards request");
 		} 
@@ -395,6 +479,6 @@ public class MovesFacade implements IMovesFacade {
 		player.setWheat(playerWheat);
 		player.setWood(playerWood);
 	
-		return true;
+		return serverGameModel;
 	}
 }

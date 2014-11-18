@@ -62,6 +62,7 @@ public class ServerModel {
 		this.turnTracker = turnTracker;
 		this.winner = winner;
 		this.deck = new DevCards();
+		this.version = 0;
 	}
 	
 	public ServerModel(Map map, List<Player> players) {
