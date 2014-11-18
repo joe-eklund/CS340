@@ -232,7 +232,7 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
+	public ServerModel yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		DevCards deck = serverGameModel.getDeck();
 		Bank bank = serverGameModel.getBank();
@@ -288,31 +288,36 @@ public class MovesFacade implements IMovesFacade {
 				}
 			}
 		}
-		return 0;
+		serverGameModel.incrementVersion();
+		return serverGameModel;
 	}
 
 	@Override
-	public int roadBuilding(RoadBuildingDevRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel roadBuilding(RoadBuildingDevRequest request, CookieParams cookie) {
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		serverGameModel.incrementVersion();
+		return serverGameModel;
 	}
 
 	@Override
-	public int soldier(SoldierDevRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel soldier(SoldierDevRequest request, CookieParams cookie) {
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		serverGameModel.incrementVersion();
+		return serverGameModel;
 	}
 
 	@Override
-	public int monopoly(MonopolyDevRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel monopoly(MonopolyDevRequest request, CookieParams cookie) {
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		serverGameModel.incrementVersion();
+		return serverGameModel;
 	}
 
 	@Override
-	public int monument(MonumentDevRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel monument(MonumentDevRequest request, CookieParams cookie) {
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		serverGameModel.incrementVersion();
+		return serverGameModel;
 	}
 
 	@Override

@@ -36,12 +36,11 @@ public interface IMovesFacade {
 	public ServerModel robPlayer(RobPlayerRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel buyDevCard(BuyDevCardRequest request, CookieParams cookie) throws InvalidMovesRequest;
-
-	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie);
-	public int roadBuilding(RoadBuildingDevRequest request);
-	public int soldier(SoldierDevRequest request);
-	public int monopoly(MonopolyDevRequest request);
-	public int monument(MonumentDevRequest request);
+	public ServerModel yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel roadBuilding(RoadBuildingDevRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel soldier(SoldierDevRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel monopoly(MonopolyDevRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel monument(MonumentDevRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel buildSettlement(BuildSettlementRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException;
 	public ServerModel buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException; 

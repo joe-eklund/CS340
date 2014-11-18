@@ -54,33 +54,33 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
+	public ServerModel yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int roadBuilding(RoadBuildingDevRequest request) {
+	public ServerModel roadBuilding(RoadBuildingDevRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int soldier(SoldierDevRequest request) {
+	public ServerModel soldier(SoldierDevRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int monopoly(MonopolyDevRequest request) {
+	public ServerModel monopoly(MonopolyDevRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int monument(MonumentDevRequest request) {
+	public ServerModel monument(MonumentDevRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
