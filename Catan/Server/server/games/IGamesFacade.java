@@ -1,5 +1,6 @@
 package server.games;
 
+import java.io.IOException;
 import java.util.List;
 
 import shared.ServerMethodRequests.CreateGameRequest;
@@ -58,4 +59,26 @@ public interface IGamesFacade {
 	 */
 	public boolean joinGame(JoinGameRequest request, String username, int userID) throws InvalidJoinGameRequest;
 	
+	/**
+	 * Saves the id to disk as the name.
+	 * @throws		IOException if there is an error writing to disk.
+	 * @param id	The id of the game to save.
+	 * @param name	The name of the game to save as.
+	 * @return		Nothing. 
+	 */
+	public void saveGame(int id, String name) throws  IOException;
+	
+	/**
+	 * Loads the name of the game into the server from disk.
+	 * @param name	The name of the game to load.
+	 * @return		True if the game was loaded, false if there was an error.
+	 */
+	public boolean loadGame(String name);
+	
+	/**
+	 * Checks if an id is a valid game id.
+	 * @param id
+	 * @return	Boolean value of whether or not the inputed id was a valid game id.
+	 */
+	public boolean validateGameID(int id);
 }
