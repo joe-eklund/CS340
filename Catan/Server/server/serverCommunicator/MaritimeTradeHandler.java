@@ -13,9 +13,7 @@ import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
-import server.moves.InvalidMaritimeTradeRequest;
 import server.moves.InvalidMovesRequest;
-import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.MaritimeTradeRequest;
 
 import com.sun.net.httpserver.HttpExchange;
