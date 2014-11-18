@@ -41,7 +41,7 @@ public interface IMovesFacade {
 	public int monopoly(MonopolyDevRequest request);
 	public int monument(MonumentDevRequest request);
 	public ServerModel buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest;
-	public int buildSettlement(BuildSettlementRequest request);
+	public ServerModel buildSettlement(BuildSettlementRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException;
 	public ServerModel buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException; 
 	public ServerModel offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;

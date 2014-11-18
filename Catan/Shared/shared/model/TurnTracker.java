@@ -101,4 +101,13 @@ public class TurnTracker {
 	public void setLargestArmy(int largestArmy) {
 		this.largestArmy = largestArmy;
 	}
+	
+	public void nextTurn() {
+		if (currentTurn < 3) {
+			currentTurn++;
+		}
+		else {
+			currentTurn = 0;
+		}
+	}
 }

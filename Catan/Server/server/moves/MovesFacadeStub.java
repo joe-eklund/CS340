@@ -89,9 +89,9 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public int buildSettlement(BuildSettlementRequest request) {
+	public ServerModel buildSettlement(BuildSettlementRequest request, CookieParams cookie) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override

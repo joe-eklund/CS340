@@ -32,6 +32,7 @@ import shared.model.City;
 import shared.model.DevCards;
 import shared.model.Player;
 import shared.model.Road;
+import shared.model.Settlement;
 import shared.model.TradeOffer;
 
 /**
@@ -191,15 +192,29 @@ public class MovesFacade implements IMovesFacade {
 		String direction = request.getRoadLocation().getDirection().name();
 		Road road = new Road(playerIndex, x, y , direction);
 		serverGameModel.getMap().getRoads().add(road);
-		//set version?
-		
+		serverGameModel.incrementVersion();
+		serverGameModel.getPlayers().get(playerIndex).decrementRoads();
 		return serverGameModel;
 	}
 
 	@Override
-	public int buildSettlement(BuildSettlementRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ServerModel buildSettlement(BuildSettlementRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException {
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid build city request");
+		} 
+		
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		
+		//execute
+		int playerIndex = request.getPlayerIndex();
+		int x = request.getVertexLocation().getX();
+		int y = request.getVertexLocation().getY(); 
+		String direction = request.getVertexLocation().getDirection().name();
+		Settlement settlement = new Settlement(playerIndex, x, y , direction);
+		serverGameModel.getMap().getSettlements().add(settlement);
+		serverGameModel.incrementVersion();
+		serverGameModel.getPlayers().get(playerIndex).decrementSettlements();
+		return serverGameModel;
 	}
 
 	@Override
@@ -217,7 +232,9 @@ public class MovesFacade implements IMovesFacade {
 		String direction = request.getCityLocation().getDirection().name();
 		City city = new City(playerIndex, x, y , direction);
 		serverGameModel.getMap().getCities().add(city);
-		//set version?
+		serverGameModel.incrementVersion();
+		serverGameModel.getTurnTracker().nextTurn();
+		serverGameModel.getPlayers().get(playerIndex).decrementCities();
 		return serverGameModel;
 	}
 
