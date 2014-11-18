@@ -1,6 +1,7 @@
 package server.moves;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import client.exceptions.ClientModelException;
 import server.commands.moves.BuildCityCommand;
@@ -26,7 +27,9 @@ import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.GameModel;
 import shared.definitions.ServerModel;
+import shared.model.Bank;
 import shared.model.City;
+import shared.model.DevCards;
 import shared.model.Player;
 import shared.model.Road;
 import shared.model.TradeOffer;
@@ -91,12 +94,61 @@ public class MovesFacade implements IMovesFacade {
 
 	@Override
 	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
-		yearOfPlentyCommand.setRequestItem(request);
-		//grab the join game cookie to get the game id.
-		//use the gameId to grab the right server will need to change this probably
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
-		yearOfPlentyCommand.setServerGameModel(serverGameModel);
-		yearOfPlentyCommand.execute();
+		DevCards deck = serverGameModel.getDeck();
+		Bank bank = serverGameModel.getBank();
+		
+		if(deck.getYearOfPlenty()>0){
+			deck.setYearOfPlenty(deck.getYearOfPlenty()-1);			
+		}
+		else{
+			//throw no more of that resource error
+		}
+		
+		String resource1 = request.getResource1();
+		String resource2 = request.getResource2();
+		List<String> resources = new ArrayList<String>();
+		resources.add(resource1);
+		resources.add(resource2);
+		for(String resource : resources){	
+			switch(resource){
+			case "brick":
+				if(bank.getBrick()>0){
+					bank.setBrick(bank.getBrick()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			case "ore":
+				if(bank.getOre()>0){
+					bank.setOre(bank.getOre()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}			
+			case "wood":
+				if(bank.getWood()>0){
+					bank.setWood(bank.getWood()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			case "sheep":
+				if(bank.getSheep()>0){
+					bank.setSheep(bank.getSheep()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			case "wheat":
+				if(bank.getWheat()>0){
+					bank.setWheat(bank.getWheat()-1);					
+				}
+				else {
+					//throw no more of that resource error
+				}
+			}
+		}
 		return 0;
 	}
 
