@@ -1,5 +1,6 @@
 package server.games;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -70,10 +71,11 @@ public interface IGamesFacade {
 	
 	/**
 	 * Loads the name of the game into the server from disk.
+	 * @throws 		IOException if there was an error reading from disk
 	 * @param name	The name of the game to load.
-	 * @return		True if the game was loaded, false if there was an error.
+	 * @return		The id of the game that was loaded.
 	 */
-	public boolean loadGame(String name);
+	public int loadGame(String name) throws IOException;
 	
 	/**
 	 * Checks if an id is a valid game id.

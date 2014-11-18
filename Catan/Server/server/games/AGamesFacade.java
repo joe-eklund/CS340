@@ -3,8 +3,12 @@ package server.games;
 import static server.games.ModelDefaults.VALID_COLORS;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -142,6 +146,15 @@ public abstract class AGamesFacade implements IGamesFacade {
 		FileWriter fw = new FileWriter("/saves/" + name + ".xml");
 		fw.write(xml);
 		fw.close();
+	}
+	
+	@Override
+	public int loadGame(String name) throws IOException{
+		XStream xstream = new XStream();
+		File file = new File("/saves/" + name + ".xml");
+		ServerModel game = (ServerModel) xstream.fromXML(file);
+		gameModelsList.add(game);
+		return gameModelsList.size() - 1;
 	}
 	
 	public boolean validateGameID(int id){
