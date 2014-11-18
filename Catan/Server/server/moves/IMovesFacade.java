@@ -30,10 +30,10 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
  */
 public interface IMovesFacade {
 	public boolean sendChat(SendChatRequest request, CookieParams cookie) throws InvalidMovesRequest;
-	public int rollNumber(RollNumberRequest request);
-	public int robPlayer(RobPlayerRequest request);
-	public int finishTurn(FinishTurnRequest request);
-	public int buyDevCard(BuyDevCardRequest request);
+	public boolean rollNumber(RollNumberRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public boolean robPlayer(RobPlayerRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public boolean finishTurn(FinishTurnRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public boolean buyDevCard(BuyDevCardRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public int yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie);
 	public int roadBuilding(RoadBuildingDevRequest request);
 	public int soldier(SoldierDevRequest request);

@@ -1,6 +1,7 @@
 package server.moves;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import client.exceptions.ClientModelException;
 import server.commands.moves.BuildCityCommand;
@@ -26,8 +27,12 @@ import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.GameModel;
 import shared.definitions.ServerModel;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.model.City;
+import shared.model.Hex;
 import shared.model.Player;
+import shared.model.Settlement;
 import shared.model.TradeOffer;
 
 /**
@@ -65,27 +70,116 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public int rollNumber(RollNumberRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean rollNumber(RollNumberRequest request,CookieParams cookie) throws InvalidMovesRequest{
+		if(request == null) {
+			throw new InvalidMovesRequest("Error: invalid send chat request");
+		} 
+		
+		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+
+		int number=request.getNumber();
+		
+		List<City> cities = serverGameModel.getMap().getCities();
+		List<Settlement> settlements = serverGameModel.getMap().getSettlements();
+		List<Hex> hexes = serverGameModel.getMap().getHexes();
+		List<Hex> withNumber=new ArrayList<Hex>();
+		VertexLocation NE,E,SE,SW,W,NW,loc;
+		int owner;
+		String resource;
+		
+		//execute
+		for(int i=0;i<hexes.size();i++){
+			if(hexes.get(i).getChit()==number)
+				withNumber.add(hexes.get(i));
+		}
+		
+		for(int i=0;i<withNumber.size();i++){
+			NE=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.NorthEast).getNormalizedLocation();
+			E=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.East).getNormalizedLocation();
+			SE=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.SouthEast).getNormalizedLocation();
+			SW=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.SouthWest).getNormalizedLocation();
+			W=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.West).getNormalizedLocation();
+			NW=new VertexLocation(withNumber.get(i).getLocation(),VertexDirection.NorthWest).getNormalizedLocation();
+			resource=withNumber.get(i).getResourceType();
+			for(int c=0;c<cities.size();c++){
+				loc=cities.get(c).getLocation().getNormalizedLocation();
+				owner=cities.get(c).getOwnerIndex();
+				if(loc.equals(NE)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(E)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(SE)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(SW)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(W)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+				if(loc.equals(NW)){
+					incrementResources(serverGameModel,owner,resource,2);
+				}
+			}
+			for(int s=0;s<settlements.size();s++){
+				loc=settlements.get(s).getLocation().getNormalizedLocation();
+				owner=settlements.get(s).getOwnerIndex();
+				if(loc.equals(NE)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(E)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(SE)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(SW)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(W)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+				if(loc.equals(NW)){
+					incrementResources(serverGameModel,owner,resource,1);
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	private void incrementResources(ServerModel game,int owner,String resource,int amount){
+		if(resource.equals("wood")){
+			game.getPlayers().get(owner).setWood(game.getPlayers().get(owner).getWood()+amount);
+		}else if(resource.equals("sheep")){
+			game.getPlayers().get(owner).setSheep(game.getPlayers().get(owner).getSheep()+amount);
+		}else if(resource.equals("ore")){
+			game.getPlayers().get(owner).setOre(game.getPlayers().get(owner).getOre()+amount);
+		}else if(resource.equals("wheat")){
+			game.getPlayers().get(owner).setWheat(game.getPlayers().get(owner).getWheat()+amount);
+		}else if(resource.equals("brick")){
+			game.getPlayers().get(owner).setBrick(game.getPlayers().get(owner).getBrick()+amount);
+		}
 	}
 
 	@Override
-	public int robPlayer(RobPlayerRequest request) {
+	public boolean robPlayer(RobPlayerRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 
 	@Override
-	public int finishTurn(FinishTurnRequest request) {
+	public boolean finishTurn(FinishTurnRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 
 	@Override
-	public int buyDevCard(BuyDevCardRequest request) {
+	public boolean buyDevCard(BuyDevCardRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return true;
 	}
 
 	@Override

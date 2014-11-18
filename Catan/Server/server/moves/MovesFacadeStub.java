@@ -28,27 +28,27 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public int rollNumber(RollNumberRequest request) {
+	public boolean rollNumber(RollNumberRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public int robPlayer(RobPlayerRequest request) {
+	public boolean robPlayer(RobPlayerRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public int finishTurn(FinishTurnRequest request) {
+	public boolean finishTurn(FinishTurnRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	public int buyDevCard(BuyDevCardRequest request) {
+	public boolean buyDevCard(BuyDevCardRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
