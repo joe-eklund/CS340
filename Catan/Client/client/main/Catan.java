@@ -90,7 +90,7 @@ public class Catan extends JFrame
 			public void run()
 			{
 				TranslatorJSON translator = new TranslatorJSON();
-				ClientCommunicator communicator=new ClientCommunicator("localhost",8080,translator);
+				ClientCommunicator communicator=new ClientCommunicator("localhost",8081,translator);
 //				ClientCommunicator communicator=new ClientCommunicator("107.170.212.54",8081,translator);
 				ProxyServer.setSingleton(communicator, translator, "UTF-8");
 				ProxyServer proxy = ProxyServer.getSingleton();

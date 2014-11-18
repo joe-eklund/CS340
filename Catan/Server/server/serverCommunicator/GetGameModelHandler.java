@@ -53,12 +53,17 @@ public class GetGameModelHandler implements HttpHandler {
 		if (exchange.getRequestMethod().toLowerCase().equals("get")) {
 			try {
 				// Validate cookie
+				
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 				CookieParams cookie = Cookie.verifyCookie(unvalidatedCookie,translator);
 				// Get URL path
+				System.out.println("Getting URL\n");
 				String path = exchange.getRequestURI().getPath();
 				int equalsInd = path.indexOf("=");
-				String subPath = path.substring(0, equalsInd);
+				String subPath = "";
+				if(equalsInd > -1){
+					subPath = path.substring(0, equalsInd);
+				}
 
 				// Check valid game id from cookie
 				if (gameFacade.validGameID(cookie.getGameID())) {
@@ -66,10 +71,28 @@ public class GetGameModelHandler implements HttpHandler {
 					if (path.equals("/game/model")) {// Return new model
 						ServerModel game = gameFacade.getGameModel(cookie.getGameID());
 						responseMessage = translator.translateTo(game);
+						exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 					}
 					// Is a version number. Check the version number and maybe return a model
 					else if (subPath.equals("/game/model/?version=")) {
 						String[] tokens = path.split("=");
+						Integer version = null;
+						version = (tokens.length > 1) ? Integer.parseInt(tokens[1]) : null;
+						if(version != null){
+							int versionInt = version.intValue();
+							ServerModel game = gameFacade.getGameModel(cookie.getGameID());
+							if(versionInt != game.getVersion()){//Different versions, so return new model
+								responseMessage = translator.translateTo(game);
+							}
+							else{//Same version
+								responseMessage = "true";
+							}
+							exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+						}
+						else{//Missing version number
+							responseMessage = "Invalid URL format. Missing valid version number.";
+							exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+						}
 					} else {// bad URI
 						System.out.println("Invalid URL");
 						responseMessage = "Invalid URL";
@@ -83,6 +106,10 @@ public class GetGameModelHandler implements HttpHandler {
 			} catch (InvalidCookieException e) { // else send error message
 				System.out.println("Unrecognized / invalid get game model request");
 				responseMessage = e.getMessage();
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			} catch(NumberFormatException e) {
+				System.out.println("Invalid game version.");
+				responseMessage = "Invalid game version";
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}
 		}
@@ -98,6 +125,7 @@ public class GetGameModelHandler implements HttpHandler {
 		exchange.getResponseHeaders().put("Content-type", contentTypes);
 
 		if (!responseMessage.isEmpty()) {
+			System.out.println(responseMessage);
 			// send failure response message
 			OutputStreamWriter writer = new OutputStreamWriter(exchange.getResponseBody());
 			writer.write(responseMessage);

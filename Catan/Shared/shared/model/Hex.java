@@ -94,7 +94,7 @@ public class Hex extends IHex{
 	 */
 	@Override
 	public int getChit() {
-		return number.intValue();
+		return (number == null) ? 0 : number.intValue();
 	}
 	
 	/**
