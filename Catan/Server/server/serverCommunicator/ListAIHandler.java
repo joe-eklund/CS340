@@ -49,34 +49,34 @@ public class ListAIHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		String response = "";
+		System.out.println("In list games handler");
+		
+		String responseMessage = "";
 		
 		if(exchange.getRequestMethod().toLowerCase().equals("get")) {
 			String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 			System.out.println(unvalidatedCookie);
-			String subCookie = unvalidatedCookie.replaceFirst("catan.user=", "");
 			try {  // check user login cookie and if valid get params
-				String cookieJSON = URLDecoder.decode(subCookie, "UTF-8");
-				System.out.println(cookieJSON);
-				CookieParams cookie = Cookie.verifyCookie(cookieJSON, translator);
-				System.out.println(cookie.getName() + " " + cookie.getPassword() + " " + cookie.getPlayerID());
-				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				List<String> AIs = this.gameFacade.listAI();
-				response = this.translator.translateTo(AIs.toArray());
 				
-			} catch (UnsupportedEncodingException | InvalidCookieException e) { // else send error message
-				response = "Error: You either did not provide a cookie or the provided cookie is invalid";
+				Cookie.verifyCookie(unvalidatedCookie, translator);
+				System.out.println("good cookie");
+				List<String> gameAI = this.gameFacade.listAI();
+				responseMessage = this.translator.translateTo(gameAI.toArray());			
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+			} catch (InvalidCookieException e) { // else send error message
+				System.out.println("bad cookie");
+				responseMessage = "Error: You either did not provide a cookie or the provided cookie is invalid";
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}
-			
 		}
 		else {
 			// unsupported request method
-			response = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
+			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
 		
-		//set "Content-Type: text/plain" header
+		//set "Content-Type: application/json" header
 		List<String> contentTypes = new ArrayList<String>();
 		String appJson = "application/json";
 		contentTypes.add(appJson);
@@ -85,7 +85,7 @@ public class ListAIHandler implements HttpHandler {
 		//send failure response message
 		OutputStreamWriter writer = new OutputStreamWriter(
 				exchange.getResponseBody());
-		writer.write(response);
+		writer.write(responseMessage);
 		writer.flush();
 		writer.close();
 		
