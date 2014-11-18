@@ -60,22 +60,26 @@ public class GetGameModelHandler implements HttpHandler {
 				System.out.println("Getting URL\n");
 				String path = exchange.getRequestURI().getPath();
 				int equalsInd = path.indexOf("=");
-				String subPath = "";
-				if(equalsInd > -1){
-					subPath = path.substring(0, equalsInd);
-				}
+				String subPath = exchange.getRequestURI().getQuery();
 
 				// Check valid game id from cookie
+//				System.out.println("PATH");
+				//System.out.println(path);
+//				System.out.println("Query");
+//				System.out.println(exchange.getRequestURI().getQuery());
+				
 				if (gameFacade.validGameID(cookie.getGameID())) {
 					// No version
-					if (path.equals("/game/model")) {// Return new model
+					if (path.equals("/game/model") && subPath == null) {// Return new model
+						
 						ServerModel game = gameFacade.getGameModel(cookie.getGameID());
 						responseMessage = translator.translateTo(game);
 						exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 					}
 					// Is a version number. Check the version number and maybe return a model
-					else if (subPath.equals("/game/model/?version=")) {
-						String[] tokens = path.split("=");
+					else if (subPath != null) {
+						
+						String[] tokens = subPath.split("=");
 						Integer version = null;
 						version = (tokens.length > 1) ? Integer.parseInt(tokens[1]) : null;
 						if(version != null){
@@ -85,11 +89,12 @@ public class GetGameModelHandler implements HttpHandler {
 								responseMessage = translator.translateTo(game);
 							}
 							else{//Same version
-								responseMessage = "true";
+								responseMessage = "\"true\"";
 							}
 							exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 						}
 						else{//Missing version number
+							System.out.println("DDD");
 							responseMessage = "Invalid URL format. Missing valid version number.";
 							exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 						}
