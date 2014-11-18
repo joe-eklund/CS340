@@ -35,8 +35,8 @@ public class LoginTest {
 	public void testInvalidRegister() {
 		int register = user.registerUser(new UserRequest("Bobby","bobby"));
 		assertEquals("Duplicate user should return invalid registration",-1,register);
-		register = user.registerUser(new UserRequest("Jim","jimmy"));
-		assertEquals("Username should be greater than 3 should return invalid registration",-1,register);
+		register = user.registerUser(new UserRequest("Ji","jimmy"));
+		assertEquals("Username should be 3 or more should return invalid registration",-1,register);
 		register = user.registerUser(new UserRequest("Jimmy","ji"));
 		assertEquals("Password should be greater than 3 should return invalid registration",-1,register);
 		register = user.registerUser(new UserRequest("Jimmy","$mar7"));
