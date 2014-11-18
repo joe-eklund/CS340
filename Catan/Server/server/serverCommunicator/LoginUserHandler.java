@@ -20,7 +20,7 @@ import com.sun.net.httpserver.HttpHandler;
  * Handler for the LoginUser command
  *
  */
-class LoginUserHandler implements HttpHandler {
+public class LoginUserHandler implements HttpHandler {
 	
 	private ITranslator translator;
 	private IUsersFacade usersFacade;
