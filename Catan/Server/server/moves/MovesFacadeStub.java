@@ -23,21 +23,21 @@ import shared.definitions.ServerModel;
 public class MovesFacadeStub implements IMovesFacade {
 
 	@Override
-	public boolean sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
+	public ServerModel sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean rollNumber(RollNumberRequest request,CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel rollNumber(RollNumberRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean robPlayer(RobPlayerRequest request,CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel robPlayer(RobPlayerRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -47,9 +47,9 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public boolean buyDevCard(BuyDevCardRequest request,CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel buyDevCard(BuyDevCardRequest request,CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override

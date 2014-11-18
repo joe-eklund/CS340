@@ -17,6 +17,7 @@ import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.UserRequest;
+import shared.definitions.ServerModel;
 import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -68,23 +69,22 @@ public class SendChatHandler implements HttpHandler {
 				SendChatRequest request = (SendChatRequest) translator.translateFrom(requestJson.toString(), SendChatRequest.class);
 				exchange.getRequestBody().close();
 				
-				if(this.movesFacade.sendChat(request, cookie)) {
-					System.out.println("Request Accepted!");
-					// create cookie for user
-					List<String> cookies = new ArrayList<String>();
+				ServerModel serverModel = this.movesFacade.sendChat(request, cookie);
+				System.out.println("Request Accepted!");
+				// create cookie for user
+				List<String> cookies = new ArrayList<String>();
 
-					// send success response headers
-					exchange.getResponseHeaders().put("Set-cookie", cookies);
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				}
-				else {
-					System.out.println("send chat request invalid");
-					responseMessage = "Unable to send chat";
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				}
+				// send success response headers
+				exchange.getResponseHeaders().put("Set-cookie", cookies);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+				
+				responseMessage = translator.translateTo(serverModel);
+				
+				// TODO join game in gameModels list
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
-				System.out.println("unrecognized / invalid join game request");
+				System.out.println("unrecognized / invalid build city request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}

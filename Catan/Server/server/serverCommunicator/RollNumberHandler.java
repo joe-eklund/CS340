@@ -17,6 +17,7 @@ import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
+import shared.definitions.ServerModel;
 import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -68,25 +69,22 @@ public class RollNumberHandler implements HttpHandler {
 				RollNumberRequest request = (RollNumberRequest) translator.translateFrom(requestJson.toString(), RollNumberRequest.class);
 				exchange.getRequestBody().close();
 				
-				if(this.movesFacade.rollNumber(request, cookie)) {
-					System.out.println("Request Accepted!");
-					// create cookie for user
-					List<String> cookies = new ArrayList<String>();
+				ServerModel serverModel = this.movesFacade.rollNumber(request, cookie);
+				System.out.println("Request Accepted!");
+				// create cookie for user
+				List<String> cookies = new ArrayList<String>();
 
-					// send success response headers
-					exchange.getResponseHeaders().put("Set-cookie", cookies);
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				}
-				else {
-					System.out.println("roll number request invalid");
-					responseMessage = "Unable to roll number";
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				}
+				// send success response headers
+				exchange.getResponseHeaders().put("Set-cookie", cookies);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+				
+				responseMessage = translator.translateTo(serverModel);
 				
 				// TODO join game in gameModels list
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
-				System.out.println(e.getMessage());
+				System.out.println("unrecognized / invalid build city request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}
