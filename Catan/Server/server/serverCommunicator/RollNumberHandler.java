@@ -80,6 +80,7 @@ public class RollNumberHandler implements HttpHandler {
 				
 				
 				responseMessage = translator.translateTo(serverModel);
+				System.out.println(responseMessage);
 				
 				// TODO join game in gameModels list
 
