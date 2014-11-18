@@ -18,6 +18,7 @@ import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.ServerModel;
 
 public class MovesFacadeStub implements IMovesFacade {
 
@@ -82,9 +83,9 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public boolean buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -94,33 +95,33 @@ public class MovesFacadeStub implements IMovesFacade {
 	}
 
 	@Override
-	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest{
+	public ServerModel buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest{
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
+	public ServerModel discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
 		// TODO Auto-generated method stub
-		return true;
+		return null;
 	}
 
 }

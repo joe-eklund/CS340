@@ -20,6 +20,7 @@ import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.ServerModel;
 
 /**
  * This interface defines a Facade containing the sendChat,
@@ -39,11 +40,11 @@ public interface IMovesFacade {
 	public int soldier(SoldierDevRequest request);
 	public int monopoly(MonopolyDevRequest request);
 	public int monument(MonumentDevRequest request);
-	public boolean buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public int buildSettlement(BuildSettlementRequest request);
-	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException; 
-	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
-	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
-	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
-	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException; 
+	public ServerModel offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public ServerModel discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest;
 }

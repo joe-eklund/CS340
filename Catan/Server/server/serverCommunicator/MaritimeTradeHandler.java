@@ -16,6 +16,7 @@ import server.moves.IMovesFacade;
 //import server.moves.InvalidMaritimeTradeRequest;
 import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.MaritimeTradeRequest;
+import shared.definitions.ServerModel;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -66,20 +67,16 @@ public class MaritimeTradeHandler implements HttpHandler {
 				MaritimeTradeRequest request = (MaritimeTradeRequest) translator.translateFrom(requestJson.toString(), MaritimeTradeRequest.class);
 				exchange.getRequestBody().close();
 				
-				if(this.movesFacade.maritimeTrade(request, cookie)) {
-					System.out.println("Request Accepted!");
-					// create cookie for user
-					List<String> cookies = new ArrayList<String>();
+				ServerModel serverModel = this.movesFacade.maritimeTrade(request, cookie);
+				System.out.println("Request Accepted!");
+				// create cookie for user
+				List<String> cookies = new ArrayList<String>();
 
-					// send success response headers
-					exchange.getResponseHeaders().put("Set-cookie", cookies);
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				}
-				else {
-					System.out.println("Maritime trade request insvalid");
-					responseMessage = "Unable to maritime trade";
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				}
+				// send success response headers
+				exchange.getResponseHeaders().put("Set-cookie", cookies);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+				responseMessage = translator.translateTo(serverModel);
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
 				System.out.println("unrecognized / invalid maritime trade request");

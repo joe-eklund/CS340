@@ -17,6 +17,7 @@ import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
+import shared.definitions.ServerModel;
 import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -68,20 +69,17 @@ public class BuildCityHandler implements HttpHandler {
 				BuildCityRequest request = (BuildCityRequest) translator.translateFrom(requestJson.toString(), BuildCityRequest.class);
 				exchange.getRequestBody().close();
 				
-				if(this.movesFacade.buildCity(request, cookie)) {
-					System.out.println("Request Accepted!");
-					// create cookie for user
-					List<String> cookies = new ArrayList<String>();
+				ServerModel serverModel = this.movesFacade.buildCity(request, cookie);
+				System.out.println("Request Accepted!");
+				// create cookie for user
+				List<String> cookies = new ArrayList<String>();
 
-					// send success response headers
-					exchange.getResponseHeaders().put("Set-cookie", cookies);
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				}
-				else {
-					System.out.println("build city request insvalid");
-					responseMessage = "Unable to build city";
-					exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-				}
+				// send success response headers
+				exchange.getResponseHeaders().put("Set-cookie", cookies);
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
+				
+				responseMessage = translator.translateTo(serverModel);
 				
 				// TODO join game in gameModels list
 

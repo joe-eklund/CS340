@@ -177,7 +177,7 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public boolean buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel buildRoad(BuildRoadRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid build city request");
 		} 
@@ -193,7 +193,7 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.getMap().getRoads().add(road);
 		//set version?
 		
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class MovesFacade implements IMovesFacade {
 	}
 
 	@Override
-	public boolean buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException {
+	public ServerModel buildCity(BuildCityRequest request, CookieParams cookie) throws InvalidMovesRequest, ClientModelException {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid build city request");
 		} 
@@ -218,11 +218,11 @@ public class MovesFacade implements IMovesFacade {
 		City city = new City(playerIndex, x, y , direction);
 		serverGameModel.getMap().getCities().add(city);
 		//set version?
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel offerTrade(OfferTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid offer trade request");
 		} 
@@ -238,11 +238,11 @@ public class MovesFacade implements IMovesFacade {
 		
 		TradeOffer tradeOffer = new TradeOffer(request.getPlayerIndex(), request.getReceiver(), brick, ore, sheep, wheat, wood);
 		serverGameModel.setTradeOffer(tradeOffer);
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid accept trade request");
 		} 
@@ -282,11 +282,11 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.getPlayers().get(receiver).setWheat(receiverWheat);
 		serverGameModel.getPlayers().get(receiver).setWood(receiverWood);	
 		
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
+	public ServerModel maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid maritime trade request");
 		} 
@@ -345,11 +345,11 @@ public class MovesFacade implements IMovesFacade {
 			break;
 		}
 		
-		return true;
+		return serverGameModel;
 	}
 
 	@Override
-	public boolean discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
+	public ServerModel discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid discard cards request");
 		} 
@@ -368,6 +368,6 @@ public class MovesFacade implements IMovesFacade {
 		player.setWheat(playerWheat);
 		player.setWood(playerWood);
 	
-		return true;
+		return serverGameModel;
 	}
 }
