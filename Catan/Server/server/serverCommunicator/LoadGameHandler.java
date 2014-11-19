@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
+import server.commands.games.IGamesCommandLog;
+import server.commands.games.LoadCommand;
 import server.games.IGamesFacade;
 import shared.ServerMethodRequests.LoadGameRequest;
 
@@ -24,10 +26,12 @@ public class LoadGameHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IGamesFacade gamesFacade;
+	private IGamesCommandLog log;
 
-	public LoadGameHandler(ITranslator translator, IGamesFacade gamesFacade) {
+	public LoadGameHandler(ITranslator translator, IGamesFacade gamesFacade, IGamesCommandLog log) {
 		this.translator = translator;
 		this.gamesFacade = gamesFacade;
+		this.log = log;
 	}
 
 	/**
@@ -60,6 +64,7 @@ public class LoadGameHandler implements HttpHandler {
 					int id = gamesFacade.loadGame(request.getName());
 					responseMessage = "Successfully loaded game: " + request.getName() + " with id " + id;
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+					log.Store(new LoadCommand(gamesFacade, request.getName()));
 				}catch(IOException e){
 					System.out.println("Error reading file. IOException");
 					responseMessage = e.getMessage();

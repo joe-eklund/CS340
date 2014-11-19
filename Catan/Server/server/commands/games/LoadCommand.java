@@ -10,7 +10,7 @@ import server.games.IGamesFacade;
  * The command class in charge of loading a game
  *
  */
-public class LoadCommand extends ACommand{
+public class LoadCommand extends ACommand implements IGamesCommand{
 
 	private IGamesFacade games;
 	private String gameName;
@@ -28,6 +28,12 @@ public class LoadCommand extends ACommand{
 		} catch (IOException e) {
 			throw new CommandException(e.getMessage());
 		}
+	}
+
+	@Override
+	public void setExecutor(IGamesFacade executor) {
+		this.games = executor;
+		
 	}
 
 }
