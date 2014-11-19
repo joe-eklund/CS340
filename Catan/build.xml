@@ -15,6 +15,13 @@
     <property name="java.lib.dir" value="${java.dir}/lib"/>
 	<property name="java.build.dir" value="${java.dir}/build"/>
 	<property name="java.test.dir" value="${java.dir}/build/junit"/>
+	
+	<!-- Our files -->
+	<property name="Cserver" value="Server"/>
+	<property name="Cshared" value="Shared"/>
+	<property name="Cclient" value="Client"/>
+	<property name="Ctesting" value="Testing"/>
+	
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
@@ -47,12 +54,13 @@
 		<fileset dir="${java.lib.dir}">
 	    	<include name="**/*.jar" />
 	    </fileset>
+		<pathelement location="${java.lib}/commons-cli-1.2.jar"/>
 	</path>
 
 	<path id="all-classpath">
 		<path refid="java.lib.classpath"/>
 	    <pathelement location="${java.build.dir}"/>
-		<pathelement location="${bin.dir}"/>
+		<!-- pathelement location="${bin.dir}"/-->
 	</path>
 
 	<!-- TARGETS -->
@@ -93,16 +101,34 @@
 		<tstamp/>
 		<mkdir dir="${java.build}"/>
 		<mkdir dir="${java.dist}"/>
+		<copy todir="${java.src}">
+			<fileset dir="${Cserver}"/>
+		</copy>
+		<copy todir="${java.src}">
+			<fileset dir="${Cshared}"/>
+		</copy>
+		<copy todir="${java.src}">
+			<fileset dir="${Cclient}"/>
+		</copy>
+		<copy todir="${java.src}">
+			<fileset dir="${Ctesting}"/>
+		</copy>
 	</target>
 		
 	<target name="clean" description="clean build files" >
 		<delete dir="${java.build}"/>
 		<delete dir="${java.dist}"/>
+		<delete dir="${java.src}"/>
 	</target>
     
 	<target name="compile" depends="init" description="compile the source " >
 		<javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
 			<classpath refid="java.lib.classpath" />
+			<!--classpath>
+				<fileset dir="${java.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath -->
 		</javac>
 	</target>
 	
@@ -123,14 +149,18 @@
 			<manifest>
 				<attribute name="Main-Class" value="client.main.Catan"/>
 				<attribute name="Class-Path" 
-					value="lib/gson-2.2.4.jar" />
+					value="./ gson-2.2.4.jar junit.jar org.hamcrest.core_1.3.0.v201303031735.jar commons-cli-1.2.jar commons-cli-1.2-sources.jar commons-io-2.4-sources.jar commons-io-2.4.jar xstream-1.4.7.jar" />
 			</manifest>
 		</jar>
  		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
 			<manifest>
 				<attribute name="Main-Class" value="server.main.Catan"/>
 				<attribute name="Class-Path" 
-					value="lib/gson-2.2.4.jar" />
+					value="${all-classpath}" />
+				<!--<attribute name="Class-Path2" 
+					value="lib/commons-cli-1.2.jar" />
+				<attribute name="Class-Path3" 
+					value="lib/commons-cli-1.2-sources.jar" />-->
 			</manifest>
 		</jar>
 	</target>
@@ -145,7 +175,7 @@
 	</target>
  	
 	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
-		<java jar="${java.dist}/catan-server.jar" dir="" fork="yes">
+		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
 			<assertions>
 				<enable/>

@@ -1,5 +1,6 @@
 package shared.ServerMethodRequests;
 
+
 /**
  * A class for encapsulating UserRequest (login and registration) request parameters
  * 
@@ -13,6 +14,7 @@ package shared.ServerMethodRequests;
 public class UserRequest {
 	private String username;
 	private String password;
+	private final static String validCharsRegex = "[0-9]*[A-z]*[_]*[-]*";
 	
 	/**
 	 * Constructor
@@ -60,8 +62,20 @@ public class UserRequest {
 	}
 
 	public boolean validatePreConditions() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = true;
+		if(username.length() < 3 || username.length() > 7){
+			result = false;
+		}  
+		else if(!username.matches(validCharsRegex)) {
+			result = false;
+		}    
+		else if(!password.matches(validCharsRegex)) {
+			result = false;
+		}
+		else if(password.length() < 5){
+			result = false;
+		}
+		return result;
 	}
 	
 }

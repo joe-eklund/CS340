@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of bulding roads
  *
  */
-public class BuildRoadCommand extends ACommand {
+public class BuildRoadCommand extends AMovesCommand {
 
 	public BuildRoadCommand() {
 		super("BuildRoadCommand");

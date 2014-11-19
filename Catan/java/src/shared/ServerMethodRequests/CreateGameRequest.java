@@ -94,5 +94,9 @@ public class CreateGameRequest {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public boolean validate() {
+		return(this.name != null);
+	}
 	
 }

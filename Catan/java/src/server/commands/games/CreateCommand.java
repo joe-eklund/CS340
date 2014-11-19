@@ -1,22 +1,37 @@
 package server.commands.games;
 
 import server.commands.ACommand;
+import server.commands.CommandException;
+import server.games.IGamesFacade;
+import server.games.InvalidGamesRequest;
+import shared.ServerMethodRequests.CreateGameRequest;
 
 /**
  * The command class in charge of creating a new game
  *
  */
-public class CreateCommand extends ACommand {
+public class CreateCommand extends ACommand implements IGamesCommand {
+	private IGamesFacade games;
+	private CreateGameRequest request;
 
-	public CreateCommand() {
+	public CreateCommand(IGamesFacade games, CreateGameRequest request) {
 		super("CreateCommand");
-		// TODO Auto-generated constructor stub
+		this.games = games;
+		this.request = request;
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute() throws CommandException {
+		try {
+			games.createGame(request);
+		} catch (InvalidGamesRequest e) {
+			throw new CommandException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void setExecutor(IGamesFacade executor) {
+		this.games = executor;
 	}
 	
 }

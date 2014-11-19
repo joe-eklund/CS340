@@ -77,5 +77,32 @@ public enum VertexDirection
 			throw new ClientModelException("Invalid direction string given to static method VertexDirection determineDirection in VertexDirection class");
 		}
 	}
+	
+	public String getDirectionStr() {
+		String dir = this.toString().toLowerCase();
+		
+		switch(dir) {
+		case "northwest":
+			dir = "NW";
+			break;
+		case "northeast":
+			dir = "NE";
+			break;
+		case "east":
+			dir = "E";
+			break;
+		case "west":
+			dir = "W";
+			break;
+		case "southwest":
+			dir = "SW";
+			break;
+		case "southeast":
+			dir = "SE";
+			break;
+		}
+		
+		return dir;
+	}
 }
 

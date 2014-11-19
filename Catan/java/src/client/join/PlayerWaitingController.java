@@ -7,10 +7,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
+import shared.model.Player;
 import client.base.*;
 import client.data.PlayerInfo;
 import client.main.Catan;
-import client.model.Player;
 import client.presenter.IPresenter;
 
 

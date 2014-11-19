@@ -1,9 +1,20 @@
 package server.serverCommunicator;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import proxy.ITranslator;
+import server.cookie.Cookie;
+import server.cookie.CookieParams;
+import server.cookie.InvalidCookieException;
 import server.game.IGameFacade;
+import shared.ServerMethodRequests.AddAIRequest;
+import shared.ServerMethodRequests.JoinGameRequest;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -15,8 +26,12 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class AddAIHandler implements HttpHandler {
 
+	private ITranslator translator;
+	private IGameFacade gameFacade;
+
 	public AddAIHandler(ITranslator translator, IGameFacade gameFacade) {
-		// TODO Auto-generated constructor stub
+		this.translator = translator;
+		this.gameFacade = gameFacade;
 	}
 	
 	/**
@@ -27,7 +42,50 @@ public class AddAIHandler implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		// TODO Auto-generated method stub
+		System.out.println("In add AI handler.");
+		String responseMessage = "AddAI not implemented on this server.";
+		exchange.getResponseHeaders().set("Content-Type", "appliction/json");
+		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		
+		if (!responseMessage.isEmpty()) {
+			//send failure response message
+			OutputStreamWriter writer = new OutputStreamWriter(
+					exchange.getResponseBody());
+			writer.write(responseMessage);
+			writer.flush();
+			writer.close();
+		}
+		exchange.getResponseBody().close();
+		
+		//Old code for Adding AI. Unfinished
+		/**if(exchange.getRequestMethod().toLowerCase().equals("post")) {
+			try{
+				//Validate cookie
+				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
+				CookieParams cookie = Cookie.verifyCookie(unvalidatedCookie, translator);
+				//Get request JSON
+				BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+				String inputLine;
+				StringBuffer requestJson = new StringBuffer();
+				while ((inputLine = in.readLine()) != null) {
+					requestJson.append(inputLine);
+				}
+				in.close();
+				System.out.println("Request JSON: " + requestJson);
+				AddAIRequest request = (AddAIRequest) translator.translateFrom(requestJson.toString(), AddAIRequest.class);
+				exchange.getRequestBody().close();
+				
+				//Check for valid game ID
+				if(gameFacade.validGameID(cookie.getGameID())){
+					//TODO Create AI and add it. 
+				}
+				
+			}catch (InvalidCookieException e) { // else send error message
+				System.out.println("Invalid addAI request");
+				responseMessage = e.getMessage();
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			}
+		}**/
 
 	}
 

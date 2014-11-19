@@ -6,7 +6,9 @@ package server.commands;
  */
 public interface ICommand {
 	/**
-	 * The Catan command will execute this method when it is its turn
+	 * Executes this command on the model(s) defined within the command (passed in to the constructor)
+	 * @throws CommandException 
 	 */
-	public void execute();
+	public void execute() throws CommandException;
+	
 }

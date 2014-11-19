@@ -1,94 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Catan">
-    <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../Program Files (x86)/eclipse/"/>
-    <property name="junit.output.dir" value="junit"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.7"/>
-    <property name="source" value="1.7"/>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
-    </path>
-    <path id="Catan.classpath">
-        <pathelement location="bin"/>
-        <pathelement location="java/lib/gson-2.2.4.jar"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-    </path>
-    <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="java/src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="clean">
-        <delete dir="bin"/>
-    </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="java/src"/>
-            <classpath refid="Catan.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
-    <target name="AllTests (1)">
-        <java classname="junit.AllTests" failonerror="true" fork="yes">
-            <classpath refid="Catan.classpath"/>
-        </java>
-    </target>
-    <target name="AllTests">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="junit.AllTests" todir="${junit.output.dir}"/>
-            <classpath refid="Catan.classpath"/>
-        </junit>
-    </target>
-    <target name="PlayerTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="junit.PlayerTest" todir="${junit.output.dir}"/>
-            <classpath refid="Catan.classpath"/>
-        </junit>
-    </target>
-    <target name="TranslatorTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="junit.TranslatorTest" todir="${junit.output.dir}"/>
-            <classpath refid="Catan.classpath"/>
-        </junit>
-    </target>
-    <target name="junitreport">
-        <junitreport todir="${junit.output.dir}">
-            <fileset dir="${junit.output.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${junit.output.dir}"/>
-        </junitreport>
+<project default="create_run_jar" name="Create Runnable Jar for Project Catan with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="C:/code/CS340/Catan/java/dist/serverTest.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="server.main.Catan"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ gson-2.2.4.jar junit.jar org.hamcrest.core_1.3.0.v201303031735.jar commons-cli-1.2.jar commons-cli-1.2-sources.jar commons-io-2.4-sources.jar commons-io-2.4.jar xstream-1.4.7.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="C:/code/CS340/Catan/bin"/>
+            <zipfileset dir="C:\code\CS340\Catan\java\lib" includes="gson-2.2.4.jar"/>
+            <zipfileset dir="C:\Program Files (x86)\eclipse\plugins\org.junit_4.11.0.v201303080030" includes="junit.jar"/>
+            <zipfileset dir="C:\Program Files (x86)\eclipse\plugins" includes="org.hamcrest.core_1.3.0.v201303031735.jar"/>
+            <zipfileset dir="C:\code\CS340\Catan\java\lib" includes="commons-cli-1.2.jar"/>
+            <zipfileset dir="C:\code\CS340\Catan\java\lib" includes="commons-cli-1.2-sources.jar"/>
+            <zipfileset dir="C:\code\CS340\Catan\java\lib" includes="commons-io-2.4-sources.jar"/>
+            <zipfileset dir="C:\code\CS340\Catan\java\lib" includes="commons-io-2.4.jar"/>
+            <zipfileset dir="C:\code\CS340\Catan\lib" includes="xstream-1.4.7.jar"/>
+        </jar>
     </target>
 </project>

@@ -10,7 +10,7 @@ import shared.ServerMethodResponses.JoinGameResponse;
 import shared.ServerMethodResponses.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.GameDescription;
-import client.model.Player;
+import shared.model.Player;
 import client.presenter.IPresenter;
 
 public class Joining extends State {

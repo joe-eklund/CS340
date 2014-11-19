@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of rolling a number for a player
  *
  */
-public class RollNumberCommand extends ACommand {
+public class RollNumberCommand extends AMovesCommand {
 
 	public RollNumberCommand() {
 		super("RollNumberCommand");

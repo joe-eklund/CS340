@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import proxy.ITranslator;
+import server.commands.games.IGamesCommandLog;
+import server.commands.moves.IMovesCommandLog;
+import server.commands.users.IUsersCommandLog;
 import server.game.IGameFacade;
 import server.games.IGamesFacade;
 import server.moves.IMovesFacade;
@@ -29,8 +32,11 @@ public class ServerCommunicator {
 	private IGameFacade gameFacade;
 	private IMovesFacade movesFacade;
 	private IUtilFacade utilFacade;
+	private IUsersCommandLog usersLog;
+	private IGamesCommandLog gamesLog;
+	private IMovesCommandLog movesLog;
     
-    public ServerCommunicator(int portNumber, ITranslator translator, IUsersFacade usersFacade, IGamesFacade gamesFacade, IGameFacade gameFacade, IMovesFacade movesFacade, IUtilFacade utilFacade) {
+    public ServerCommunicator(int portNumber, ITranslator translator, IUsersFacade usersFacade, IGamesFacade gamesFacade, IGameFacade gameFacade, IMovesFacade movesFacade, IUtilFacade utilFacade, IUsersCommandLog usersLog, IGamesCommandLog gamesLog, IMovesCommandLog movesLog) {
     	this.portNumber = portNumber;
     	this.translator = translator;
     	this.usersFacade = usersFacade;
@@ -38,6 +44,9 @@ public class ServerCommunicator {
     	this.gameFacade = gameFacade;
     	this.movesFacade = movesFacade;
     	this.utilFacade = utilFacade;
+    	this.usersLog = usersLog;
+    	this.gamesLog = gamesLog;
+    	this.movesLog = movesLog;
     }
     
     /**
@@ -48,6 +57,7 @@ public class ServerCommunicator {
 			server = HttpServer.create(new InetSocketAddress(portNumber), MAX_WAITING_CONNECTION);
 		} catch (IOException e) {
 			//could not initialize server -- already running
+			System.err.println("Error: Port " + portNumber + " is already in use!");
 			return;
 		}
         
@@ -59,16 +69,17 @@ public class ServerCommunicator {
         
         // user: operations for users (pre-login)
         server.createContext("/user/login", new LoginUserHandler(translator, usersFacade));
-        server.createContext("/user/register", new RegisterUserHandler(translator, usersFacade));
+        server.createContext("/user/register", new RegisterUserHandler(translator, usersFacade, usersLog));
         
         // games: operations for games list (pre-joining)
-        server.createContext("/games/list", new ListGameshandler(gamesFacade));
-        server.createContext("/games/create", new CreateGameHandler(translator, gamesFacade));
-        server.createContext("/games/join", new JoinGameHandler(translator, gamesFacade));
+        server.createContext("/games/list", new ListGamesHandler(translator, gamesFacade));
+        server.createContext("/games/create", new CreateGameHandler(translator, gamesFacade, gamesLog));
+        server.createContext("/games/join", new JoinGameHandler(translator, gamesFacade, gamesLog));
         server.createContext("/games/save", new SaveGameHandler(translator, gamesFacade));
         server.createContext("/games/load", new LoadGameHandler(translator, gamesFacade));
         
         // game: current game setup operations (requires cookie)
+//        server.createContext("/game/model?version=[0-9]*", new GetGameModelHandler(translator, gameFacade));
         server.createContext("/game/model", new GetGameModelHandler(translator, gameFacade));
         server.createContext("/game/reset", new ResetGameHandler(translator, gameFacade));
         server.createContext("/game/commands", new GameCommandsHandler(translator, gameFacade));
@@ -85,17 +96,22 @@ public class ServerCommunicator {
         server.createContext("/moves/Road_Building", new RoadBuildingHandler(translator, movesFacade));
         server.createContext("/moves/Soldier", new SoldierHandler(translator, movesFacade));
         server.createContext("/moves/Monopoly", new MonopolyHandler(translator, movesFacade));
-        server.createContext("/moves/Monument", new Monumenthandler(translator, movesFacade));
+        server.createContext("/moves/Monument", new MonumentHandler(translator, movesFacade));
         server.createContext("/moves/buildRoad", new BuildRoadHandler(translator, movesFacade));
         server.createContext("/moves/buildSettlement", new BuildSettlementHandler(translator, movesFacade));
         server.createContext("/moves/buildCity", new BuildCityHandler(translator, movesFacade));
         server.createContext("/moves/offerTrade", new OfferTradeHandler(translator, movesFacade));
         server.createContext("/moves/acceptTrade", new AcceptTradeHandler(translator, movesFacade));
         server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(translator, movesFacade));
-        server.createContext("/moves/discardCards", new DiscardCardshandler(translator, movesFacade));
+        server.createContext("/moves/discardCards", new DiscardCardsHandler(translator, movesFacade));
         
         // util: change how the server runs
         server.createContext("/util/changeLogLevel", new ChangeLogLevelHandler(translator, utilFacade));
+        
+        //swagger?
+        server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
+        server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+        server.createContext("/", new HomeHandler());
         
         server.start();
 	}

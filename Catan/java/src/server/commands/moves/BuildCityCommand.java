@@ -1,12 +1,12 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
+import server.commands.CommandException;
 
 /**
  * The command class in charge of building cities
  *
  */
-public class BuildCityCommand extends ACommand {
+public class BuildCityCommand extends AMovesCommand {
 
 	public BuildCityCommand() {
 		super("BuildCityCommand");
@@ -14,7 +14,7 @@ public class BuildCityCommand extends ACommand {
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws CommandException {
 		// TODO Auto-generated method stub
 		
 	}

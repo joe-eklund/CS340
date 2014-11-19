@@ -18,7 +18,7 @@ import shared.definitions.ServerLogLevel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import client.model.Log;
+import shared.model.Log;
 import client.presenter.IPresenter;
 
 public interface IState {

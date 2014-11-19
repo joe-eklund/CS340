@@ -21,9 +21,9 @@ import shared.definitions.ServerLogLevel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.Log;
+import shared.model.Player;
 import client.base.OverlayView;
-import client.model.Log;
-import client.model.Player;
 import client.presenter.IPresenter;
 
 public abstract class State implements IState {
@@ -252,32 +252,27 @@ public abstract class State implements IState {
 	
 	@Override
 	public void update(IPresenter presenter) {
-		try {
-			GetGameModelResponse response = getGameModel(presenter);
-			if(response != null && response.isSuccessful()) {
-				if(response.isNeedToUpdate()) {
-					System.out.println("UPDATING MODEL");
-					
-					List<Player> players = response.getGameModel().getPlayers();
-					players.removeAll(Collections.singleton(null));
-					if(players.size() == 4) {
-						if(presenter.getState().getStatus().equals("PlayerWaiting")){
-							OverlayView.closePlayerWaitingModal();
-						}
-						presenter.setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
+		
+		GetGameModelResponse response = getGameModel(presenter);
+		if(response != null && response.isSuccessful()) {
+			if(response.isNeedToUpdate()) {
+				System.out.println("UPDATING MODEL");
+				
+				List<Player> players = response.getGameModel().getPlayers();
+				players.removeAll(Collections.singleton(null));
+				if(players.size() == 4) {
+					if(presenter.getState().getStatus().equals("PlayerWaiting")){
+						OverlayView.closePlayerWaitingModal();
 					}
-					
-					presenter.setVersion(response.getGameModel().getVersion());
-					presenter.getClientModel().updateServerModel(response.getGameModel());
+					presenter.setStateBasedOffString(response.getGameModel().getTurnTracker().getStatus());
 				}
-			}
-			else {
-				System.err.println("Error: Unable to process update game model request!");
+				
+				presenter.setVersion(response.getGameModel().getVersion());
+				presenter.getClientModel().updateServerModel(response.getGameModel());
 			}
 		}
-		catch(Exception e) {
-			e.printStackTrace();
-			System.exit(0);
+		else {
+			System.err.println("Error: Unable to process update game model request!");
 		}
 	}
 }

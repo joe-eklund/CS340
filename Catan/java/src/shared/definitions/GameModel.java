@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import client.model.*;
 import client.model.interfaces.IHex;
 import shared.locations.*;
+import shared.model.*;
 
 import java.util.Map;
 /**

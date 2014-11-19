@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of playing a monolpoly development card for a player
  *
  */
-public class MonopolyCommand extends ACommand {
+public class MonopolyCommand extends AMovesCommand {
 
 	public MonopolyCommand() {
 		super("MonopolyCommand");

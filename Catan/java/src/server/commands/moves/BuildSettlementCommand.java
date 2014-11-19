@@ -1,13 +1,12 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 
 /**
  * The command class in charge of building settlements
  *
  */
-public class BuildSettlementCommand extends ACommand {
+public class BuildSettlementCommand extends AMovesCommand {
 
 	public BuildSettlementCommand() {
 		super("BuildSettlementCommand");

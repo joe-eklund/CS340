@@ -22,7 +22,7 @@ import shared.definitions.ServerLogLevel;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import client.model.Log;
+import shared.model.Log;
 
 /**
  * An interface for a Server

@@ -7,9 +7,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import shared.definitions.CatanColor;
+import shared.model.Player;
 import client.base.Controller;
 import client.main.Catan;
-import client.model.Player;
 import client.presenter.IPresenter;
 
 
@@ -38,6 +38,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
+		
 		presenter.finishTurn();
 	}
 	

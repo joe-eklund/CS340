@@ -15,8 +15,12 @@ import com.sun.net.httpserver.HttpHandler;
  */
 public class ResetGameHandler implements HttpHandler {
 
+	private ITranslator translator;
+	private IGameFacade gameFacade;
+
 	public ResetGameHandler(ITranslator translator, IGameFacade gameFacade) {
-		// TODO Auto-generated constructor stub
+		this.translator = translator;
+		this.gameFacade = gameFacade;
 	}
 
 	/**

@@ -38,13 +38,15 @@ public class Catan {
 	 * 
 	 * ==> "-p 39640 -t" will run the server on port 39640 with the testing data 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		
 		CommandLineParser parser = new GnuParser();
 		
 		Options options = new Options();
 		options.addOption("t", "test-data", false, "start server using testing stubs");
 		options.addOption("p", "port", true, "port on which server will listen");
+		
+		//CommandLine line = parser.parse(options, args);
 		
 		try {
 			// serverModels will be shared by GamesFacade, GameFacade, and MovesFacade
@@ -90,7 +92,7 @@ public class Catan {
 				System.err.println("Invalid port number; port must be >= " + MIN_PORT + " && port must be <= " + MAX_PORT);
 			}
 
-		} catch(ParseException e) {
+		}catch(ParseException e) {
 			System.out.println("Error Starting Server");
 			System.err.println(e.getMessage());
 		}

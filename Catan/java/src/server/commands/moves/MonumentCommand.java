@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of playing the monument development card for a player
  *
  */
-public class MonumentCommand extends ACommand {
+public class MonumentCommand extends AMovesCommand {
 
 	public MonumentCommand() {
 		super("MonumentCommand");

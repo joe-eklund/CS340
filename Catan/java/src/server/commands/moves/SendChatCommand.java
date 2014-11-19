@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of sending a chat for a player
  *
  */
-public class SendChatCommand extends ACommand {
+public class SendChatCommand extends AMovesCommand {
 
 	public SendChatCommand() {
 		super("SendChatCommand");

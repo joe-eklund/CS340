@@ -77,5 +77,8 @@ public class SendChatRequest {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+	public boolean validatePreConditions() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

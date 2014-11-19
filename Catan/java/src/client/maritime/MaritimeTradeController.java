@@ -8,10 +8,10 @@ import java.util.Observer;
 import java.util.Set;
 
 import shared.definitions.*;
+import shared.model.Player;
+import shared.model.Port;
 import client.base.*;
 import client.main.Catan;
-import client.model.Player;
-import client.model.Port;
 import client.presenter.IPresenter;
 
 

@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import client.model.Log;
-import client.model.LogEntry;
 import client.communication.CommsLogEntry;
 import shared.ServerMethodRequests.*;
 import shared.ServerMethodResponses.*;
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.Log;
+import shared.model.LogEntry;
 
 /**
  * A Server Proxy class that implements the Server Interface
@@ -103,10 +103,10 @@ public class ProxyServer implements IServer{
 			int index = cookie.lastIndexOf(";Path=/");
 			cookie = cookie.substring(0, index);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			PlayerCookie playerCookie = null;
+			PlayerLoginCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
-				playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
+				playerCookie = (PlayerLoginCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerLoginCookie.class);
 				playerID = playerCookie.getPlayerID();
 				playerName = playerCookie.getName();
 			} catch (UnsupportedEncodingException e) {
@@ -132,10 +132,10 @@ public class ProxyServer implements IServer{
 			int index = cookie.lastIndexOf(";Path=/");
 			cookie = cookie.substring(0, index);
 			String subCookie = cookie.replaceFirst("catan.user=", "");
-			PlayerCookie playerCookie = null;
+			PlayerLoginCookie playerCookie = null;
 			try {
 				String cookieJSON = URLDecoder.decode(subCookie, this.cookieEncoding);
-				playerCookie = (PlayerCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerCookie.class);
+				playerCookie = (PlayerLoginCookie) this.cookieTranslator.translateFrom(cookieJSON, PlayerLoginCookie.class);
 				playerID = playerCookie.getPlayerID();
 				playerName = playerCookie.getName();
 			} catch (UnsupportedEncodingException e) {
@@ -188,6 +188,7 @@ public class ProxyServer implements IServer{
 			String gameCookieExtension = response.getResponseHeaders().get("Set-cookie").get(0);
 			int index = gameCookieExtension.lastIndexOf(";Path=/;");
 			gameCookieExtension = gameCookieExtension.substring(0, index);
+			gameCookieExtension = gameCookieExtension.replace("%7D", "");
 			cookie = cookie + "; " + gameCookieExtension;
 			resultCookie = cookie;
 		}

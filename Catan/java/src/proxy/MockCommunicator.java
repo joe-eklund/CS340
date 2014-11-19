@@ -26,8 +26,8 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerLogLevel;
-import client.model.Log;
-import client.model.LogEntry;
+import shared.model.Log;
+import shared.model.LogEntry;
 import static shared.definitions.TestingConstants.*;
 
 /**This class will contain some hard code data for the use of testing.

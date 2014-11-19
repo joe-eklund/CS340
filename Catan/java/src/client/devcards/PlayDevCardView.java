@@ -9,9 +9,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import shared.definitions.*;
+import shared.model.DevCards;
 import client.base.*;
 import client.main.Catan;
-import client.model.DevCards;
 import client.presenter.IPresenter;
 import client.utils.*;
 
