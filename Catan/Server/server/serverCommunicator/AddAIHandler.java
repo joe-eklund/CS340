@@ -44,12 +44,8 @@ public class AddAIHandler implements HttpHandler {
 	public void handle(HttpExchange exchange) throws IOException {
 		System.out.println("In add AI handler.");
 		String responseMessage = "AddAI not implemented on this server.";
+		exchange.getResponseHeaders().set("Content-Type", "appliction/json");
 		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-		//set "Content-Type: text/plain" header
-		List<String> contentTypes = new ArrayList<String>();
-		String type = "text/plain";
-		contentTypes.add(type);
-		exchange.getResponseHeaders().put("Content-type", contentTypes);
 		
 		if (!responseMessage.isEmpty()) {
 			//send failure response message
