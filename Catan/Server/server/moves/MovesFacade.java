@@ -494,7 +494,7 @@ public class MovesFacade implements IMovesFacade {
 		Player player = serverGameModel.getPlayers().get(playerIndex);
 		int x = request.getRoadLocation().getX();
 		int y = request.getRoadLocation().getY(); 
-		String direction = request.getRoadLocation().getDirection().name();
+		String direction = request.getRoadLocation().getDirectionStr();
 		Road road = new Road(playerIndex, x, y , direction);
 		serverGameModel.getMap().getRoads().add(road);
 		serverGameModel.incrementVersion();
@@ -518,7 +518,7 @@ public class MovesFacade implements IMovesFacade {
 		Player player = serverGameModel.getPlayers().get(playerIndex);
 		int x = request.getVertexLocation().getX();
 		int y = request.getVertexLocation().getY(); 
-		String direction = request.getVertexLocation().getDirection().name();
+		String direction = request.getVertexLocation().getDirectionStr();
 		Settlement settlement = new Settlement(playerIndex, x, y , direction);
 		serverGameModel.getMap().getSettlements().add(settlement);
 		serverGameModel.incrementVersion();
@@ -547,7 +547,7 @@ public class MovesFacade implements IMovesFacade {
 		Player player = serverGameModel.getPlayers().get(playerIndex);
 		int x = request.getCityLocation().getX();
 		int y = request.getCityLocation().getY(); 
-		String direction = request.getCityLocation().getDirection().name();
+		String direction = request.getCityLocation().getDirectionStr();
 		City city = new City(playerIndex, x, y , direction);
 		serverGameModel.getMap().getCities().add(city);
 		serverGameModel.incrementVersion();

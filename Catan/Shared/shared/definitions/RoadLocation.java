@@ -37,7 +37,35 @@ public class RoadLocation {
 	 * @return the direction
 	 */
 	public EdgeDirection getDirection() {
+		
 		return direction;
+	}
+	
+	public String getDirectionStr() {
+		String dir = direction.name().toLowerCase();
+		
+		switch(dir) {
+		case "northwest":
+			dir = "NW";
+			break;
+		case "north":
+			dir = "N";
+			break;
+		case "northeast":
+			dir = "NE";
+			break;
+		case "south":
+			dir = "S";
+			break;
+		case "southwest":
+			dir = "SW";
+			break;
+		case "southeast":
+			dir = "SE";
+			break;
+		}
+		
+		return dir;
 	}
 
 	/**
