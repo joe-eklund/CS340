@@ -289,18 +289,38 @@ public class MovesFacade implements IMovesFacade {
 		Player player = serverGameModel.getPlayers().get(owner);
 
 		DevCards card=serverGameModel.getDeck();
+		Bank bank = serverGameModel.getBank();
 		Random rand=new Random();
 		int c=rand.nextInt(card.getTotalDevCardCount());
-		if(c<card.getSoldier()){
-			player.getNewDevCards().setSoldier(player.getNewDevCards().getSoldier()+1);
-		}else if(c<card.getSoldier()+card.getMonument()){
-			player.getNewDevCards().setMonument(player.getNewDevCards().getMonument()+1);
-		}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()){
-			player.getNewDevCards().setMonopoly(player.getNewDevCards().getMonopoly()+1);
-		}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()+card.getRoadBuilding()){
-			player.getNewDevCards().setRoadBuilding(player.getNewDevCards().getRoadBuilding()+1);
-		}else{
-			player.getNewDevCards().setYearOfPlenty(player.getNewDevCards().getYearOfPlenty()+1);
+		if(player.getSheep() > 0 && player.getWheat() > 0 && player.getOre() > 0){
+			
+			if(c<card.getSoldier()){
+				player.getNewDevCards().setSoldier(player.getNewDevCards().getSoldier()+1);
+				card.setSoldier(card.getSoldier()-1);
+			}else if(c<card.getSoldier()+card.getMonument()){
+				player.getNewDevCards().setMonument(player.getNewDevCards().getMonument()+1);
+				card.setMonument(card.getMonument()-1);
+			}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()){
+				player.getNewDevCards().setMonopoly(player.getNewDevCards().getMonopoly()+1);
+				card.setMonopoly(card.getMonopoly()-1);
+			}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()+card.getRoadBuilding()){
+				player.getNewDevCards().setRoadBuilding(player.getNewDevCards().getRoadBuilding()+1);
+				card.setRoadBuilding(card.getRoadBuilding());
+			}else{
+				player.getNewDevCards().setYearOfPlenty(player.getNewDevCards().getYearOfPlenty()+1);
+				card.setYearOfPlenty(card.getYearOfPlenty());
+			}
+			
+			player.setSheep(player.getSheep()-1);
+			player.setWheat(player.getWheat()-1);
+			player.setOre(player.getOre()-1);
+			bank.setSheep(bank.getSheep()+1);
+			bank.setWheat(bank.getWheat()+1);
+			bank.setOre(bank.getOre()+1);
+			
+		}
+		else{
+			//error not enough resources
 		}
 		serverGameModel.incrementVersion();
 		return serverGameModel;
