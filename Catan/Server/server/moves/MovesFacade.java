@@ -733,6 +733,7 @@ public class MovesFacade implements IMovesFacade {
 		
 		return serverGameModel;
 	}
+	
 	private void checkForLargestArmy(ServerModel game){
 		int largest=0;
 		int playerWith=-1;
@@ -745,11 +746,13 @@ public class MovesFacade implements IMovesFacade {
 		//if(playerWith!=-1)
 			//TODO set largest army-remove previous
 	}
+	
 	private void checkForWinner(ServerModel game,int owner){
 		int points=game.getPlayers().get(owner).getVictoryPoints();
 		if(points>=10)
 			game.setWinner(owner);
 	}
+	
 	private void incrementResources(ServerModel game,int owner,String resource,int amount){
 		if(resource.equals("wood")){
 			game.getPlayers().get(owner).setWood(game.getPlayers().get(owner).getWood()+amount);
