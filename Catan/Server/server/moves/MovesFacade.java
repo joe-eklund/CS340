@@ -54,9 +54,18 @@ public class MovesFacade implements IMovesFacade {
 
 	private YearOfPlentyCommand yearOfPlentyCommand = new YearOfPlentyCommand();
 	private ArrayList<ServerModel> serverModels;
+	private int player1TotResources;
+	private int player2TotResources;
+	private int player3TotResources;
+	private int player4TotResources;
+	
 	
 	public MovesFacade(ArrayList<ServerModel> serverModels){
 		this.serverModels = serverModels;
+		player1TotResources = 1000;
+		player2TotResources = 1000;
+		player3TotResources = 1000;
+		player4TotResources = 1000;
 	}
 	
 	@Override
@@ -88,6 +97,27 @@ public class MovesFacade implements IMovesFacade {
 		int number=request.getNumber();
 		
 		if(number==7){
+			player1TotResources = serverGameModel.getPlayers().get(0).getResourceCount();
+			player2TotResources = serverGameModel.getPlayers().get(1).getResourceCount();
+			player3TotResources = serverGameModel.getPlayers().get(2).getResourceCount();
+			player4TotResources = serverGameModel.getPlayers().get(3).getResourceCount();
+			
+			if (player1TotResources <= 7) {
+				player1TotResources = 1000;
+			}
+			
+			if (player2TotResources <= 7) {
+				player1TotResources = 1000;
+			}
+			
+			if (player3TotResources <= 7) {
+				player3TotResources = 1000;
+			}
+			
+			if (player4TotResources <= 7) {
+				player4TotResources = 1000;
+			}
+			
 			serverGameModel.getTurnTracker().setStatus("Discarding");
 			serverGameModel.incrementVersion();
 			return serverGameModel;
@@ -655,13 +685,22 @@ public class MovesFacade implements IMovesFacade {
 		player.setWheat(playerWheat);
 		player.setWood(playerWood);
 		
-		Player p1 = serverGameModel.getPlayers().get(0);
-		Player p2 = serverGameModel.getPlayers().get(1);
-		Player p3 = serverGameModel.getPlayers().get(2);
-		Player p4 = serverGameModel.getPlayers().get(3);
+		int p1Resources = serverGameModel.getPlayers().get(0).getResourceCount();
+		int p2Resources = serverGameModel.getPlayers().get(1).getResourceCount();
+		int p3Resources = serverGameModel.getPlayers().get(2).getResourceCount();
+		int p4Resources = serverGameModel.getPlayers().get(3).getResourceCount();
 		
-//		if (p1.)
-	
+		System.out.println(Math.ceil(player2TotResources/2.0));
+		boolean a = (p1Resources <= (int) Math.ceil(player1TotResources/2.0));
+		boolean b = (p2Resources <= (int) Math.ceil(player2TotResources/2.0));
+		boolean c = (p3Resources <= (int) Math.ceil(player3TotResources/2.0));
+		boolean d = (p4Resources <= (int) Math.ceil(player4TotResources/2.0));
+		if (a && b && c && d) {
+			serverGameModel.getTurnTracker().setStatus("Robbing");
+		}
+		
+		serverGameModel.incrementVersion();
+		
 		return serverGameModel;
 	}
 	
