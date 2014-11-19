@@ -7,7 +7,6 @@ import proxy.ITranslator;
 
 /**
  * This class will be used to help with handling the cookie used with the server
- * @author Chad
  *
  */
 public class Cookie {

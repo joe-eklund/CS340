@@ -1,5 +1,11 @@
 package server.commands.moves;
 
+import server.commands.CommandException;
+import server.cookie.CookieParams;
+import server.moves.IMovesFacade;
+import server.moves.InvalidMovesRequest;
+import shared.ServerMethodRequests.FinishTurnRequest;
+
 
 /**
  * The command class in charge of finishing a players turn
@@ -7,15 +13,20 @@ package server.commands.moves;
  */
 public class FinishTurnCommand extends AMovesCommand {
 
-	public FinishTurnCommand() {
-		super("FinishTurnCommand");
-		// TODO Auto-generated constructor stub
+	private FinishTurnRequest request;
+
+	public FinishTurnCommand(IMovesFacade moves, FinishTurnRequest request, CookieParams cookieParams) {
+		super("FinishTurnCommand", moves, cookieParams);
+		this.request = request;
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute() throws CommandException {
+		try {
+			executor.finishTurn(request, cookieParms);
+		} catch (InvalidMovesRequest e) {
+			throw new CommandException(e.getMessage());
+		}
 	}
 
 }

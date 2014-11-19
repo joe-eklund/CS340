@@ -1,5 +1,11 @@
 package server.commands.moves;
 
+import server.commands.CommandException;
+import server.cookie.CookieParams;
+import server.moves.IMovesFacade;
+import server.moves.InvalidMovesRequest;
+import shared.ServerMethodRequests.MaritimeTradeRequest;
+
 
 /**
  * The command class in charge of maritime trades
@@ -7,15 +13,20 @@ package server.commands.moves;
  */
 public class MaritimeTradeCommand extends AMovesCommand {
 
-	public MaritimeTradeCommand() {
-		super("MaritimeTradeCommand");
-		// TODO Auto-generated constructor stub
+	private MaritimeTradeRequest request;
+
+	public MaritimeTradeCommand(IMovesFacade moves, MaritimeTradeRequest request, CookieParams cookieParams) {
+		super("MaritimeTradeCommand", moves, cookieParams);
+		this.request = request;
 	}
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-		
+	public void execute() throws CommandException {
+		try {
+			executor.maritimeTrade(request, cookieParms);
+		} catch (InvalidMovesRequest e) {
+			throw new CommandException(e.getMessage());
+		}
 	}
 
 }
