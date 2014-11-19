@@ -2,6 +2,7 @@ package server.games;
 
 import static server.games.ModelDefaults.VALID_COLORS;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.commons.io.FileUtils;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -137,9 +140,17 @@ public abstract class AGamesFacade implements IGamesFacade {
 		XStream xstream = new XStream();
 		ServerModel game = gameModelsList.get(id);
 		String xml = xstream.toXML(game);
-		FileWriter fw = new FileWriter("/saves/" + name + ".xml");
-		fw.write(xml);
-		fw.close();
+		File file = new File("saves/");
+		if (!file.exists()) {
+			if (file.mkdir()) {
+				System.out.println("Directory is created!");
+			} else {
+				System.out.println("Failed to create directory!");
+			}
+		}
+		BufferedWriter writer = new BufferedWriter( new FileWriter("saves/" + name + ".xml"));
+	    writer.write(xml);
+	    writer.close();
 	}
 	
 	@Override

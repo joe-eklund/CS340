@@ -61,9 +61,9 @@ public class CreateGameHandler implements HttpHandler {
 				System.out.println(requestJson.toString());
 				CreateGameRequest request = (CreateGameRequest) translator.translateFrom(requestJson.toString(), CreateGameRequest.class);
 				exchange.getRequestBody().close();
-				
+				System.out.println("About to translate.");
 				responseMessage = this.translator.translateTo(this.gamesFacade.createGame(request));
-				
+				System.out.println("Finished translating");
 				// TODO Create empty game model and add to gameModels list
 				
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -96,6 +96,7 @@ public class CreateGameHandler implements HttpHandler {
 		writer.close();
 		
 		exchange.getResponseBody().close();
+		System.out.println("Closed exchange response body.");
 	}
 
 }
