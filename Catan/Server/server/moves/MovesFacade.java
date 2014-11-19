@@ -91,7 +91,7 @@ public class MovesFacade implements IMovesFacade {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid send chat request");
 		} 
-		
+		//TODO check if robber is on hex, if so no resources
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 
 		int number=request.getNumber();
@@ -403,7 +403,9 @@ public class MovesFacade implements IMovesFacade {
 		cards.setSoldier(cards.getSoldier()-1);
 		player.setOldDevCards(cards);
 		player.setSoldiers(player.getSoldiers()+1);
-		//TODO check for largest army
+
+		checkForLargestArmy(serverGameModel);
+		
 		serverGameModel.getTurnTracker().setStatus("Robbing");
 		serverGameModel.incrementVersion();
 		return serverGameModel;
@@ -770,7 +772,7 @@ public class MovesFacade implements IMovesFacade {
 	}
 	
 	private void checkForLargestArmy(ServerModel game){
-		int largest=0;
+		int largest=2;
 		int playerWith=-1;
 		for(int i=0;i<game.getPlayers().size();i++){
 			if(game.getPlayers().get(i).getSoldiers()>largest){
@@ -778,8 +780,8 @@ public class MovesFacade implements IMovesFacade {
 				playerWith=i;
 			}
 		}
-		//if(playerWith!=-1)
-			//TODO set largest army-remove previous
+		if(playerWith!=-1)
+			game.getTurnTracker().setLargestArmy(playerWith);
 	}
 	
 	private void checkForWinner(ServerModel game,int owner){
