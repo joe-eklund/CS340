@@ -201,6 +201,19 @@ public class MovesFacade implements IMovesFacade {
 	@Override
 	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		int owner=request.getPlayerIndex();
+		
+		DevCards newCards=serverGameModel.getPlayers().get(owner).getNewDevCards();
+		DevCards oldCards=serverGameModel.getPlayers().get(owner).getOldDevCards();
+		oldCards.setMonopoly(oldCards.getMonopoly()+newCards.getMonopoly());
+		oldCards.setMonument(oldCards.getMonument()+newCards.getMonument());
+		oldCards.setRoadBuilding(oldCards.getRoadBuilding()+newCards.getRoadBuilding());
+		oldCards.setSoldier(oldCards.getSoldier()+newCards.getSoldier());
+		oldCards.setYearOfPlenty(oldCards.getYearOfPlenty()+newCards.getYearOfPlenty());
+		newCards=new DevCards();
+		serverGameModel.getPlayers().get(owner).setNewDevCards(newCards);
+		serverGameModel.getPlayers().get(owner).setOldDevCards(oldCards);
+		
 		serverGameModel.getTurnTracker().nextTurn();
 		serverGameModel.incrementVersion();
 		serverGameModel.getTurnTracker().setStatus("Rolling");
@@ -292,6 +305,7 @@ public class MovesFacade implements IMovesFacade {
 				}
 			}
 		}
+		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
 		serverGameModel.setBank(bank);
 		serverGameModel.incrementVersion();
 		return serverGameModel;
@@ -312,6 +326,10 @@ public class MovesFacade implements IMovesFacade {
 		
 		serverGameModel.getPlayers().get(owner).setRoads(player.getRoads()-2);
 		
+		DevCards cards = player.getOldDevCards();
+		cards.setRoadBuilding(cards.getRoadBuilding()-1);
+		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		
 		serverGameModel.setMap(map);
 		serverGameModel.incrementVersion();
 		return serverGameModel;
@@ -320,6 +338,14 @@ public class MovesFacade implements IMovesFacade {
 	@Override
 	public ServerModel soldier(SoldierDevRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		int owner = request.getPlayerIndex();
+		Player player=serverGameModel.getPlayers().get(owner);
+		
+		DevCards cards = player.getOldDevCards();
+		cards.setSoldier(cards.getSoldier()-1);
+		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		
+		serverGameModel.getTurnTracker().setStatus("Robbing");
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
@@ -327,6 +353,59 @@ public class MovesFacade implements IMovesFacade {
 	@Override
 	public ServerModel monopoly(MonopolyDevRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		int owner = request.getPlayerIndex();
+		Player player=serverGameModel.getPlayers().get(owner);
+		Player other;
+		
+		String resource = request.getResource();
+		int amount=0;
+		for(int i=0;i<serverGameModel.getPlayers().size();i++){
+			if(i!=owner){//&&serverGameModel.getPlayers().get(i).getBrick()>0)
+				other=serverGameModel.getPlayers().get(i);
+				switch(resource){
+				case "ore":
+					if(other.getOre()>0){
+						amount=other.getOre();
+						serverGameModel.getPlayers().get(owner).setOre(player.getOre()+amount);
+						serverGameModel.getPlayers().get(i).setOre(0);
+					}
+					break;
+				case "sheep":
+					if(other.getSheep()>0){
+						amount=other.getSheep();
+						serverGameModel.getPlayers().get(owner).setSheep(player.getSheep()+amount);
+						serverGameModel.getPlayers().get(i).setSheep(0);
+					}
+					break;
+				case "wood":
+					if(other.getWood()>0){
+						amount=other.getWood();
+						serverGameModel.getPlayers().get(owner).setWood(player.getWood()+amount);
+						serverGameModel.getPlayers().get(i).setWood(0);
+					}
+					break;
+				case "wheat":
+					if(other.getWheat()>0){
+						amount=other.getWheat();
+						serverGameModel.getPlayers().get(owner).setWheat(player.getWheat()+amount);
+						serverGameModel.getPlayers().get(i).setWheat(0);
+					}
+					break;
+				case "brick":
+					if(other.getBrick()>0){
+						amount=other.getBrick();
+						serverGameModel.getPlayers().get(owner).setBrick(player.getBrick()+amount);
+						serverGameModel.getPlayers().get(i).setBrick(0);
+					}
+					break;
+				}
+			}
+		}
+		
+		DevCards cards = player.getOldDevCards();
+		cards.setMonopoly(cards.getMonopoly()-1);
+		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
@@ -334,6 +413,15 @@ public class MovesFacade implements IMovesFacade {
 	@Override
 	public ServerModel monument(MonumentDevRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		int owner = request.getPlayerIndex();
+		Player player=serverGameModel.getPlayers().get(owner);
+		
+		serverGameModel.getPlayers().get(owner).setVictoryPoints(player.getVictoryPoints()+1);
+		
+		DevCards cards = player.getOldDevCards();
+		cards.setMonument(cards.getMonument()-1);
+		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
