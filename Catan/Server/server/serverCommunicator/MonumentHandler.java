@@ -49,6 +49,8 @@ public class MonumentHandler implements HttpHandler {
 		String responseMessage = "";
 		
 		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
+			exchange.getResponseHeaders().set("Content-Type", "appliction/json");
+
 			try { 
 				//TODO verify cookie method
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
@@ -94,7 +96,6 @@ public class MonumentHandler implements HttpHandler {
 		List<String> contentTypes = new ArrayList<String>();
 		String type = "text/plain";
 		contentTypes.add(type);
-		exchange.getResponseHeaders().put("Content-type", contentTypes);
 		
 		if (!responseMessage.isEmpty()) {
 			//send failure response message
