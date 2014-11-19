@@ -29,6 +29,7 @@ import shared.definitions.DevCardType;
 import shared.definitions.GameModel;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.City;
@@ -271,8 +272,11 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.getTurnTracker().nextTurn();
 		serverGameModel.incrementVersion();
 		
-//		if ()
-		serverGameModel.getTurnTracker().setStatus("Rolling");
+		if ((serverGameModel.getTurnTracker().getStatus().equals("SecondRound") && request.getPlayerIndex() == 0) || 
+				!serverGameModel.getTurnTracker().getStatus().equals("FirstRound") && !serverGameModel.getTurnTracker().getStatus().equals("SecondRound")) {
+			serverGameModel.getTurnTracker().setStatus("Rolling");
+		}
+	
 		return serverGameModel;
 	}
 
@@ -536,6 +540,13 @@ public class MovesFacade implements IMovesFacade {
 		player.decrementSheep();
 		player.decrementWheat();
 		player.decrementWood();
+		
+		if (serverGameModel.getTurnTracker().getStatus().equals("SecoundRound")) {
+			HexLocation hexLoc = new HexLocation(x, y);
+			serverGameModel.getMap().getHexes().get(0).get
+//			if ()
+			
+		}
 		
 		checkForWinner(serverGameModel,playerIndex);
 		

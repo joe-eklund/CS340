@@ -1,0 +1,3 @@
+-Resources not distributed properly when a number is rolled
+-Client gets stuck if try to rob a hex with no one surrounding the hex
+-Is it one of each resource of the second settlement?
