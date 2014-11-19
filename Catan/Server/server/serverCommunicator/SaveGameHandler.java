@@ -43,6 +43,8 @@ public class SaveGameHandler implements HttpHandler {
 		String responseMessage = "";
 		
 		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
+			exchange.getResponseHeaders().set("Content-Type", "appliction/json");
+			
 			BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 			String inputLine;
 			StringBuffer requestJson = new StringBuffer();
@@ -78,11 +80,6 @@ public class SaveGameHandler implements HttpHandler {
 			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is not supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
-		//set "Content-Type: text/plain" header
-				List<String> contentTypes = new ArrayList<String>();
-				String type = "text/plain";
-				contentTypes.add(type);
-				exchange.getResponseHeaders().put("Content-type", contentTypes);
 				
 				if (!responseMessage.isEmpty()) {
 					//send failure response message

@@ -11,8 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.io.FileUtils;
-
 import com.thoughtworks.xstream.XStream;
 
 import proxy.TranslatorJSON;
