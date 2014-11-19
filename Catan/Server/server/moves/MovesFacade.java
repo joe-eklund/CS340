@@ -251,17 +251,18 @@ public class MovesFacade implements IMovesFacade {
 	public ServerModel finishTurn(FinishTurnRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		int owner=request.getPlayerIndex();
+		Player player = serverGameModel.getPlayers().get(owner);
 		
-		DevCards newCards=serverGameModel.getPlayers().get(owner).getNewDevCards();
-		DevCards oldCards=serverGameModel.getPlayers().get(owner).getOldDevCards();
+		DevCards newCards=player.getNewDevCards();
+		DevCards oldCards=player.getOldDevCards();
 		oldCards.setMonopoly(oldCards.getMonopoly()+newCards.getMonopoly());
 		oldCards.setMonument(oldCards.getMonument()+newCards.getMonument());
 		oldCards.setRoadBuilding(oldCards.getRoadBuilding()+newCards.getRoadBuilding());
 		oldCards.setSoldier(oldCards.getSoldier()+newCards.getSoldier());
 		oldCards.setYearOfPlenty(oldCards.getYearOfPlenty()+newCards.getYearOfPlenty());
 		newCards=new DevCards();
-		serverGameModel.getPlayers().get(owner).setNewDevCards(newCards);
-		serverGameModel.getPlayers().get(owner).setOldDevCards(oldCards);
+		player.setNewDevCards(newCards);
+		player.setOldDevCards(oldCards);
 		
 		serverGameModel.getTurnTracker().nextTurn();
 		serverGameModel.incrementVersion();
@@ -276,20 +277,21 @@ public class MovesFacade implements IMovesFacade {
 		} 
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		int owner=request.getPlayerIndex();
+		Player player = serverGameModel.getPlayers().get(owner);
 
 		DevCards card=serverGameModel.getDeck();
 		Random rand=new Random();
 		int c=rand.nextInt(card.getTotalDevCardCount());
 		if(c<card.getSoldier()){
-			serverGameModel.getPlayers().get(owner).getNewDevCards().setSoldier(serverGameModel.getPlayers().get(owner).getNewDevCards().getSoldier()+1);
+			player.getNewDevCards().setSoldier(player.getNewDevCards().getSoldier()+1);
 		}else if(c<card.getSoldier()+card.getMonument()){
-			serverGameModel.getPlayers().get(owner).getNewDevCards().setMonument(serverGameModel.getPlayers().get(owner).getNewDevCards().getMonument()+1);
+			player.getNewDevCards().setMonument(player.getNewDevCards().getMonument()+1);
 		}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()){
-			serverGameModel.getPlayers().get(owner).getNewDevCards().setMonopoly(serverGameModel.getPlayers().get(owner).getNewDevCards().getMonopoly()+1);
+			player.getNewDevCards().setMonopoly(player.getNewDevCards().getMonopoly()+1);
 		}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()+card.getRoadBuilding()){
-			serverGameModel.getPlayers().get(owner).getNewDevCards().setRoadBuilding(serverGameModel.getPlayers().get(owner).getNewDevCards().getRoadBuilding()+1);
+			player.getNewDevCards().setRoadBuilding(player.getNewDevCards().getRoadBuilding()+1);
 		}else{
-			serverGameModel.getPlayers().get(owner).getNewDevCards().setYearOfPlenty(serverGameModel.getPlayers().get(owner).getNewDevCards().getYearOfPlenty()+1);
+			player.getNewDevCards().setYearOfPlenty(player.getNewDevCards().getYearOfPlenty()+1);
 		}
 		serverGameModel.incrementVersion();
 		return serverGameModel;
@@ -315,7 +317,7 @@ public class MovesFacade implements IMovesFacade {
 			case "brick":
 				if(bank.getBrick()>0){
 					bank.setBrick(bank.getBrick()-1);
-					serverGameModel.getPlayers().get(owner).setBrick(player.getBrick()+1);
+					player.setBrick(player.getBrick()+1);
 				}
 				else {
 					//throw no more of that resource error
@@ -323,7 +325,7 @@ public class MovesFacade implements IMovesFacade {
 			case "ore":
 				if(bank.getOre()>0){
 					bank.setOre(bank.getOre()-1);	
-					serverGameModel.getPlayers().get(owner).setOre(player.getOre()+1);				
+					player.setOre(player.getOre()+1);				
 				}
 				else {
 					//throw no more of that resource error
@@ -331,7 +333,7 @@ public class MovesFacade implements IMovesFacade {
 			case "wood":
 				if(bank.getWood()>0){
 					bank.setWood(bank.getWood()-1);
-					serverGameModel.getPlayers().get(owner).setWood(player.getWood()+1);					
+					player.setWood(player.getWood()+1);					
 				}
 				else {
 					//throw no more of that resource error
@@ -339,7 +341,7 @@ public class MovesFacade implements IMovesFacade {
 			case "sheep":
 				if(bank.getSheep()>0){
 					bank.setSheep(bank.getSheep()-1);	
-					serverGameModel.getPlayers().get(owner).setSheep(player.getSheep()+1);				
+					player.setSheep(player.getSheep()+1);				
 				}
 				else {
 					//throw no more of that resource error
@@ -347,7 +349,7 @@ public class MovesFacade implements IMovesFacade {
 			case "wheat":
 				if(bank.getWheat()>0){
 					bank.setWheat(bank.getWheat()-1);		
-					serverGameModel.getPlayers().get(owner).setWheat(player.getWheat()+1);			
+					player.setWheat(player.getWheat()+1);			
 				}
 				else {
 					//throw no more of that resource error
@@ -393,7 +395,8 @@ public class MovesFacade implements IMovesFacade {
 		
 		DevCards cards = player.getOldDevCards();
 		cards.setSoldier(cards.getSoldier()-1);
-		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		player.setOldDevCards(cards);
+		player.setSoldiers(player.getSoldiers()+1);
 		//TODO check for largest army
 		serverGameModel.getTurnTracker().setStatus("Robbing");
 		serverGameModel.incrementVersion();
@@ -410,42 +413,42 @@ public class MovesFacade implements IMovesFacade {
 		String resource = request.getResource();
 		int amount=0;
 		for(int i=0;i<serverGameModel.getPlayers().size();i++){
-			if(i!=owner){//&&serverGameModel.getPlayers().get(i).getBrick()>0)
+			if(i!=owner){
 				other=serverGameModel.getPlayers().get(i);
 				switch(resource){
 				case "ore":
 					if(other.getOre()>0){
 						amount=other.getOre();
-						serverGameModel.getPlayers().get(owner).setOre(player.getOre()+amount);
-						serverGameModel.getPlayers().get(i).setOre(0);
+						player.setOre(player.getOre()+amount);
+						other.setOre(0);
 					}
 					break;
 				case "sheep":
 					if(other.getSheep()>0){
 						amount=other.getSheep();
-						serverGameModel.getPlayers().get(owner).setSheep(player.getSheep()+amount);
-						serverGameModel.getPlayers().get(i).setSheep(0);
+						player.setSheep(player.getSheep()+amount);
+						other.setSheep(0);
 					}
 					break;
 				case "wood":
 					if(other.getWood()>0){
 						amount=other.getWood();
-						serverGameModel.getPlayers().get(owner).setWood(player.getWood()+amount);
-						serverGameModel.getPlayers().get(i).setWood(0);
+						player.setWood(player.getWood()+amount);
+						other.setWood(0);
 					}
 					break;
 				case "wheat":
 					if(other.getWheat()>0){
 						amount=other.getWheat();
-						serverGameModel.getPlayers().get(owner).setWheat(player.getWheat()+amount);
-						serverGameModel.getPlayers().get(i).setWheat(0);
+						player.setWheat(player.getWheat()+amount);
+						other.setWheat(0);
 					}
 					break;
 				case "brick":
 					if(other.getBrick()>0){
 						amount=other.getBrick();
-						serverGameModel.getPlayers().get(owner).setBrick(player.getBrick()+amount);
-						serverGameModel.getPlayers().get(i).setBrick(0);
+						player.setBrick(player.getBrick()+amount);
+						other.setBrick(0);
 					}
 					break;
 				}
@@ -466,11 +469,11 @@ public class MovesFacade implements IMovesFacade {
 		int owner = request.getPlayerIndex();
 		Player player=serverGameModel.getPlayers().get(owner);
 		
-		serverGameModel.getPlayers().get(owner).setVictoryPoints(player.getVictoryPoints()+1);
+		player.setVictoryPoints(player.getVictoryPoints()+1);
 		
 		DevCards cards = player.getOldDevCards();
 		cards.setMonument(cards.getMonument()-1);
-		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		player.setOldDevCards(cards);
 
 		checkForWinner(serverGameModel,owner);
 		
@@ -729,6 +732,18 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.incrementVersion();
 		
 		return serverGameModel;
+	}
+	private void checkForLargestArmy(ServerModel game){
+		int largest=0;
+		int playerWith=-1;
+		for(int i=0;i<game.getPlayers().size();i++){
+			if(game.getPlayers().get(i).getSoldiers()>largest){
+				largest=game.getPlayers().get(i).getSoldiers();
+				playerWith=i;
+			}
+		}
+		//if(playerWith!=-1)
+			//TODO set largest army-remove previous
 	}
 	private void checkForWinner(ServerModel game,int owner){
 		int points=game.getPlayers().get(owner).getVictoryPoints();
