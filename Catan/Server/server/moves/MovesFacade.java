@@ -29,6 +29,7 @@ import shared.definitions.DevCardType;
 import shared.definitions.GameModel;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -510,9 +511,13 @@ public class MovesFacade implements IMovesFacade {
 		Road road = new Road(playerIndex, x, y , direction);
 		serverGameModel.getMap().getRoads().add(road);
 		serverGameModel.incrementVersion();
+		
 		player.decrementRoads();
-		player.decrementBrick();
-		player.decrementWood();
+		
+		if (!request.isFree()) {
+			player.decrementBrick();
+			player.decrementWood();
+		}
 
 		checkForLongestRoad(serverGameModel);
 		
@@ -543,10 +548,68 @@ public class MovesFacade implements IMovesFacade {
 		player.decrementWheat();
 		player.decrementWood();
 		
-		if (serverGameModel.getTurnTracker().getStatus().equals("SecoundRound")) {
+		if (serverGameModel.getTurnTracker().getStatus().equals("SecondRound")) {
+			
 			HexLocation hexLoc = new HexLocation(x, y);
-//			serverGameModel.getMap().getHexes().get(0).get
-//			if ()
+			HexLocation neighbor1 = null;
+			HexLocation neighbor2 = null;
+			
+			switch(direction) {
+			case "NW":
+				neighbor1 = hexLoc.getNeighborLoc(EdgeDirection.NorthWest);
+				neighbor2 = hexLoc.getNeighborLoc(EdgeDirection.North);
+				break;
+			case "NE":
+				neighbor1 = hexLoc.getNeighborLoc(EdgeDirection.NorthEast);
+				neighbor2 = hexLoc.getNeighborLoc(EdgeDirection.North);
+				break;
+			case "E":
+				neighbor1 = hexLoc.getNeighborLoc(EdgeDirection.NorthEast);
+				neighbor2 = hexLoc.getNeighborLoc(EdgeDirection.SouthEast);
+				break;
+			case "SE":
+				neighbor1 = hexLoc.getNeighborLoc(EdgeDirection.SouthEast);
+				neighbor2 = hexLoc.getNeighborLoc(EdgeDirection.South);
+				break;
+			case "SW":
+				neighbor1 = hexLoc.getNeighborLoc(EdgeDirection.SouthWest);
+				neighbor2 = hexLoc.getNeighborLoc(EdgeDirection.South);
+				break;
+			case "W":
+				neighbor1 = hexLoc.getNeighborLoc(EdgeDirection.NorthWest);
+				neighbor2 = hexLoc.getNeighborLoc(EdgeDirection.SouthWest);
+				break;
+			}
+			
+			for (Hex hex : serverGameModel.getMap().getHexes()) {
+				int hexX = hex.getLocation().getX();
+				int hexY = hex.getLocation().getY();
+				
+				if ((hexX == hexLoc.getX() && hexY == hexLoc.getY()) ||
+						(hexX == neighbor1.getX() && hexY == neighbor1.getY()) ||
+						(hexX == neighbor2.getX() && hexY == neighbor2.getY())) {
+					
+					String resource = hex.getResourceType();
+					
+					switch (resource) {
+					case "brick":
+						player.setBrick(1);
+						break;
+					case "ore":
+						player.setOre(1);
+						break;
+					case "sheep":
+						player.setSheep(1);
+						break;
+					case "wheat":
+						player.setWheat(1);
+						break;
+					case "wood":
+						player.setWood(1);
+						break;
+					}
+				}
+			}
 			
 		}
 		
@@ -790,11 +853,13 @@ public class MovesFacade implements IMovesFacade {
 		int num;
 		for(int i=0;i<game.getPlayers().size();i++){
 			num = 19-game.getPlayers().get(i).getRoads();
-			if(19-game.getPlayers().get(i).getRoads()>longest &&
+			
+			if(playerWith >= 0 && playerWith < game.getPlayers().size() && 19-game.getPlayers().get(i).getRoads()>longest &&
 					game.getPlayers().get(i).getRoads()<game.getPlayers().get(playerWith).getRoads()){
 				longest=num;
 				playerWith=i;
 			}
+			
 		}
 		if(playerWith!=-1)
 			game.getTurnTracker().setLongestRoad(playerWith);
