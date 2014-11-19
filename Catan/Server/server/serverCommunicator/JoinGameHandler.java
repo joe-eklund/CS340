@@ -56,6 +56,7 @@ public class JoinGameHandler implements HttpHandler {
 		
 		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
 			try {  // check user login cookie and if valid get params
+				exchange.getResponseHeaders().set("Content-Type", "appliction/json");
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 				CookieParams cookie = Cookie.verifyCookie(unvalidatedCookie, translator);
 				
@@ -103,13 +104,6 @@ public class JoinGameHandler implements HttpHandler {
 			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
-		
-		//set "Content-Type: text/plain" header
-		List<String> contentTypes = new ArrayList<String>();
-		String type = "text/plain";
-		contentTypes.add(type);
-		exchange.getResponseHeaders().put("Content-type", contentTypes);
-		
 		if (!responseMessage.isEmpty()) {
 			//send failure response message
 			OutputStreamWriter writer = new OutputStreamWriter(

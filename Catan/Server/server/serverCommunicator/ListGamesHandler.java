@@ -66,6 +66,7 @@ public class ListGamesHandler implements HttpHandler {
 		String responseMessage = "";
 		
 		if(exchange.getRequestMethod().toLowerCase().equals("get")) {
+			exchange.getResponseHeaders().set("Content-Type", "appliction/json");
 			String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 			System.out.println(unvalidatedCookie);
 			//try {  // check user login cookie and if valid get params
@@ -87,12 +88,6 @@ public class ListGamesHandler implements HttpHandler {
 			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is no supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
-		
-		//set "Content-Type: application/json" header
-		List<String> contentTypes = new ArrayList<String>();
-		String appJson = "application/json";
-		contentTypes.add(appJson);
-		exchange.getResponseHeaders().put("Content-type", contentTypes);
 		
 		//send failure response message
 		OutputStreamWriter writer = new OutputStreamWriter(
