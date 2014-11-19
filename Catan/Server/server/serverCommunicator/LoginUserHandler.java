@@ -96,6 +96,7 @@ public class LoginUserHandler implements HttpHandler {
 		
 		exchange.getResponseBody().close();
 		System.out.println("response code: " + exchange.getResponseCode());
+		System.out.println("response cookie: " + exchange.getResponseHeaders().get("Set-cookie").get(0));
 		System.out.println("response message: " + responseMessage);
 		System.out.println("response body closed");
 	}

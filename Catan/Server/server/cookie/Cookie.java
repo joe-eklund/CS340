@@ -43,16 +43,18 @@ public class Cookie {
 					throw new InvalidCookieException(
 							"Error: the cookie catan.game value is invalid");
 				}
-				//if(gameCookie.contains("%7d")) {
-					try {
-						gameID = Integer.parseInt(gameCookie.split("%7d")[0]);
-						System.out.println("cookie gameID: " + gameID);
-					} catch (NumberFormatException e) {
-						System.out.println("invalid cookie game id");
-						throw new InvalidCookieException(
-								"Error: the cookie catan.game value is invalid");
-					}
-				//}
+				if(gameCookie.contains("%7D")) {
+					gameCookie.replaceAll("%7D", "");
+				}
+				try {
+					System.out.println("extracting gameID");
+					gameID = Integer.parseInt(gameCookie.split("%7D")[0]);
+					System.out.println("cookie gameID: " + gameID);
+				} catch (NumberFormatException e) {
+					System.out.println("invalid cookie game id");
+					throw new InvalidCookieException(
+							"Error: the cookie catan.game value is invalid");
+				}
 				cookie = cookie.split("catan.game=")[0];
 			}
 			try {
@@ -87,7 +89,7 @@ public class Cookie {
 	 * @return The completed cookie in string form
 	 */
 	public static String createLoginCookie(String username, String password, int userID) {
-		return "catan.user=%7B%22name%22%3A%22" + username + "%22%2C%22password%22%3A%22" + password + "%22%2C%22playerID%22%3A" + userID + "%7D;Path=/";
+		return "catan.user=%7B%22name%22%3A%22" + username + "%22%2C%22password%22%3A%22" + password + "%22%2C%22playerID%22%3A" + userID + "%7D;Path=/;";
 	}
 	
 	/**

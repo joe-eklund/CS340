@@ -47,8 +47,8 @@ public class CreateGameHandler implements HttpHandler {
 		
 		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
 			try {  // check user login cookie and if valid get params
-				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
-				Cookie.verifyCookie(unvalidatedCookie, translator);
+				//String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
+				//Cookie.verifyCookie(unvalidatedCookie, translator);
 				
 				BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 				String inputLine;
@@ -67,7 +67,8 @@ public class CreateGameHandler implements HttpHandler {
 				// TODO Create empty game model and add to gameModels list
 				
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			} catch (InvalidCookieException | InvalidGamesRequest e) { // else send error message
+				
+			} catch (/*InvalidCookieException |*/ InvalidGamesRequest e) { // else send error message
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}
@@ -76,6 +77,7 @@ public class CreateGameHandler implements HttpHandler {
 			// unsupported request method
 			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is not supported!";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+			System.out.println("Invalid request: " + exchange.getRequestMethod());
 		}
 		
 		System.out.println(responseMessage + "\n\n");

@@ -68,19 +68,19 @@ public class ListGamesHandler implements HttpHandler {
 		if(exchange.getRequestMethod().toLowerCase().equals("get")) {
 			String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 			System.out.println(unvalidatedCookie);
-			try {  // check user login cookie and if valid get params
+			//try {  // check user login cookie and if valid get params
 				
-				Cookie.verifyCookie(unvalidatedCookie, translator);
+				//Cookie.verifyCookie(unvalidatedCookie, translator);
 				System.out.println("good cookie");
 				List<GameDescription> gameDescriptions = this.gamesFacade.listGames();
 				responseMessage = this.translator.translateTo(gameDescriptions.toArray());			
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				
-			} catch (InvalidCookieException e) { // else send error message
+			/*} catch (InvalidCookieException e) { // else send error message
 				System.out.println("bad cookie");
 				responseMessage = "Error: You either did not provide a cookie or the provided cookie is invalid";
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-			}
+			}*/
 		}
 		else {
 			// unsupported request method
