@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
+import server.commands.moves.BuildRoadCommand;
+import server.commands.moves.BuildSettlementCommand;
+import server.commands.moves.IMovesCommandLog;
 import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
@@ -31,11 +34,13 @@ public class BuildSettlementHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IMovesFacade movesFacade;
+	private IMovesCommandLog movesLog;
 
 	public BuildSettlementHandler(ITranslator translator,
-			IMovesFacade movesFacade) {
+			IMovesFacade movesFacade, IMovesCommandLog movesLog) {
 		this.translator = translator;
 		this.movesFacade = movesFacade;
+		this.movesLog = movesLog;
 	}
 
 	/**
@@ -77,6 +82,7 @@ System.out.println("In build settlement handler");
 				// send success response headers
 				exchange.getResponseHeaders().put("Set-cookie", cookies);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				movesLog.store(new BuildSettlementCommand(movesFacade, request, cookie));
 				
 				
 				responseMessage = translator.translateTo(serverModel);

@@ -54,7 +54,6 @@ import shared.model.TradeOffer;
  */
 public class MovesFacade implements IMovesFacade {
 
-	private YearOfPlentyCommand yearOfPlentyCommand = new YearOfPlentyCommand();
 	private ArrayList<ServerModel> serverModels;
 	private int player1TotResources;
 	private int player2TotResources;

@@ -87,23 +87,23 @@ public class ServerCommunicator {
         server.createContext("/game/listAI", new ListAIHandler(translator, gameFacade));
         
         // game: mid game actions--moves (requires cookie)
-        server.createContext("/moves/sendChat", new SendChatHandler(translator, movesFacade));
-        server.createContext("/moves/rollNumber", new RollNumberHandler(translator, movesFacade));
-        server.createContext("/moves/robPlayer", new RobPlayerHandler(translator, movesFacade));
-        server.createContext("/moves/finishTurn", new FinishTurnHandler(translator, movesFacade));
-        server.createContext("/moves/buyDevCard", new BuyDevCardHandler(translator, movesFacade));
-        server.createContext("/moves/Year_Of_Plenty", new YearOfPlentyHandler(translator, movesFacade));
-        server.createContext("/moves/Road_Building", new RoadBuildingHandler(translator, movesFacade));
-        server.createContext("/moves/Soldier", new SoldierHandler(translator, movesFacade));
-        server.createContext("/moves/Monopoly", new MonopolyHandler(translator, movesFacade));
-        server.createContext("/moves/Monument", new MonumentHandler(translator, movesFacade));
-        server.createContext("/moves/buildRoad", new BuildRoadHandler(translator, movesFacade));
-        server.createContext("/moves/buildSettlement", new BuildSettlementHandler(translator, movesFacade));
-        server.createContext("/moves/buildCity", new BuildCityHandler(translator, movesFacade));
-        server.createContext("/moves/offerTrade", new OfferTradeHandler(translator, movesFacade));
-        server.createContext("/moves/acceptTrade", new AcceptTradeHandler(translator, movesFacade));
-        server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(translator, movesFacade));
-        server.createContext("/moves/discardCards", new DiscardCardsHandler(translator, movesFacade));
+        server.createContext("/moves/sendChat", new SendChatHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/rollNumber", new RollNumberHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/robPlayer", new RobPlayerHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/finishTurn", new FinishTurnHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/buyDevCard", new BuyDevCardHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/Year_Of_Plenty", new YearOfPlentyHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/Road_Building", new RoadBuildingHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/Soldier", new SoldierHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/Monopoly", new MonopolyHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/Monument", new MonumentHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/buildRoad", new BuildRoadHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/buildSettlement", new BuildSettlementHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/buildCity", new BuildCityHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/offerTrade", new OfferTradeHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/acceptTrade", new AcceptTradeHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/maritimeTrade", new MaritimeTradeHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/discardCards", new DiscardCardsHandler(translator, movesFacade, movesLog));
         
         // util: change how the server runs
         server.createContext("/util/changeLogLevel", new ChangeLogLevelHandler(translator, utilFacade));

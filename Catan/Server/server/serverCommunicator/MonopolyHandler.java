@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
+import server.commands.moves.IMovesCommandLog;
+import server.commands.moves.MonopolyCommand;
+import server.commands.moves.SendChatCommand;
 import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
@@ -30,10 +33,12 @@ public class MonopolyHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IMovesFacade movesFacade;
+	private IMovesCommandLog movesLog;
 
-	public MonopolyHandler(ITranslator translator, IMovesFacade movesFacade) {
+	public MonopolyHandler(ITranslator translator, IMovesFacade movesFacade, IMovesCommandLog movesLog) {
 		this.translator = translator;
 		this.movesFacade = movesFacade;
+		this.movesLog = movesLog;
 	}
 
 	/**
@@ -77,6 +82,7 @@ public class MonopolyHandler implements HttpHandler {
 				// send success response headers
 				exchange.getResponseHeaders().put("Set-cookie", cookies);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				movesLog.store(new MonopolyCommand(movesFacade, request, cookie));
 				
 				responseMessage = translator.translateTo(serverModel);
 

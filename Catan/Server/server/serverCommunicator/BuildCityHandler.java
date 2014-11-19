@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
+import server.commands.moves.BuildCityCommand;
+import server.commands.moves.BuildRoadCommand;
+import server.commands.moves.IMovesCommandLog;
 import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
@@ -31,10 +34,12 @@ public class BuildCityHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IMovesFacade movesFacade;
+	private IMovesCommandLog movesLog;
 
-	public BuildCityHandler(ITranslator translator, IMovesFacade movesFacade) {
+	public BuildCityHandler(ITranslator translator, IMovesFacade movesFacade, IMovesCommandLog movesLog) {
 		this.translator = translator;
 		this.movesFacade = movesFacade;
+		this.movesLog = movesLog;
 	}
 
 	/**
@@ -76,6 +81,7 @@ public class BuildCityHandler implements HttpHandler {
 				// send success response headers
 				exchange.getResponseHeaders().put("Set-cookie", cookies);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				movesLog.store(new BuildCityCommand(movesFacade, request, cookie));
 				
 				
 				responseMessage = translator.translateTo(serverModel);
