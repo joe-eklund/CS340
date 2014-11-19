@@ -38,15 +38,13 @@ public class Catan {
 	 * 
 	 * ==> "-p 39640 -t" will run the server on port 39640 with the testing data 
 	 */
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) {
 		
 		CommandLineParser parser = new GnuParser();
 		
 		Options options = new Options();
 		options.addOption("t", "test-data", false, "start server using testing stubs");
 		options.addOption("p", "port", true, "port on which server will listen");
-		
-		//CommandLine line = parser.parse(options, args);
 		
 		try {
 			// serverModels will be shared by GamesFacade, GameFacade, and MovesFacade
