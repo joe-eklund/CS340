@@ -27,11 +27,13 @@ import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.DevCardType;
 import shared.definitions.GameModel;
+import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.City;
 import shared.model.Hex;
+import shared.model.Map;
 import shared.model.Player;
 import shared.model.Bank;
 import shared.model.City;
@@ -234,16 +236,13 @@ public class MovesFacade implements IMovesFacade {
 	@Override
 	public ServerModel yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
-		DevCards deck = serverGameModel.getDeck();
 		Bank bank = serverGameModel.getBank();
+		int owner = request.getPlayerIndex();
+		Player player=serverGameModel.getPlayers().get(owner);
 		
-		if(deck.getYearOfPlenty()>0){
-			deck.setYearOfPlenty(deck.getYearOfPlenty()-1);			
-		}
-		else{
-			//throw no more of that resource error
-		}
-		
+		DevCards cards = player.getOldDevCards();
+		cards.setYearOfPlenty(cards.getYearOfPlenty()-1);
+
 		String resource1 = request.getResource1();
 		String resource2 = request.getResource2();
 		List<String> resources = new ArrayList<String>();
@@ -253,41 +252,47 @@ public class MovesFacade implements IMovesFacade {
 			switch(resource){
 			case "brick":
 				if(bank.getBrick()>0){
-					bank.setBrick(bank.getBrick()-1);					
+					bank.setBrick(bank.getBrick()-1);
+					serverGameModel.getPlayers().get(owner).setBrick(player.getBrick()+1);
 				}
 				else {
 					//throw no more of that resource error
 				}
 			case "ore":
 				if(bank.getOre()>0){
-					bank.setOre(bank.getOre()-1);					
+					bank.setOre(bank.getOre()-1);	
+					serverGameModel.getPlayers().get(owner).setOre(player.getOre()+1);				
 				}
 				else {
 					//throw no more of that resource error
 				}			
 			case "wood":
 				if(bank.getWood()>0){
-					bank.setWood(bank.getWood()-1);					
+					bank.setWood(bank.getWood()-1);
+					serverGameModel.getPlayers().get(owner).setWood(player.getWood()+1);					
 				}
 				else {
 					//throw no more of that resource error
 				}
 			case "sheep":
 				if(bank.getSheep()>0){
-					bank.setSheep(bank.getSheep()-1);					
+					bank.setSheep(bank.getSheep()-1);	
+					serverGameModel.getPlayers().get(owner).setSheep(player.getSheep()+1);				
 				}
 				else {
 					//throw no more of that resource error
 				}
 			case "wheat":
 				if(bank.getWheat()>0){
-					bank.setWheat(bank.getWheat()-1);					
+					bank.setWheat(bank.getWheat()-1);		
+					serverGameModel.getPlayers().get(owner).setWheat(player.getWheat()+1);			
 				}
 				else {
 					//throw no more of that resource error
 				}
 			}
 		}
+		serverGameModel.setBank(bank);
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
@@ -295,6 +300,19 @@ public class MovesFacade implements IMovesFacade {
 	@Override
 	public ServerModel roadBuilding(RoadBuildingDevRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		int owner = request.getPlayerIndex();
+		Player player=serverGameModel.getPlayers().get(owner);
+		
+		RoadLocation spot1 = request.getSpot1();
+		RoadLocation spot2 = request.getSpot2();
+		
+		Map map = serverGameModel.getMap();
+		map.getRoads().add(new Road(owner,spot1.getX(),spot1.getY(),spot1.getDirection().toString()));
+		map.getRoads().add(new Road(owner,spot2.getX(),spot2.getY(),spot2.getDirection().toString()));
+		
+		serverGameModel.getPlayers().get(owner).setRoads(player.getRoads()-2);
+		
+		serverGameModel.setMap(map);
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
