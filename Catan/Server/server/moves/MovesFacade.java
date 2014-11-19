@@ -92,7 +92,6 @@ public class MovesFacade implements IMovesFacade {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid send chat request");
 		} 
-		//TODO check if robber is on hex, if so no resources
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 
 		int number=request.getNumber();
@@ -138,7 +137,7 @@ public class MovesFacade implements IMovesFacade {
 		
 		//execute
 		for(int i=0;i<hexes.size();i++){
-			if(hexes.get(i).getChit()==number)
+			if(hexes.get(i).getChit()==number && !serverGameModel.getMap().getRobber().getLocation().equals(hexes.get(i)))
 				withNumber.add(hexes.get(i));
 		}
 		
@@ -390,7 +389,8 @@ public class MovesFacade implements IMovesFacade {
 		DevCards cards = player.getOldDevCards();
 		cards.setRoadBuilding(cards.getRoadBuilding()-1);
 		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
-		//TODO check for longest road
+		
+		checkForLongestRoad(serverGameModel);
 		
 		serverGameModel.setMap(map);
 		serverGameModel.incrementVersion();
@@ -513,7 +513,9 @@ public class MovesFacade implements IMovesFacade {
 		player.decrementRoads();
 		player.decrementBrick();
 		player.decrementWood();
-		//TODO check for longest road
+
+		checkForLongestRoad(serverGameModel);
+		
 		return serverGameModel;
 	}
 
@@ -782,11 +784,28 @@ public class MovesFacade implements IMovesFacade {
 		return serverGameModel;
 	}
 	
+	private void checkForLongestRoad(ServerModel game){
+		int longest=4;
+		int playerWith=game.getTurnTracker().getLongestRoad();
+		int num;
+		for(int i=0;i<game.getPlayers().size();i++){
+			num = 19-game.getPlayers().get(i).getRoads();
+			if(19-game.getPlayers().get(i).getRoads()>longest &&
+					game.getPlayers().get(i).getRoads()<game.getPlayers().get(playerWith).getRoads()){
+				longest=num;
+				playerWith=i;
+			}
+		}
+		if(playerWith!=-1)
+			game.getTurnTracker().setLongestRoad(playerWith);
+	}
+	
 	private void checkForLargestArmy(ServerModel game){
 		int largest=2;
-		int playerWith=-1;
+		int playerWith=game.getTurnTracker().getLargestArmy();
 		for(int i=0;i<game.getPlayers().size();i++){
-			if(game.getPlayers().get(i).getSoldiers()>largest){
+			if(game.getPlayers().get(i).getSoldiers() > largest && 
+					game.getPlayers().get(i).getSoldiers() > game.getPlayers().get(playerWith).getSoldiers()){
 				largest=game.getPlayers().get(i).getSoldiers();
 				playerWith=i;
 			}
