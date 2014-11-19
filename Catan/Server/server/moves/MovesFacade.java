@@ -359,6 +359,7 @@ public class MovesFacade implements IMovesFacade {
 		DevCards cards = player.getOldDevCards();
 		cards.setRoadBuilding(cards.getRoadBuilding()-1);
 		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		//TODO check for longest road
 		
 		serverGameModel.setMap(map);
 		serverGameModel.incrementVersion();
@@ -374,7 +375,7 @@ public class MovesFacade implements IMovesFacade {
 		DevCards cards = player.getOldDevCards();
 		cards.setSoldier(cards.getSoldier()-1);
 		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
-		
+		//TODO check for largest army
 		serverGameModel.getTurnTracker().setStatus("Robbing");
 		serverGameModel.incrementVersion();
 		return serverGameModel;
@@ -451,6 +452,8 @@ public class MovesFacade implements IMovesFacade {
 		DevCards cards = player.getOldDevCards();
 		cards.setMonument(cards.getMonument()-1);
 		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+
+		checkForWinner(serverGameModel,owner);
 		
 		serverGameModel.incrementVersion();
 		return serverGameModel;
@@ -476,6 +479,7 @@ public class MovesFacade implements IMovesFacade {
 		player.decrementRoads();
 		player.decrementBrick();
 		player.decrementWood();
+		//TODO check for longest road
 		return serverGameModel;
 	}
 
@@ -502,6 +506,8 @@ public class MovesFacade implements IMovesFacade {
 		player.decrementSheep();
 		player.decrementWheat();
 		player.decrementWood();
+		
+		checkForWinner(serverGameModel,playerIndex);
 		
 		return serverGameModel;
 	}
@@ -532,6 +538,8 @@ public class MovesFacade implements IMovesFacade {
 		int newWheat = player.getResources().getWheat() - 2;
 		player.getResources().setOre(newOre);
 		player.getResources().setWheat(newWheat);
+		
+		checkForWinner(serverGameModel,playerIndex);
 		
 		return serverGameModel;
 	}
@@ -703,7 +711,11 @@ public class MovesFacade implements IMovesFacade {
 		
 		return serverGameModel;
 	}
-	
+	private void checkForWinner(ServerModel game,int owner){
+		int points=game.getPlayers().get(owner).getVictoryPoints();
+		if(points>=10)
+			game.setWinner(owner);
+	}
 	private void incrementResources(ServerModel game,int owner,String resource,int amount){
 		if(resource.equals("wood")){
 			game.getPlayers().get(owner).setWood(game.getPlayers().get(owner).getWood()+amount);
