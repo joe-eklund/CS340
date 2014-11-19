@@ -204,22 +204,41 @@ public class MovesFacade implements IMovesFacade {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		Player player=serverGameModel.getPlayers().get(request.getPlayerIndex());
 		Player target=serverGameModel.getPlayers().get(request.getVictimIndex());
-		String loot=request.getType();
-		if(loot.equals("wood")){
-			player.setWood(player.getWood()+1);
-			target.setWood(target.getWood()-1);
-		}else if(loot.equals("wheat")){
-			player.setWheat(player.getWheat()+1);
-			target.setWheat(target.getWheat()-1);
-		}else if(loot.equals("ore")){
-			player.setOre(player.getOre()+1);
-			target.setOre(target.getOre()-1);
-		}else if(loot.equals("brick")){
-			player.setBrick(player.getBrick()+1);
-			target.setBrick(target.getBrick()-1);
-		}else if(loot.equals("sheep")){
-			player.setSheep(player.getSheep()+1);
-			target.setSheep(target.getSheep()-1);
+		
+		ArrayList<String> potentialLoot = new ArrayList<String>();
+		
+		if (target.getResourceCount() > 0) {
+			if (target.getResources().brick > 0)
+				potentialLoot.add("brick");
+			if (target.getResources().ore > 0)
+				potentialLoot.add("ore");
+			if (target.getResources().sheep > 0)
+				potentialLoot.add("sheep");
+			if (target.getResources().wheat > 0)
+				potentialLoot.add("wheat");
+			if (target.getResources().wood > 0)
+				potentialLoot.add("wood");
+			
+			Random randomGenerator = new Random();
+			int lootIndex = randomGenerator.nextInt(potentialLoot.size());
+			
+			String loot=potentialLoot.get(lootIndex);
+			if(loot.equals("wood")){
+				player.setWood(player.getWood()+1);
+				target.setWood(target.getWood()-1);
+			}else if(loot.equals("wheat")){
+				player.setWheat(player.getWheat()+1);
+				target.setWheat(target.getWheat()-1);
+			}else if(loot.equals("ore")){
+				player.setOre(player.getOre()+1);
+				target.setOre(target.getOre()-1);
+			}else if(loot.equals("brick")){
+				player.setBrick(player.getBrick()+1);
+				target.setBrick(target.getBrick()-1);
+			}else if(loot.equals("sheep")){
+				player.setSheep(player.getSheep()+1);
+				target.setSheep(target.getSheep()-1);
+			}
 		}
 
 		serverGameModel.incrementVersion();
