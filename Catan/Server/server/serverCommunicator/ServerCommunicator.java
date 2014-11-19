@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import proxy.ITranslator;
+import server.commands.games.IGamesCommandLog;
+import server.commands.moves.IMovesCommandLog;
+import server.commands.users.IUsersCommandLog;
 import server.game.IGameFacade;
 import server.games.IGamesFacade;
 import server.moves.IMovesFacade;
@@ -29,8 +32,11 @@ public class ServerCommunicator {
 	private IGameFacade gameFacade;
 	private IMovesFacade movesFacade;
 	private IUtilFacade utilFacade;
+	private IUsersCommandLog usersLog;
+	private IGamesCommandLog gamesLog;
+	private IMovesCommandLog movesLog;
     
-    public ServerCommunicator(int portNumber, ITranslator translator, IUsersFacade usersFacade, IGamesFacade gamesFacade, IGameFacade gameFacade, IMovesFacade movesFacade, IUtilFacade utilFacade) {
+    public ServerCommunicator(int portNumber, ITranslator translator, IUsersFacade usersFacade, IGamesFacade gamesFacade, IGameFacade gameFacade, IMovesFacade movesFacade, IUtilFacade utilFacade, IUsersCommandLog usersLog, IGamesCommandLog gamesLog, IMovesCommandLog movesLog) {
     	this.portNumber = portNumber;
     	this.translator = translator;
     	this.usersFacade = usersFacade;
@@ -38,6 +44,9 @@ public class ServerCommunicator {
     	this.gameFacade = gameFacade;
     	this.movesFacade = movesFacade;
     	this.utilFacade = utilFacade;
+    	this.usersLog = usersLog;
+    	this.gamesLog = gamesLog;
+    	this.movesLog = movesLog;
     }
     
     /**
@@ -60,12 +69,12 @@ public class ServerCommunicator {
         
         // user: operations for users (pre-login)
         server.createContext("/user/login", new LoginUserHandler(translator, usersFacade));
-        server.createContext("/user/register", new RegisterUserHandler(translator, usersFacade));
+        server.createContext("/user/register", new RegisterUserHandler(translator, usersFacade, usersLog));
         
         // games: operations for games list (pre-joining)
         server.createContext("/games/list", new ListGamesHandler(translator, gamesFacade));
-        server.createContext("/games/create", new CreateGameHandler(translator, gamesFacade));
-        server.createContext("/games/join", new JoinGameHandler(translator, gamesFacade));
+        server.createContext("/games/create", new CreateGameHandler(translator, gamesFacade, gamesLog));
+        server.createContext("/games/join", new JoinGameHandler(translator, gamesFacade, gamesLog));
         server.createContext("/games/save", new SaveGameHandler(translator, gamesFacade));
         server.createContext("/games/load", new LoadGameHandler(translator, gamesFacade));
         

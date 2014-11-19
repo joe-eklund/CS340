@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of sending a chat for a player
  *
  */
-public class SendChatCommand extends ACommand {
+public class SendChatCommand extends AMovesCommand {
 
 	public SendChatCommand() {
 		super("SendChatCommand");
@@ -15,12 +14,6 @@ public class SendChatCommand extends ACommand {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setParam(Object param) {
 		// TODO Auto-generated method stub
 		
 	}

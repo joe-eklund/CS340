@@ -3,15 +3,14 @@ package server.games;
 import java.util.ArrayList;
 import java.util.List;
 
-import client.exceptions.ClientModelException;
 import shared.ServerMethodRequests.CreateGameRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 import shared.definitions.GameDescription;
-import shared.definitions.Location;
 import shared.definitions.ServerModel;
 import shared.model.Resources;
 import shared.model.Road;
 import shared.model.Settlement;
+import client.exceptions.ClientModelException;
 
 public class GamesFacadeStub extends AGamesFacade {
 

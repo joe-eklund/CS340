@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
+import server.commands.games.IGamesCommandLog;
+import server.commands.games.JoinCommand;
 import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
@@ -27,10 +29,12 @@ public class JoinGameHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IGamesFacade gamesFacade;
+	private IGamesCommandLog gamesLog;
 
-	public JoinGameHandler(ITranslator translator, IGamesFacade gamesFacade) {
+	public JoinGameHandler(ITranslator translator, IGamesFacade gamesFacade, IGamesCommandLog gamesLog) {
 		this.translator = translator;
 		this.gamesFacade = gamesFacade;
+		this.gamesLog = gamesLog;
 	}
 
 	/**
@@ -58,6 +62,7 @@ public class JoinGameHandler implements HttpHandler {
 			try {  // check user login cookie and if valid get params
 				exchange.getResponseHeaders().set("Content-Type", "appliction/json");
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
+				System.out.println("logged in cookie: " + unvalidatedCookie);
 				CookieParams cookie = Cookie.verifyCookie(unvalidatedCookie, translator);
 				
 				BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
@@ -84,6 +89,7 @@ public class JoinGameHandler implements HttpHandler {
 					// send success response headers
 					exchange.getResponseHeaders().put("Set-cookie", cookies);
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+					this.gamesLog.Store(new JoinCommand(gamesFacade, request, cookie.getName(), cookie.getPlayerID()));
 				}
 				else {
 					System.out.println("join game request had invalid color (duplicate or unrecognized)");

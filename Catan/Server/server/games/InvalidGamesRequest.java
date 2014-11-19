@@ -1,5 +1,6 @@
 package server.games;
 
+@SuppressWarnings("serial")
 public class InvalidGamesRequest extends Exception {
 
 	/**

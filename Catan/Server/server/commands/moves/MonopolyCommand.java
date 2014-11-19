@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of playing a monolpoly development card for a player
  *
  */
-public class MonopolyCommand extends ACommand {
+public class MonopolyCommand extends AMovesCommand {
 
 	public MonopolyCommand() {
 		super("MonopolyCommand");
@@ -15,12 +14,6 @@ public class MonopolyCommand extends ACommand {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setParam(Object param) {
 		// TODO Auto-generated method stub
 		
 	}

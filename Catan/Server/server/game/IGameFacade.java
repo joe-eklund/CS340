@@ -3,10 +3,7 @@ package server.game;
 import java.util.List;
 
 import shared.ServerMethodRequests.AddAIRequest;
-import shared.ServerMethodRequests.CreateGameRequest;
-import shared.ServerMethodRequests.JoinGameRequest;
 import shared.ServerMethodRequests.ResetGameRequest;
-import shared.definitions.GameDescription;
 import shared.definitions.ServerModel;
 
 /**

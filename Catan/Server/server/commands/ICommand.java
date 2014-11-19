@@ -11,9 +11,4 @@ public interface ICommand {
 	 */
 	public void execute() throws CommandException;
 	
-	/**
-	 * Sets the request to be executed on the command model(s) for this command
-	 * @param param
-	 */
-	public void setParam(Object request);
 }

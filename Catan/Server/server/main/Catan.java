@@ -9,6 +9,9 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import proxy.TranslatorJSON;
+import server.commands.games.GamesCommandLog;
+import server.commands.moves.MovesCommandLog;
+import server.commands.users.UsersCommandLog;
 import server.game.GameFacade;
 import server.game.IGameFacade;
 import server.games.GamesFacade;
@@ -54,6 +57,11 @@ public class Catan {
 			IMovesFacade movesFacade = new MovesFacade(serverModels);
 			IUtilFacade utilFacade = new UtilFacade();
 			
+			// initialize command logs
+			UsersCommandLog usersLog = new UsersCommandLog();
+			GamesCommandLog gamesLog = new GamesCommandLog();
+			MovesCommandLog movesLog = new MovesCommandLog();
+			
 			CommandLine line = parser.parse(options, args);
 			
 			if(line.hasOption("t")) { // testing option ==> load server stubs
@@ -74,7 +82,7 @@ public class Catan {
 			}
 			
 			if(portNumber >= MIN_PORT && portNumber <= MAX_PORT) {
-				ServerCommunicator serverCommunicator = new ServerCommunicator(portNumber, translator, usersFacade, gamesFacade, gameFacade, movesFacade, utilFacade);
+				ServerCommunicator serverCommunicator = new ServerCommunicator(portNumber, translator, usersFacade, gamesFacade, gameFacade, movesFacade, utilFacade, usersLog, gamesLog, movesLog);
 				serverCommunicator.run();
 				System.out.println("Catan server listening on port: " + portNumber);
 			}

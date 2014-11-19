@@ -1,13 +1,12 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 
 /**
  * The command class in charge of playing the soldier development card for a player
  *
  */
-public class SoldierCommand extends ACommand {
+public class SoldierCommand extends AMovesCommand {
 
 	public SoldierCommand() {
 		super("SoldierCommand");
@@ -19,11 +18,4 @@ public class SoldierCommand extends ACommand {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void setParam(Object param) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

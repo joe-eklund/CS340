@@ -1,8 +1,12 @@
 package server.junit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import proxy.ClientCommunicator;
 import proxy.CommandResponse;
@@ -11,17 +15,14 @@ import proxy.RequestType;
 import proxy.TranslatorJSON;
 import server.commands.users.UsersCommandLog;
 import server.main.Catan;
-import server.serverCommunicator.RegisterUserHandler;
 import server.serverCommunicator.LoginUserHandler;
+import server.serverCommunicator.RegisterUserHandler;
 import server.users.IUsersFacade;
 import server.users.UsersFacadeStub;
 import shared.ServerMethodRequests.UserRequest;
-import shared.ServerMethodResponses.UserResponse;
 import shared.definitions.User;
-import shared.model.Player;
-import static org.junit.Assert.*;
 
-public class UserTest {
+public class CommandLogTest {
 	private IUsersFacade user;
 	private RegisterUserHandler regHandler;
 	private TranslatorJSON jsonTrans;
@@ -36,18 +37,7 @@ public class UserTest {
 		regHandler=new RegisterUserHandler(jsonTrans,user, userCommands);
 	}
 	
-	@Test
-	public void testValidLogin() {
-		int login = user.loginUser(new UserRequest("Bobby","bobby"));
-		assertTrue("Should be valid login",login>-1);
-	}
-	@Test
-	public void testInvalidLogin() {
-		int login = user.loginUser(new UserRequest("Bobby","boby"));
-		assertEquals("Password should return invalid login",-1,login);
-		login = user.loginUser(new UserRequest("Jimmy","jimmy"));
-		assertEquals("User doesn't exist should return invalid login",-1,login);
-	}
+	
 	@Test
 	public void testValidRegister() {
 		int register = user.registerUser(new UserRequest("Jimmy","jimmy"));
@@ -70,12 +60,5 @@ public class UserTest {
 		assertTrue("Password needs to be greater than length of 4",response.getResponseMessage().equals("Don't trust your client -- they have violated the server API contract: invalid username and/or password configuration."));
 		response = client.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "user/register", new User("Jimmy","$ma_r7"), null);
 		assertTrue("Password shouldn't contain invalid characters",response.getResponseMessage().equals("Don't trust your client -- they have violated the server API contract: invalid username and/or password configuration."));
-	}
-	@Test
-	public void testCommandLogExecuteAll() {
-		UsersFacadeStub restoredUsers = new UsersFacadeStub();
-		userCommands.setFacade(restoredUsers);
-		userCommands.executeAll();
-		assertTrue("User and restoredUsers should be the same after commandLog.executeAll for User command log is executed on restoredUsers.", user.equals(restoredUsers));
 	}
 }

@@ -100,7 +100,12 @@ public abstract class AGamesFacade implements IGamesFacade {
 		
 		
 		if (validColor) {
-			List<PlayerDescription> players = gameDescriptionsList.get(request.getID()).getPlayerDescriptions();
+			List<PlayerDescription> players;
+			try {
+				players = gameDescriptionsList.get(request.getID()).getPlayerDescriptions();
+			} catch (IndexOutOfBoundsException e) {
+				throw new InvalidGamesRequest("Error: Invalid gameID");
+			}
 			
 			int playerGameIndex = getPlayerIndexInGame(username, players);
 			

@@ -1,5 +1,6 @@
 package server.commands;
 
 public interface ICommandLog {
-	public void storeAndExecute(ICommand command);
+	public void clear();
+	public void executeAll();
 }

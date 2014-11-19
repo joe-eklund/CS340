@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
+import server.commands.users.IUsersCommandLog;
+import server.commands.users.RegisterCommand;
 import server.cookie.Cookie;
 import server.users.IUsersFacade;
 import shared.ServerMethodRequests.UserRequest;
@@ -18,17 +20,18 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Handler for RegisterUser command
- * @author Chad
  *
  */
 public class RegisterUserHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IUsersFacade usersFacade;
+	private IUsersCommandLog userCommands;
 
-	public RegisterUserHandler(ITranslator translator, IUsersFacade usersFacade) {
+	public RegisterUserHandler(ITranslator translator, IUsersFacade usersFacade, IUsersCommandLog usersLog) {
 		this.translator = translator;
 		this.usersFacade = usersFacade;
+		this.userCommands = usersLog;
 	}
 
 	/**
@@ -70,6 +73,7 @@ public class RegisterUserHandler implements HttpHandler {
 					exchange.getResponseHeaders().put("Set-cookie", cookies);
 					exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 					successfulRequest = true;
+					this.userCommands.store(new RegisterCommand(usersFacade, request));
 				} else {
 					responseMessage = "Registration failed - duplicate username";
 				}

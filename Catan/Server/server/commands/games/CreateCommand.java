@@ -1,6 +1,5 @@
 package server.commands.games;
 
-import proxy.ITranslator;
 import server.commands.ACommand;
 import server.commands.CommandException;
 import server.games.IGamesFacade;
@@ -11,12 +10,14 @@ import shared.ServerMethodRequests.CreateGameRequest;
  * The command class in charge of creating a new game
  *
  */
-public class CreateCommand extends ACommand {
+public class CreateCommand extends ACommand implements IGamesCommand {
 	private IGamesFacade games;
 	private CreateGameRequest request;
 
-	public CreateCommand(ITranslator translator, IGamesFacade games) {
+	public CreateCommand(IGamesFacade games, CreateGameRequest request) {
 		super("CreateCommand");
+		this.games = games;
+		this.request = request;
 	}
 
 	@Override
@@ -29,12 +30,8 @@ public class CreateCommand extends ACommand {
 	}
 
 	@Override
-	public void setParam(Object param) {
-		try {
-			this.request = (CreateGameRequest) param;
-		} catch (Exception e) {
-			System.err.println("Error: the provided param cannot be cast to CreateGameRequest.");
-		}
+	public void setExecutor(IGamesFacade executor) {
+		this.games = executor;
 	}
 	
 }

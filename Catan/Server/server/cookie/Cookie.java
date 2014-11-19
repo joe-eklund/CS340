@@ -55,7 +55,14 @@ public class Cookie {
 					throw new InvalidCookieException(
 							"Error: the cookie catan.game value is invalid");
 				}
-				cookie = cookie.split("catan.game=")[0];
+				if(cookie.split("catan.game=")[0].equals("")) {
+					//cookie = cookie.split("catan.game=")[1];
+					int loginCookieStart = cookie.indexOf("%7B%22");
+					cookie = cookie.substring(loginCookieStart, cookie.length());
+				}
+				else {
+					cookie = cookie.split("catan.game=")[0];
+				}
 			}
 			try {
 				String cookieJSON = URLDecoder.decode(cookie, "UTF-8");

@@ -1,12 +1,11 @@
 package server.commands.moves;
 
-import server.commands.ACommand;
 
 /**
  * The command class in charge of robbing a player
  *
  */
-public class RobPlayerCommand extends ACommand {
+public class RobPlayerCommand extends AMovesCommand {
 
 	public RobPlayerCommand() {
 		super("RobPlayerCommand");
@@ -15,12 +14,6 @@ public class RobPlayerCommand extends ACommand {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setParam(Object param) {
 		// TODO Auto-generated method stub
 		
 	}

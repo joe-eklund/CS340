@@ -27,7 +27,7 @@ public abstract class AGameFacade implements IGameFacade {
 
 	@Override
 	public ServerModel getGameModel(int id) {
-		return gameModels.get(id);
+		return this.getGameByID(id);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public abstract class AGameFacade implements IGameFacade {
 		}
 		else return false;
 	}
-	
+
 	private ServerModel getGameByID(int gameID) {
 		ServerModel result = null;
 		try {

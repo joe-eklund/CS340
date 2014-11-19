@@ -5,12 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
 
 import proxy.ITranslator;
-import server.cookie.Cookie;
-import server.cookie.InvalidCookieException;
+import server.commands.games.CreateCommand;
+import server.commands.games.IGamesCommandLog;
 import server.games.IGamesFacade;
 import server.games.InvalidGamesRequest;
 import shared.ServerMethodRequests.CreateGameRequest;
@@ -20,17 +18,18 @@ import com.sun.net.httpserver.HttpHandler;
 
 /**
  * Handler for create game command
- * @author Chad
  *
  */
 public class CreateGameHandler implements HttpHandler {
 
 	private ITranslator translator;
 	private IGamesFacade gamesFacade;
+	private IGamesCommandLog gamesLog;
 
-	public CreateGameHandler(ITranslator translator, IGamesFacade gamesFacade) {
+	public CreateGameHandler(ITranslator translator, IGamesFacade gamesFacade, IGamesCommandLog gamesLog) {
 		this.translator = translator;
 		this.gamesFacade = gamesFacade;
+		this.gamesLog = gamesLog;
 	}
 
 	/**
@@ -68,6 +67,7 @@ public class CreateGameHandler implements HttpHandler {
 				System.out.println("Finished translating");
 				// TODO Create empty game model and add to gameModels list
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				gamesLog.Store(new CreateCommand(gamesFacade, request));
 				
 			} catch (/*InvalidCookieException |*/ InvalidGamesRequest e) { // else send error message
 				responseMessage = e.getMessage();
