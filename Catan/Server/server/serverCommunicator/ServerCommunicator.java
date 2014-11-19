@@ -102,6 +102,7 @@ public class ServerCommunicator {
         //swagger?
         server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
         server.createContext("/docs/api/view", new Handlers.BasicFile(""));
+        server.createContext("/", new HomeHandler());
         
         server.start();
 	}
