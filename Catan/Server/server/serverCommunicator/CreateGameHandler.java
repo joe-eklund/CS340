@@ -49,6 +49,8 @@ public class CreateGameHandler implements HttpHandler {
 			try {  // check user login cookie and if valid get params
 				//String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
 				//Cookie.verifyCookie(unvalidatedCookie, translator);
+
+				exchange.getResponseHeaders().set("Content-Type", "appliction/json");
 				
 				BufferedReader in = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 				String inputLine;
@@ -65,7 +67,6 @@ public class CreateGameHandler implements HttpHandler {
 				responseMessage = this.translator.translateTo(this.gamesFacade.createGame(request));
 				System.out.println("Finished translating");
 				// TODO Create empty game model and add to gameModels list
-				
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				
 			} catch (/*InvalidCookieException |*/ InvalidGamesRequest e) { // else send error message
@@ -76,19 +77,11 @@ public class CreateGameHandler implements HttpHandler {
 		else {
 			// unsupported request method
 			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is not supported!";
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			System.out.println("Invalid request: " + exchange.getRequestMethod());
 		}
 		
 		System.out.println(responseMessage + "\n\n");
 		
-		//set "Content-Type: application/json" header
-		List<String> contentTypes = new ArrayList<String>();
-		String appJson = "application/json";
-		contentTypes.add(appJson);
-		exchange.getResponseHeaders().put("Content-type", contentTypes);
-		
-		//send failure response message
 		OutputStreamWriter writer = new OutputStreamWriter(
 				exchange.getResponseBody());
 		writer.write(responseMessage);

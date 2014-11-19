@@ -10,11 +10,10 @@ import java.util.List;
 
 import proxy.ITranslator;
 import server.cookie.Cookie;
-import server.cookie.InvalidCookieException;
 import server.cookie.CookieParams;
+import server.cookie.InvalidCookieException;
 import server.games.IGamesFacade;
 import server.games.InvalidGamesRequest;
-import shared.ServerMethodRequests.CreateGameRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 
 import com.sun.net.httpserver.HttpExchange;
