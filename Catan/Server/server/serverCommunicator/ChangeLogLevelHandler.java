@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import proxy.ITranslator;
-import server.commands.util.LogLevel;
 import server.util.IUtilFacade;
 import shared.ServerMethodRequests.ChangeLogLevelRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
@@ -113,5 +112,4 @@ public class ChangeLogLevelHandler implements HttpHandler {
 		exchange.getResponseBody().close();
 
 	}
-
 }
