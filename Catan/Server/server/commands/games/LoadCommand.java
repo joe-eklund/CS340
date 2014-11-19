@@ -19,4 +19,10 @@ public class LoadCommand extends ACommand{
 		
 	}
 
+	@Override
+	public void setParam(Object param) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

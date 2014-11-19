@@ -18,5 +18,11 @@ public class SaveCommand extends ACommand {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setParam(Object param) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

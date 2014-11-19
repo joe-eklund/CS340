@@ -1,5 +1,6 @@
 package server.commands.game;
 
+import proxy.ITranslator;
 import server.commands.ACommand;
 
 /**
@@ -8,13 +9,19 @@ import server.commands.ACommand;
  */
 public class AddAICommand extends ACommand {
 
-	public AddAICommand() {
+	public AddAICommand(ITranslator translator) {
 		super("AddAICommand");
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setParam(Object param) {
 		// TODO Auto-generated method stub
 		
 	}

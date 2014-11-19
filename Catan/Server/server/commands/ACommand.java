@@ -1,5 +1,6 @@
 package server.commands;
 
+
 /**
  * An abstract class that every Catan command will implement
  *
@@ -31,5 +32,4 @@ public abstract class ACommand implements ICommand{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 }

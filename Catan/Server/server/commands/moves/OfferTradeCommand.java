@@ -19,4 +19,10 @@ public class OfferTradeCommand extends ACommand {
 		
 	}
 
+	@Override
+	public void setParam(Object param) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
