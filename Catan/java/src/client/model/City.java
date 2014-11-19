@@ -13,7 +13,7 @@ import client.exceptions.ClientModelException;
  */
 public class City {
 	private int owner;
-	private VertexLocation verLocation;
+	private transient VertexLocation verLocation;
 	private Location location;
 	
 	/**

@@ -104,18 +104,22 @@ public class MovesFacade implements IMovesFacade {
 			
 			if (player1TotResources <= 7) {
 				player1TotResources = 1000;
+				serverGameModel.getPlayers().get(0).setDiscarded(true);
 			}
 			
 			if (player2TotResources <= 7) {
 				player1TotResources = 1000;
+				serverGameModel.getPlayers().get(1).setDiscarded(true);
 			}
 			
 			if (player3TotResources <= 7) {
 				player3TotResources = 1000;
+				serverGameModel.getPlayers().get(2).setDiscarded(true);
 			}
 			
 			if (player4TotResources <= 7) {
 				player4TotResources = 1000;
+				serverGameModel.getPlayers().get(3).setDiscarded(true);
 			}
 			
 			serverGameModel.getTurnTracker().setStatus("Discarding");
@@ -266,6 +270,8 @@ public class MovesFacade implements IMovesFacade {
 		
 		serverGameModel.getTurnTracker().nextTurn();
 		serverGameModel.incrementVersion();
+		
+//		if ()
 		serverGameModel.getTurnTracker().setStatus("Rolling");
 		return serverGameModel;
 	}
@@ -551,7 +557,27 @@ public class MovesFacade implements IMovesFacade {
 		City city = new City(playerIndex, x, y , direction);
 		serverGameModel.getMap().getCities().add(city);
 		serverGameModel.incrementVersion();
-		serverGameModel.getTurnTracker().nextTurn();
+		
+		ArrayList<Settlement> settlements = serverGameModel.getMap().getSettlements();
+		
+		for (int i = 0; i < settlements.size(); i++) {
+			VertexLocation loc = settlements.get(i).getLocation().getNormalizedLocation();
+			if (settlements.get(i).getLocation().getHexLoc().getX() == x &&
+					settlements.get(i).getLocation().getHexLoc().getY() == y &&
+					settlements.get(i).getLocation().getDir().getDirectionStr().equals(direction)) {
+				settlements.remove(i);
+				break;
+			}
+			
+			if (loc.getHexLoc().getX() == x &&
+					loc.getHexLoc().getY() == y &&
+					loc.getDir().getDirectionStr().equals(direction)) {
+				settlements.remove(i);
+				break;
+			}
+				
+		}
+		
 		player.decrementCities();
 		player.incrementVictoryPoints();
 		player.incrementSettlements();
@@ -725,8 +751,17 @@ public class MovesFacade implements IMovesFacade {
 		boolean b = (p2Resources <= (int) Math.ceil(player2TotResources/2.0));
 		boolean c = (p3Resources <= (int) Math.ceil(player3TotResources/2.0));
 		boolean d = (p4Resources <= (int) Math.ceil(player4TotResources/2.0));
+		
+		if (!serverGameModel.getPlayers().get(player.getPlayerIndex()).isDiscarded()) {
+			serverGameModel.getPlayers().get(player.getPlayerIndex()).setDiscarded(true);
+		}
+		
 		if (a && b && c && d) {
 			serverGameModel.getTurnTracker().setStatus("Robbing");
+			serverGameModel.getPlayers().get(0).setDiscarded(false);
+			serverGameModel.getPlayers().get(1).setDiscarded(false);
+			serverGameModel.getPlayers().get(2).setDiscarded(false);
+			serverGameModel.getPlayers().get(3).setDiscarded(false);
 		}
 		
 		serverGameModel.incrementVersion();

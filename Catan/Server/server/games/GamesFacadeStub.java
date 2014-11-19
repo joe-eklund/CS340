@@ -141,7 +141,7 @@ public class GamesFacadeStub extends AGamesFacade {
 				serverModel.getMap().getSettlements().add(settlement);
 				serverModel.incrementVersion();
 				serverModel.getPlayers().get(3).decrementSettlements();
-				serverModel.getPlayers().get(0).setVictoryPoints(2);
+				serverModel.getPlayers().get(3).setVictoryPoints(2);
 				
 				serverModel.getTurnTracker().setCurrentTurn(0);
 				serverModel.getTurnTracker().setStatus("Rolling");
