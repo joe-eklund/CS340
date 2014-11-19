@@ -3,7 +3,10 @@ package server.serverCommunicator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import proxy.ITranslator;
 import server.cookie.Cookie;
@@ -40,9 +43,26 @@ public class AddAIHandler implements HttpHandler {
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		System.out.println("In add AI handler.");
-		String responseMessage = "";
+		String responseMessage = "AddAI not implemented on this server.";
+		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		//set "Content-Type: text/plain" header
+		List<String> contentTypes = new ArrayList<String>();
+		String type = "text/plain";
+		contentTypes.add(type);
+		exchange.getResponseHeaders().put("Content-type", contentTypes);
 		
-		if(exchange.getRequestMethod().toLowerCase().equals("post")) {
+		if (!responseMessage.isEmpty()) {
+			//send failure response message
+			OutputStreamWriter writer = new OutputStreamWriter(
+					exchange.getResponseBody());
+			writer.write(responseMessage);
+			writer.flush();
+			writer.close();
+		}
+		exchange.getResponseBody().close();
+		
+		//Old code for Adding AI. Unfinished
+		/**if(exchange.getRequestMethod().toLowerCase().equals("post")) {
 			try{
 				//Validate cookie
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
@@ -69,7 +89,7 @@ public class AddAIHandler implements HttpHandler {
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}
-		}
+		}**/
 
 	}
 
