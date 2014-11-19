@@ -51,6 +51,7 @@ public class GetGameModelHandler implements HttpHandler {
 		// Check if request method is get
 		if (exchange.getRequestMethod().toLowerCase().equals("get")) {
 			try {
+				exchange.getResponseHeaders().set("Content-Type", "appliction/json");
 				// Validate cookie
 				
 				String unvalidatedCookie = exchange.getRequestHeaders().get("Cookie").get(0);
@@ -121,11 +122,6 @@ public class GetGameModelHandler implements HttpHandler {
 			responseMessage = "Error: \"" + exchange.getRequestMethod() + "\" is not supported.";
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		}
-		// set "Content-Type: text/plain" header
-		List<String> contentTypes = new ArrayList<String>();
-		String type = " application/json";
-		contentTypes.add(type);
-		exchange.getResponseHeaders().put("Content-type", contentTypes);
 
 		if (!responseMessage.isEmpty()) {
 			System.out.println(responseMessage);

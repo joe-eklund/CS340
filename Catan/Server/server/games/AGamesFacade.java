@@ -154,10 +154,23 @@ public abstract class AGamesFacade implements IGamesFacade {
 	@Override
 	public int loadGame(String name) throws IOException{
 		XStream xstream = new XStream();
-		File file = new File("/saves/" + name + ".xml");
+		File file = new File("saves/" + name + ".xml");
 		ServerModel game = (ServerModel) xstream.fromXML(file);
+		List<Player> players = game.getPlayers();
+		List<PlayerDescription> playerDescriptions = new ArrayList<>();
+		if(players != null){
+			for(int i = 0; i < players.size(); i++){
+				if(players.get(i) != null){
+					PlayerDescription pDescrip = new PlayerDescription(players.get(i).getColor(),players.get(i).getPlayerID(),
+							players.get(i).getName());
+					playerDescriptions.add(pDescrip);
+				}
+			}
+		}
+		GameDescription gs = new GameDescription(name, gameModelsList.size(), playerDescriptions);
 		gameModelsList.add(game);
-		return gameModelsList.size() - 1;
+		gameDescriptionsList.add(gs);
+		return gs.getId();
 	}
 	
 	public boolean validateGameID(int id){
