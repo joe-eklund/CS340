@@ -545,7 +545,7 @@ public class MovesFacade implements IMovesFacade {
 		
 		if (serverGameModel.getTurnTracker().getStatus().equals("SecoundRound")) {
 			HexLocation hexLoc = new HexLocation(x, y);
-			serverGameModel.getMap().getHexes().get(0).get
+//			serverGameModel.getMap().getHexes().get(0).get
 //			if ()
 			
 		}
