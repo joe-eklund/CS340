@@ -46,3 +46,10 @@ Catan/.classpath
 *.class
 
 *.class
+
+Catan/java/src/*
+
+*.class
+
+
+Catan/java/

@@ -38,7 +38,7 @@ public class ListGamesHandler implements HttpHandler {
 	 *  <valid logged in cookie> ::= as defined in CS 340 webpage cookie specification
 	 * @post 
 	 *  the exchange response code will be set to HTTP 200 Success
-	 *  the exchange response headers include Content­Type: application/json
+	 *  the exchange response headers include ContentType: application/json
 	 * 	the exchange response body will contain a json formatted list of gameDescriptions
 	 *  in gameDescription,
 	 *  	the game id is a non-negative unique integer 
