@@ -270,7 +270,7 @@ public class MovesFacade implements IMovesFacade {
 		oldCards.setYearOfPlenty(oldCards.getYearOfPlenty()+newCards.getYearOfPlenty());
 		newCards=new DevCards();
 		player.setNewDevCards(newCards);
-		player.setOldDevCards(oldCards);
+		//player.setOldDevCards(oldCards);
 		
 		serverGameModel.getTurnTracker().nextTurn();
 		serverGameModel.incrementVersion();
