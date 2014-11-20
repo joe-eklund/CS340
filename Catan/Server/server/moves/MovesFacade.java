@@ -270,6 +270,7 @@ public class MovesFacade implements IMovesFacade {
 		oldCards.setYearOfPlenty(oldCards.getYearOfPlenty()+newCards.getYearOfPlenty());
 		newCards=new DevCards();
 		newCards.reset();
+		player.setPlayedDevCard(false);
 		//player.setNewDevCards(newCards);
 		//player.setOldDevCards(oldCards);
 		
@@ -303,7 +304,7 @@ public class MovesFacade implements IMovesFacade {
 				player.getNewDevCards().setSoldier(player.getNewDevCards().getSoldier()+1);
 				card.setSoldier(card.getSoldier()-1);
 			}else if(c<card.getSoldier()+card.getMonument()){
-				player.getNewDevCards().setMonument(player.getNewDevCards().getMonument()+1);
+				player.getOldDevCards().setMonument(player.getOldDevCards().getMonument()+1);
 				card.setMonument(card.getMonument()-1);
 			}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()){
 				player.getNewDevCards().setMonopoly(player.getNewDevCards().getMonopoly()+1);
@@ -338,62 +339,66 @@ public class MovesFacade implements IMovesFacade {
 		int owner = request.getPlayerIndex();
 		Player player=serverGameModel.getPlayers().get(owner);
 		
-		DevCards cards = player.getOldDevCards();
-		cards.setYearOfPlenty(cards.getYearOfPlenty()-1);
-
-		String resource1 = request.getResource1();
-		String resource2 = request.getResource2();
-		List<String> resources = new ArrayList<String>();
-		resources.add(resource1);
-		resources.add(resource2);
-		for(String resource : resources){	
-			switch(resource.toLowerCase()){
-			case "brick":
-				if(bank.getBrick()>0){
-					bank.setBrick(bank.getBrick()-1);
-					player.setBrick(player.getBrick()+1);
+		if (player.hasPlayedDevCard()) {
+			DevCards cards = player.getOldDevCards();
+			cards.setYearOfPlenty(cards.getYearOfPlenty()-1);
+	
+			String resource1 = request.getResource1();
+			String resource2 = request.getResource2();
+			List<String> resources = new ArrayList<String>();
+			resources.add(resource1);
+			resources.add(resource2);
+			for(String resource : resources){	
+				switch(resource.toLowerCase()){
+				case "brick":
+					if(bank.getBrick()>0){
+						bank.setBrick(bank.getBrick()-1);
+						player.setBrick(player.getBrick()+1);
+					}
+					else {
+						//throw no more of that resource error
+					}
+					break;
+				case "ore":
+					if(bank.getOre()>0){
+						bank.setOre(bank.getOre()-1);	
+						player.setOre(player.getOre()+1);				
+					}
+					else {
+						//throw no more of that resource error
+					}	
+					break;
+				case "wood":
+					if(bank.getWood()>0){
+						bank.setWood(bank.getWood()-1);
+						player.setWood(player.getWood()+1);					
+					}
+					else {
+						//throw no more of that resource error
+					}
+					break;
+				case "sheep":
+					if(bank.getSheep()>0){
+						bank.setSheep(bank.getSheep()-1);	
+						player.setSheep(player.getSheep()+1);				
+					}
+					else {
+						//throw no more of that resource error
+					}
+					break;
+				case "wheat":
+					if(bank.getWheat()>0){
+						bank.setWheat(bank.getWheat()-1);		
+						player.setWheat(player.getWheat()+1);			
+					}
+					else {
+						//throw no more of that resource error
+					}
+					break;
 				}
-				else {
-					//throw no more of that resource error
-				}
-				break;
-			case "ore":
-				if(bank.getOre()>0){
-					bank.setOre(bank.getOre()-1);	
-					player.setOre(player.getOre()+1);				
-				}
-				else {
-					//throw no more of that resource error
-				}	
-				break;
-			case "wood":
-				if(bank.getWood()>0){
-					bank.setWood(bank.getWood()-1);
-					player.setWood(player.getWood()+1);					
-				}
-				else {
-					//throw no more of that resource error
-				}
-				break;
-			case "sheep":
-				if(bank.getSheep()>0){
-					bank.setSheep(bank.getSheep()-1);	
-					player.setSheep(player.getSheep()+1);				
-				}
-				else {
-					//throw no more of that resource error
-				}
-				break;
-			case "wheat":
-				if(bank.getWheat()>0){
-					bank.setWheat(bank.getWheat()-1);		
-					player.setWheat(player.getWheat()+1);			
-				}
-				else {
-					//throw no more of that resource error
-				}
-				break;
 			}
+			
+			player.setPlayedDevCard(true);
 		}
 		//player.setOldDevCards(cards);
 		//serverGameModel.setBank(bank);
@@ -407,22 +412,24 @@ public class MovesFacade implements IMovesFacade {
 		int owner = request.getPlayerIndex();
 		Player player=serverGameModel.getPlayers().get(owner);
 	
-		
-		RoadLocation spot1 = new RoadLocation(request.getSpot1().getX(), request.getSpot1().getY(), EdgeDirection.valueOf(request.getSpot1().getDirectionStr()));
-		RoadLocation spot2 = new RoadLocation(request.getSpot2().getX(), request.getSpot2().getY(), EdgeDirection.valueOf(request.getSpot2().getDirectionStr()));
-		
-		Map map = serverGameModel.getMap();
-		map.getRoads().add(new Road(owner,spot1.getX(),spot1.getY(),spot1.getDirectionStr()));
-		map.getRoads().add(new Road(owner,spot2.getX(),spot2.getY(),spot2.getDirectionStr()));
-		
-		player.setRoads(player.getRoads()-2);
-		
-		DevCards cards = player.getOldDevCards();
-		cards.setRoadBuilding(cards.getRoadBuilding()-1);
-		//serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
-		
-		checkForLongestRoad(serverGameModel);
-		
+		if (player.hasPlayedDevCard()) {
+			RoadLocation spot1 = new RoadLocation(request.getSpot1().getX(), request.getSpot1().getY(), EdgeDirection.valueOf(request.getSpot1().getDirectionStr()));
+			RoadLocation spot2 = new RoadLocation(request.getSpot2().getX(), request.getSpot2().getY(), EdgeDirection.valueOf(request.getSpot2().getDirectionStr()));
+			
+			Map map = serverGameModel.getMap();
+			map.getRoads().add(new Road(owner,spot1.getX(),spot1.getY(),spot1.getDirectionStr()));
+			map.getRoads().add(new Road(owner,spot2.getX(),spot2.getY(),spot2.getDirectionStr()));
+			
+			player.setRoads(player.getRoads()-2);
+			
+			DevCards cards = player.getOldDevCards();
+			cards.setRoadBuilding(cards.getRoadBuilding()-1);
+			//serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+			
+			checkForLongestRoad(serverGameModel);
+			
+			player.setPlayedDevCard(true);
+		}
 		//serverGameModel.setMap(map);
 		serverGameModel.incrementVersion();
 		return serverGameModel;
@@ -434,14 +441,17 @@ public class MovesFacade implements IMovesFacade {
 		int owner = request.getPlayerIndex();
 		Player player=serverGameModel.getPlayers().get(owner);
 		
-		DevCards cards = player.getOldDevCards();
-		cards.setSoldier(cards.getSoldier()-1);
-		//player.setOldDevCards(cards);
-		player.setSoldiers(player.getSoldiers()+1);
-
-		checkForLargestArmy(serverGameModel);
-		
-		serverGameModel.getTurnTracker().setStatus("Playing");
+		if (player.hasPlayedDevCard()) {
+			DevCards cards = player.getOldDevCards();
+			cards.setSoldier(cards.getSoldier()-1);
+			//player.setOldDevCards(cards);
+			player.setSoldiers(player.getSoldiers()+1);
+	
+			checkForLargestArmy(serverGameModel);
+			
+			player.setPlayedDevCard(true);
+		}
+//		serverGameModel.getTurnTracker().setStatus("Playing");
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
@@ -453,49 +463,52 @@ public class MovesFacade implements IMovesFacade {
 		Player player=serverGameModel.getPlayers().get(owner);
 		Player other;
 		
-		String resource = request.getResource();
-		int amount=0;
-		for(int i=0;i<serverGameModel.getPlayers().size();i++){
-			if(i!=owner){
-				other=serverGameModel.getPlayers().get(i);
-				switch(resource){
-				case "ore":
-					if(other.getOre()>0){
-						amount=other.getOre();
-						player.setOre(player.getOre()+amount);
-						other.setOre(0);
+		if (player.hasPlayedDevCard()) {
+			String resource = request.getResource();
+			int amount=0;
+			for(int i=0;i<serverGameModel.getPlayers().size();i++){
+				if(i!=owner){
+					other=serverGameModel.getPlayers().get(i);
+					switch(resource){
+					case "ore":
+						if(other.getOre()>0){
+							amount=other.getOre();
+							player.setOre(player.getOre()+amount);
+							other.setOre(0);
+						}
+						break;
+					case "sheep":
+						if(other.getSheep()>0){
+							amount=other.getSheep();
+							player.setSheep(player.getSheep()+amount);
+							other.setSheep(0);
+						}
+						break;
+					case "wood":
+						if(other.getWood()>0){
+							amount=other.getWood();
+							player.setWood(player.getWood()+amount);
+							other.setWood(0);
+						}
+						break;
+					case "wheat":
+						if(other.getWheat()>0){
+							amount=other.getWheat();
+							player.setWheat(player.getWheat()+amount);
+							other.setWheat(0);
+						}
+						break;
+					case "brick":
+						if(other.getBrick()>0){
+							amount=other.getBrick();
+							player.setBrick(player.getBrick()+amount);
+							other.setBrick(0);
+						}
+						break;
 					}
-					break;
-				case "sheep":
-					if(other.getSheep()>0){
-						amount=other.getSheep();
-						player.setSheep(player.getSheep()+amount);
-						other.setSheep(0);
-					}
-					break;
-				case "wood":
-					if(other.getWood()>0){
-						amount=other.getWood();
-						player.setWood(player.getWood()+amount);
-						other.setWood(0);
-					}
-					break;
-				case "wheat":
-					if(other.getWheat()>0){
-						amount=other.getWheat();
-						player.setWheat(player.getWheat()+amount);
-						other.setWheat(0);
-					}
-					break;
-				case "brick":
-					if(other.getBrick()>0){
-						amount=other.getBrick();
-						player.setBrick(player.getBrick()+amount);
-						other.setBrick(0);
-					}
-					break;
 				}
 			}
+			player.setPlayedDevCard(true);
 		}
 		
 		DevCards cards = player.getOldDevCards();
