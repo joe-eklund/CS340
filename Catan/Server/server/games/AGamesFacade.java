@@ -187,6 +187,8 @@ public abstract class AGamesFacade implements IGamesFacade {
 	
 	protected void addPlayerToGameModel(int gameID, String username, String color, int userID) {
 		Player newPlayer = new Player(color, username, -1, userID);
+		newPlayer.getOldDevCards().reset();
+		newPlayer.getNewDevCards().reset();
 		this.gameModelsList.get(gameID).addPlayer(newPlayer);
 	}
 	
