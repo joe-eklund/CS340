@@ -269,6 +269,7 @@ public class MovesFacade implements IMovesFacade {
 		oldCards.setSoldier(oldCards.getSoldier()+newCards.getSoldier());
 		oldCards.setYearOfPlenty(oldCards.getYearOfPlenty()+newCards.getYearOfPlenty());
 		newCards=new DevCards();
+		newCards.reset();
 		//player.setNewDevCards(newCards);
 		//player.setOldDevCards(oldCards);
 		
@@ -440,7 +441,7 @@ public class MovesFacade implements IMovesFacade {
 
 		checkForLargestArmy(serverGameModel);
 		
-		serverGameModel.getTurnTracker().setStatus("Robbing");
+		serverGameModel.getTurnTracker().setStatus("Playing");
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
