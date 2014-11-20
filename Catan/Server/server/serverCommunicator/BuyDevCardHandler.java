@@ -21,6 +21,7 @@ import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuyDevCardRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -84,6 +85,8 @@ public class BuyDevCardHandler implements HttpHandler {
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new BuyDevCardCommand(movesFacade, request, cookie));
 				
+				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
+				serverModel.getLog().addMessage(new LogEntry(name+ " bought a developement card", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
 				
 				responseMessage = translator.translateTo(serverModel);
 				

@@ -18,6 +18,7 @@ import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.MonopolyDevRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -82,6 +83,9 @@ public class MonopolyHandler implements HttpHandler {
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new MonopolyCommand(movesFacade, request, cookie));
 				
+				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
+				serverModel.getLog().addMessage(new LogEntry(name+ " played monopoly", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
+
 				responseMessage = translator.translateTo(serverModel);
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message

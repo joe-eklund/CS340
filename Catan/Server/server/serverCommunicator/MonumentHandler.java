@@ -20,6 +20,7 @@ import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.MonopolyDevRequest;
 import shared.ServerMethodRequests.MonumentDevRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -84,6 +85,9 @@ public class MonumentHandler implements HttpHandler {
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new MonumentCommand(movesFacade, request, cookie));
 				
+				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
+				serverModel.getLog().addMessage(new LogEntry(name+ " played Monument", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
+
 				responseMessage = translator.translateTo(serverModel);
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message

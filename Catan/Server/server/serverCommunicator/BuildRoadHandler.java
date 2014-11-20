@@ -20,6 +20,7 @@ import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -82,6 +83,10 @@ public class BuildRoadHandler implements HttpHandler {
 				exchange.getResponseHeaders().put("Set-cookie", cookies);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new BuildRoadCommand(movesFacade, request, cookie));
+				
+				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
+				serverModel.getLog().addMessage(new LogEntry(name+ " built a road", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
+
 				
 				responseMessage = translator.translateTo(serverModel);
 

@@ -20,6 +20,7 @@ import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.JoinGameRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -83,6 +84,8 @@ public class BuildCityHandler implements HttpHandler {
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new BuildCityCommand(movesFacade, request, cookie));
 				
+				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
+				serverModel.getLog().addMessage(new LogEntry(name+ " built a city", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
 				
 				responseMessage = translator.translateTo(serverModel);
 				

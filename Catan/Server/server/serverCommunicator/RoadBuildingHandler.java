@@ -20,6 +20,7 @@ import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.MonopolyDevRequest;
 import shared.ServerMethodRequests.RoadBuildingDevRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -81,7 +82,10 @@ public class RoadBuildingHandler implements HttpHandler {
 				exchange.getResponseHeaders().put("Set-cookie", cookies);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new RoadBuildingCommand(movesFacade, request, cookie));
-				
+
+				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
+				serverModel.getLog().addMessage(new LogEntry(name+ " played Road Building", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
+
 				responseMessage = translator.translateTo(serverModel);
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message

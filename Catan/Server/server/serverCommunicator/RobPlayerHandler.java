@@ -21,6 +21,7 @@ import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.FinishTurnRequest;
 import shared.ServerMethodRequests.RobPlayerRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 import client.exceptions.ClientModelException;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -84,7 +85,10 @@ public class RobPlayerHandler implements HttpHandler {
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new RobPlayerCommand(movesFacade, request, cookie));
 				
-				
+				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
+				String robbee = serverModel.getPlayerByID(request.getVictimIndex()).getName();
+				serverModel.getLog().addMessage(new LogEntry(name+ " robbed " + robbee , serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
+
 				responseMessage = translator.translateTo(serverModel);
 				
 				// TODO join game in gameModels list
