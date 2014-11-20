@@ -92,7 +92,7 @@ public class ServerCommunicator {
         server.createContext("/moves/robPlayer", new RobPlayerHandler(translator, movesFacade, movesLog));
         server.createContext("/moves/finishTurn", new FinishTurnHandler(translator, movesFacade, movesLog));
         server.createContext("/moves/buyDevCard", new BuyDevCardHandler(translator, movesFacade, movesLog));
-        server.createContext("/moves/Year_Of_Plenty", new YearOfPlentyHandler(translator, movesFacade, movesLog));
+        server.createContext("/moves/Year_of_Plenty", new YearOfPlentyHandler(translator, movesFacade, movesLog));
         server.createContext("/moves/Road_Building", new RoadBuildingHandler(translator, movesFacade, movesLog));
         server.createContext("/moves/Soldier", new SoldierHandler(translator, movesFacade, movesLog));
         server.createContext("/moves/Monopoly", new MonopolyHandler(translator, movesFacade, movesLog));

@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import client.exceptions.ClientModelException;
-import server.commands.moves.BuildCityCommand;
-import server.commands.moves.YearOfPlentyCommand;
 import server.cookie.CookieParams;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
@@ -25,8 +23,6 @@ import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
-import shared.definitions.DevCardType;
-import shared.definitions.GameModel;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
 import shared.locations.EdgeDirection;
@@ -38,9 +34,7 @@ import shared.model.Hex;
 import shared.model.Map;
 import shared.model.Player;
 import shared.model.Bank;
-import shared.model.City;
 import shared.model.DevCards;
-import shared.model.Player;
 import shared.model.Road;
 import shared.model.Settlement;
 import shared.model.TradeOffer;
@@ -247,7 +241,6 @@ public class MovesFacade implements IMovesFacade {
 
 		serverGameModel.incrementVersion();
 		serverGameModel.getTurnTracker().setStatus("Playing");
-		
 		return serverGameModel;
 	}
 

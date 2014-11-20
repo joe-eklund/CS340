@@ -10,14 +10,12 @@ import java.util.List;
 
 import proxy.ITranslator;
 import server.commands.moves.IMovesCommandLog;
-import server.commands.moves.SendChatCommand;
 import server.commands.moves.YearOfPlentyCommand;
 import server.cookie.Cookie;
 import server.cookie.CookieParams;
 import server.cookie.InvalidCookieException;
 import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
-import shared.ServerMethodRequests.BuildRoadRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.ServerModel;
 
@@ -75,7 +73,8 @@ public class YearOfPlentyHandler implements HttpHandler {
 				exchange.getRequestBody().close();
 				
 				ServerModel serverModel = this.movesFacade.yearOfPlenty(request, cookie);
-				System.out.println("Request Accepted!");
+									
+				System.out.println("YOP Request Accepted!");
 				// create cookie for user
 				List<String> cookies = new ArrayList<String>();
 
