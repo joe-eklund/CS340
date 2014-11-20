@@ -411,8 +411,8 @@ public class MovesFacade implements IMovesFacade {
 		RoadLocation spot2 = new RoadLocation(request.getSpot2().getX(), request.getSpot2().getY(), EdgeDirection.valueOf(request.getSpot2().getDirectionStr()));
 		
 		Map map = serverGameModel.getMap();
-		map.getRoads().add(new Road(owner,spot1.getX(),spot1.getY(),spot1.getDirection().toString()));
-		map.getRoads().add(new Road(owner,spot2.getX(),spot2.getY(),spot2.getDirection().toString()));
+		map.getRoads().add(new Road(owner,spot1.getX(),spot1.getY(),spot1.getDirectionStr()));
+		map.getRoads().add(new Road(owner,spot2.getX(),spot2.getY(),spot2.getDirectionStr()));
 		
 		player.setRoads(player.getRoads()-2);
 		
@@ -422,7 +422,7 @@ public class MovesFacade implements IMovesFacade {
 		
 		checkForLongestRoad(serverGameModel);
 		
-		serverGameModel.setMap(map);
+		//serverGameModel.setMap(map);
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
