@@ -18,6 +18,7 @@ import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.ServerModel;
+import shared.model.LogEntry;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -82,6 +83,7 @@ public class YearOfPlentyHandler implements HttpHandler {
 				exchange.getResponseHeaders().put("Set-cookie", cookies);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new YearOfPlentyCommand(movesFacade, request, cookie));
+				serverModel.getLog().addMessage(new LogEntry("Year of Plenty", serverModel.getPlayerByID(cookie.getPlayerID()).getColor()));
 				
 				responseMessage = translator.translateTo(serverModel);
 

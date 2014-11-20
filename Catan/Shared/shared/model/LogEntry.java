@@ -10,8 +10,8 @@ public class LogEntry {
 
 	/**
 	 * Class Constructor
-	 * @param message
-	 * @param source
+	 * @param message The command that is played
+	 * @param source 
 	 */
 	public LogEntry(String message, String source) {
 		this.message = message;
