@@ -71,7 +71,7 @@ public class GamesFacadeStub extends AGamesFacade {
 				serverModel.getMap().getSettlements().add(settlement);
 				serverModel.incrementVersion();
 				serverModel.getPlayers().get(0).decrementSettlements();
-				serverModel.getPlayers().get(0).setVictoryPoints(2);
+				
 				
 				
 				//Player 1
@@ -94,7 +94,7 @@ public class GamesFacadeStub extends AGamesFacade {
 				serverModel.getMap().getSettlements().add(settlement);
 				serverModel.incrementVersion();
 				serverModel.getPlayers().get(1).decrementSettlements();
-				serverModel.getPlayers().get(1).setVictoryPoints(2);
+				
 				
 				//Player 2
 				road = new Road(2, 0, -2 , "N");
@@ -117,7 +117,7 @@ public class GamesFacadeStub extends AGamesFacade {
 				serverModel.getMap().getSettlements().add(settlement);
 				serverModel.incrementVersion();
 				serverModel.getPlayers().get(2).decrementSettlements();
-				serverModel.getPlayers().get(2).setVictoryPoints(2);
+				
 				
 				//Player 3
 				road = new Road(3, 2, 0 , "N");
@@ -140,7 +140,7 @@ public class GamesFacadeStub extends AGamesFacade {
 				serverModel.getMap().getSettlements().add(settlement);
 				serverModel.incrementVersion();
 				serverModel.getPlayers().get(3).decrementSettlements();
-				serverModel.getPlayers().get(3).setVictoryPoints(2);
+				
 				
 				serverModel.getTurnTracker().setCurrentTurn(0);
 				serverModel.getTurnTracker().setStatus("Rolling");

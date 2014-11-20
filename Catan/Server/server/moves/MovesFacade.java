@@ -96,27 +96,33 @@ public class MovesFacade implements IMovesFacade {
 			player3TotResources = serverGameModel.getPlayers().get(2).getResourceCount();
 			player4TotResources = serverGameModel.getPlayers().get(3).getResourceCount();
 			
-			if (player1TotResources <= 7) {
-				player1TotResources = 1000;
-				serverGameModel.getPlayers().get(0).setDiscarded(true);
+			if (player1TotResources > 7 || player2TotResources > 7 || player3TotResources > 7 || player4TotResources > 7) {
+				if (player1TotResources <= 7) {
+					player1TotResources = 1000;
+					serverGameModel.getPlayers().get(0).setDiscarded(true);
+				}
+				
+				if (player2TotResources <= 7) {
+					player1TotResources = 1000;
+					serverGameModel.getPlayers().get(1).setDiscarded(true);
+				}
+				
+				if (player3TotResources <= 7) {
+					player3TotResources = 1000;
+					serverGameModel.getPlayers().get(2).setDiscarded(true);
+				}
+				
+				if (player4TotResources <= 7) {
+					player4TotResources = 1000;
+					serverGameModel.getPlayers().get(3).setDiscarded(true);
+				}
+				
+				serverGameModel.getTurnTracker().setStatus("Discarding");
+			}
+			else {
+				serverGameModel.getTurnTracker().setStatus("Robbing");
 			}
 			
-			if (player2TotResources <= 7) {
-				player1TotResources = 1000;
-				serverGameModel.getPlayers().get(1).setDiscarded(true);
-			}
-			
-			if (player3TotResources <= 7) {
-				player3TotResources = 1000;
-				serverGameModel.getPlayers().get(2).setDiscarded(true);
-			}
-			
-			if (player4TotResources <= 7) {
-				player4TotResources = 1000;
-				serverGameModel.getPlayers().get(3).setDiscarded(true);
-			}
-			
-			serverGameModel.getTurnTracker().setStatus("Discarding");
 			serverGameModel.incrementVersion();
 			return serverGameModel;
 		}
@@ -555,10 +561,13 @@ public class MovesFacade implements IMovesFacade {
 		serverGameModel.incrementVersion();
 		player.decrementSettlements();
 		player.incrementVictoryPoints();
-		player.decrementBrick();
-		player.decrementSheep();
-		player.decrementWheat();
-		player.decrementWood();
+		
+		if (!request.isFree()) {
+			player.decrementBrick();
+			player.decrementSheep();
+			player.decrementWheat();
+			player.decrementWood();
+		}
 		
 		if (serverGameModel.getTurnTracker().getStatus().equals("SecondRound")) {
 			
