@@ -394,8 +394,8 @@ public class MovesFacade implements IMovesFacade {
 				break;
 			}
 		}
-		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
-		serverGameModel.setBank(bank);
+		//player.setOldDevCards(cards);
+		//serverGameModel.setBank(bank);
 		serverGameModel.incrementVersion();
 		return serverGameModel;
 	}
@@ -414,11 +414,11 @@ public class MovesFacade implements IMovesFacade {
 		map.getRoads().add(new Road(owner,spot1.getX(),spot1.getY(),spot1.getDirection().toString()));
 		map.getRoads().add(new Road(owner,spot2.getX(),spot2.getY(),spot2.getDirection().toString()));
 		
-		serverGameModel.getPlayers().get(owner).setRoads(player.getRoads()-2);
+		player.setRoads(player.getRoads()-2);
 		
 		DevCards cards = player.getOldDevCards();
 		cards.setRoadBuilding(cards.getRoadBuilding()-1);
-		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
+		//serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
 		
 		checkForLongestRoad(serverGameModel);
 		
