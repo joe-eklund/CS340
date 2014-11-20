@@ -319,7 +319,7 @@ public class MovesFacade implements IMovesFacade {
 			
 		}
 		else{
-			//error not enough resources
+			throw new InvalidMovesRequest("Error: invalid buy dev card request-not enought resources");
 		}
 		serverGameModel.incrementVersion();
 		return serverGameModel;
