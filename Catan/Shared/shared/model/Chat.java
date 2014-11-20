@@ -25,7 +25,7 @@ public class Chat {
 	 * @post the message is anded to the list of messages along with its source.
 	 */
 	public void addMessage(String source, String message){
-		lines.add(new LogEntry(source, message));
+		lines.add(new LogEntry(message, source));
 	}
 	
 	/**

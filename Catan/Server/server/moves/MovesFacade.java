@@ -204,47 +204,52 @@ public class MovesFacade implements IMovesFacade {
 	public ServerModel robPlayer(RobPlayerRequest request, CookieParams cookie) throws InvalidMovesRequest {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid rob player request");
-		} 
+		}
+		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
-		Player player=serverGameModel.getPlayers().get(request.getPlayerIndex());
-		Player target=serverGameModel.getPlayers().get(request.getVictimIndex());
 		
-		ArrayList<String> potentialLoot = new ArrayList<String>();
-		
-		if (target.getResourceCount() > 0) {
-			if (target.getResources().brick > 0)
-				potentialLoot.add("brick");
-			if (target.getResources().ore > 0)
-				potentialLoot.add("ore");
-			if (target.getResources().sheep > 0)
-				potentialLoot.add("sheep");
-			if (target.getResources().wheat > 0)
-				potentialLoot.add("wheat");
-			if (target.getResources().wood > 0)
-				potentialLoot.add("wood");
+		if (request.getVictimIndex() >= 0 && request.getVictimIndex() < 4) {
 			
-			Random randomGenerator = new Random();
-			int lootIndex = randomGenerator.nextInt(potentialLoot.size());
+			Player player=serverGameModel.getPlayers().get(request.getPlayerIndex());
+			Player target=serverGameModel.getPlayers().get(request.getVictimIndex());
 			
-			String loot=potentialLoot.get(lootIndex);
-			if(loot.equals("wood")){
-				player.setWood(player.getWood()+1);
-				target.setWood(target.getWood()-1);
-			}else if(loot.equals("wheat")){
-				player.setWheat(player.getWheat()+1);
-				target.setWheat(target.getWheat()-1);
-			}else if(loot.equals("ore")){
-				player.setOre(player.getOre()+1);
-				target.setOre(target.getOre()-1);
-			}else if(loot.equals("brick")){
-				player.setBrick(player.getBrick()+1);
-				target.setBrick(target.getBrick()-1);
-			}else if(loot.equals("sheep")){
-				player.setSheep(player.getSheep()+1);
-				target.setSheep(target.getSheep()-1);
+			
+			ArrayList<String> potentialLoot = new ArrayList<String>();
+			
+			if (target.getResourceCount() > 0) {
+				if (target.getResources().brick > 0)
+					potentialLoot.add("brick");
+				if (target.getResources().ore > 0)
+					potentialLoot.add("ore");
+				if (target.getResources().sheep > 0)
+					potentialLoot.add("sheep");
+				if (target.getResources().wheat > 0)
+					potentialLoot.add("wheat");
+				if (target.getResources().wood > 0)
+					potentialLoot.add("wood");
+				
+				Random randomGenerator = new Random();
+				int lootIndex = randomGenerator.nextInt(potentialLoot.size());
+				
+				String loot=potentialLoot.get(lootIndex);
+				if(loot.equals("wood")){
+					player.setWood(player.getWood()+1);
+					target.setWood(target.getWood()-1);
+				}else if(loot.equals("wheat")){
+					player.setWheat(player.getWheat()+1);
+					target.setWheat(target.getWheat()-1);
+				}else if(loot.equals("ore")){
+					player.setOre(player.getOre()+1);
+					target.setOre(target.getOre()-1);
+				}else if(loot.equals("brick")){
+					player.setBrick(player.getBrick()+1);
+					target.setBrick(target.getBrick()-1);
+				}else if(loot.equals("sheep")){
+					player.setSheep(player.getSheep()+1);
+					target.setSheep(target.getSheep()-1);
+				}
 			}
 		}
-
 		serverGameModel.incrementVersion();
 		serverGameModel.getTurnTracker().setStatus("Playing");
 		return serverGameModel;
@@ -341,7 +346,7 @@ public class MovesFacade implements IMovesFacade {
 		resources.add(resource1);
 		resources.add(resource2);
 		for(String resource : resources){	
-			switch(resource){
+			switch(resource.toLowerCase()){
 			case "brick":
 				if(bank.getBrick()>0){
 					bank.setBrick(bank.getBrick()-1);
@@ -350,6 +355,7 @@ public class MovesFacade implements IMovesFacade {
 				else {
 					//throw no more of that resource error
 				}
+				break;
 			case "ore":
 				if(bank.getOre()>0){
 					bank.setOre(bank.getOre()-1);	
@@ -357,7 +363,8 @@ public class MovesFacade implements IMovesFacade {
 				}
 				else {
 					//throw no more of that resource error
-				}			
+				}	
+				break;
 			case "wood":
 				if(bank.getWood()>0){
 					bank.setWood(bank.getWood()-1);
@@ -366,6 +373,7 @@ public class MovesFacade implements IMovesFacade {
 				else {
 					//throw no more of that resource error
 				}
+				break;
 			case "sheep":
 				if(bank.getSheep()>0){
 					bank.setSheep(bank.getSheep()-1);	
@@ -374,6 +382,7 @@ public class MovesFacade implements IMovesFacade {
 				else {
 					//throw no more of that resource error
 				}
+				break;
 			case "wheat":
 				if(bank.getWheat()>0){
 					bank.setWheat(bank.getWheat()-1);		
@@ -382,6 +391,7 @@ public class MovesFacade implements IMovesFacade {
 				else {
 					//throw no more of that resource error
 				}
+				break;
 			}
 		}
 		serverGameModel.getPlayers().get(owner).setOldDevCards(cards);
@@ -395,9 +405,10 @@ public class MovesFacade implements IMovesFacade {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		int owner = request.getPlayerIndex();
 		Player player=serverGameModel.getPlayers().get(owner);
+	
 		
-		RoadLocation spot1 = request.getSpot1();
-		RoadLocation spot2 = request.getSpot2();
+		RoadLocation spot1 = new RoadLocation(request.getSpot1().getX(), request.getSpot1().getY(), EdgeDirection.valueOf(request.getSpot1().getDirectionStr()));
+		RoadLocation spot2 = new RoadLocation(request.getSpot2().getX(), request.getSpot2().getY(), EdgeDirection.valueOf(request.getSpot2().getDirectionStr()));
 		
 		Map map = serverGameModel.getMap();
 		map.getRoads().add(new Road(owner,spot1.getX(),spot1.getY(),spot1.getDirection().toString()));
@@ -424,7 +435,7 @@ public class MovesFacade implements IMovesFacade {
 		
 		DevCards cards = player.getOldDevCards();
 		cards.setSoldier(cards.getSoldier()-1);
-		player.setOldDevCards(cards);
+		//player.setOldDevCards(cards);
 		player.setSoldiers(player.getSoldiers()+1);
 
 		checkForLargestArmy(serverGameModel);
@@ -535,6 +546,8 @@ public class MovesFacade implements IMovesFacade {
 		if (!request.isFree()) {
 			player.decrementBrick();
 			player.decrementWood();
+			serverGameModel.getBank().brick += 1;
+			serverGameModel.getBank().wood += 1;
 		}
 
 		checkForLongestRoad(serverGameModel);
@@ -567,6 +580,11 @@ public class MovesFacade implements IMovesFacade {
 			player.decrementSheep();
 			player.decrementWheat();
 			player.decrementWood();
+			serverGameModel.getBank().brick += 1;
+			serverGameModel.getBank().sheep += 1;
+			serverGameModel.getBank().wheat += 1;
+			serverGameModel.getBank().wood += 1;
+			serverGameModel.getBank().ore += 1;
 		}
 		
 		if (serverGameModel.getTurnTracker().getStatus().equals("SecondRound")) {
@@ -612,22 +630,30 @@ public class MovesFacade implements IMovesFacade {
 					
 					String resource = hex.getResourceType();
 					
-					switch (resource) {
-					case "brick":
-						player.setBrick(1);
-						break;
-					case "ore":
-						player.setOre(1);
-						break;
-					case "sheep":
-						player.setSheep(1);
-						break;
-					case "wheat":
-						player.setWheat(1);
-						break;
-					case "wood":
-						player.setWood(1);
-						break;
+					if (resource != null) {
+					
+						switch (resource) {
+						case "brick":
+								player.setBrick(player.getBrick()+1);
+								serverGameModel.getBank().brick--;
+							break;
+						case "ore":
+							player.setOre(player.getOre()+1);
+							serverGameModel.getBank().ore--;
+							break;
+						case "sheep":
+								player.setSheep(player.getSheep()+1);
+								serverGameModel.getBank().sheep--;
+							break;
+						case "wheat":
+								player.setWheat(player.getWheat()+1);
+								serverGameModel.getBank().wheat--;
+							break;
+						case "wood":
+								player.setWood(player.getWood()+1);
+								serverGameModel.getBank().wood--;
+							break;
+						}
 					}
 				}
 			}
@@ -685,6 +711,8 @@ public class MovesFacade implements IMovesFacade {
 		int newWheat = player.getResources().getWheat() - 2;
 		player.getResources().setOre(newOre);
 		player.getResources().setWheat(newWheat);
+		serverGameModel.getBank().ore += 3;
+		serverGameModel.getBank().wheat += 2;
 		
 		checkForWinner(serverGameModel,playerIndex);
 		
@@ -696,6 +724,7 @@ public class MovesFacade implements IMovesFacade {
 		if(request == null) {
 			throw new InvalidMovesRequest("Error: invalid offer trade request");
 		} 
+		
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		
@@ -720,38 +749,42 @@ public class MovesFacade implements IMovesFacade {
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		
-		//execute
-		int sender = serverGameModel.getTradeOffer().getSender();
-		int receiver = serverGameModel.getTradeOffer().getReceiver();
-		int brick = serverGameModel.getTradeOffer().getOffer().getBrick();
-		int ore = serverGameModel.getTradeOffer().getOffer().getOre();
-		int sheep = serverGameModel.getTradeOffer().getOffer().getSheep();
-		int wheat = serverGameModel.getTradeOffer().getOffer().getWheat();
-		int wood = serverGameModel.getTradeOffer().getOffer().getWood();
+		if (request.isWillAccept()) {
+
+			//execute
+			int sender = serverGameModel.getTradeOffer().getSender();
+			int receiver = serverGameModel.getTradeOffer().getReceiver();
+			int brick = serverGameModel.getTradeOffer().getOffer().getBrick();
+			int ore = serverGameModel.getTradeOffer().getOffer().getOre();
+			int sheep = serverGameModel.getTradeOffer().getOffer().getSheep();
+			int wheat = serverGameModel.getTradeOffer().getOffer().getWheat();
+			int wood = serverGameModel.getTradeOffer().getOffer().getWood();
+			
+			int senderBrick = serverGameModel.getPlayers().get(sender).getBrick() - brick;
+			int senderOre = serverGameModel.getPlayers().get(sender).getOre() - ore;
+			int senderSheep = serverGameModel.getPlayers().get(sender).getSheep() - sheep;
+			int senderWheat = serverGameModel.getPlayers().get(sender).getWheat() - wheat;
+			int senderWood = serverGameModel.getPlayers().get(sender).getWood() - wood;
+			
+			serverGameModel.getPlayers().get(sender).setBrick(senderBrick);
+			serverGameModel.getPlayers().get(sender).setOre(senderOre);
+			serverGameModel.getPlayers().get(sender).setSheep(senderSheep);
+			serverGameModel.getPlayers().get(sender).setWheat(senderWheat);
+			serverGameModel.getPlayers().get(sender).setWood(senderWood);
+			
+			int receiverBrick = serverGameModel.getPlayers().get(receiver).getBrick() + brick;
+			int receiverOre = serverGameModel.getPlayers().get(receiver).getOre() + ore;
+			int receiverSheep = serverGameModel.getPlayers().get(receiver).getSheep() + sheep;
+			int receiverWheat = serverGameModel.getPlayers().get(receiver).getWheat() + wheat;
+			int receiverWood = serverGameModel.getPlayers().get(receiver).getWood() + wood;
+			
+			serverGameModel.getPlayers().get(receiver).setBrick(receiverBrick);	
+			serverGameModel.getPlayers().get(receiver).setOre(receiverOre);
+			serverGameModel.getPlayers().get(receiver).setSheep(receiverSheep);
+			serverGameModel.getPlayers().get(receiver).setWheat(receiverWheat);
+			serverGameModel.getPlayers().get(receiver).setWood(receiverWood);
 		
-		int senderBrick = serverGameModel.getPlayers().get(sender).getBrick() - brick;
-		int senderOre = serverGameModel.getPlayers().get(sender).getOre() - ore;
-		int senderSheep = serverGameModel.getPlayers().get(sender).getSheep() - sheep;
-		int senderWheat = serverGameModel.getPlayers().get(sender).getWheat() - wheat;
-		int senderWood = serverGameModel.getPlayers().get(sender).getWood() - wood;
-		
-		serverGameModel.getPlayers().get(sender).setBrick(senderBrick);
-		serverGameModel.getPlayers().get(sender).setOre(senderOre);
-		serverGameModel.getPlayers().get(sender).setSheep(senderSheep);
-		serverGameModel.getPlayers().get(sender).setWheat(senderWheat);
-		serverGameModel.getPlayers().get(sender).setWood(senderWood);
-		
-		int receiverBrick = serverGameModel.getPlayers().get(receiver).getBrick() + brick;
-		int receiverOre = serverGameModel.getPlayers().get(receiver).getOre() + ore;
-		int receiverSheep = serverGameModel.getPlayers().get(receiver).getSheep() + sheep;
-		int receiverWheat = serverGameModel.getPlayers().get(receiver).getWheat() + wheat;
-		int receiverWood = serverGameModel.getPlayers().get(receiver).getWood() + wood;
-		
-		serverGameModel.getPlayers().get(receiver).setBrick(receiverBrick);	
-		serverGameModel.getPlayers().get(receiver).setOre(receiverOre);
-		serverGameModel.getPlayers().get(receiver).setSheep(receiverSheep);
-		serverGameModel.getPlayers().get(receiver).setWheat(receiverWheat);
-		serverGameModel.getPlayers().get(receiver).setWood(receiverWood);
+		}
 		serverGameModel.incrementVersion();
 		serverGameModel.setTradeOffer(null);
 		return serverGameModel;
@@ -775,22 +808,27 @@ public class MovesFacade implements IMovesFacade {
 		case "brick":
 			int playerBrick = player.getBrick() - ratio;
 			player.setBrick(playerBrick);
+			serverGameModel.getBank().brick += ratio;
 			break;
 		case "ore":
 			int playerOre = player.getOre() - ratio;
 			player.setOre(playerOre);
+			serverGameModel.getBank().ore += ratio;
 			break;
 		case "sheep":
 			int playerSheep = player.getSheep() - ratio;
 			player.setSheep(playerSheep);
+			serverGameModel.getBank().sheep += ratio;
 			break;
 		case "wheat":
 			int playerWheat = player.getWheat() - ratio;
 			player.setWheat(playerWheat);
+			serverGameModel.getBank().wheat += ratio;
 			break;
 		case "wood":
 			int playerWood = player.getWood() - ratio;
 			player.setWood(playerWood);
+			serverGameModel.getBank().wood += ratio;
 			break;
 		}
 		
@@ -827,6 +865,14 @@ public class MovesFacade implements IMovesFacade {
 		} 
 		
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
+		
+		serverGameModel.getBank().brick += request.getDiscardedCards().getBrick();
+		serverGameModel.getBank().ore += request.getDiscardedCards().getOre();
+		serverGameModel.getBank().sheep += request.getDiscardedCards().getSheep();
+		serverGameModel.getBank().wheat += request.getDiscardedCards().getWheat();
+		serverGameModel.getBank().wood += request.getDiscardedCards().getWood();
+		
+		
 		Player player = serverGameModel.getPlayers().get(request.getPlayerIndex());
 		int playerBrick = player.getBrick() - request.getDiscardedCards().getBrick();
 		int playerOre = player.getOre() - request.getDiscardedCards().getOre();
@@ -845,7 +891,6 @@ public class MovesFacade implements IMovesFacade {
 		int p3Resources = serverGameModel.getPlayers().get(2).getResourceCount();
 		int p4Resources = serverGameModel.getPlayers().get(3).getResourceCount();
 		
-		System.out.println(Math.ceil(player2TotResources/2.0));
 		boolean a = (p1Resources <= (int) Math.ceil(player1TotResources/2.0));
 		boolean b = (p2Resources <= (int) Math.ceil(player2TotResources/2.0));
 		boolean c = (p3Resources <= (int) Math.ceil(player3TotResources/2.0));
@@ -890,7 +935,7 @@ public class MovesFacade implements IMovesFacade {
 		int largest=2;
 		int playerWith=game.getTurnTracker().getLargestArmy();
 		for(int i=0;i<game.getPlayers().size();i++){
-			if(game.getPlayers().get(i).getSoldiers() > largest && 
+			if(playerWith >= 0 && playerWith < game.getPlayers().size() && game.getPlayers().get(i).getSoldiers() > largest && 
 					game.getPlayers().get(i).getSoldiers() > game.getPlayers().get(playerWith).getSoldiers()){
 				largest=game.getPlayers().get(i).getSoldiers();
 				playerWith=i;
@@ -907,16 +952,21 @@ public class MovesFacade implements IMovesFacade {
 	}
 	
 	private void incrementResources(ServerModel game,int owner,String resource,int amount){
-		if(resource.equals("wood")){
+		if(resource.equals("wood") && game.getBank().wood > 0){
 			game.getPlayers().get(owner).setWood(game.getPlayers().get(owner).getWood()+amount);
-		}else if(resource.equals("sheep")){
+			game.getBank().wood -= amount;
+		}else if(resource.equals("sheep") && game.getBank().sheep > 0){
 			game.getPlayers().get(owner).setSheep(game.getPlayers().get(owner).getSheep()+amount);
-		}else if(resource.equals("ore")){
+			game.getBank().sheep -= amount;
+		}else if(resource.equals("ore") && game.getBank().ore > 0){
 			game.getPlayers().get(owner).setOre(game.getPlayers().get(owner).getOre()+amount);
-		}else if(resource.equals("wheat")){
+			game.getBank().ore -= amount;
+		}else if(resource.equals("wheat")  && game.getBank().wheat > 0){
 			game.getPlayers().get(owner).setWheat(game.getPlayers().get(owner).getWheat()+amount);
-		}else if(resource.equals("brick")){
+			game.getBank().wheat -= amount;
+		}else if(resource.equals("brick")  && game.getBank().brick > 0){
 			game.getPlayers().get(owner).setBrick(game.getPlayers().get(owner).getBrick()+amount);
+			game.getBank().brick -= amount;
 		}
 	}
 }

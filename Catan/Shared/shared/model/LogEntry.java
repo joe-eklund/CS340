@@ -13,7 +13,7 @@ public class LogEntry {
 	 * @param message The command that is played
 	 * @param source 
 	 */
-	public LogEntry(String source, String message) {
+	public LogEntry(String message, String source) {
 		this.message = message;
 		this.source = source;
 	}
