@@ -89,7 +89,7 @@ public class SendChatHandler implements HttpHandler {
 				// TODO join game in gameModels list
 
 			} catch (InvalidCookieException | InvalidMovesRequest e) { // else send error message
-				System.out.println("unrecognized / invalid build city request");
+				System.out.println("unrecognized / invalid send chat request");
 				responseMessage = e.getMessage();
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 			}

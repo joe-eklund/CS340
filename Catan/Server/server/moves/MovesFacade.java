@@ -84,7 +84,7 @@ public class MovesFacade implements IMovesFacade {
 	@Override
 	public ServerModel rollNumber(RollNumberRequest request,CookieParams cookie) throws InvalidMovesRequest{
 		if(request == null) {
-			throw new InvalidMovesRequest("Error: invalid send chat request");
+			throw new InvalidMovesRequest("Error: invalid roll number request");
 		} 
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 
