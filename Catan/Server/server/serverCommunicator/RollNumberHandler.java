@@ -84,8 +84,9 @@ public class RollNumberHandler implements HttpHandler {
 				exchange.getResponseHeaders().put("Set-cookie", cookies);
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				movesLog.store(new RollNumberCommand(movesFacade, request, cookie));
+				
 				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
-				serverModel.getLog().addMessage(new LogEntry(name+ " rolled", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
+				serverModel.getLog().addMessage(new LogEntry(name+ " rolled a " + request.getNumber(), serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
 
 				responseMessage = translator.translateTo(serverModel);
 				System.out.println(responseMessage);
