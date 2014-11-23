@@ -549,4 +549,8 @@ public class Player {
 	public void decrementWood() {
 		resources.wood--;
 	}
+
+	public void decrementVictoryPoints() {
+		this.victoryPoints--;
+	}
 }

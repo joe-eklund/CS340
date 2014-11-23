@@ -85,6 +85,9 @@ public class SoldierHandler implements HttpHandler {
 				
 				String name = serverModel.getPlayerByID(cookie.getPlayerID()).getName();
 				serverModel.getLog().addMessage(new LogEntry(name+ " played a soldier", serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
+				String robbee = request.getVictimIndex() == -1 ? "No One" : serverModel.getPlayerByID(request.getVictimIndex()).getName();
+				
+				serverModel.getLog().addMessage(new LogEntry(name+ " robbed " + robbee , serverModel.getPlayerByID(cookie.getPlayerID()).getName()));
 
 				responseMessage = translator.translateTo(serverModel);
 
