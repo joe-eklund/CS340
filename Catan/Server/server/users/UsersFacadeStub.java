@@ -13,5 +13,4 @@ public class UsersFacadeStub extends AUsersFacade{
 			add(new User("Cathy", "cathy"));
 		}};
 	}
-
 }

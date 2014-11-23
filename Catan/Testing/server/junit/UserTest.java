@@ -41,6 +41,7 @@ public class UserTest {
 		int login = user.loginUser(new UserRequest("Bobby","bobby"));
 		assertTrue("Should be valid login",login>-1);
 	}
+	
 	@Test
 	public void testInvalidLogin() {
 		int login = user.loginUser(new UserRequest("Bobby","boby"));
@@ -48,11 +49,13 @@ public class UserTest {
 		login = user.loginUser(new UserRequest("Jimmy","jimmy"));
 		assertEquals("User doesn't exist should return invalid login",-1,login);
 	}
+	
 	@Test
 	public void testValidRegister() {
 		int register = user.registerUser(new UserRequest("Jimmy","jimmy"));
 		assertTrue("Should be valid registration",register>-1);
 	}
+	
 	@Test
 	public void testInvalidRegister() {
 		//check for duplicates
@@ -71,6 +74,7 @@ public class UserTest {
 		response = client.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "user/register", new User("Jimmy","$ma_r7"), null);
 		assertTrue("Password shouldn't contain invalid characters",response.getResponseMessage().equals("Don't trust your client -- they have violated the server API contract: invalid username and/or password configuration."));
 	}
+	
 	@Test
 	public void testCommandLogExecuteAll() {
 		UsersFacadeStub restoredUsers = new UsersFacadeStub();

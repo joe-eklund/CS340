@@ -21,7 +21,8 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.ServerModel;
 
 public class MovesFacadeStub implements IMovesFacade {
-
+	MovesFacade facade = new MovesFacade(null);
+	
 	@Override
 	public ServerModel sendChat(SendChatRequest request,CookieParams cookie) throws InvalidMovesRequest{
 		// TODO Auto-generated method stub
@@ -55,8 +56,7 @@ public class MovesFacadeStub implements IMovesFacade {
 
 	@Override
 	public ServerModel yearOfPlenty(YearOfPlentyDevRequest request, CookieParams cookie) {
-		// TODO Auto-generated method stub
-		return null;
+		return facade.yearOfPlenty(request, cookie);
 	}
 
 	@Override
