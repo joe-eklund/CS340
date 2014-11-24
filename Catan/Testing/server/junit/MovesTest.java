@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import proxy.TranslatorJSON;
 import server.commands.users.UsersCommandLog;
+import server.cookie.CookieParams;
 import server.moves.IMovesFacade;
+import server.moves.InvalidMovesRequest;
 import server.moves.MovesFacadeStub;
 import server.serverCommunicator.LoginUserHandler;
 import server.serverCommunicator.RegisterUserHandler;
@@ -15,16 +17,19 @@ import server.serverCommunicator.YearOfPlentyHandler;
 import server.users.IUsersFacade;
 import server.users.UsersFacadeStub;
 import shared.ServerMethodRequests.UserRequest;
+import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.ServerModel;
 
 public class MovesTest {
 	private IMovesFacade moves;
 	private TranslatorJSON jsonTrans;
-	private YearOfPlentyHandler yopHandle;
+	private CookieParams cookie;
 	
 	@Before 
 	public void setUp() { 
 		moves = new MovesFacadeStub();
 		jsonTrans = new TranslatorJSON();
+		cookie=new CookieParams("Bobby", "bobby", 0, 1);
 	}
 	
 	@Test
@@ -87,7 +92,16 @@ public class MovesTest {
 	
 	@Test
 	public void testYearOfPlenty() {
-		moves.yearOfPlenty(request, cookie);
+
+		YearOfPlentyHandler yopHandle;
+		YearOfPlentyDevRequest request=new YearOfPlentyDevRequest(0, "wood", "sheep");
+		ServerModel preGame,postGame;
+		
+		try {
+			postGame=moves.yearOfPlenty(request, cookie);
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
