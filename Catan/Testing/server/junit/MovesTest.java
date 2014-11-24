@@ -1,6 +1,9 @@
 package server.junit;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +11,13 @@ import org.junit.Test;
 import proxy.TranslatorJSON;
 import server.commands.users.UsersCommandLog;
 import server.cookie.CookieParams;
+import server.game.GameFacadeStub;
+import server.game.IGameFacade;
+import server.games.GamesFacadeStub;
+import server.games.IGamesFacade;
 import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
+import server.moves.MovesFacade;
 import server.moves.MovesFacadeStub;
 import server.serverCommunicator.LoginUserHandler;
 import server.serverCommunicator.RegisterUserHandler;
@@ -25,11 +33,18 @@ public class MovesTest {
 	private TranslatorJSON jsonTrans;
 	private CookieParams cookie;
 	
+	private IGamesFacade games;
+	private ArrayList<ServerModel> gamesList;
+	
 	@Before 
 	public void setUp() { 
-		moves = new MovesFacadeStub();
+		//moves = new MovesFacadeStub();
 		jsonTrans = new TranslatorJSON();
-		cookie=new CookieParams("Bobby", "bobby", 0, 1);
+		cookie = new CookieParams("Bobby", "bobby", 0, 1);
+		
+		gamesList=new ArrayList<ServerModel>();
+		games=new GamesFacadeStub(gamesList);
+		moves=new MovesFacade(gamesList);
 	}
 	
 	@Test
@@ -92,13 +107,16 @@ public class MovesTest {
 	
 	@Test
 	public void testYearOfPlenty() {
-
-		YearOfPlentyHandler yopHandle;
 		YearOfPlentyDevRequest request=new YearOfPlentyDevRequest(0, "wood", "sheep");
-		ServerModel preGame,postGame;
+		ServerModel aGame;
 		
+		aGame=gamesList.get(1);
+		int wood=aGame.getPlayers().get(0).getWood();
+		int sheep=aGame.getPlayers().get(0).getSheep();
 		try {
-			postGame=moves.yearOfPlenty(request, cookie);
+			aGame=moves.yearOfPlenty(request, cookie);
+			assertEquals("Bobby should have an additional wood.",wood+1,aGame.getPlayers().get(0).getWood());
+			assertEquals("Bobby should have an additional wood.",sheep+1,aGame.getPlayers().get(0).getSheep());
 		} catch (InvalidMovesRequest e) {
 			System.out.println(e.getMessage());
 		}
