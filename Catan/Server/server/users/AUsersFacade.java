@@ -28,7 +28,7 @@ public abstract class AUsersFacade implements IUsersFacade {
 		int result = -1;
 		
 		User unvalidatedUser = new User(request.getUsername(), request.getPassword());
-		if(users.indexOf(unvalidatedUser) == -1) {
+		if(users.indexOf(unvalidatedUser) == -1 && request.validatePreConditions()) {
 			users.add(unvalidatedUser);
 			result = users.indexOf(unvalidatedUser);
 		}

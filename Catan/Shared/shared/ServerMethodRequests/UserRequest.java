@@ -14,7 +14,7 @@ package shared.ServerMethodRequests;
 public class UserRequest {
 	private String username;
 	private String password;
-	private final static String validCharsRegex = "[0-9]*[A-z]*[_]*[-]*";
+	private final static String validCharsRegex = "[A-Za-z0-9_-]*";
 	
 	/**
 	 * Constructor
