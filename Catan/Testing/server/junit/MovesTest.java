@@ -28,15 +28,19 @@ import shared.ServerMethodRequests.BuyDevCardRequest;
 import shared.ServerMethodRequests.FinishTurnRequest;
 import shared.ServerMethodRequests.MonopolyDevRequest;
 import shared.ServerMethodRequests.MonumentDevRequest;
+import shared.ServerMethodRequests.RoadBuildingDevRequest;
 import shared.ServerMethodRequests.RobPlayerRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.UserRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
+import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.model.Chat;
 import shared.model.Player;
+import shared.model.Road;
 
 public class MovesTest {
 	private IMovesFacade moves;
@@ -207,7 +211,29 @@ public class MovesTest {
 	
 	@Test
 	public void testRoadBuilding() {
+		EdgeDirection direction = EdgeDirection.North;
+		EdgeDirection direction2 = EdgeDirection.NorthEast;
+		RoadLocation location1 = new RoadLocation(0, 0, direction);
+		RoadLocation location2 = new RoadLocation(0, 0, direction2);
+		RoadBuildingDevRequest request = new RoadBuildingDevRequest(0, location1, location2);
+		ServerModel aGame;
 		
+		aGame = gamesList.get(1);
+		int wood = aGame.getPlayers().get(0).getWood();
+		
+		try {
+			aGame=moves.roadBuilding(request, cookie);
+			//Need to get the right roads not right right now
+			Road road = aGame.getMap().getRoads().get(0);
+			Road road2 = aGame.getMap().getRoads().get(1);
+			assertEquals("Bobby should have road at X1: 0",location1.getX(),road.location.getX());
+			assertEquals("Bobby should have road at Y1: 0",location1.getY(),road.location.getY());
+			assertEquals("Bobby should have road at Y2: 0",location2.getX(),road2.location.getX());
+			assertEquals("Bobby should have road at Y2: 0",location2.getY(),road2.location.getY());
+
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
