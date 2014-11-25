@@ -1,30 +1,17 @@
 package server.junit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import client.exceptions.ClientModelException;
 import proxy.TranslatorJSON;
-import server.commands.users.UsersCommandLog;
 import server.cookie.CookieParams;
-import server.game.GameFacadeStub;
-import server.game.IGameFacade;
 import server.games.GamesFacadeStub;
 import server.games.IGamesFacade;
 import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import server.moves.MovesFacade;
-import server.moves.MovesFacadeStub;
-import server.serverCommunicator.LoginUserHandler;
-import server.serverCommunicator.RegisterUserHandler;
-import server.serverCommunicator.YearOfPlentyHandler;
-import server.users.IUsersFacade;
-import server.users.UsersFacadeStub;
 import shared.ServerMethodRequests.BuildSettlementRequest;
 import shared.ServerMethodRequests.BuyDevCardRequest;
 import shared.ServerMethodRequests.FinishTurnRequest;
@@ -35,17 +22,13 @@ import shared.ServerMethodRequests.RobPlayerRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
-import shared.ServerMethodRequests.UserRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
-import shared.definitions.Location;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
 import shared.definitions.VertexLocationRequest;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
-import shared.model.Chat;
 import shared.model.Player;
 import shared.model.Road;
 
