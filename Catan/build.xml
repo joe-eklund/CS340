@@ -77,12 +77,12 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-    <target name="test">
+    <target name="test-server">
         <java classname="client.junit.AllTests" failonerror="true" fork="yes">
             <classpath refid="Catan.classpath"/>
         </java>
     </target>
-    <target name="AllTests">
+    <target name="test-client">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
@@ -90,7 +90,7 @@
             <classpath refid="Catan.classpath"/>
         </junit>
     </target>
-    <target name="server">
+    <target name="our-server">
         <java classname="server.main.Catan" failonerror="true" fork="yes">
             <arg line="-p 8081"/>
             <classpath refid="Catan.classpath"/>
