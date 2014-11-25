@@ -63,8 +63,8 @@ public class UserTest {
 		assertEquals("Duplicate user should return invalid registration",-1,register);
 		//check invalid server registrations
 		Catan game=new Catan();
-		game.main(new String[]{"-p", "8080", "-t"});
-		ClientCommunicator client=new ClientCommunicator("localhost",8080,jsonTrans);
+		game.main(new String[]{"-p", "8081", "-t"});
+		ClientCommunicator client=new ClientCommunicator("localhost",8081,jsonTrans);
 		CommandResponse response = client.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "user/register", new User("Ji","jimmy"), null);
 		assertTrue("Username needs to be greater than length of 2",response.getResponseMessage().equals("Don't trust your client -- they have violated the server API contract: invalid username and/or password configuration."));
 		response = client.executeCommand(RequestType.POST, new ArrayList<Pair<String,String>>(), "user/register", new User("Tyrannosaurus","trexe"), null);
