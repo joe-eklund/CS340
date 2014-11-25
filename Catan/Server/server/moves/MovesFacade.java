@@ -286,48 +286,22 @@ public class MovesFacade implements IMovesFacade {
 		
 		if(player.getSheep() > 0 && player.getWheat() > 0 && player.getOre() > 0 && 
 				card.getTotalDevCardCount() > 0){
-			
-			boolean notDone = true;
-			while(notDone) {
-				int c=rand.nextInt(4);
-				
-				switch(c) {
-				case 0:
-					if (card.getSoldier() > 0) {
-						player.getNewDevCards().setSoldier(player.getNewDevCards().getSoldier()+1);
-						card.setSoldier(card.getSoldier()-1);
-						notDone = false;
-					}
-					break;
-				case 1:
-					if (card.getMonument() > 0) {
-						player.getOldDevCards().setMonument(player.getOldDevCards().getMonument()+1);
-						card.setMonument(card.getMonument()-1);
-						notDone = false;
-					}
-					break;
-				case 2:
-					if (card.getMonopoly() > 0) {
-						player.getNewDevCards().setMonopoly(player.getNewDevCards().getMonopoly()+1);
-						card.setMonopoly(card.getMonopoly()-1);
-						notDone = false;
-					}
-					break;
-				case 3:
-					if (card.getRoadBuilding() > 0) {
-						player.getNewDevCards().setRoadBuilding(player.getNewDevCards().getRoadBuilding()+1);
-						card.setRoadBuilding(card.getRoadBuilding());
-						notDone = false;
-					}
-					break;
-				case 4:
-					if (card.getYearOfPlenty() > 0) {
-						player.getNewDevCards().setYearOfPlenty(player.getNewDevCards().getYearOfPlenty()+1);
-						card.setYearOfPlenty(card.getYearOfPlenty());
-						notDone = false;
-					}
-					break;
-				}
+			int c=rand.nextInt(card.getTotalDevCardCount());
+			if(c<card.getSoldier()){
+				player.getNewDevCards().setSoldier(player.getNewDevCards().getSoldier()+1);
+				card.setSoldier(card.getSoldier()-1);
+			}else if(c<card.getSoldier()+card.getMonument()){
+				player.getOldDevCards().setMonument(player.getOldDevCards().getMonument()+1);
+				card.setMonument(card.getMonument()-1);
+			}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()){
+				player.getNewDevCards().setMonopoly(player.getNewDevCards().getMonopoly()+1);
+				card.setMonopoly(card.getMonopoly()-1);
+			}else if(c<card.getSoldier()+card.getMonument()+card.getMonopoly()+card.getRoadBuilding()){
+				player.getNewDevCards().setRoadBuilding(player.getNewDevCards().getRoadBuilding()+1);
+				card.setRoadBuilding(card.getRoadBuilding()-1);
+			}else{
+				player.getNewDevCards().setYearOfPlenty(player.getNewDevCards().getYearOfPlenty()+1);
+				card.setYearOfPlenty(card.getYearOfPlenty()-1);
 			}
 			
 			player.setSheep(player.getSheep()-1);

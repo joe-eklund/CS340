@@ -24,11 +24,15 @@ import server.serverCommunicator.RegisterUserHandler;
 import server.serverCommunicator.YearOfPlentyHandler;
 import server.users.IUsersFacade;
 import server.users.UsersFacadeStub;
+import shared.ServerMethodRequests.BuyDevCardRequest;
+import shared.ServerMethodRequests.FinishTurnRequest;
+import shared.ServerMethodRequests.RobPlayerRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.UserRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.ServerModel;
+import shared.locations.HexLocation;
 import shared.model.Chat;
 
 public class MovesTest {
@@ -82,10 +86,10 @@ public class MovesTest {
 		aGame=gamesList.get(2);
 		cookie=new CookieParams("Bobby", "bobby", 0, 2);
 		request=new RollNumberRequest(6,0);
-		int player0Resources=aGame.getPlayers().get(0).getResources().totalResourcesCount();
-		int player1Resources=aGame.getPlayers().get(1).getResources().totalResourcesCount();
-		int player2Resources=aGame.getPlayers().get(2).getResources().totalResourcesCount();
-		int player3Resources=aGame.getPlayers().get(3).getResources().totalResourcesCount();
+		int player0Resources=aGame.getPlayers().get(0).getResourceCount();
+		int player1Resources=aGame.getPlayers().get(1).getResourceCount();
+		int player2Resources=aGame.getPlayers().get(2).getResourceCount();
+		int player3Resources=aGame.getPlayers().get(3).getResourceCount();
 		try {
 			moves.rollNumber(request, cookie);
 			assertEquals("Player 0 should have more resources.",player0Resources+1,aGame.getPlayers().get(0).getResources().totalResourcesCount());
@@ -93,10 +97,10 @@ public class MovesTest {
 			assertEquals("Player 2 should have more resources.",player2Resources+0,aGame.getPlayers().get(2).getResources().totalResourcesCount());
 			assertEquals("Player 3 should have more resources.",player3Resources+0,aGame.getPlayers().get(3).getResources().totalResourcesCount());
 			request=new RollNumberRequest(10,0);
-			player0Resources=aGame.getPlayers().get(0).getResources().totalResourcesCount();
-			player1Resources=aGame.getPlayers().get(1).getResources().totalResourcesCount();
-			player2Resources=aGame.getPlayers().get(2).getResources().totalResourcesCount();
-			player3Resources=aGame.getPlayers().get(3).getResources().totalResourcesCount();
+			player0Resources=aGame.getPlayers().get(0).getResourceCount();
+			player1Resources=aGame.getPlayers().get(1).getResourceCount();
+			player2Resources=aGame.getPlayers().get(2).getResourceCount();
+			player3Resources=aGame.getPlayers().get(3).getResourceCount();
 			moves.rollNumber(request, cookie);
 			assertEquals("Player 0 should have more resources.",player0Resources+0,aGame.getPlayers().get(0).getResources().totalResourcesCount());
 			assertEquals("Player 1 should have more resources.",player1Resources+1,aGame.getPlayers().get(1).getResources().totalResourcesCount());
@@ -108,13 +112,54 @@ public class MovesTest {
 	}
 	
 	@Test
+	public void testRobPlayer() {
+		RobPlayerRequest request=new RobPlayerRequest(0,1,new HexLocation(0,2));
+		cookie=new CookieParams("Bobby", "bobby", 0, 2);
+		ServerModel aGame=gamesList.get(2);
+		int player=aGame.getPlayers().get(0).getResourceCount();
+		int target=aGame.getPlayers().get(1).getResourceCount();
+		int other1=aGame.getPlayers().get(2).getResourceCount();
+		int other2=aGame.getPlayers().get(3).getResourceCount();
+		try {
+			moves.robPlayer(request, cookie);
+			assertEquals("Bobby should have an addition resource.",player+1,aGame.getPlayers().get(0).getResourceCount());
+			assertEquals("Billy should have one less resource.",target-1,aGame.getPlayers().get(1).getResourceCount());
+			assertEquals("Sandy should have the same amount of resources.",other1,aGame.getPlayers().get(2).getResourceCount());
+			assertEquals("Cathy should have the same amount of resources.",other2,aGame.getPlayers().get(3).getResourceCount());
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	@Test
 	public void testBuyDevCard() {
-		
+		//me
+		BuyDevCardRequest request=new BuyDevCardRequest(0);
+		ServerModel aGame=gamesList.get(2);
+		cookie=new CookieParams("Bobby", "bobby", 0, 2);
+		int devCards=aGame.getPlayers().get(0).getNewDevCards().getTotalDevCardCount();
+		try {
+			moves.buyDevCard(request, cookie);
+			assertEquals("Bobby should have a new development card.",devCards+1,aGame.getPlayers().get(0).getNewDevCards().getTotalDevCardCount());
+			
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
 	public void testFinishTurn() {
-		
+		FinishTurnRequest request=new FinishTurnRequest(0);
+		ServerModel aGame=gamesList.get(2);
+		aGame.getTurnTracker().setStatus("Playing");
+		cookie=new CookieParams("Bobby", "bobby", 0, 2);
+		try {
+			moves.finishTurn(request, cookie);
+			assertEquals("The state should be Rolling.","Rolling",aGame.getTurnTracker().getStatus());
+			assertEquals("It should be Billy's turn, ie 1.",1,aGame.getTurnTracker().getCurrentTurn());
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test

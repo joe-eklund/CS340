@@ -168,7 +168,7 @@ public class GamesFacadeStub extends AGamesFacade {
 				serverModel.getTurnTracker().setCurrentTurn(0);
 				serverModel.getTurnTracker().setStatus("Rolling");
 				
-				//Giving player 0 resources
+				//Giving players resources
 				serverModel.getPlayers().get(0).setResources(new Resources(10, 10, 10, 10, 10));
 				serverModel.getPlayers().get(1).setResources(new Resources(10, 10, 10, 10, 10));
 				serverModel.getPlayers().get(2).setResources(new Resources(10, 10, 10, 10, 10));
