@@ -90,15 +90,15 @@
             <classpath refid="Catan.classpath"/>
         </junit>
     </target>
-    <target name="Catan (1)">
+    <target name="server">
         <java classname="server.main.Catan" failonerror="true" fork="yes">
-            <arg line="-p 8080"/>
+            <arg line="-p 8081"/>
             <classpath refid="Catan.classpath"/>
         </java>
     </target>
     <target name="Catan">
         <java classname="client.main.Catan" failonerror="true" fork="yes">
-            <arg line="8080"/>
+            <arg line="8081"/>
             <classpath refid="Catan.classpath"/>
         </java>
     </target>
