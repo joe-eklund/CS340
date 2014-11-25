@@ -26,6 +26,8 @@ import server.users.IUsersFacade;
 import server.users.UsersFacadeStub;
 import shared.ServerMethodRequests.BuyDevCardRequest;
 import shared.ServerMethodRequests.FinishTurnRequest;
+import shared.ServerMethodRequests.MonopolyDevRequest;
+import shared.ServerMethodRequests.MonumentDevRequest;
 import shared.ServerMethodRequests.RobPlayerRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
@@ -34,6 +36,7 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.ServerModel;
 import shared.locations.HexLocation;
 import shared.model.Chat;
+import shared.model.Player;
 
 public class MovesTest {
 	private IMovesFacade moves;
@@ -218,7 +221,7 @@ public class MovesTest {
 		try {
 			aGame=moves.yearOfPlenty(request, cookie);
 			assertEquals("Bobby should have an additional wood.",wood+1,aGame.getPlayers().get(0).getWood());
-			assertEquals("Bobby should have an additional wood.",sheep+1,aGame.getPlayers().get(0).getSheep());
+			assertEquals("Bobby should have an additional sheep.",sheep+1,aGame.getPlayers().get(0).getSheep());
 		} catch (InvalidMovesRequest e) {
 			System.out.println(e.getMessage());
 		}
@@ -226,11 +229,35 @@ public class MovesTest {
 	
 	@Test
 	public void testMonument() {
+		MonumentDevRequest request = new MonumentDevRequest(0);
+		ServerModel aGame;
 		
+		aGame = gamesList.get(1);
+		int points = aGame.getPlayers().get(0).getMonuments();
+		try {
+			aGame = moves.monument(request, cookie);
+			assertEquals("Bobby should have an additional point.",points+1,aGame.getPlayers().get(0).getMonuments());
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
 	public void testMonopoly() {
+		MonopolyDevRequest request = new MonopolyDevRequest(0, "wood");
+		ServerModel aGame;
 		
+		aGame = gamesList.get(1);
+		int totalWood = 0;
+		for(Player player : aGame.getPlayers()){
+			totalWood += aGame.getPlayers().get(player.getPlayerIndex()).getWood();
+		}
+		
+		try {
+			aGame = moves.monopoly(request, cookie);
+			assertEquals("Bobby should have all the wood.",totalWood,aGame.getPlayers().get(0).getWood());
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
