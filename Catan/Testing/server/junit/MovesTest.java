@@ -137,11 +137,12 @@ public class MovesTest {
 		BuyDevCardRequest request=new BuyDevCardRequest(0);
 		ServerModel aGame=gamesList.get(2);
 		cookie=new CookieParams("Bobby", "bobby", 0, 2);
-		int devCards=aGame.getPlayers().get(0).getNewDevCards().getTotalDevCardCount();
+		int playerCards=aGame.getPlayers().get(0).getNewDevCards().getTotalDevCardCount();
+		int devCards=aGame.getDeck().getTotalDevCardCount();
 		try {
 			moves.buyDevCard(request, cookie);
-			assertEquals("Bobby should have a new development card.",devCards+1,aGame.getPlayers().get(0).getNewDevCards().getTotalDevCardCount());
-			
+			assertEquals("Bobby should have a new development card.",playerCards+1,aGame.getPlayers().get(0).getNewDevCards().getTotalDevCardCount());
+			assertEquals("The deck should have one less card.",devCards-1,aGame.getDeck().getTotalDevCardCount());	
 		} catch (InvalidMovesRequest e) {
 			System.out.println(e.getMessage());
 		}
