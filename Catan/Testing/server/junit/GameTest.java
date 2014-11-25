@@ -36,6 +36,10 @@ public class GameTest {
 	}
 	@Test
 	public void testAddAI(){ 
+		int ais=game.listAI().size();
+		AddAIRequest request=new AddAIRequest("AI v4.9");
+		game.addAI(request);
+		assertEquals("There should be another ai.",ais+1,game.listAI().size());
 		
 	}
 	@Test
