@@ -1,0 +1,1547 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="39" failures="9" hostname="EpperMarshall" name="client.junit.AllTests" tests="74" time="23.595" timestamp="2014-11-25T01:54:36">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="env.PROMPT" value="$P$G" />
+    <property name="os.name" value="Windows 7" />
+    <property name="env.FP_NO_HOST_CHECK" value="NO" />
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_20\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_20\jre\classes" />
+    <property name="env.COMPUTERNAME" value="EPPERMARSHALL" />
+    <property name="env.CommonProgramW6432" value="C:\Program Files\Common Files" />
+    <property name="env.ALLUSERSPROFILE" value="C:\ProgramData" />
+    <property name="sun.desktop" value="windows" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="C:\Program Files (x86)\WinAnt" />
+    <property name="java.runtime.version" value="1.8.0_20-b26" />
+    <property name="env.HOMEPATH" value="\Users\Epper Marshall" />
+    <property name="user.name" value="Epper Marshall" />
+    <property name="env.ADSK_3DSMAX_x64_2015" value="C:\Program Files\Autodesk\3ds Max 2015\" />
+    <property name="user.language" value="en" />
+    <property name="env.windows_tracing_flags" value="3" />
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_20\jre\bin" />
+    <property name="ant.project.default-target" value="build" />
+    <property name="ant.project.name" value="Catan" />
+    <property name="java.version" value="1.8.0_20" />
+    <property name="env.PROCESSOR_IDENTIFIER" value="Intel64 Family 6 Model 42 Stepping 7, GenuineIntel" />
+    <property name="user.timezone" value="America/Denver" />
+    <property name="env.TEMP" value="C:\Users\EPPERM~1\AppData\Local\Temp" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_20\jre\lib\endorsed" />
+    <property name="env._JAVACMD" value="C:\Program Files\Java\jdk1.8.0_20\bin\java.exe" />
+    <property name="sun.cpu.isalist" value="amd64" />
+    <property name="env.HOMEDRIVE" value="C:" />
+    <property name="sun.jnu.encoding" value="Cp1252" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="ECLIPSE_HOME" value="../../../Program Files (x86)/eclipse/" />
+    <property name="file.separator" value="\" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="52.0" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_20\jre" />
+    <property name="env.PSModulePath" value="C:\Windows\system32\WindowsPowerShell\v1.0\Modules\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\PowerShell\Modules\" />
+    <property name="env.APPDATA" value="C:\Users\Epper Marshall\AppData\Roaming" />
+    <property name="env.PUBLIC" value="C:\Users\Public" />
+    <property name="env.windows_tracing_logfile" value="C:\BVTBin\Tests\installpackage\csilogfile.log" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="env.ComSpec" value="C:\Windows\system32\cmd.exe" />
+    <property name="env.OS" value="Windows_NT" />
+    <property name="env.CommonProgramFiles" value="C:\Program Files\Common Files" />
+    <property name="ant.file" value="C:\code\CS340\Catan\build.xml" />
+    <property name="os.version" value="6.1" />
+    <property name="env.ProgramW6432" value="C:\Program Files" />
+    <property name="env._USE_CLASSPATH" value="no" />
+    <property name="env.=::" value="::\" />
+    <property name="path.separator" value=";" />
+    <property name="java.vm.version" value="25.20-b23" />
+    <property name="user.variant" value="" />
+    <property name="env.USERPROFILE" value="C:\Users\Epper Marshall" />
+    <property name="ant.library.dir" value="C:\Program Files (x86)\WinAnt\lib" />
+    <property name="junit.output.dir" value="junit" />
+    <property name="env.JAVA_HOME" value="C:\Program Files\Java\jdk1.8.0_20" />
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob" />
+    <property name="env.TMP" value="C:\Users\EPPERM~1\AppData\Local\Temp" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
+    <property name="sun.stdout.encoding" value="cp437" />
+    <property name="user.script" value="" />
+    <property name="user.home" value="C:\Users\Epper Marshall" />
+    <property name="env.ILMDIR" value="C:\Program Files (x86)\Common Files\Autodesk Shared\Materials\" />
+    <property name="target" value="1.7" />
+    <property name="env.ProgramData" value="C:\ProgramData" />
+    <property name="env.SESSIONNAME" value="Console" />
+    <property name="env.ProgramFiles(x86)" value="C:\Program Files (x86)" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="env.NUMBER_OF_PROCESSORS" value="8" />
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_20\jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\app\EpperMarshall\product\12.1.0\dbhome_1\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files (x86)\Autodesk\Backburner\;C:\Program Files (x86)\WinAnt\bin;." />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="env.CM2015DIR" value="C:\Program Files (x86)\Common Files\Autodesk Shared\Materials\" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.8.2 compiled on December 20 2010" />
+    <property name="java.class.path" value="C:\code\CS340\Catan\bin;C:\code\CS340\Catan\java\lib\gson-2.2.4.jar;C:\Program Files (x86)\eclipse\plugins\org.junit_4.11.0.v201303080030\junit.jar;C:\Program Files (x86)\eclipse\plugins\org.hamcrest.core_1.3.0.v201303031735.jar;C:\code\CS340\Catan\java\lib\commons-cli-1.2.jar;C:\code\CS340\Catan\java\lib\commons-cli-1.2-sources.jar;C:\code\CS340\Catan\java\lib\commons-io-2.4-sources.jar;C:\code\CS340\Catan\java\lib\commons-io-2.4.jar;C:\code\CS340\Catan\lib\xstream-1.4.7.jar;C:\Program Files (x86)\WinAnt\lib\ant-launcher.jar;C:\Program Files (x86)\WinAnt\lib\ant.jar;C:\Program Files (x86)\WinAnt\lib\ant-junit.jar;C:\Program Files (x86)\WinAnt\lib\ant-junit4.jar" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner client.junit.AllTests filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\code\CS340\Catan\junit\TEST-client.junit.AllTests.xml crashfile=C:\code\CS340\Catan\junitvmwatcher6616019967133384173.properties propsfile=C:\code\CS340\Catan\junit8532469455829472969.properties" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type" value="file" />
+    <property name="env.windir" value="C:\Windows" />
+    <property name="env.LOGONSERVER" value="\\EPPERMARSHALL" />
+    <property name="env.PROCESSOR_ARCHITECTURE" value="AMD64" />
+    <property name="java.vm.specification.version" value="1.8" />
+    <property name="sun.os.patch.level" value="Service Pack 1" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="env.ProgramFiles" value="C:\Program Files" />
+    <property name="env.ANT_HOME" value="C:\Program Files (x86)\WinAnt" />
+    <property name="env.PROCESSOR_REVISION" value="2a07" />
+    <property name="java.io.tmpdir" value="C:\Users\EPPERM~1\AppData\Local\Temp\" />
+    <property name="env.CommonProgramFiles(x86)" value="C:\Program Files (x86)\Common Files" />
+    <property name="env.VS120COMNTOOLS" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="env.SystemRoot" value="C:\Windows" />
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment" />
+    <property name="os.arch" value="amd64" />
+    <property name="env.ANT_CMD_LINE_ARGS" value=" AllTests" />
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_20\jre\lib\ext;C:\Windows\Sun\Java\lib\ext" />
+    <property name="env.LOCALAPPDATA" value="C:\Users\Epper Marshall\AppData\Local" />
+    <property name="user.dir" value="C:\code\CS340\Catan" />
+    <property name="line.separator" value="&#xd;&#xa;" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="env.PATHEXT" value=".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC" />
+    <property name="env.Path" value="C:\app\EpperMarshall\product\12.1.0\dbhome_1\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Common Files\Autodesk Shared\;C:\Program Files (x86)\Autodesk\Backburner\;C:\Program Files (x86)\WinAnt\bin" />
+    <property name="basedir" value="C:\code\CS340\Catan" />
+    <property name="ant.java.version" value="1.7" />
+    <property name="ant.core.lib" value="C:\Program Files (x86)\WinAnt\lib\ant.jar" />
+    <property name="env.USERNAME" value="Epper Marshall" />
+    <property name="source" value="1.7" />
+    <property name="env.SystemDrive" value="C:" />
+    <property name="file.encoding" value="Cp1252" />
+    <property name="sun.stderr.encoding" value="cp437" />
+    <property name="ant.file.type.Catan" value="file" />
+    <property name="env.USERDOMAIN" value="EpperMarshall" />
+    <property name="java.specification.version" value="1.8" />
+    <property name="ant.file.Catan" value="C:\code\CS340\Catan\build.xml" />
+    <property name="env.=C:" value="C:\code\CS340\Catan" />
+    <property name="ant.project.invoked-targets" value="AllTests" />
+    <property name="env.PROCESSOR_LEVEL" value="6" />
+  </properties>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testUtilChangeLogLevel" time="1.277">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testUtilChangeLogLevel(ClientCommunicatorTest.java:188)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testRollNumber" time="1.14">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testRollNumber(ClientCommunicatorTest.java:212)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testAddAI" time="1.133">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testAddAI(ClientCommunicatorTest.java:179)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testBuildRoad" time="1.143">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testBuildRoad(ClientCommunicatorTest.java:311)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testRegisterUser" time="1.815">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testRegisterUser(ClientCommunicatorTest.java:98)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testOfferTrade" time="1.146">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testOfferTrade(ClientCommunicatorTest.java:347)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testPostGameCommands" time="0.0" />
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testYearOfPlenty" time="1.152">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testYearOfPlenty(ClientCommunicatorTest.java:256)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testDiscardCards" time="1.126">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testDiscardCards(ClientCommunicatorTest.java:380)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testMonopoly" time="1.14">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testMonopoly(ClientCommunicatorTest.java:289)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testMonument" time="1.149">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testMonument(ClientCommunicatorTest.java:300)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testFinishTurn" time="1.128">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testFinishTurn(ClientCommunicatorTest.java:234)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testCreateGame" time="1.124">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testCreateGame(ClientCommunicatorTest.java:116)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="connectUserLoginTest" time="1.128">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.connectUserLoginTest(ClientCommunicatorTest.java:89)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testGetGameCommands" time="1.778">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testGetGameCommands(ClientCommunicatorTest.java:156)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testGameReset" time="1.263">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testGameReset(ClientCommunicatorTest.java:145)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testMaritimeTrade" time="1.14">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testMaritimeTrade(ClientCommunicatorTest.java:369)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testSendChat" time="1.146">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testSendChat(ClientCommunicatorTest.java:201)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testGetGameListAI" time="1.129">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testGetGameListAI(ClientCommunicatorTest.java:170)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientCommunicatorTest" name="testGetGamesList" time="1.131">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ClientCommunicatorTest.testGetGamesList(ClientCommunicatorTest.java:107)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanPlaySoldier" time="0.065">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanDiscardCards" time="0.015">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanPlayMonopoly" time="0.008">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanPlayMonument" time="0.009">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanPlayYearOfPlenty" time="0.004">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanBuildCity" time="0.004">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanBuildRoad" time="0.004">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testUpdateServerModel" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanOfferTrade" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testFinishTurn" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanBuyDevCard" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanPlayRoadBuilding" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanBuildSettlement" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanMaritimeTrade" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ClientModelUnitTest" name="testCanAcceptTrade" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.ClientModelUnitTest.setUp(ClientModelUnitTest.java:21)
+</error>
+  </testcase>
+  <testcase classname="client.junit.PlayerTest" name="testGetColor" time="0.0" />
+  <testcase classname="client.junit.PlayerTest" name="testGetPlayerIndex" time="0.0" />
+  <testcase classname="client.junit.PlayerTest" name="testGetResources" time="0.0" />
+  <testcase classname="client.junit.PlayerTest" name="testBuilding" time="0.0" />
+  <testcase classname="client.junit.PlayerTest" name="testGetName" time="0.001" />
+  <testcase classname="client.junit.PlayerTest" name="testGetVictoryPoints" time="0.0" />
+  <testcase classname="client.junit.ServerProxyTest" name="testRollNumber" time="0.032" />
+  <testcase classname="client.junit.ServerProxyTest" name="testResetGame" time="0.005" />
+  <testcase classname="client.junit.ServerProxyTest" name="testAddAI" time="0.001">
+    <error message="shared.ServerMethodRequests.AddAIRequest cannot be cast to java.lang.String" type="java.lang.ClassCastException">java.lang.ClassCastException: shared.ServerMethodRequests.AddAIRequest cannot be cast to java.lang.String
+	at proxy.MockCommunicator.doPost(MockCommunicator.java:175)
+	at proxy.MockCommunicator.executeCommand(MockCommunicator.java:60)
+	at proxy.ProxyServer.addAI(ProxyServer.java:278)
+	at client.junit.ServerProxyTest.testAddAI(ServerProxyTest.java:214)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testLoginUser" time="0.002" />
+  <testcase classname="client.junit.ServerProxyTest" name="testBuildCity" time="0.003">
+    <failure message="Response code for successful build city attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for successful build city attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testBuildCity(ServerProxyTest.java:333)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testBuildRoad" time="0.0">
+    <failure message="Response code for successful build road attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for successful build road attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testBuildRoad(ServerProxyTest.java:305)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testJoinGame" time="0.003">
+    <error message="String index out of range: -1" type="java.lang.StringIndexOutOfBoundsException">java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+	at java.lang.String.substring(String.java:1954)
+	at proxy.ProxyServer.joinGame(ProxyServer.java:190)
+	at client.junit.ServerProxyTest.testJoinGame(ServerProxyTest.java:123)
+</error>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testRegisterUser" time="0.001" />
+  <testcase classname="client.junit.ServerProxyTest" name="testPlayRoadBuilding" time="0.001">
+    <failure message="Response code for successful dev road building attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for successful dev road building attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testPlayRoadBuilding(ServerProxyTest.java:415)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testListGames" time="0.002" />
+  <testcase classname="client.junit.ServerProxyTest" name="testOfferTrade" time="0.007" />
+  <testcase classname="client.junit.ServerProxyTest" name="testPostGameCommands" time="0.01" />
+  <testcase classname="client.junit.ServerProxyTest" name="testBuyDevCard" time="0.004" />
+  <testcase classname="client.junit.ServerProxyTest" name="testDiscardCards" time="0.004" />
+  <testcase classname="client.junit.ServerProxyTest" name="testAcceptTrade" time="0.004" />
+  <testcase classname="client.junit.ServerProxyTest" name="testPlayMonopoly" time="0.001">
+    <failure message="Response code for successful play monopoly attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for successful play monopoly attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testPlayMonopoly(ServerProxyTest.java:428)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testPlayMonument" time="0.003" />
+  <testcase classname="client.junit.ServerProxyTest" name="testOfferMaritimeTrade" time="0.001">
+    <failure message="Response code for successful maritime trade attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for successful maritime trade attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testOfferMaritimeTrade(ServerProxyTest.java:361)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testFinishTurn" time="0.004" />
+  <testcase classname="client.junit.ServerProxyTest" name="testChangeLogLevel" time="0.001" />
+  <testcase classname="client.junit.ServerProxyTest" name="testCreateGame" time="0.001" />
+  <testcase classname="client.junit.ServerProxyTest" name="testGetGameCommands" time="0.002" />
+  <testcase classname="client.junit.ServerProxyTest" name="testPlaySoldier" time="0.003" />
+  <testcase classname="client.junit.ServerProxyTest" name="testBuildSettlement" time="0.001">
+    <failure message="Response code for successful build settlement attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for successful build settlement attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testBuildSettlement(ServerProxyTest.java:319)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testListAI" time="0.001" />
+  <testcase classname="client.junit.ServerProxyTest" name="testPlayYearOfPlenty" time="0.001">
+    <failure message="Response code for successful play year of plenty attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for successful play year of plenty attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testPlayYearOfPlenty(ServerProxyTest.java:402)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testSendChat" time="0.0">
+    <failure message="Response code for unsuccessful send chat attempt expected:&lt;true&gt; but was:&lt;false&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Response code for unsuccessful send chat attempt expected:&lt;true&gt; but was:&lt;false&gt;
+	at client.junit.ServerProxyTest.testSendChat(ServerProxyTest.java:249)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.ServerProxyTest" name="testGetGameModel" time="0.003">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at client.junit.ServerProxyTest.testGetGameModel(ServerProxyTest.java:143)
+</error>
+  </testcase>
+  <testcase classname="client.junit.TranslatorTest" name="testTranslateToJSON" time="0.003">
+    <failure message="JSON should match expected:&lt;{&quot;[deck&quot;:{&quot;monopoly&quot;:2,&quot;monument&quot;:5,&quot;roadBuilding&quot;:2,&quot;soldier&quot;:14,&quot;yearOfPlenty&quot;:2},&quot;map&quot;:{&quot;radius&quot;:3},&quot;players&quot;:[{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:0,&quot;name&quot;:&quot;Ender&quot;,&quot;color&quot;:&quot;Blue&quot;},{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:1,&quot;name&quot;:&quot;Ralph&quot;,&quot;color&quot;:&quot;Orange&quot;},{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:2,&quot;name&quot;:&quot;Santa&quot;,&quot;color&quot;:&quot;Red&quot;},{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:3,&quot;name&quot;:&quot;Frodo&quot;,&quot;color&quot;:&quot;Brown&quot;}],&quot;log&quot;:{&quot;lines&quot;:[]},&quot;chat&quot;:{&quot;lines&quot;:[]},&quot;bank&quot;:{&quot;brick&quot;:19,&quot;ore&quot;:19,&quot;sheep&quot;:19,&quot;wheat&quot;:19,&quot;wood&quot;:19},&quot;turnTracker&quot;:{&quot;currentTurn&quot;:0,&quot;status&quot;:&quot;Playing&quot;,&quot;longestRoad&quot;:-1,&quot;largestArmy&quot;:-1},&quot;winner&quot;:-1,&quot;version&quot;:0]}&gt; but was:&lt;{&quot;[chat&quot;:{&quot;lines&quot;:[]},&quot;bank&quot;:{&quot;brick&quot;:19,&quot;ore&quot;:19,&quot;sheep&quot;:19,&quot;wheat&quot;:19,&quot;wood&quot;:19},&quot;log&quot;:{&quot;lines&quot;:[]},&quot;map&quot;:{&quot;radius&quot;:3},&quot;players&quot;:[{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Blue&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Ender&quot;,&quot;playerIndex&quot;:0,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0},{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Orange&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Ralph&quot;,&quot;playerIndex&quot;:1,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0},{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Red&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Santa&quot;,&quot;playerIndex&quot;:2,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0},{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Brown&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Frodo&quot;,&quot;playerIndex&quot;:3,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0}],&quot;turnTracker&quot;:{&quot;currentTurn&quot;:0,&quot;status&quot;:&quot;Playing&quot;,&quot;longestRoad&quot;:-1,&quot;largestArmy&quot;:-1},&quot;winner&quot;:-1,&quot;deck&quot;:{&quot;monopoly&quot;:2,&quot;monument&quot;:5,&quot;roadBuilding&quot;:2,&quot;soldier&quot;:14,&quot;yearOfPlenty&quot;:2}]}&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: JSON should match expected:&lt;{&quot;[deck&quot;:{&quot;monopoly&quot;:2,&quot;monument&quot;:5,&quot;roadBuilding&quot;:2,&quot;soldier&quot;:14,&quot;yearOfPlenty&quot;:2},&quot;map&quot;:{&quot;radius&quot;:3},&quot;players&quot;:[{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:0,&quot;name&quot;:&quot;Ender&quot;,&quot;color&quot;:&quot;Blue&quot;},{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:1,&quot;name&quot;:&quot;Ralph&quot;,&quot;color&quot;:&quot;Orange&quot;},{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:2,&quot;name&quot;:&quot;Santa&quot;,&quot;color&quot;:&quot;Red&quot;},{&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;roads&quot;:15,&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0,&quot;monuments&quot;:0,&quot;playedDevCard&quot;:false,&quot;discarded&quot;:false,&quot;playerID&quot;:0,&quot;playerIndex&quot;:3,&quot;name&quot;:&quot;Frodo&quot;,&quot;color&quot;:&quot;Brown&quot;}],&quot;log&quot;:{&quot;lines&quot;:[]},&quot;chat&quot;:{&quot;lines&quot;:[]},&quot;bank&quot;:{&quot;brick&quot;:19,&quot;ore&quot;:19,&quot;sheep&quot;:19,&quot;wheat&quot;:19,&quot;wood&quot;:19},&quot;turnTracker&quot;:{&quot;currentTurn&quot;:0,&quot;status&quot;:&quot;Playing&quot;,&quot;longestRoad&quot;:-1,&quot;largestArmy&quot;:-1},&quot;winner&quot;:-1,&quot;version&quot;:0]}&gt; but was:&lt;{&quot;[chat&quot;:{&quot;lines&quot;:[]},&quot;bank&quot;:{&quot;brick&quot;:19,&quot;ore&quot;:19,&quot;sheep&quot;:19,&quot;wheat&quot;:19,&quot;wood&quot;:19},&quot;log&quot;:{&quot;lines&quot;:[]},&quot;map&quot;:{&quot;radius&quot;:3},&quot;players&quot;:[{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Blue&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Ender&quot;,&quot;playerIndex&quot;:0,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0},{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Orange&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Ralph&quot;,&quot;playerIndex&quot;:1,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0},{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Red&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Santa&quot;,&quot;playerIndex&quot;:2,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0},{&quot;cities&quot;:4,&quot;settlements&quot;:5,&quot;roads&quot;:15,&quot;color&quot;:&quot;Brown&quot;,&quot;discarded&quot;:false,&quot;monuments&quot;:0,&quot;name&quot;:&quot;Frodo&quot;,&quot;playerIndex&quot;:3,&quot;playedDevCard&quot;:false,&quot;playerID&quot;:0,&quot;resources&quot;:{&quot;brick&quot;:0,&quot;ore&quot;:0,&quot;sheep&quot;:0,&quot;wheat&quot;:0,&quot;wood&quot;:0},&quot;soldiers&quot;:0,&quot;victoryPoints&quot;:0}],&quot;turnTracker&quot;:{&quot;currentTurn&quot;:0,&quot;status&quot;:&quot;Playing&quot;,&quot;longestRoad&quot;:-1,&quot;largestArmy&quot;:-1},&quot;winner&quot;:-1,&quot;deck&quot;:{&quot;monopoly&quot;:2,&quot;monument&quot;:5,&quot;roadBuilding&quot;:2,&quot;soldier&quot;:14,&quot;yearOfPlenty&quot;:2}]}&gt;
+	at client.junit.TranslatorTest.testTranslateToJSON(TranslatorTest.java:49)
+</failure>
+  </testcase>
+  <testcase classname="client.junit.TranslatorTest" name="testTranslateFrom" time="0.002" />
+  <testcase classname="client.junit.TranslatorTest" name="testTranslateFromArray" time="0.001" />
+  <testcase classname="client.junit.PollerTest" name="testPollerUpdate" time="0.001">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.PollerTest.testPollerUpdate(PollerTest.java:62)
+</error>
+  </testcase>
+  <testcase classname="client.junit.PollerTest" name="testPresenterRun" time="0.002">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at shared.model.ClientModel.getPlayerColorMap(ClientModel.java:880)
+	at shared.model.ClientModel.&lt;init&gt;(ClientModel.java:47)
+	at client.junit.PollerTest.testPresenterRun(PollerTest.java:39)
+</error>
+  </testcase>
+  <system-out><![CDATA[
+util/changeLogLevel
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+
+moves/rollNumber
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+game/addAI
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+
+moves/buildRoad
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+user/register
+
+moves/offerTrade
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+moves/Year_of_Plenty
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+moves/discardCards
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+moves/Monopoly
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+moves/Monument
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+moves/finishTurn
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+games/create
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+
+user/login
+
+game/commands
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=0
+
+game/reset
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D; catan.game=0
+
+moves/maritimeTrade
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+moves/sendChat
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+Header: Cookie = catan.game=2
+
+game/listAI
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+
+games/list
+Header: Cookie = catan.user=%7B%22name%22%3A%22Brooke%22%2C%22password%22%3A%22brooke%22%2C%22playerID%22%3A0%7D
+3
+]]></system-out>
+  <system-err><![CDATA[Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testUtilChangeLogLevel(ClientCommunicatorTest.java:187)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testRollNumber(ClientCommunicatorTest.java:211)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testAddAI(ClientCommunicatorTest.java:178)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testBuildRoad(ClientCommunicatorTest.java:310)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testRegisterUser(ClientCommunicatorTest.java:97)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testOfferTrade(ClientCommunicatorTest.java:346)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testYearOfPlenty(ClientCommunicatorTest.java:255)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testDiscardCards(ClientCommunicatorTest.java:379)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testMonopoly(ClientCommunicatorTest.java:288)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testMonument(ClientCommunicatorTest.java:299)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testFinishTurn(ClientCommunicatorTest.java:233)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testCreateGame(ClientCommunicatorTest.java:115)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.connectUserLoginTest(ClientCommunicatorTest.java:88)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doGet
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doGet(ClientCommunicator.java:134)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:106)
+	at client.junit.ClientCommunicatorTest.testGetGameCommands(ClientCommunicatorTest.java:155)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testGameReset(ClientCommunicatorTest.java:144)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testMaritimeTrade(ClientCommunicatorTest.java:368)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doPost
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doPost(ClientCommunicator.java:196)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:109)
+	at client.junit.ClientCommunicatorTest.testSendChat(ClientCommunicatorTest.java:200)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doGet
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doGet(ClientCommunicator.java:134)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:106)
+	at client.junit.ClientCommunicatorTest.testGetGameListAI(ClientCommunicatorTest.java:169)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+Unable to doGet
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at java.net.Socket.connect(Socket.java:538)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:1167)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1103)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:997)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:931)
+	at proxy.ClientCommunicator.doGet(ClientCommunicator.java:134)
+	at proxy.ClientCommunicator.executeCommand(ClientCommunicator.java:106)
+	at client.junit.ClientCommunicatorTest.testGetGamesList(ClientCommunicatorTest.java:106)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:38)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:518)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1052)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:906)
+]]></system-err>
+</testsuite>

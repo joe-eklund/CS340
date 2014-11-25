@@ -1,203 +1,153 @@
-﻿<project name="Demo Server" default="server" basedir=".">
-
-	<!-- PROPERTIES -->
-	<!-- ********** -->	
-    
-	<!-- Directory paths for the java server, javascript, and dest dir for the student copy -->
-    <property name="port.arg" value="8081"/>
-    <property name="web.arg" value="gameplay"/>
-    <property name="requests.arg" value="ug"/>
-     
-    <!-- Input folders -->
-    <property name="java.dir" value="java"/>
-	<property name="bin.dir" value="bin"/>
-    <property name="java.src.dir" value="${java.dir}/src"/>
-    <property name="java.lib.dir" value="${java.dir}/lib"/>
-	<property name="java.build.dir" value="${java.dir}/build"/>
-	<property name="java.test.dir" value="${java.dir}/build/junit"/>
-	
-	<!-- Our files -->
-	<property name="Cserver" value="Server"/>
-	<property name="Cshared" value="Shared"/>
-	<property name="Cclient" value="Client"/>
-	<property name="Ctesting" value="Testing"/>
-	
-    <!-- JavaScript source folder -->
-    <property name="javascript.dir" value="gameplay/js"/>
-    
-    <!-- Base output folder -->
-    <property name="dest.dir" value="docs"/>
-    <!-- Javadoc output folder -->
-    <property name="javadoc.dir" value="${dest.dir}/java"/>
-    <!-- YUIDoc output folder -->
-    <property name="yuidoc.dir" value="${dest.dir}/javascript"/>
-	<property name="outputresults" location="output" />
-	<property name="junit.output.dir" value="junit"/>
-    <!-- Jar file path/name from here -->
-    <property name="jar.file" value="server.jar"/>
-   
-	<!-- CLASSPATHS -->
-	<!-- ********** -->
-    
-	<path id="JUnit 4.libraryclasspath">
-	    <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
-	    <pathelement location="${C:/Program Files (x86)/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar}"/>
-	</path>
-	
-	<path id="Catan.classpath">
-	    <pathelement location="bin"/>
-	    <pathelement location="java/lib/gson-2.2.4.jar"/>
-	    <path refid="JUnit 4.libraryclasspath"/>
-	</path>
-	
-	<path id="java.lib.classpath">
-		<fileset dir="${java.lib.dir}">
-	    	<include name="**/*.jar" />
-	    </fileset>
-		<pathelement location="${java.lib}/commons-cli-1.2.jar"/>
-	</path>
-
-	<path id="all-classpath">
-		<path refid="java.lib.classpath"/>
-	    <pathelement location="${java.build.dir}"/>
-		<!-- pathelement location="${bin.dir}"/-->
-	</path>
-
-	<!-- TARGETS -->
-	<!-- ******* -->
- 
-	<target name="server" description="Runs the demo server">
-		<java jar="${jar.file}" fork="true">
-			<arg value="${port.arg}"/>
-			<arg value="${web.arg}"/>
-			<arg value="${requests.arg}"/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
-	</target>
-    
-    <target name="make-java-doc" description="Generate the Java docs">
-        <echo> Making Java documentation </echo>
-        <delete dir="${javadoc.dir}"/>
-		<javadoc destdir="${javadoc.dir}" Package="true">
-			<classpath refid="java.lib.classpath" />
-			<packageset dir="${java.src.dir}">
-				<include name="client/**"/>
-				<include name="shared/**"/>
-				<include name="proxy/**"/>
-			</packageset>
-		</javadoc>
-   </target>
-
-  	<property name="java.dir" location="java"/>
-	<property name="java.src" location="${java.dir}/src"/>
-	<property name="java.images" location="${java.dir}/images"/>
-	<property name="java.build" location="${java.dir}/build"/>
-	<property name="java.dist" location="${java.dir}/dist"/>
-	<property name="java.lib" location="${java.dir}/lib"/>
- 
-	<target name="init" description="create build directories">
-		<tstamp/>
-		<mkdir dir="${java.build}"/>
-		<mkdir dir="${java.dist}"/>
-		<copy todir="${java.src}">
-			<fileset dir="${Cserver}"/>
-		</copy>
-		<copy todir="${java.src}">
-			<fileset dir="${Cshared}"/>
-		</copy>
-		<copy todir="${java.src}">
-			<fileset dir="${Cclient}"/>
-		</copy>
-		<copy todir="${java.src}">
-			<fileset dir="${Ctesting}"/>
-		</copy>
-	</target>
-		
-	<target name="clean" description="clean build files" >
-		<delete dir="${java.build}"/>
-		<delete dir="${java.dist}"/>
-		<delete dir="${java.src}"/>
-	</target>
-    
-	<target name="compile" depends="init" description="compile the source " >
-		<javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
-			<classpath refid="java.lib.classpath" />
-			<!--classpath>
-				<fileset dir="${java.lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath -->
-		</javac>
-	</target>
-	
-	<target name="package" depends="compile" description="package the jar file" >
-		<mkdir dir="${java.dist}/lib"/>
-		<copy todir="${java.dist}/lib">
-			<fileset dir="${java.lib}">
-				<include name="**"/>
-			</fileset>
-		</copy>
-		<mkdir dir="${java.dist}/images"/>
-		<copy todir="${java.dist}/images">
-			<fileset dir="${java.images}">
-				<include name="**"/>
-			</fileset>
-		</copy>
- 		<jar jarfile="${java.dist}/catan-client.jar" basedir="${java.build}">
-			<manifest>
-				<attribute name="Main-Class" value="client.main.Catan"/>
-				<attribute name="Class-Path" 
-					value="./ gson-2.2.4.jar junit.jar org.hamcrest.core_1.3.0.v201303031735.jar commons-cli-1.2.jar commons-cli-1.2-sources.jar commons-io-2.4-sources.jar commons-io-2.4.jar xstream-1.4.7.jar" />
-			</manifest>
-		</jar>
- 		<jar jarfile="${java.dist}/catan-server.jar" basedir="${java.build}">
-			<manifest>
-				<attribute name="Main-Class" value="server.main.Catan"/>
-				<attribute name="Class-Path" 
-					value="${all-classpath}" />
-				<!--<attribute name="Class-Path2" 
-					value="lib/commons-cli-1.2.jar" />
-				<attribute name="Class-Path3" 
-					value="lib/commons-cli-1.2-sources.jar" />-->
-			</manifest>
-		</jar>
-	</target>
-	
-	<target name="client" depends="package" description="compiles, packages, and runs the student client">
-		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
-			<sysproperty key="com.sun.management.jmxremote" value=""/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
-	</target>
- 	
-	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
-		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
-			<sysproperty key="com.sun.management.jmxremote" value=""/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
-	</target>
-    
-    <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
-        <zip destfile="./tester.zip" basedir="${java.dist}" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Catan">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../Program Files (x86)/eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="Catan.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="java/lib/gson-2.2.4.jar"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="java/lib/commons-cli-1.2.jar"/>
+        <pathelement location="java/lib/commons-cli-1.2-sources.jar"/>
+        <pathelement location="java/lib/commons-io-2.4-sources.jar"/>
+        <pathelement location="java/lib/commons-io-2.4.jar"/>
+        <pathelement location="lib/xstream-1.4.7.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="Client">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="Server">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="Shared">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="Testing">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
     </target>
-	
-	<target name="test" depends="clean,compile">
-		<junit showoutput="true" fork="yes" haltonfailure="yes">
-			<classpath>
-				<pathelement location="${java.lib}/junit-4.11.jar"/>
-				<pathelement location="${java.lib}/hamcrest-core-1.3.jar"/>
-				<pathelement location="${java.lib}/gson-2.2.4.jar"/>
-				<pathelement location="${java.build}"/>
-			</classpath>
-			<formatter type="plain" usefile="false" />
-			<test name="junit.AllTests" />
-		</junit>
-	</target>
-  
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="Client"/>
+            <src path="Server"/>
+            <src path="Shared"/>
+            <src path="Testing"/>
+            <classpath refid="Catan.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="test">
+        <java classname="client.junit.AllTests" failonerror="true" fork="yes">
+            <classpath refid="Catan.classpath"/>
+        </java>
+    </target>
+    <target name="AllTests">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="client.junit.AllTests" todir="${junit.output.dir}"/>
+            <classpath refid="Catan.classpath"/>
+        </junit>
+    </target>
+    <target name="Catan (1)">
+        <java classname="server.main.Catan" failonerror="true" fork="yes">
+            <arg line="-p 8080"/>
+            <classpath refid="Catan.classpath"/>
+        </java>
+    </target>
+    <target name="Catan">
+        <java classname="client.main.Catan" failonerror="true" fork="yes">
+            <arg line="8080"/>
+            <classpath refid="Catan.classpath"/>
+        </java>
+    </target>
+    <target name="ClientModelUnitTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="client.junit.ClientModelUnitTest" todir="${junit.output.dir}"/>
+            <classpath refid="Catan.classpath"/>
+        </junit>
+    </target>
+    <target name="PlayerTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="client.junit.PlayerTest" todir="${junit.output.dir}"/>
+            <classpath refid="Catan.classpath"/>
+        </junit>
+    </target>
+    <target name="TranslatorTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="client.junit.TranslatorTest" todir="${junit.output.dir}"/>
+            <classpath refid="Catan.classpath"/>
+        </junit>
+    </target>
+    <target name="UserTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="server.junit.UserTest" todir="${junit.output.dir}"/>
+            <classpath refid="Catan.classpath"/>
+        </junit>
+    </target>
+    <target name="MovesTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="server.junit.MovesTest" todir="${junit.output.dir}"/>
+            <classpath refid="Catan.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
 </project>
