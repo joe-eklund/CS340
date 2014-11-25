@@ -32,8 +32,10 @@ import shared.ServerMethodRequests.RoadBuildingDevRequest;
 import shared.ServerMethodRequests.RobPlayerRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
+import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.UserRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.Location;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
 import shared.locations.EdgeDirection;
@@ -178,7 +180,27 @@ public class MovesTest {
 	
 	@Test
 	public void testBuildRoad() {
+		EdgeDirection direction = EdgeDirection.North;
+		EdgeDirection direction2 = EdgeDirection.NorthEast;
+		RoadLocation location1 = new RoadLocation(0, 0, direction);
+		RoadLocation location2 = new RoadLocation(0, 0, direction2);
+		RoadBuildingDevRequest request = new RoadBuildingDevRequest(0, location1, location2);
+		ServerModel aGame;
 		
+		aGame = gamesList.get(1);
+		int wood = aGame.getPlayers().get(0).getWood();
+		
+		try {
+			aGame=moves.roadBuilding(request, cookie);
+			//Need to get the right roads not right right now
+			Road road = aGame.getMap().getRoads().get(0);
+			Road road2 = aGame.getMap().getRoads().get(1);
+			assertEquals("Bobby should have road at X1: 0",location1.getX(),road.location.getX());
+			assertEquals("Bobby should have road at Y1: 0",location1.getY(),road.location.getY());
+
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
@@ -188,7 +210,27 @@ public class MovesTest {
 	
 	@Test
 	public void testBuildSettlement() {
+		EdgeDirection direction = EdgeDirection.North;
+		EdgeDirection direction2 = EdgeDirection.NorthEast;
+		RoadLocation location1 = new RoadLocation(0, 0, direction);
+		RoadLocation location2 = new RoadLocation(0, 0, direction2);
+		RoadBuildingDevRequest request = new RoadBuildingDevRequest(0, location1, location2);
+		ServerModel aGame;
 		
+		aGame = gamesList.get(1);
+		int wood = aGame.getPlayers().get(0).getWood();
+		
+		try {
+			aGame=moves.roadBuilding(request, cookie);
+			//Need to get the right roads not right right now
+			Road road = aGame.getMap().getRoads().get(0);
+			Road road2 = aGame.getMap().getRoads().get(1);
+			assertEquals("Bobby should have road at X1: 0",location1.getX(),road.location.getX());
+			assertEquals("Bobby should have road at Y1: 0",location1.getY(),road.location.getY());
+
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
@@ -206,7 +248,22 @@ public class MovesTest {
 	//Development Cards
 	@Test
 	public void testSoldier() {
+		HexLocation location = new HexLocation(0, 0);
+		SoldierDevRequest request = new SoldierDevRequest(0, 1, location);
+		ServerModel aGame;
 		
+		aGame = gamesList.get(1);
+		
+		try {
+			aGame = moves.soldier(request, cookie);
+			//Need to get the right roads not right right now
+			Road road = aGame.getMap().getRoads().get(0);
+			Road road2 = aGame.getMap().getRoads().get(1);
+			assertEquals("Bobby should have road at X1: 0",location.getX(),aGame.getMap().getRobber().getX());
+			assertEquals("Bobby should have road at X1: 0",location.getX(),aGame.getMap().getRobber().getX());
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
