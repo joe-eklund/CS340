@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import client.exceptions.ClientModelException;
 import proxy.TranslatorJSON;
 import server.commands.users.UsersCommandLog;
 import server.cookie.CookieParams;
@@ -24,6 +25,7 @@ import server.serverCommunicator.RegisterUserHandler;
 import server.serverCommunicator.YearOfPlentyHandler;
 import server.users.IUsersFacade;
 import server.users.UsersFacadeStub;
+import shared.ServerMethodRequests.BuildSettlementRequest;
 import shared.ServerMethodRequests.BuyDevCardRequest;
 import shared.ServerMethodRequests.FinishTurnRequest;
 import shared.ServerMethodRequests.MonopolyDevRequest;
@@ -38,8 +40,11 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.Location;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
+import shared.definitions.VertexLocationRequest;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.model.Chat;
 import shared.model.Player;
 import shared.model.Road;
@@ -194,7 +199,6 @@ public class MovesTest {
 			aGame=moves.roadBuilding(request, cookie);
 			//Need to get the right roads not right right now
 			Road road = aGame.getMap().getRoads().get(0);
-			Road road2 = aGame.getMap().getRoads().get(1);
 			assertEquals("Bobby should have road at X1: 0",location1.getX(),road.location.getX());
 			assertEquals("Bobby should have road at Y1: 0",location1.getY(),road.location.getY());
 
@@ -210,25 +214,23 @@ public class MovesTest {
 	
 	@Test
 	public void testBuildSettlement() {
-		EdgeDirection direction = EdgeDirection.North;
-		EdgeDirection direction2 = EdgeDirection.NorthEast;
-		RoadLocation location1 = new RoadLocation(0, 0, direction);
-		RoadLocation location2 = new RoadLocation(0, 0, direction2);
-		RoadBuildingDevRequest request = new RoadBuildingDevRequest(0, location1, location2);
+		VertexLocationRequest location1 = new VertexLocationRequest(0, 0, VertexDirection.NorthEast);
+		BuildSettlementRequest request = new BuildSettlementRequest(0, location1, true);
 		ServerModel aGame;
 		
 		aGame = gamesList.get(1);
-		int wood = aGame.getPlayers().get(0).getWood();
 		
 		try {
-			aGame=moves.roadBuilding(request, cookie);
-			//Need to get the right roads not right right now
+			aGame = moves.buildSettlement(request, cookie);
+
 			Road road = aGame.getMap().getRoads().get(0);
 			Road road2 = aGame.getMap().getRoads().get(1);
 			assertEquals("Bobby should have road at X1: 0",location1.getX(),road.location.getX());
 			assertEquals("Bobby should have road at Y1: 0",location1.getY(),road.location.getY());
 
 		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		} catch (ClientModelException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -256,10 +258,6 @@ public class MovesTest {
 		
 		try {
 			aGame = moves.soldier(request, cookie);
-			//Need to get the right roads not right right now
-			Road road = aGame.getMap().getRoads().get(0);
-			Road road2 = aGame.getMap().getRoads().get(1);
-			assertEquals("Bobby should have road at X1: 0",location.getX(),aGame.getMap().getRobber().getX());
 			assertEquals("Bobby should have road at X1: 0",location.getX(),aGame.getMap().getRobber().getX());
 		} catch (InvalidMovesRequest e) {
 			System.out.println(e.getMessage());
