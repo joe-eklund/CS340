@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shared.ServerMethodRequests.AcceptTradeRequest;
+import shared.ServerMethodRequests.AddAIRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildRoadRequest;
 import shared.ServerMethodRequests.BuildSettlementRequest;
@@ -26,6 +27,11 @@ import shared.ServerMethodRequests.YearOfPlentyDevRequest;
 import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerLogLevel;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.model.Log;
 import shared.model.LogEntry;
 import static shared.definitions.TestingConstants.*;
@@ -91,7 +97,7 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "game/model":
 			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue())) {
-				if(clientVersion < getServerModel().getVersion()) {
+				if(clientVersion != getServerModel().getVersion()) {
 					result = new CommandResponse(null, 200, getServerModel(), null);
 				}
 				else {
@@ -120,6 +126,8 @@ public class MockCommunicator implements ICommunicator {
 	 */
 	private CommandResponse doPost(String commandName, List<Pair<String,String>> headers, Object commandParameters, Class<?> responseCastClass){
 		CommandResponse result = null;
+		int x;
+		int y;
 		switch(commandName) {
 		case "user/login":
 			UserRequest loginRequest = (UserRequest) commandParameters;
@@ -172,8 +180,8 @@ public class MockCommunicator implements ICommunicator {
 			}
 			break;
 		case "game/addAI":
-			String addAIRequest = (String) commandParameters;
-			if(MOCK_AIS_LIST.contains(addAIRequest)) {
+			AddAIRequest addAIRequest = (AddAIRequest) commandParameters;
+			if(MOCK_AIS_LIST.contains(addAIRequest.getAIType())) {
 				result = new CommandResponse(null, 200, null, null);
 			}
 			else {
@@ -189,7 +197,7 @@ public class MockCommunicator implements ICommunicator {
 				result = new CommandResponse(null, 400, null, null);
 			}
 			break;
-		case "games/sendChat":
+		case "moves/sendChat":
 			SendChatRequest chatRequest = (SendChatRequest) commandParameters;
 			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && chatRequest.getPlayerIndex() == PLAYER_INDEX && chatRequest.getContent().equals(CHAT_CONTENT)) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
@@ -227,7 +235,11 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "moves/buildRoad":
 			BuildRoadRequest buildRoadRequest = (BuildRoadRequest) commandParameters;
-			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildRoadRequest.getPlayerIndex() == PLAYER_INDEX && buildRoadRequest.getRoadLocation().equals(EDGE_LOCATION) && buildRoadRequest.isFree()) {
+			x = buildRoadRequest.getRoadLocation().getX();
+			y = buildRoadRequest.getRoadLocation().getY();
+			EdgeDirection eDir = buildRoadRequest.getRoadLocation().getDirection();
+			EdgeLocation roadLocation= new EdgeLocation(new HexLocation(x,y), eDir);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildRoadRequest.getPlayerIndex() == PLAYER_INDEX && roadLocation.equals(EDGE_LOCATION) && buildRoadRequest.isFree()) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
@@ -236,7 +248,11 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "moves/buildSettlement":
 			BuildSettlementRequest buildSettlementRequest = (BuildSettlementRequest) commandParameters;
-			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildSettlementRequest.getPlayerIndex() == PLAYER_INDEX && buildSettlementRequest.getVertexLocation().equals(VERTEX_LOCATION) && buildSettlementRequest.isFree()) {
+			x = buildSettlementRequest.getVertexLocation().getX();
+			y = buildSettlementRequest.getVertexLocation().getY();
+			VertexDirection vDirSettle = buildSettlementRequest.getVertexLocation().getDirection();
+			VertexLocation settleVertex = new VertexLocation(new HexLocation(x,y), vDirSettle);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildSettlementRequest.getPlayerIndex() == PLAYER_INDEX && settleVertex.equals(VERTEX_LOCATION) && buildSettlementRequest.isFree()) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
@@ -245,7 +261,11 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "moves/buildCity":
 			BuildCityRequest buildCityRequest = (BuildCityRequest) commandParameters;
-			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildCityRequest.getPlayerIndex() == PLAYER_INDEX && buildCityRequest.getCityLocation().equals(VERTEX_LOCATION)) {
+			x = buildCityRequest.getCityLocation().getX();
+			y = buildCityRequest.getCityLocation().getY();
+			VertexDirection vDirCity = buildCityRequest.getCityLocation().getDirection();
+			VertexLocation cityVertex = new VertexLocation(new HexLocation(x,y), vDirCity);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && buildCityRequest.getPlayerIndex() == PLAYER_INDEX && cityVertex.equals(VERTEX_LOCATION)) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
@@ -263,7 +283,7 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "moves/maritimeTrade":
 			MaritimeTradeRequest maritimeRequest = (MaritimeTradeRequest) commandParameters;
-			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && maritimeRequest.getPlayerIndex() == PLAYER_INDEX && maritimeRequest.getInputResource().equals(RESOURCE_TYPE.name()) && maritimeRequest.getInputResource().equals(RESOURCE_TYPE.name()) && maritimeRequest.getRatio() == MARITIME_RATIO) {
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && maritimeRequest.getPlayerIndex() == PLAYER_INDEX && maritimeRequest.getInputResource().equals(RESOURCE_TYPE.name().toLowerCase()) && maritimeRequest.getInputResource().equals(RESOURCE_TYPE.name().toLowerCase()) && maritimeRequest.getRatio() == MARITIME_RATIO) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
@@ -290,7 +310,7 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "moves/Year_of_Plenty":
 			YearOfPlentyDevRequest yearPlentyRequest = (YearOfPlentyDevRequest) commandParameters;
-			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && yearPlentyRequest.getPlayerIndex() == PLAYER_INDEX && yearPlentyRequest.getResource1().equals(RESOURCE_TYPE.name()) && yearPlentyRequest.getResource2().equals(OTHER_RESOURCE_TYPE.name())) {
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && yearPlentyRequest.getPlayerIndex() == PLAYER_INDEX && yearPlentyRequest.getResource1().equals(RESOURCE_TYPE.name().toLowerCase()) && yearPlentyRequest.getResource2().equals(OTHER_RESOURCE_TYPE.name().toLowerCase())) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
@@ -299,7 +319,15 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "moves/Road_Building":
 			RoadBuildingDevRequest roadBuildRequest = (RoadBuildingDevRequest) commandParameters;
-			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && roadBuildRequest.getPlayerIndex() == PLAYER_INDEX && roadBuildRequest.getSpot1().equals(EDGE_LOCATION) && roadBuildRequest.getSpot2().equals(ANOTHER_EDGE)) {
+			x = roadBuildRequest.getSpot1().getX();
+			y = roadBuildRequest.getSpot1().getY();
+			EdgeDirection eDir1 = roadBuildRequest.getSpot1().getDirection();
+			EdgeLocation spot1 = new EdgeLocation(new HexLocation(x,y), eDir1);
+			x = roadBuildRequest.getSpot2().getX();
+			y = roadBuildRequest.getSpot2().getY();
+			EdgeDirection eDir2 = roadBuildRequest.getSpot2().getDirection();
+			EdgeLocation spot2 = new EdgeLocation(new HexLocation(x,y), eDir2);
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && roadBuildRequest.getPlayerIndex() == PLAYER_INDEX && spot1.equals(EDGE_LOCATION) && spot2.equals(ANOTHER_EDGE)) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {
@@ -308,7 +336,7 @@ public class MockCommunicator implements ICommunicator {
 			break;
 		case "moves/Monopoly":
 			MonopolyDevRequest monopolyRequest = (MonopolyDevRequest) commandParameters;
-			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monopolyRequest.getPlayerIndex() == PLAYER_INDEX && monopolyRequest.getResource().equals(RESOURCE_TYPE.name())) {
+			if(VALID_JOINED_GAME_COOKIE.equals(headers.get(0).getValue()) && monopolyRequest.getPlayerIndex() == PLAYER_INDEX && monopolyRequest.getResource().equals(RESOURCE_TYPE.name().toLowerCase())) {
 				result =  new CommandResponse(null, 200, getServerModel(), null);
 			}
 			else {

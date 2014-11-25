@@ -69,8 +69,8 @@ public final class TestingConstants {
 	public static final int VALID_JOIN_GAME_INDEX = 0;
 	public static final String INVALID_LOGIN_COOKIE = "invalid login cookie";
 	public static final String JOIN_GAME_COLOR = CatanColor.BLUE.name().toLowerCase();
-	public static final String VALID_JOIN_RETURN_COOKIE = "catan.game=0;Path=/;";
-	public static final String VALID_JOINED_GAME_COOKIE = VALID_LOGIN_COOKIE_CLIENT + "; catan.game=0";
+	public static final String VALID_JOIN_RETURN_COOKIE = "catan.game=0;Path=/;";
+	public static final String VALID_JOINED_GAME_COOKIE = VALID_LOGIN_COOKIE_CLIENT + "; catan.game=0";
 	
 	private static final List<String> COOKIE_VALUE_LIST_JOIN = new ArrayList<String>() {{
 		add(TestingConstants.VALID_JOIN_RETURN_COOKIE);
