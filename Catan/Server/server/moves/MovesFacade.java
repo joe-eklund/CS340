@@ -426,9 +426,7 @@ public class MovesFacade implements IMovesFacade {
 	public ServerModel soldier(SoldierDevRequest request, CookieParams cookie) {
 		ServerModel serverGameModel = serverModels.get(cookie.getGameID());
 		int owner = request.getPlayerIndex();
-		Player player=serverGameModel.getPlayers().get(owner);
-		
-		
+		Player player=serverGameModel.getPlayers().get(owner);		
 		
 		if (!player.hasPlayedDevCard()) {
 			

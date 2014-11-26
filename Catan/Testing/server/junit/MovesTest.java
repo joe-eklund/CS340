@@ -1,9 +1,12 @@
 package server.junit;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import client.exceptions.ClientModelException;
 import proxy.TranslatorJSON;
 import server.cookie.CookieParams;
@@ -31,6 +34,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.model.Player;
 import shared.model.Road;
+import shared.model.Settlement;
 
 public class MovesTest {
 	private IMovesFacade moves;
@@ -176,7 +180,6 @@ public class MovesTest {
 		ServerModel aGame;
 		
 		aGame = gamesList.get(1);
-		int wood = aGame.getPlayers().get(0).getWood();
 		
 		try {
 			aGame=moves.roadBuilding(request, cookie);
@@ -197,19 +200,20 @@ public class MovesTest {
 	
 	@Test
 	public void testBuildSettlement() {
-		VertexLocationRequest location1 = new VertexLocationRequest(0, 0, VertexDirection.NorthEast);
+		VertexLocationRequest location1 = new VertexLocationRequest(0, 0, VertexDirection.NorthWest);
 		BuildSettlementRequest request = new BuildSettlementRequest(0, location1, true);
 		ServerModel aGame;
 		
 		aGame = gamesList.get(1);
-		
+		int totalBuildingsBEFORE = aGame.getMap().getSettlements().size();
+		int playerBuildingsBEFORE = aGame.getPlayers().get(0).getSettlements();
 		try {
 			aGame = moves.buildSettlement(request, cookie);
+			int totalBuildingsAFTER = aGame.getMap().getSettlements().size();
+			int playerBuildingsAFTER = aGame.getPlayers().get(0).getSettlements();
 
-			Road road = aGame.getMap().getRoads().get(0);
-			Road road2 = aGame.getMap().getRoads().get(1);
-			assertEquals("Bobby should have road at X1: 0",location1.getX(),road.location.getX());
-			assertEquals("Bobby should have road at Y1: 0",location1.getY(),road.location.getY());
+			assertEquals("Total Buildings",totalBuildingsBEFORE+1,totalBuildingsAFTER);
+			assertEquals("PLayer Buildings", playerBuildingsBEFORE-1, playerBuildingsAFTER);
 
 		} catch (InvalidMovesRequest e) {
 			System.out.println(e.getMessage());
@@ -233,15 +237,18 @@ public class MovesTest {
 	//Development Cards
 	@Test
 	public void testSoldier() {
-		HexLocation location = new HexLocation(0, 0);
-		SoldierDevRequest request = new SoldierDevRequest(0, 1, location);
+		HexLocation location = new HexLocation(1, 1);
+		SoldierDevRequest request = new SoldierDevRequest(0, 0, location);
 		ServerModel aGame;
 		
 		aGame = gamesList.get(1);
-		
+		int soldiersBEFORE = aGame.getPlayers().get(0).getSoldiers();
+
 		try {
 			aGame = moves.soldier(request, cookie);
-			assertEquals("Bobby should have road at X1: 0",location.getX(),aGame.getMap().getRobber().getX());
+			int soldiersAFTER = aGame.getPlayers().get(0).getSoldiers();
+
+			assertEquals("Soldier Played",soldiersBEFORE+1,soldiersAFTER);
 		} catch (InvalidMovesRequest e) {
 			System.out.println(e.getMessage());
 		}
@@ -297,10 +304,10 @@ public class MovesTest {
 		ServerModel aGame;
 		
 		aGame = gamesList.get(1);
-		int points = aGame.getPlayers().get(0).getMonuments();
+		int points = aGame.getPlayers().get(0).getVictoryPoints();
 		try {
 			aGame = moves.monument(request, cookie);
-			assertEquals("Bobby should have an additional point.",points+1,aGame.getPlayers().get(0).getMonuments());
+			assertEquals("Bobby should have an additional point.",points+1,aGame.getPlayers().get(0).getVictoryPoints());
 		} catch (InvalidMovesRequest e) {
 			System.out.println(e.getMessage());
 		}
