@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,14 +101,30 @@ public class GamesTest {
 		assertTrue("Failed to catch/deny user request to join full game.", invalid);
 	}
 	
-	/*
+	
 	@Test
 	public void testSaveGame() { 
-		
+		try {
+			games.saveGame(0, "testsave");
+			assertTrue("Saved game correctly and was suppose to.", true);
+		} catch (IOException e) {
+			assertTrue("Game did not save correctly and was suppose to.", false);
+		}
 	}
+	
 	@Test
 	public void testLoadGame() { 
-		
+		//There MUST be a "testsave.xml" file in the saves/ folder for this to pass.
+		try {
+			int id = games.loadGame("testsave");
+			boolean condition = false;
+			if(id == games.listGames().size()-1){
+				condition = true;
+			}
+			else condition = false;
+			assertTrue("Loaded game correctly and was suppose to.", condition);
+		} catch (IOException e) {
+			assertTrue("Game did not load correctly and was suppose to.", false);
+		}
 	}
-	*/
 }

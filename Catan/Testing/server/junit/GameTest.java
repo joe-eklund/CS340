@@ -38,6 +38,8 @@ public class GameTest {
 		IGameFacade modelGame = new GameFacade(getModelGamesList);
 		ServerModel modelToCheck = modelGame.getGameModel(0);
 		assertEquals("The game model should be the default game model.", serverModel, modelToCheck);
+		ServerModel modelToCheck2 = modelGame.getGameModel(1);
+		assertEquals("The game model should be null. There is no model with that ID.", null, modelToCheck2);
 	}
 	@Test
 	public void testAddAI(){ 

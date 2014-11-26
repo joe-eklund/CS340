@@ -55,7 +55,7 @@ public abstract class AGameFacade implements IGameFacade {
 		try {
 			result = this.gameModels.get(gameID);
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
+			return null;
 		}	
 		return result;
 	}
