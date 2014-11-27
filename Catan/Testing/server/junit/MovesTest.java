@@ -15,26 +15,35 @@ import server.games.IGamesFacade;
 import server.moves.IMovesFacade;
 import server.moves.InvalidMovesRequest;
 import server.moves.MovesFacade;
+import shared.ServerMethodRequests.AcceptTradeRequest;
+import shared.ServerMethodRequests.BuildCityRequest;
 import shared.ServerMethodRequests.BuildSettlementRequest;
 import shared.ServerMethodRequests.BuyDevCardRequest;
+import shared.ServerMethodRequests.DiscardCardsRequest;
 import shared.ServerMethodRequests.FinishTurnRequest;
+import shared.ServerMethodRequests.MaritimeTradeRequest;
 import shared.ServerMethodRequests.MonopolyDevRequest;
 import shared.ServerMethodRequests.MonumentDevRequest;
+import shared.ServerMethodRequests.OfferTradeRequest;
 import shared.ServerMethodRequests.RoadBuildingDevRequest;
 import shared.ServerMethodRequests.RobPlayerRequest;
 import shared.ServerMethodRequests.RollNumberRequest;
 import shared.ServerMethodRequests.SendChatRequest;
 import shared.ServerMethodRequests.SoldierDevRequest;
 import shared.ServerMethodRequests.YearOfPlentyDevRequest;
+import shared.definitions.ResourceHand;
 import shared.definitions.RoadLocation;
 import shared.definitions.ServerModel;
 import shared.definitions.VertexLocationRequest;
 import shared.locations.EdgeDirection;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
+import shared.model.City;
 import shared.model.Player;
+import shared.model.Resources;
 import shared.model.Road;
 import shared.model.Settlement;
+import shared.model.TradeOffer;
 
 public class MovesTest {
 	private IMovesFacade moves;
@@ -183,7 +192,6 @@ public class MovesTest {
 		
 		try {
 			aGame=moves.roadBuilding(request, cookie);
-			//Need to get the right roads not right right now
 			Road road = aGame.getMap().getRoads().get(0);
 			assertEquals("Bobby should have road at X1: 0",location1.getX(),road.location.getX());
 			assertEquals("Bobby should have road at Y1: 0",location1.getY(),road.location.getY());
@@ -195,7 +203,36 @@ public class MovesTest {
 	
 	@Test
 	public void testBuildCity() {
+		VertexLocationRequest location1 = new VertexLocationRequest(0, 0, VertexDirection.NorthWest);
+		BuildCityRequest request = new BuildCityRequest(0, location1);
+		ServerModel aGame;
 		
+		aGame = gamesList.get(1);
+		int totalCitiesBEFORE = aGame.getMap().getCities().size();
+		int playerCitiesBEFORE = aGame.getPlayers().get(0).getCities();
+		try {
+			aGame = moves.buildCity(request, cookie);
+			int totalCitiesAFTER = aGame.getMap().getCities().size();
+			int playerCitiesAFTER = aGame.getPlayers().get(0).getCities();
+
+			assertEquals("Total Cities",totalCitiesBEFORE+1,totalCitiesAFTER);
+			assertEquals("PLayer Cities", playerCitiesBEFORE-1, playerCitiesAFTER);
+
+		} catch (InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		} catch (ClientModelException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		boolean builtCity = false;
+		for (City city : aGame.getMap().getCities()) {
+			if (city.getLocation().getHexLoc().getX() == 0 && city.getLocation().getHexLoc().getY() == 0) {
+				builtCity = true;
+				break;
+			}
+		}
+		
+		assertEquals(builtCity, true);
 	}
 	
 	@Test
@@ -220,17 +257,177 @@ public class MovesTest {
 		} catch (ClientModelException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		boolean builtSettlement = false;
+		for (Settlement settlement : aGame.getMap().getSettlements()) {
+			if (settlement.getLocation().getHexLoc().getX() == 0 && settlement.getLocation().getHexLoc().getY() == 0) {
+				builtSettlement = true;
+				break;
+			}
+		}
+		
+		assertEquals(builtSettlement, true);
 	}
 	
 	@Test
 	public void testTrade() {
 		//offer trade
+		OfferTradeRequest offerRequest = new OfferTradeRequest(0, new ResourceHand(1, 1, 0, -1, -1), 1);
+		ServerModel aGame = gamesList.get(1);
+		
+		TradeOffer trade = aGame.getTradeOffer();
+		assertEquals(trade, null);
+		
+		try {
+			aGame = moves.offerTrade(offerRequest, cookie);
+		}
+		catch(InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
+		
+		assertEquals(aGame.getTradeOffer().getSender(), 0);
+		assertEquals(aGame.getTradeOffer().getReceiver(), 1);
+		
+		Resources offer = aGame.getTradeOffer().getOffer();
+		assertEquals(offer.brick, 1);
+		assertEquals(offer.wood, 1);
+		assertEquals(offer.sheep, 0);
+		assertEquals(offer.wheat, -1);
+		assertEquals(offer.ore, -1);
+		
 		//accept trade
+		int p1TotalBrickBEFORE = aGame.getPlayers().get(0).getBrick();
+		int p1TotalWoodBEFORE = aGame.getPlayers().get(0).getWood();
+		int p1TotalSheepBEFORE = aGame.getPlayers().get(0).getSheep();
+		int p1TotalWheatBEFORE = aGame.getPlayers().get(0).getWheat();
+		int p1TotalOreBEFORE = aGame.getPlayers().get(0).getOre();
+		
+		int p2TotalBrickBEFORE = aGame.getPlayers().get(1).getBrick();
+		int p2TotalWoodBEFORE = aGame.getPlayers().get(1).getWood();
+		int p2TotalSheepBEFORE = aGame.getPlayers().get(1).getSheep();
+		int p2TotalWheatBEFORE = aGame.getPlayers().get(1).getWheat();
+		int p2TotalOreBEFORE = aGame.getPlayers().get(1).getOre();
+		
+		AcceptTradeRequest acceptRequest = new AcceptTradeRequest(1, false);
+		
+		try {
+			aGame = moves.acceptTrade(acceptRequest, cookie);
+			
+			Player p1 = aGame.getPlayers().get(0);
+			Player p2 = aGame.getPlayers().get(1);
+			
+			assertEquals(p1.getBrick(), p1TotalBrickBEFORE);
+			assertEquals(p1.getWood(), p1TotalWoodBEFORE);
+			assertEquals(p1.getSheep(), p1TotalSheepBEFORE);
+			assertEquals(p1.getWheat(), p1TotalWheatBEFORE);
+			assertEquals(p1.getOre(), p1TotalOreBEFORE);
+			
+			assertEquals(p2.getBrick(), p1TotalBrickBEFORE);
+			assertEquals(p2.getWood(), p1TotalWoodBEFORE);
+			assertEquals(p2.getSheep(), p1TotalSheepBEFORE);
+			assertEquals(p2.getWheat(), p1TotalWheatBEFORE);
+			assertEquals(p2.getOre(), p1TotalOreBEFORE);
+			
+		}
+		catch(InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
+		
+		offerRequest = new OfferTradeRequest(0, new ResourceHand(1, 1, 0, -1, -1), 1);
+		acceptRequest = new AcceptTradeRequest(1, true);
+		
+		try {
+			aGame = moves.offerTrade(offerRequest, cookie);
+			aGame = moves.acceptTrade(acceptRequest, cookie);
+			
+			Player p1 = aGame.getPlayers().get(0);
+			Player p2 = aGame.getPlayers().get(1);
+			
+			assertEquals(p1.getBrick(), p1TotalBrickBEFORE-1);
+			assertEquals(p1.getWood(), p1TotalWoodBEFORE-1);
+			assertEquals(p1.getSheep(), p1TotalSheepBEFORE);
+			assertEquals(p1.getWheat(), p1TotalWheatBEFORE+1);
+			assertEquals(p1.getOre(), p1TotalOreBEFORE+1);
+			
+			assertEquals(p2.getBrick(), p2TotalBrickBEFORE+1);
+			assertEquals(p2.getWood(), p2TotalWoodBEFORE+1);
+			assertEquals(p2.getSheep(), p2TotalSheepBEFORE);
+			assertEquals(p2.getWheat(), p2TotalWheatBEFORE-1);
+			assertEquals(p2.getOre(), p2TotalOreBEFORE-1);
+			
+		}
+		catch(InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
+		
 		//maritime trade
+		aGame.getPlayers().get(0).setBrick(4);
+		aGame.getPlayers().get(0).setWheat(3);
+		aGame.getPlayers().get(0).setWood(2);
+		aGame.getPlayers().get(0).setOre(0);
+		aGame.getPlayers().get(0).setSheep(0);
+		int bankTotalBrickBEFORE = aGame.getBank().brick;
+		int bankTotalWoodBEFORE = aGame.getBank().wood;
+		int bankTotalSheepBEFORE = aGame.getBank().sheep;
+		int bankTotalWheatBEFORE = aGame.getBank().wheat;
+		int bankTotalOreBEFORE = aGame.getBank().ore;
+		
+		MaritimeTradeRequest maritimeBrickRequest = new MaritimeTradeRequest(0, 4, "brick", "ore");
+		MaritimeTradeRequest maritimeWheatRequest = new MaritimeTradeRequest(0, 3, "wheat", "ore");
+		MaritimeTradeRequest maritimeWoodRequest = new MaritimeTradeRequest(0, 2, "wood", "ore");
+		
+		try {
+			moves.maritimeTrade(maritimeBrickRequest, cookie);
+			moves.maritimeTrade(maritimeWheatRequest, cookie);
+			moves.maritimeTrade(maritimeWoodRequest, cookie);
+			aGame = gamesList.get(1);
+			
+			Player p1 = aGame.getPlayers().get(0);
+			
+			assertEquals(p1.getBrick(), 0);
+			assertEquals(p1.getWood(), 0);
+			assertEquals(p1.getSheep(), 0);
+			assertEquals(p1.getWheat(), 0);
+			assertEquals(p1.getOre(), 3);
+			
+			assertEquals(aGame.getBank().brick, bankTotalBrickBEFORE + 4);
+			assertEquals(aGame.getBank().wheat, bankTotalWheatBEFORE + 3);
+			assertEquals(aGame.getBank().wood, bankTotalWoodBEFORE + 2);
+			assertEquals(aGame.getBank().sheep, bankTotalSheepBEFORE);
+			assertEquals(aGame.getBank().ore, bankTotalOreBEFORE - 3);
+			
+		}
+		catch(InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test
 	public void testDiscard() {
+		DiscardCardsRequest request = new DiscardCardsRequest(new ResourceHand(5, 5, 5, 5, 5), 0);
+		ServerModel aGame = gamesList.get(1);
+		
+		Player p1 = aGame.getPlayers().get(0);
+		p1.setBrick(5);
+		p1.setWood(5);
+		p1.setSheep(5);
+		p1.setWheat(5);
+		p1.setOre(5);
+		
+		try {
+			aGame = moves.discardCards(request, cookie);
+			
+			p1 = aGame.getPlayers().get(0);
+			assertEquals(p1.getBrick(), 0);
+			assertEquals(p1.getWheat(), 0);
+			assertEquals(p1.getWood(), 0);
+			assertEquals(p1.getSheep(), 0);
+			assertEquals(p1.getOre(), 0);
+			
+		}
+		catch(InvalidMovesRequest e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	

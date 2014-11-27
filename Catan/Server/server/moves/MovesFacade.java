@@ -880,22 +880,27 @@ public class MovesFacade implements IMovesFacade {
 		case "brick":
 			int playerBrick = player.getBrick() + 1;
 			player.setBrick(playerBrick);
+			serverGameModel.getBank().brick -= 1;
 			break;
 		case "ore":
 			int playerOre = player.getOre() + 1;
 			player.setOre(playerOre);
+			serverGameModel.getBank().ore -= 1;
 			break;
 		case "sheep":
 			int playerSheep = player.getSheep() + 1;
 			player.setSheep(playerSheep);
+			serverGameModel.getBank().sheep -= 1;
 			break;
 		case "wheat":
 			int playerWheat = player.getWheat() + 1;
 			player.setWheat(playerWheat);
+			serverGameModel.getBank().wheat -= 1;
 			break;
 		case "wood":
 			int playerWood = player.getWood() + 1;
 			player.setWood(playerWood);
+			serverGameModel.getBank().wood -= 1;
 			break;
 		}
 		
