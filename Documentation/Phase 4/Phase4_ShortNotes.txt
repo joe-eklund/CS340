@@ -1,0 +1,64 @@
+-plugin [mysql | mongodb]
+	PersistenceProvider (DAO Factory)
+		-getDAO
+			[Users | GameDescriptions | Games]
+		-start()
+		-end(boolean successful)
+		-clearAllTables
+	
+	ModelDAO (UserDAO, GameDescriptionsDAO, GamesDAO) 
+		-save()
+		-load()
+		-clear()
+	
+	NonMoveCommandDAO (UsersCommandsDAO, GameDescriptionCommandsDAO)
+		-add()
+		-getAll()
+		-clear()
+		
+	MoveCommandDAO (GameCommandsDAO)
+		-add(gameID)
+		-getAll(gameID)
+		-clear()
+		
+CREATE TABLE users 
+{
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+	users BLOB NOT NULL
+}
+
+CREATE TABLE game_descriptions
+{
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+	descriptions BLOB NOT NULL
+}
+
+CREATE TABLE games  
+{
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+	games BLOB NOT NULL
+}
+
+CREATE TABLE user_commands {
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+	command BLOB NOT NULL
+}
+
+CREATE TABLE game_description_commands {
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+	command BLOB NOT NULL
+}
+
+CREATE TABLE game_commands {
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+	game INTEGER NOT NULL,
+	command BLOB NOT NULL
+}
+ 
+
+
+		
+
+Users will only have users directory blob (blob from list<User>)
+GameDescriptions will only have GameDescriptions blob (blob from list<GameDescription>)
+Games will have Games blob (blob from list<ServerModel>)
