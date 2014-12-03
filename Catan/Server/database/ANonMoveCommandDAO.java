@@ -6,4 +6,11 @@ package database;
  */
 public abstract class ANonMoveCommandDAO implements INonMoveCommandDAO {
 
+	/**
+	 * Gets the commands name
+	 * @return Information about the the command
+	 */
+	public String getName(){
+		return null;
+	}
 }
