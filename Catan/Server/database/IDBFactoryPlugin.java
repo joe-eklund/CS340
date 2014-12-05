@@ -26,13 +26,13 @@ public interface IDBFactoryPlugin {
 	public ANonMoveCommandDAO getNonMoveCommandDAO();
 	
 	/**
-	 * Starts a command to the database.
+	 * Starts a connection to the database.
 	 */
 	public void start();
 	
 	/**
-	 * Stops a command to the database.
-	 * @param success	True or false to execute the command to the database.
+	 * Stops a connection to the database.
+	 * @param success	True or false to roll back or commit the command to the database.
 	 */
 	public void stop(boolean success);
 	

@@ -19,13 +19,13 @@ public interface IModelDAO {
 	
 	/**
 	 * @pre none
-	 * @post returns object representing blob of associated data model to be cast to appropriate model
+	 * @post returns object representing blob of list of game models
 	 */
 	public Object load();
 	
 	/**
 	 * @pre none
-	 * @post clears all rows in associated data model
+	 * @post clears the row (drops table-recreates)in associated data model
 	 */
 	public void clear();
 }

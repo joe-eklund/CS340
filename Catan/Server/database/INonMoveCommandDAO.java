@@ -24,7 +24,7 @@ public interface INonMoveCommandDAO {
 	public List<Object> getAll();
 	
 	/**
-	 * This clears all Non-move commands from the database.  After this method is called there will be no Non-move commands in the database.
+	 * This clears all Non-move commands(drop-recreate) from the database.  After this method is called there will be no Non-move commands in the database.
 	 */
 	public void clear();
 }
