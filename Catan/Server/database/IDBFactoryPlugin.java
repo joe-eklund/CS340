@@ -8,7 +8,7 @@ public interface IDBFactoryPlugin {
 	
 	/**
 	 * Gets the model DAO to access the database.
-	 * @param type	The type of database, such as sqlite or mongodb.
+	 * @param type	Which datamodel
 	 * @return		AModelDAO object to access the model in the database.
 	 */
 	public AModelDAO getModelDAO(String type);
