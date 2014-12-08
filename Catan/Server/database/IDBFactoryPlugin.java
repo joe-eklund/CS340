@@ -17,7 +17,7 @@ public interface IDBFactoryPlugin {
 	 * Gets the Move Command DAO to access the database.
 	 * @return	AMoveCommandDAO object to access the move commands in the database.
 	 */
-	public AMoveCommandDAO getMoveCommandDAO();
+	public MoveCommandDAO getMoveCommandDAO();
 	
 	/**
 	 * Gets the Non Move Command DAO to access the database.

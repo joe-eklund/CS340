@@ -31,11 +31,12 @@ public class SQLGameModelDAO extends AModelDAO {
 		ResultSet rs = null;
 		try {
 			//TODO change query
-			String query = "select id, name, phone, address, email, url from contact";
+			String query = "select * from tableName";
 			stmt = db.getConnection().prepareStatement(query);
 
 			rs = stmt.executeQuery();
-			//TODO serialize blob to java object
+			//TODO get first-should only be one there
+			//TODO serialize blob to serializable object
 			
 			/*Do not do this, this is 240 example
 			 * while (rs.next()) {

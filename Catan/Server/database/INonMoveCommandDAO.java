@@ -10,18 +10,19 @@ import java.util.List;
 public interface INonMoveCommandDAO {
 	
 	/**
-	 * This method allows a client to add a Non-move command to the database
+	 * This method allows a client to add a single Non-move command to the database
+	 * @param type ::= users | gameDescripions
 	 * @param command
 	 * @param gameID
 	 */
-	public void add(Serializable command);
+	public void add(Serializable command, String type);
 	
 	/**
-	 * Returns a list of all the Non-move commands currently in the database.
-	 * @param gameID
+	 * Returns a list of all the Non-move commands of "type" currently in the database.
+	 * @param type ::= users | gameDescripions
 	 * @return List of move commands
 	 */
-	public List<Object> getAll();
+	public List<Serializable> getAll(String type);
 	
 	/**
 	 * This clears all Non-move commands(drop-recreate) from the database.  After this method is called there will be no Non-move commands in the database.
