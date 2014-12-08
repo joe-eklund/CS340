@@ -20,31 +20,31 @@
 		-add(gameID)
 		-getAll(gameID)
 		-clear()
-		
+//one row		
 CREATE TABLE users 
 {
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
 	users BLOB NOT NULL
 }
-
+//one row
 CREATE TABLE game_descriptions
 {
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
 	descriptions BLOB NOT NULL
 }
-
+//one row-updates(clears/rewrites) every # commands
 CREATE TABLE games  
 {
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
 	games BLOB NOT NULL
 }
-
+//multiple rows
 CREATE TABLE non_move_commands {
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
 	type CHAR(4) NOT NULL, -- either 'game' for game descriptions command or 'user' user command
 	command BLOB NOT NULL
 }
-
+//multiple rows
 CREATE TABLE move_commands {
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
 	game INTEGER NOT NULL,
