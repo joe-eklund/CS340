@@ -20,10 +20,13 @@ import shared.definitions.GameDescription;
 import shared.definitions.PlayerDescription;
 import shared.definitions.ServerModel;
 import shared.locations.HexLocation;
+import shared.model.City;
 import shared.model.Hex;
 import shared.model.Map;
 import shared.model.Player;
 import shared.model.Port;
+import shared.model.Road;
+import shared.model.Settlement;
 
 public abstract class AGamesFacade implements IGamesFacade {
 	protected ArrayList<GameDescription> gameDescriptionsList;
@@ -161,6 +164,38 @@ public abstract class AGamesFacade implements IGamesFacade {
 		XStream xstream = new XStream();
 		File file = new File("saves/" + name + ".xml");
 		ServerModel game = (ServerModel) xstream.fromXML(file);
+		
+		ArrayList<Road> roads = game.getMap().getRoads();
+		ArrayList<Settlement> settlements = game.getMap().getSettlements();
+		ArrayList<City> cities = game.getMap().getCities();
+		
+		for (Road road : roads) {
+			try {
+				road.initializeLocation();
+			}
+			catch(Exception e) {
+				System.err.print(e);
+			}
+		}
+		
+		for (Settlement settlement : settlements) {
+			try {
+				settlement.initializeLocation();
+			}
+			catch(Exception e) {
+				System.err.print(e);
+			}
+		}
+		
+		for (City city : cities) {
+			try {
+				city.initializeLocation();
+			}
+			catch(Exception e) {
+				System.err.print(e);
+			}
+		}
+		
 		List<Player> players = game.getPlayers();
 		List<PlayerDescription> playerDescriptions = new ArrayList<>();
 		if(players != null){
