@@ -39,17 +39,13 @@ CREATE TABLE games
 	games BLOB NOT NULL
 }
 
-CREATE TABLE user_commands {
+CREATE TABLE non_move_commands {
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
+	type CHAR(4) NOT NULL, -- either 'game' for game descriptions command or 'user' user command
 	command BLOB NOT NULL
 }
 
-CREATE TABLE game_description_commands {
-	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
-	command BLOB NOT NULL
-}
-
-CREATE TABLE game_commands {
+CREATE TABLE move_commands {
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,
 	game INTEGER NOT NULL,
 	command BLOB NOT NULL
