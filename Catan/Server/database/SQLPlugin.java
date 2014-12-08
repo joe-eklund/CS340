@@ -1,5 +1,8 @@
 package database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 public class SQLPlugin implements IDBFactoryPlugin{
 
 	
@@ -34,8 +37,15 @@ public class SQLPlugin implements IDBFactoryPlugin{
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		Connection c = null;
+	    try {
+	      Class.forName("org.sqlite.JDBC");
+	      c = DriverManager.getConnection("jdbc:sqlite:gameModel.db");
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+	    }
+	    System.out.println("Opened database successfully");
 	}
 
 	@Override
