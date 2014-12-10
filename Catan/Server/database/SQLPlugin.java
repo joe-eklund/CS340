@@ -34,8 +34,8 @@ public class SQLPlugin implements IDBFactoryPlugin{
 	}
 
 	@Override
-	public MoveCommandDAO getMoveCommandDAO() {
-		// TODO Auto-generated method stub
+	public AMoveCommandDAO getMoveCommandDAO() {
+		AMoveCommandDAO moveCommand=new 
 		return null;
 	}
 

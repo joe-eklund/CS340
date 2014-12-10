@@ -20,7 +20,7 @@ public class NonSQLPlugin implements IDBFactoryPlugin {
 	}
 
 	@Override
-	public MoveCommandDAO getMoveCommandDAO() {
+	public AMoveCommandDAO getMoveCommandDAO() {
 		// TODO Auto-generated method stub
 		return null;
 	}
