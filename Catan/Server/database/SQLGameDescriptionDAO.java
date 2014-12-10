@@ -31,7 +31,7 @@ public class SQLGameDescriptionDAO extends AModelDAO {
 		ResultSet rs = null;
 		try {
 			//TODO change query
-			String query = "select* from GameDescription";
+			String query = "select * from GameDescription";
 			stmt = db.getConnection().prepareStatement(query);
 
 			rs = stmt.executeQuery();
