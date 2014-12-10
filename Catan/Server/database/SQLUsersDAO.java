@@ -1,9 +1,16 @@
 package database;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class SQLUsersDAO extends AModelDAO{
 
@@ -17,7 +24,22 @@ public class SQLUsersDAO extends AModelDAO{
 	 */
 	@Override
 	public void save(Serializable model){
-		//TODO save the model to database
+
+	    try {
+			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into Users (users) values (?)");
+		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    ObjectOutputStream oos = new ObjectOutputStream(baos);
+		    oos.writeObject(model);
+		    byte[] modelAsBytes = baos.toByteArray();
+			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
+		    pstmt.setBinaryStream(1, bais, modelAsBytes.length);
+		    pstmt.executeUpdate();
+		    pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -26,36 +48,26 @@ public class SQLUsersDAO extends AModelDAO{
 	@Override
 	public Serializable load(){
 		Serializable model=null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+		Statement stmt=null;
 		try {
-			//TODO change query
-			String query = "select id, name, phone, address, email, url from contact";
-			stmt = db.getConnection().prepareStatement(query);
-
-			rs = stmt.executeQuery();
-			//TODO serialize blob to java object
-			
-			/*Do not do this, this is 240 example
-			 * while (rs.next()) {
-				int id = rs.getInt(1);
-				String name = rs.getString(2);
-				String phone = rs.getString(3);
-				String address = rs.getString(4);
-				String email = rs.getString(5);
-				String url = rs.getString(6);
-
-				result.add(new Contact(id, name, phone, address, email, url));
-			}*/
+			stmt = db.getConnection().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT users FROM Users");
+			while (rs.next()) {
+				byte[] st = (byte[]) rs.getObject(1);
+				ByteArrayInputStream baip = new ByteArrayInputStream(st);
+				ObjectInputStream ois = new ObjectInputStream(baip);
+				model = (Serializable) ois.readObject();
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-		catch (SQLException e) {
-			System.out.println("Failed DB load list of users:"+e.getMessage());
-		}		
-		finally {
-			SQLPlugin.safeClose(rs);
-			SQLPlugin.safeClose(stmt);
-		}
-		return model;
+	    return model;
 	}
 	/**
 	 * Drop table, create empty table

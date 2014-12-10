@@ -127,7 +127,6 @@ public class SQLPlugin implements IDBFactoryPlugin{
 	public void clearAllTables() {
 		Statement stmt = null;
 		ResultSet rs = null;
-		start();
 		try {		
 			stmt = connection.createStatement();
 			
