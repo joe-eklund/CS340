@@ -12,6 +12,7 @@ public class SQLGameDescriptionDAO extends AModelDAO {
 	public SQLGameDescriptionDAO(SQLPlugin sqlPlugin) {
 		db =  sqlPlugin;
 	}
+	
 	/**
 	 * Saves the list of game descriptions(serialize it first) into the db-only one blob/row
 	 */
@@ -30,10 +31,11 @@ public class SQLGameDescriptionDAO extends AModelDAO {
 		ResultSet rs = null;
 		try {
 			//TODO change query
-			String query = "select id, name, phone, address, email, url from contact";
+			String query = "select* from GameDescription";
 			stmt = db.getConnection().prepareStatement(query);
 
 			rs = stmt.executeQuery();
+			
 			//TODO serialize blob to java object
 			
 			/*Do not do this, this is 240 example
@@ -57,12 +59,27 @@ public class SQLGameDescriptionDAO extends AModelDAO {
 		}
 		return model;
 	}
+	
 	/**
 	 * Drop table, create empty table
 	 */
 	@Override
 	public void clear(){
-		//TODO clear all rows
-	}
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String query = "Delete from GameDescription";
+			stmt = db.getConnection().prepareStatement(query);
 
+			rs = stmt.executeQuery();
+			//May want to do a check for proper result here. Test if all rows have been deleted.
+		}
+		catch (SQLException e) {
+			System.out.println("Failed DB clear game description table: "+e.getMessage());
+		}		
+		finally {
+			SQLPlugin.safeClose(rs);
+			SQLPlugin.safeClose(stmt);
+		}
+	}
 }
