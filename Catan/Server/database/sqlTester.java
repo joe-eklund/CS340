@@ -4,7 +4,7 @@ public class sqlTester {
 
 	public static void main(String[] args) {
 		IDBFactoryPlugin plugin=new SQLPlugin();
-		System.out.println("plugin");
+		System.out.println("plugin made-pre clear");
 		plugin.clearAllTables();
 		System.out.println("made db");
 	}

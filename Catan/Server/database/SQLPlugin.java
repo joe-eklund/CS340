@@ -2,17 +2,14 @@ package database;
 
 import java.io.File;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
+import org.sqlite.SQLiteConfig;
 
 public class SQLPlugin implements IDBFactoryPlugin{
 
 	private static final String DATABASE_DIRECTORY = "SQLDatabase";
-	private static final String DATABASE_FILE = "database.sqlite";
+	private static final String DATABASE_FILE = "database.db";
 	private static final String DATABASE_URL = "jdbc:sqlite:" + DATABASE_DIRECTORY + File.separator + DATABASE_FILE;
 	
 	private Connection connection;
@@ -51,14 +48,8 @@ public class SQLPlugin implements IDBFactoryPlugin{
 		connection = null;
 	    try {
 			assert (connection == null);
-			SQLiteConfig config = new SQLiteConfig();
-			// config.setReadOnly(true);   
-			config.setSharedCache(true);
-			config.recursiveTriggers(true);
-			// ... other configuration can be set via SQLiteConfig object
-			Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db", config.toProperties());
-			//Class.forName("org.sqlite.JDBC");
-			//connection = DriverManager.getConnection(DATABASE_URL);
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_FILE);
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
@@ -134,13 +125,17 @@ public class SQLPlugin implements IDBFactoryPlugin{
 
 	@Override
 	public void clearAllTables() {
-		PreparedStatement stmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		start();
-		try {
+		try {		
+			stmt = connection.createStatement();
 			
-			String drop = "DROP DATABASE " + DATABASE_FILE;
-			String makeDB="CREATE DATABASE " + DATABASE_FILE;
+			String dropGameDescriptions="DROP TABLE GameDescriptions";
+			String dropGameModel="DROP TABLE GameModel";
+			String dropMoveCommand="DROP TABLE MoveCommand";
+			String dropNonMoveCommand="DROP TABLE NonMoveCommand";
+			String dropUsers="DROP TABLE Users";
 			String makeGameDescriptions="CREATE TABLE GameDescriptions " +
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
 					"descriptions BLOB NOT NULL)";
@@ -158,23 +153,26 @@ public class SQLPlugin implements IDBFactoryPlugin{
 			String makeUsers="CREATE TABLE Users " +
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
 					"users BLOB NOT NULL)";
+
+			stmt.addBatch(dropUsers);
+			stmt.addBatch(dropNonMoveCommand);
+			stmt.addBatch(dropMoveCommand);
+			stmt.addBatch(dropGameModel);
+			stmt.addBatch(dropGameDescriptions);
+			stmt.executeBatch();
+			stmt.clearBatch();
 			
-			stmt = connection.prepareStatement(drop);
-			//stmt.executeUpdate(drop);
-			//System.out.println("dropped sql db");
-			stmt.addBatch(makeDB);
 			stmt.addBatch(makeUsers);
 			stmt.addBatch(makeGameModel);
 			stmt.addBatch(makeGameDescriptions);
 			stmt.addBatch(makeMoveCommand);
 			stmt.addBatch(makeNonMoveCommand);
 			stmt.executeBatch();
-			connection.commit();
-			System.out.println("made sql tables");
 			
 		}
 		catch (SQLException e) {
-			System.out.println("Failed clearing tables:"+e.getMessage());
+			System.out.println("Failed clearing tables: "+e.getMessage());
+			e.printStackTrace();
 		}		
 		finally {
 			SQLPlugin.safeClose(rs);
