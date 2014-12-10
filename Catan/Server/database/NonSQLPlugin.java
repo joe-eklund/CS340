@@ -7,13 +7,13 @@ public class NonSQLPlugin implements IDBFactoryPlugin {
 		AModelDAO modelDAO=null;
 		switch(type){
 		case "Game Model":
-			modelDAO=new NonSQLGameModelDAO();
+			modelDAO=new NonSQLGameModelDAO(this);
 			break;
 		case "Game Description":
-			modelDAO=new NonSQLGameDescriptionDAO();
+			modelDAO=new NonSQLGameDescriptionDAO(this);
 			break;
 		case "Users":
-			modelDAO=new NonSQLUsersDAO();
+			modelDAO=new NonSQLUsersDAO(this);
 			break;
 		}
 		return modelDAO;
