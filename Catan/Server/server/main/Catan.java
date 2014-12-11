@@ -41,6 +41,9 @@ import server.util.IUtilFacade;
 import server.util.UtilFacade;
 import shared.definitions.GameDescription;
 import shared.definitions.ServerModel;
+import shared.model.City;
+import shared.model.Road;
+import shared.model.Settlement;
 import database.IDBFactoryPlugin;
 
 
@@ -124,12 +127,50 @@ public class Catan {
 				dbPlugin.start();
 				dbPlugin.clearAllTables();
 				dbPlugin.stop(true);
+				
 			}
 			
 			// Load GameModels from DB
 			dbPlugin.start();
 			Object s = dbPlugin.getModelDAO("Game Model").load();
 			serverModels = (s == null) ? new ArrayList<ServerModel>() : (ArrayList<ServerModel>) s;
+			
+			ArrayList<Road> roads = new ArrayList<Road>();
+			ArrayList<Settlement> settlements = new ArrayList<Settlement>();
+			ArrayList<City> cities = new ArrayList<City>();
+			
+			for (ServerModel model : serverModels) {
+				roads = model.getMap().getRoads();
+				settlements = model.getMap().getSettlements();
+				cities = model.getMap().getCities();
+			}
+			
+			for (Road road : roads) {
+				try {
+					road.initializeLocation();
+				}
+				catch(Exception e) {
+					System.err.print(e);
+				}
+			}
+			
+			for (Settlement settlement : settlements) {
+				try {
+					settlement.initializeLocation();
+				}
+				catch(Exception e) {
+					System.err.print(e);
+				}
+			}
+			
+			for (City city : cities) {
+				try {
+					city.initializeLocation();
+				}
+				catch(Exception e) {
+					System.err.print(e);
+				}
+			}
 			
 			// Load User from DB
 			Object u = dbPlugin.getModelDAO("Users").load();
@@ -187,6 +228,7 @@ public class Catan {
 			movesLog.setDBPlugin(dbPlugin);
 			movesLog.setGamesLog(gamesLog);
 			movesLog.setUsersLog(usersLog);
+			movesLog.setDeltaThreshold(threshold);
 			
 			
 			if(line.hasOption("t")) { // testing option ==> load server stubs

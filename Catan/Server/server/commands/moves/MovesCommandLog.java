@@ -88,6 +88,7 @@ public class MovesCommandLog implements IMovesCommandLog {
 		this.dbPlugin.start();
 		this.dbPlugin.getModelDAO("Game Model").save(this.movesFacade.getModelsList());
 		this.dbPlugin.stop(true);
+		this.clear();
 		
 	}
 
