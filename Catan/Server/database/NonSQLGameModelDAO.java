@@ -2,6 +2,12 @@ package database;
 
 import java.io.Serializable;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.thoughtworks.xstream.XStream;
+
+
 public class NonSQLGameModelDAO extends AModelDAO{
 	private NonSQLPlugin db;
 	
@@ -14,7 +20,15 @@ public class NonSQLGameModelDAO extends AModelDAO{
 	 */
 	@Override
 	public void save(Serializable model){
-		//TODO save the model to database
+		DBCollection collection = db.getDB().getCollection("games");
+		XStream xStream = new XStream();
+		String xml = xStream.toXML(model);
+		
+		BasicDBObject dbObject = new BasicDBObject("models", xml);
+		
+		collection.insert(dbObject);
+		
+		db.closeDB();
 	}
 	
 	/**

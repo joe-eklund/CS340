@@ -1,7 +1,20 @@
 package database;
 
+import com.mongodb.*;
+
 public class NonSQLPlugin implements IDBFactoryPlugin {
 
+	Mongo mongo;
+	
+	public NonSQLPlugin() {
+		try {
+			mongo = new Mongo();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public AModelDAO getModelDAO(String type) {
 		AModelDAO modelDAO=null;
@@ -47,6 +60,14 @@ public class NonSQLPlugin implements IDBFactoryPlugin {
 	public void clearAllTables() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public DB getDB() {
+		return mongo.getDB("phase4");
+	}
+	
+	public void closeDB() {
+		mongo.close();
 	}
 
 }
