@@ -109,6 +109,13 @@ public class Catan {
 					dbPlugin = loadPlugin(pluginFile, pluginInfo[2]);
 				}
 			}
+			else {
+				String defaultPlugin = (String) plugins.keySet().toArray()[0];
+				System.err.println("Error: invalid db option. Defaulting to " + defaultPlugin);
+				String[] pluginInfo = plugins.get(defaultPlugin);
+				File pluginFile = new File(pluginInfo[1]);
+				dbPlugin = loadPlugin(pluginFile, pluginInfo[2]);
+			}
 			
 			int threshold = 20;
 			if(line.hasOption("delta")) {
