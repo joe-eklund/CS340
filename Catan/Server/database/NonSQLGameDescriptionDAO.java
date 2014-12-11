@@ -2,6 +2,11 @@ package database;
 
 import java.io.Serializable;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.thoughtworks.xstream.XStream;
+
 public class NonSQLGameDescriptionDAO extends AModelDAO{
 private NonSQLPlugin db;
 	
@@ -13,7 +18,17 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public void save(Serializable model){
-		//TODO save the model to database
+		db.start();
+		DBCollection collection = db.getDB().getCollection("gamedescriptions");
+		XStream xStream = new XStream();
+		String xml = xStream.toXML(model);
+		
+		BasicDBObject dbObject = new BasicDBObject("blob", xml);
+		
+		collection.drop();
+		
+		collection.insert(dbObject);
+		db.stop(true);
 	}
 	
 	/**
@@ -21,13 +36,26 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public Serializable load(){
-		return null;
+		db.start();
+		DBCollection collection = db.getDB().getCollection("gamedescriptions");
+		
+		XStream xStream = new XStream();
+		
+		DBObject obj = collection.findOne();
+
+		String xml = (String)obj.get("blob");
+		Serializable xmlObj = (Serializable) xStream.fromXML(xml);
+		db.stop(true);
+		
+		return xmlObj;
 	}
 	/**
 	 * Drop table, create empty table
 	 */
 	@Override
 	public void clear(){
-		//TODO clear all rows
+		db.start();
+		db.getDB().getCollection("gamedescriptions").drop();
+		db.stop(true);
 	}
 }
