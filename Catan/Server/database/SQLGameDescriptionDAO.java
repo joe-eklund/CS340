@@ -1,8 +1,10 @@
 package database;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +23,22 @@ public class SQLGameDescriptionDAO extends AModelDAO {
 	 */
 	@Override
 	public void save(Serializable model){
-		//TODO save the model to database
+		try {
+			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into GameDescription (description) values (?)");
+		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    ObjectOutputStream oos = new ObjectOutputStream(baos);
+		    oos.writeObject(model);
+		    byte[] modelAsBytes = baos.toByteArray();
+			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
+		    pstmt.setBinaryStream(1, bais, modelAsBytes.length);
+		    pstmt.executeUpdate();
+		    db.getConnection().commit();
+		    pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

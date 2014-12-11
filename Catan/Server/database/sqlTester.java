@@ -6,14 +6,24 @@ import java.util.List;
 
 public class sqlTester {
 
+	private static IDBFactoryPlugin plugin=new SQLPlugin();
+	
+	
+	//*********We could easily change this over to JUnits****//
 	public static void main(String[] args) {
-		IDBFactoryPlugin plugin=new SQLPlugin();
+		
 		System.out.println("plugin made-pre start");
 		plugin.start();
 		System.out.println("connection made-pre clear");
 		plugin.clearAllTables();
 		System.out.println("made db-pre save");
-		//Test Users
+		//Test GameDescription
+		testUsers();
+		testNonMoveCommand();
+	}
+
+	//Test Users
+	private static boolean testUsers(){
 		List<String> names=new ArrayList<String>();
 		names.add("Bob");
 		names.add("Fred");
@@ -23,7 +33,11 @@ public class sqlTester {
 		Serializable temp=dao.load();
 		List<String> newList=(List<String>) temp;
 		System.out.println("post load, list-"+newList.size()+" "+newList.get(0));
-		//Test nonMoveCommand
+		return true;
+	}
+	
+	//Test nonMoveCommand
+	private static boolean testNonMoveCommand(){
 		System.out.println("***testing nonMoveCommand***");
 		String type="User";
 		String command="Test whatever";
@@ -34,6 +48,13 @@ public class sqlTester {
 		if(temp2.size()!=0)
 			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));
 		plugin.stop(false);
+		return true;
 	}
-
+	
+	//Test GameDescription
+	private static boolean testGameDescription(){
+		
+		return true;
+	}
+	
 }
