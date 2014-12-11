@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 import shared.locations.HexLocation;
 
 /**
@@ -14,7 +16,7 @@ import shared.locations.HexLocation;
  *    </ul>
  *
  */
-public class SoldierDevRequest {
+public class SoldierDevRequest implements Serializable {
 	private String type;
 	private int playerIndex;
 	private HexLocation location;

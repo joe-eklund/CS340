@@ -1,12 +1,14 @@
 package shared.definitions;
 
+import java.io.Serializable;
+
 /**
  * Represents a collection of resources cards. It has five properties: [Brick, Wood,
  * Sheep, Wheat, Ore]. Each has an integer value. 0 means the card amount doesn’t change. A
  * negative number means you’re gaining a card. Positive means you’re giving a way a card.
  * 
  */
-public class ResourceHand {
+public class ResourceHand implements Serializable {
 	private int brick;
 	private int wood;
 	private int sheep; 

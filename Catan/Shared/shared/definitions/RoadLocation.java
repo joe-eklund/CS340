@@ -1,8 +1,10 @@
 package shared.definitions;
 
+import java.io.Serializable;
+
 import shared.locations.EdgeDirection;
 
-public class RoadLocation {
+public class RoadLocation implements Serializable {
 	private int x;
 	private int y;
 	private EdgeDirection direction;

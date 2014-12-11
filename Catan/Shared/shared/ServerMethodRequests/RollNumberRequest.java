@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating RollNumber request parameters
  * 
@@ -11,7 +13,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class RollNumberRequest {
+public class RollNumberRequest implements Serializable {
 	private String type;
 	private int number;
 	private int playerIndex;

@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating SaveGame request parameters
  *
@@ -9,7 +11,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class SaveGameRequest {
+public class SaveGameRequest implements Serializable {
 
 	private int id;
 	private String name;

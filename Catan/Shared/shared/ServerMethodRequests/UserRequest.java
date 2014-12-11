@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 
 /**
  * A class for encapsulating UserRequest (login and registration) request parameters
@@ -11,7 +13,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class UserRequest {
+public class UserRequest implements Serializable {
 	private String username;
 	private String password;
 	private final static String validCharsRegex = "[A-Za-z0-9_-]*";

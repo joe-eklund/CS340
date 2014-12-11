@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 
 /**
  * A class for encapsulating MonopolyDev request parameters
@@ -12,7 +14,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class MonopolyDevRequest {
+public class MonopolyDevRequest implements Serializable {
 	private String type;
 	private int playerIndex;
 	private String resource;

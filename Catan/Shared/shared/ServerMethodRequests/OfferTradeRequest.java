@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 import shared.definitions.ResourceHand;
 
 /**
@@ -14,7 +16,7 @@ import shared.definitions.ResourceHand;
  *    </ul>
  *
  */
-public class OfferTradeRequest {
+public class OfferTradeRequest implements Serializable {
 	private String type;
 	private int playerIndex;
 	private ResourceHand offer;
