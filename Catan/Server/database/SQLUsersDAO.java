@@ -74,6 +74,24 @@ public class SQLUsersDAO extends AModelDAO{
 	 */
 	@Override
 	public void clear(){
-		//TODO clear all rows
+
+		String dropUsers="DROP TABLE Users";
+		String makeUsers="CREATE TABLE Users " +
+				"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
+				"users BLOB NOT NULL)";
+		Statement stmt = null;
+		try {		
+			stmt = db.getConnection().createStatement();
+			stmt.addBatch(dropUsers);
+			stmt.addBatch(makeUsers);
+			stmt.executeBatch();
+		}
+		catch (SQLException e) {
+			System.out.println("Failed clearing user table:");
+			e.printStackTrace();
+		}		
+		finally {
+			SQLPlugin.safeClose(stmt);
+		}
 	}
 }

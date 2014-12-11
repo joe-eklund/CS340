@@ -126,7 +126,6 @@ public class SQLPlugin implements IDBFactoryPlugin{
 	@Override
 	public void clearAllTables() {
 		Statement stmt = null;
-		ResultSet rs = null;
 		try {		
 			stmt = connection.createStatement();
 			
@@ -170,11 +169,10 @@ public class SQLPlugin implements IDBFactoryPlugin{
 			
 		}
 		catch (SQLException e) {
-			System.out.println("Failed clearing tables: "+e.getMessage());
+			System.out.println("Failed clearing tables:S");
 			e.printStackTrace();
 		}		
 		finally {
-			SQLPlugin.safeClose(rs);
 			SQLPlugin.safeClose(stmt);
 		}
 	}
