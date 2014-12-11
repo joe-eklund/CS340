@@ -36,6 +36,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 			pstmt.setString(1, type);
 		    pstmt.setBinaryStream(2, bais, modelAsBytes.length);
 		    pstmt.executeUpdate();
+		    db.getConnection().commit();
 		    pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -55,6 +56,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 		try {
 			stmt = db.getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT command FROM NonMoveCommand where type = '" + type+"'");
+		    db.getConnection().commit();
 			while (rs.next()) {
 				byte[] st = (byte[]) rs.getObject(1);
 				ByteArrayInputStream baip = new ByteArrayInputStream(st);
@@ -90,6 +92,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 			stmt.addBatch(dropNonMoveCommand);
 			stmt.addBatch(makeNonMoveCommand);
 			stmt.executeBatch();
+		    db.getConnection().commit();
 		}
 		catch (SQLException e) {
 			System.out.println("Failed clearing NonMoveCommand table:");

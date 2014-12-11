@@ -34,6 +34,7 @@ public class SQLUsersDAO extends AModelDAO{
 			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
 		    pstmt.setBinaryStream(1, bais, modelAsBytes.length);
 		    pstmt.executeUpdate();
+		    db.getConnection().commit();
 		    pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -52,6 +53,7 @@ public class SQLUsersDAO extends AModelDAO{
 		try {
 			stmt = db.getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT users FROM Users");
+		    db.getConnection().commit();
 			while (rs.next()) {
 				byte[] st = (byte[]) rs.getObject(1);
 				ByteArrayInputStream baip = new ByteArrayInputStream(st);
@@ -85,6 +87,7 @@ public class SQLUsersDAO extends AModelDAO{
 			stmt.addBatch(dropUsers);
 			stmt.addBatch(makeUsers);
 			stmt.executeBatch();
+		    db.getConnection().commit();
 		}
 		catch (SQLException e) {
 			System.out.println("Failed clearing user table:");

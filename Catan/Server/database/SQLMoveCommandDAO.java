@@ -36,6 +36,7 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 			pstmt.setLong(1, gameID);
 		    pstmt.setBinaryStream(2, bais, modelAsBytes.length);
 		    pstmt.executeUpdate();
+		    db.getConnection().commit();
 		    pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -55,6 +56,7 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 		try {
 			stmt = db.getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT command FROM MoveCommand where game = " + gameID);
+		    db.getConnection().commit();
 			while (rs.next()) {
 				byte[] st = (byte[]) rs.getObject(1);
 				ByteArrayInputStream baip = new ByteArrayInputStream(st);
@@ -90,6 +92,7 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 			stmt.addBatch(dropMoveCommand);
 			stmt.addBatch(makeMoveCommand);
 			stmt.executeBatch();
+		    db.getConnection().commit();
 		}
 		catch (SQLException e) {
 			System.out.println("Failed clearing MoveCommand table:");
