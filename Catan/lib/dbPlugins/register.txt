@@ -1,2 +1,1 @@
-english englishPlugin.jar TestPluginEnglish
-spanish spanishPlugin.jar TestPluginSpanish
+nonsql nonsql.jar NonSQLPlugin

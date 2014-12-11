@@ -9,7 +9,7 @@ import shared.ServerMethodRequests.UserRequest;
  *
  */
 public class RegisterCommand extends ACommand implements IUsersCommand{
-	private IUsersFacade executor;
+	private transient IUsersFacade executor;
 	private UserRequest request;
 	
 	public RegisterCommand(IUsersFacade executor, UserRequest request) {

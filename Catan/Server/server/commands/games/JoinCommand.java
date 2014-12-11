@@ -11,7 +11,7 @@ import shared.ServerMethodRequests.JoinGameRequest;
  *
  */
 public class JoinCommand extends ACommand implements IGamesCommand{
-	private IGamesFacade executor;
+	private transient IGamesFacade executor;
 	private JoinGameRequest request;
 	private String username;
 	private int userID;

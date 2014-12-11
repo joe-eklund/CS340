@@ -29,9 +29,16 @@ public class MovesCommandLog implements IMovesCommandLog {
 	@Override
 	public void store(IMovesCommand command) {
 		_movesCommandLog.add(command);
+		
+		this.dbPlugin.start();
+		this.dbPlugin.getMoveCommandDAO().add(command, command.getGameID());;
+		this.dbPlugin.stop(true);
+		
 		if(_movesCommandLog.size() > DeltaThreshold) {
 			this.storeAllAndClear();
 		}
+		
+		
 	}
 	@Override
 	public void clear() {

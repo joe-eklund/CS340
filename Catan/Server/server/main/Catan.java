@@ -111,7 +111,7 @@ public class Catan {
 			int threshold = 20;
 			if(line.hasOption("delta")) {
 				try {
-					threshold = Integer.parseInt(line.getOptionValue("p"));
+					threshold = Integer.parseInt(line.getOptionValue("delta"));
 					if(threshold < 1) {
 						threshold = 20;
 						throw new NumberFormatException();
@@ -152,14 +152,14 @@ public class Catan {
 			MovesCommandLog movesLog = new MovesCommandLog();
 			
 			// Update Users with Deltas
-			List<Serializable> commands = dbPlugin.getNonMoveCommandDAO().getAll("user");
+			List<Serializable> commands = dbPlugin.getNonMoveCommandDAO().getAll("User");
 			List<IUsersCommand> usersCommands = (ArrayList<IUsersCommand>) ((commands == null) ? new ArrayList<IUsersCommand>() : commands);
 			usersLog.storeAll(usersCommands);
 			usersLog.setFacade(usersFacade);
 			usersLog.executeAll();
 			
 			// Update Game Descriptions with Deltas
-			commands = dbPlugin.getNonMoveCommandDAO().getAll("game");
+			commands = dbPlugin.getNonMoveCommandDAO().getAll("Game");
 			List<IGamesCommand> gamesCommands = (ArrayList<IGamesCommand>) ((commands == null) ? new ArrayList<IGamesCommand>() : commands);
 			gamesLog.storeAll(gamesCommands);
 			gamesLog.SetFacade(gamesFacade);
@@ -241,7 +241,7 @@ public class Catan {
 		try {
 			URL[] urls = new URL[] {pluginFile.toURI().toURL()};
 			ClassLoader loader = new URLClassLoader(urls);
-			String path = "server." + pluginFile.getName().replace(".jar", "") + "." + className;
+			String path = pluginFile.getName().replace(".jar", "") + "." + className;
 			Class c = loader.loadClass(path);
 			//System.out.println("server." + pluginFile.getName().replace(".jar", "") + "." + className);
 			//Class c = loader.loadClass("server.spanishPlugin.TestPluginSpanish");

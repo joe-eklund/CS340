@@ -1,4 +1,4 @@
-package database;
+package nonsql;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,6 +18,8 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.thoughtworks.xstream.XStream;
+
+import database.AMoveCommandDAO;
 
 public class NonSQLMoveCommandDAO extends AMoveCommandDAO {
 private NonSQLPlugin db;
@@ -65,7 +67,8 @@ private NonSQLPlugin db;
 			while(cursor.hasNext()) {
 				DBObject obj = cursor.next();
 				String xml = (String)obj.get(Integer.toString(gameID));
-				commands.add((Serializable) xStream.fromXML(xml));
+				if (xml != null)
+					commands.add((Serializable) xStream.fromXML(xml));
 			}
 			
 			db.stop(true);

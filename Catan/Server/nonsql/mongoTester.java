@@ -1,9 +1,13 @@
-package database;
+package nonsql;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.AModelDAO;
+import database.AMoveCommandDAO;
+import database.ANonMoveCommandDAO;
+import database.IDBFactoryPlugin;
 import server.games.GamesFacadeStub;
 import shared.definitions.ServerModel;
 

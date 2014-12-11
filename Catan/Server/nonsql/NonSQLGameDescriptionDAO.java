@@ -1,4 +1,4 @@
-package database;
+package nonsql;
 
 import java.io.Serializable;
 
@@ -6,6 +6,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.thoughtworks.xstream.XStream;
+
+import database.AModelDAO;
 
 public class NonSQLGameDescriptionDAO extends AModelDAO{
 private NonSQLPlugin db;

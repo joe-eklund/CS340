@@ -1,8 +1,13 @@
-package database;
+package nonsql;
 
 import java.net.UnknownHostException;
 
 import com.mongodb.*;
+
+import database.AModelDAO;
+import database.AMoveCommandDAO;
+import database.ANonMoveCommandDAO;
+import database.IDBFactoryPlugin;
 
 public class NonSQLPlugin implements IDBFactoryPlugin {
 	

@@ -24,6 +24,9 @@ public class UsersCommandLog implements IUsersCommandLog {
 	@Override
 	public void store(IUsersCommand command) {
 		_usersCommandLog.add(command);
+		this.dbPlugin.start();
+		this.dbPlugin.getNonMoveCommandDAO().add(command, "User");
+		this.dbPlugin.stop(true);
 	}
 
 	@Override

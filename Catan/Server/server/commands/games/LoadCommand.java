@@ -12,7 +12,7 @@ import server.games.IGamesFacade;
  */
 public class LoadCommand extends ACommand implements IGamesCommand{
 
-	private IGamesFacade games;
+	private transient IGamesFacade games;
 	private String gameName;
 
 	public LoadCommand(IGamesFacade games, String gameName) {

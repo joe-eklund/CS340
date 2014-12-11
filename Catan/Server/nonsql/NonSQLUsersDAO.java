@@ -1,27 +1,28 @@
-package database;
+package nonsql;
 
 import java.io.Serializable;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.thoughtworks.xstream.XStream;
 
+import database.AModelDAO;
 
-public class NonSQLGameModelDAO extends AModelDAO{
-	private NonSQLPlugin db;
+public class NonSQLUsersDAO extends AModelDAO{
+private NonSQLPlugin db;
 	
-	public NonSQLGameModelDAO(NonSQLPlugin nonSqlPlugin) {
+	public NonSQLUsersDAO(NonSQLPlugin nonSqlPlugin) {
 		db = nonSqlPlugin;
 	}
-	
 	/**
-	 * Saves the list of game models(serialize it first) into the db-only one blob/row
+	 * Saves the list of users(serialize it first) into the db-only one blob/row
 	 */
 	@Override
 	public void save(Serializable model){
 		db.start();
-		DBCollection collection = db.getDB().getCollection("games");
+		DBCollection collection = db.getDB().getCollection("users");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(model);
 		
@@ -31,16 +32,17 @@ public class NonSQLGameModelDAO extends AModelDAO{
 		
 		collection.insert(dbObject);
 		db.stop(true);
+		
 	}
 	
 	/**
-	 * Loads the blob representing the list of game models
+	 * Loads the blob representing the list of users
 	 */
 	@Override
 	public Serializable load(){
 		try {
 			db.start();
-			DBCollection collection = db.getDB().getCollection("games");
+			DBCollection collection = db.getDB().getCollection("users");
 			
 			XStream xStream = new XStream();
 			
@@ -59,6 +61,7 @@ public class NonSQLGameModelDAO extends AModelDAO{
 			e.printStackTrace();
 			return null;
 		}
+		
 	}
 	/**
 	 * Drop table, create empty table
@@ -66,7 +69,7 @@ public class NonSQLGameModelDAO extends AModelDAO{
 	@Override
 	public void clear(){
 		db.start();
-		db.getDB().getCollection("games").drop();
+		db.getDB().getCollection("users").drop();
 		db.stop(true);
 	}
 }

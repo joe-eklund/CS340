@@ -11,7 +11,7 @@ import shared.ServerMethodRequests.CreateGameRequest;
  *
  */
 public class CreateCommand extends ACommand implements IGamesCommand {
-	private IGamesFacade games;
+	private transient IGamesFacade games;
 	private CreateGameRequest request;
 
 	public CreateCommand(IGamesFacade games, CreateGameRequest request) {

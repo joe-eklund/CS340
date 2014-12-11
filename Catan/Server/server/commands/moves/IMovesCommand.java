@@ -7,4 +7,5 @@ import server.moves.IMovesFacade;
 
 public interface IMovesCommand extends ICommand, Serializable {
 	public void setExecutor(IMovesFacade executor);
+	public int getGameID();
 }

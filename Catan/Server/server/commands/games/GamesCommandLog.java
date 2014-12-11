@@ -24,6 +24,9 @@ public class GamesCommandLog implements IGamesCommandLog {
 	@Override
 	public void Store(IGamesCommand command) {
 		_gamesCommandLog.add(command);
+		this.dbPlugin.start();
+		this.dbPlugin.getNonMoveCommandDAO().add(command, "Game");;
+		this.dbPlugin.stop(true);
 	}
 	
 	@Override
