@@ -24,7 +24,7 @@ public class SQLGameModelDAO extends AModelDAO {
 	@Override
 	public void save(Serializable model){
 		try {
-			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into GameModel (model) values (?)");
+			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into GameModel (games) values (?)");
 		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		    ObjectOutputStream oos = new ObjectOutputStream(baos);
 		    oos.writeObject(model);
@@ -51,7 +51,7 @@ public class SQLGameModelDAO extends AModelDAO {
 		ResultSet rs = null;
 		try {
 			//TODO change query
-			String query = "select * from GameModel";
+			String query = "select games from GameModel";
 			stmt = db.getConnection().prepareStatement(query);
 			rs = stmt.executeQuery();
 			db.getConnection().commit();

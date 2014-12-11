@@ -69,7 +69,7 @@ public class sqlTester {
 	private static boolean testGameModel(){
 		System.out.println("***testing Game Model***");
 		String description = "Model model model model!!";
-		SQLGameDescriptionDAO dao = (SQLGameDescriptionDAO) plugin.getModelDAO("Game Description");
+		SQLGameModelDAO dao = (SQLGameModelDAO) plugin.getModelDAO("Game Model");
 		dao.save((Serializable) description);
 		System.out.println("added!");
 		String result = (String) dao.load();
