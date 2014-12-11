@@ -44,6 +44,27 @@ public class mongoTester {
 		
 		System.out.println(loadedModels.size());
 		
+		//Non moves
+		
+		System.out.println("***testing nonMoveCommand***");
+		String type="User";
+		String command="Test whatever";
+		ANonMoveCommandDAO dao2=plugin.getNonMoveCommandDAO();
+		dao2.add(command, type);
+		System.out.println("added!");
+		List<Serializable> temp2=dao2.getAll(type);
+		if(temp2.size()!=0)
+			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));
+		
+		command = "2nd Command";
+		dao2.add(command, type);
+		System.out.println("added!");
+		temp2=dao2.getAll(type);
+		if(temp2.size()!=0)
+			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(1));
+		
+		
+		
 	}
 
 }

@@ -38,7 +38,7 @@ public class NonSQLPlugin implements IDBFactoryPlugin {
 	@Override
 	public ANonMoveCommandDAO getNonMoveCommandDAO() {
 		// TODO Auto-generated method stub
-		return null;
+		return new NonSQLNonMoveCommandDAO(this);
 	}
 
 	@Override
