@@ -8,9 +8,8 @@ import org.sqlite.SQLiteConfig;
 
 public class SQLPlugin implements IDBFactoryPlugin{
 
-	private static final String DATABASE_DIRECTORY = "SQLDatabase";
 	private static final String DATABASE_FILE = "database.db";
-	private static final String DATABASE_URL = "jdbc:sqlite:" + DATABASE_DIRECTORY + File.separator + DATABASE_FILE;
+	private static final String DATABASE_URL = "jdbc:sqlite:" + DATABASE_FILE;
 	
 	private Connection connection;
 	
@@ -49,7 +48,8 @@ public class SQLPlugin implements IDBFactoryPlugin{
 	    try {
 			assert (connection == null);
 			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_FILE);
+			connection = DriverManager.getConnection(DATABASE_URL);
+			connection.setAutoCommit(false);
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);

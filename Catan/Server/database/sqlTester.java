@@ -33,6 +33,7 @@ public class sqlTester {
 		List<Serializable> temp2=dao2.getAll(type);
 		if(temp2.size()!=0)
 			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));
+		plugin.stop(false);
 	}
 
 }
