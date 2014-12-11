@@ -15,7 +15,7 @@ public interface IModelDAO {
 	 * @pre none
 	 * @post model is saved to appropriate database table 
 	 */
-	public void save(Serializable model);
+	public void save(Object model);
 	
 	/**
 	 * @pre none

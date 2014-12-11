@@ -13,14 +13,14 @@ public interface IMoveCommandDAO {
 	 * @param command
 	 * @param gameID
 	 */
-	public void add(Serializable command, int gameID);
+	public void add(Object command, int gameID);
 	
 	/**
 	 * Returns a list of all the move commands currently in the database associated with gameID
 	 * @param gameID
 	 * @return List of move commands
 	 */
-	public List<Serializable> getAll(int gameID);
+	public List<Object> getAll(int gameID);
 	
 	/**
 	 * This clears all move commands(drop-recreate) from the database.  After this method is called there will be no move commands in the database.

@@ -24,7 +24,7 @@ public class SQLGameDescriptionDAO extends AModelDAO {
 	 * Saves the list of game descriptions(serialize it first) into the db-only one blob/row
 	 */
 	@Override
-	public void save(Serializable model){
+	public void save(Object model){
 		try {
 			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into GameDescriptions (descriptions) values (?)");
 		    ByteArrayOutputStream baos = new ByteArrayOutputStream();

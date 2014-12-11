@@ -1,6 +1,5 @@
 package sql;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +33,9 @@ public class sqlTester {
 		names.add("Bob");
 		names.add("Fred");
 		AModelDAO dao = plugin.getModelDAO("Users");
-		dao.save((Serializable) names);
+		dao.save(names);
 		System.out.println("saved-pre load");
-		Serializable temp=dao.load();
+		Object temp=dao.load();
 		List<String> newList=(List<String>) temp;
 		System.out.println("post load, list-"+newList.size()+" "+newList.get(0));
 		return true;
@@ -50,7 +49,7 @@ public class sqlTester {
 		ANonMoveCommandDAO dao2=plugin.getNonMoveCommandDAO();
 		dao2.add(command, type);
 		System.out.println("added!");
-		List<Serializable> temp2=dao2.getAll(type);
+		List<Object> temp2=dao2.getAll(type);
 		if(temp2.size()!=0)
 			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));
 		return true;
@@ -61,7 +60,7 @@ public class sqlTester {
 		System.out.println("***testing Game Description***");
 		String description = "This game is cool!";
 		SQLGameDescriptionDAO dao = (SQLGameDescriptionDAO) plugin.getModelDAO("Game Description");
-		dao.save((Serializable) description);
+		dao.save((Object) description);
 		System.out.println("added!");
 		String result = (String) dao.load();
 		if(result!=null)
@@ -74,7 +73,7 @@ public class sqlTester {
 		System.out.println("***testing Game Model***");
 		String description = "Model model model model!!";
 		SQLGameModelDAO dao = (SQLGameModelDAO) plugin.getModelDAO("Game Model");
-		dao.save((Serializable) description);
+		dao.save((Object) description);
 		System.out.println("added!");
 		String result = (String) dao.load();
 		if(result!=null)

@@ -15,7 +15,7 @@ public abstract class AModelDAO implements IModelDAO {
 	 * @pre none
 	 * @post model is saved to appropriate database table 
 	 */
-	public void save(Serializable model){
+	public void save(Object model){
 		//TODO save the model to database
 	}
 	
@@ -24,7 +24,7 @@ public abstract class AModelDAO implements IModelDAO {
 	 * @pre none
 	 * @post returns object representing blob of associated data model to be cast to appropriate model
 	 */
-	public Serializable load(){
+	public Object load(){
 		//TODO load object
 		return null;
 	}

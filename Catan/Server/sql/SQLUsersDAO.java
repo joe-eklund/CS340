@@ -25,7 +25,7 @@ public class SQLUsersDAO extends AModelDAO{
 	 * Saves the list of users(serialize it first) into the db-only one blob/row
 	 */
 	@Override
-	public void save(Serializable model){
+	public void save(Object model){
 
 	    try {
 			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into Users (users) values (?)");
@@ -49,8 +49,8 @@ public class SQLUsersDAO extends AModelDAO{
 	 * Loads the blob representing the list of users
 	 */
 	@Override
-	public Serializable load(){
-		Serializable model=null;
+	public Object load(){
+		Object model=null;
 		Statement stmt=null;
 		try {
 			stmt = db.getConnection().createStatement();
@@ -60,7 +60,7 @@ public class SQLUsersDAO extends AModelDAO{
 				byte[] st = (byte[]) rs.getObject(1);
 				ByteArrayInputStream baip = new ByteArrayInputStream(st);
 				ObjectInputStream ois = new ObjectInputStream(baip);
-				model = (Serializable) ois.readObject();
+				model = ois.readObject();
 			}
 			rs.close();
 			stmt.close();

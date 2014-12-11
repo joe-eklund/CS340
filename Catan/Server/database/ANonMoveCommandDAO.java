@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class ANonMoveCommandDAO implements INonMoveCommandDAO {
 
 	@Override
-	public void add(Serializable command, String type) {
+	public void add(Object command, String type) {
 		// TODO Auto-generated method stub
 			// insert into ...
 	}
@@ -24,7 +24,7 @@ public abstract class ANonMoveCommandDAO implements INonMoveCommandDAO {
 	}
 
 	@Override
-	public List<Serializable> getAll(String type) {
+	public List<Object> getAll(String type) {
 		// TODO Auto-generated method stub
 			// SELECT * FROM [non move command table] WHERE type = '[type]'
 		return null;

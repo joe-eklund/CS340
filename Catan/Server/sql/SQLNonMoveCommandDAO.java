@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 	 * Adds a row with the type and command which was processed
 	 */
 	@Override
-	public void add(Serializable command, String type){
+	public void add(Object command, String type){
 
 	    try {
 			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into NonMoveCommand (type,command) values (?,?)");
@@ -52,9 +51,9 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 	 * Loads the list of commands of type
 	 */
 	@Override
-	public List<Serializable> getAll(String type){
-		List<Serializable> model=new ArrayList<Serializable>();
-		Serializable temp=null;
+	public List<Object> getAll(String type){
+		List<Object> model=new ArrayList<Object>();
+		Object temp=null;
 		Statement stmt=null;
 		try {
 			stmt = db.getConnection().createStatement();
@@ -64,7 +63,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 				byte[] st = (byte[]) rs.getObject(1);
 				ByteArrayInputStream baip = new ByteArrayInputStream(st);
 				ObjectInputStream ois = new ObjectInputStream(baip);
-				temp = (Serializable) ois.readObject();
+				temp = (Object) ois.readObject();
 				model.add(temp);
 			}
 			rs.close();

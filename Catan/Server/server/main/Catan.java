@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -129,15 +128,15 @@ public class Catan {
 			
 			// Load GameModels from DB
 			dbPlugin.start();
-			Serializable s = dbPlugin.getModelDAO("Game Model").load();
+			Object s = dbPlugin.getModelDAO("Game Model").load();
 			serverModels = (s == null) ? new ArrayList<ServerModel>() : (ArrayList<ServerModel>) s;
 			
 			// Load User from DB
-			Serializable u = dbPlugin.getModelDAO("Users").load();
+			Object u = dbPlugin.getModelDAO("Users").load();
 			users = (u == null) ? new ArrayList<IUser>() : (ArrayList<IUser>) u;
 			
 			// Load Game Descriptions from DB
-			Serializable d = dbPlugin.getModelDAO("Game Description").load();
+			Object d = dbPlugin.getModelDAO("Game Description").load();
 			gameDescriptions = (d == null) ? new ArrayList<GameDescription>() : (ArrayList<GameDescription>) d;
 			
 			dbPlugin.stop(true);
@@ -156,7 +155,7 @@ public class Catan {
 			
 			// Update Users with Deltas
 			dbPlugin.start();
-			List<Serializable> commands = dbPlugin.getNonMoveCommandDAO().getAll("User");
+			List<Object> commands = dbPlugin.getNonMoveCommandDAO().getAll("User");
 			dbPlugin.stop(true);
 			List<IUsersCommand> usersCommands = (ArrayList<IUsersCommand>) ((commands == null) ? new ArrayList<IUsersCommand>() : commands);
 			usersLog.storeAll(usersCommands);
