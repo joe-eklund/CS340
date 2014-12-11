@@ -17,9 +17,10 @@ public class sqlTester {
 		System.out.println("connection made-pre clear");
 		plugin.clearAllTables();
 		System.out.println("made db-pre save");
-		//Test GameDescription
 		testUsers();
 		testNonMoveCommand();
+//		testGameDescription();
+//		testGameModel();
 	}
 
 	//Test Users
@@ -53,8 +54,29 @@ public class sqlTester {
 	
 	//Test GameDescription
 	private static boolean testGameDescription(){
-		
+		System.out.println("***testing Game Description***");
+		String description = "This game is cool!";
+		SQLGameDescriptionDAO dao = (SQLGameDescriptionDAO) plugin.getModelDAO("Game Description");
+		dao.save((Serializable) description);
+		System.out.println("added!");
+		String result = (String) dao.load();
+		if(result!=null)
+			System.out.println("got:"+result);
+		plugin.stop(false);
 		return true;
 	}
 	
+	//Test GameModel
+	private static boolean testGameModel(){
+		System.out.println("***testing Game Model***");
+		String description = "Model model model model!!";
+		SQLGameDescriptionDAO dao = (SQLGameDescriptionDAO) plugin.getModelDAO("Game Description");
+		dao.save((Serializable) description);
+		System.out.println("added!");
+		String result = (String) dao.load();
+		if(result!=null)
+			System.out.println("got:"+result);
+		plugin.stop(false);
+		return true;
+	}
 }

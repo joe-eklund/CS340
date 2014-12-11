@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.sql.*;
 
-import org.sqlite.SQLiteConfig;
+//import org.sqlite.SQLiteConfig;
 
 public class SQLPlugin implements IDBFactoryPlugin{
 

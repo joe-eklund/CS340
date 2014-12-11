@@ -19,6 +19,7 @@ public class SQLUsersDAO extends AModelDAO{
 	public SQLUsersDAO(SQLPlugin sqlPlugin) {
 		db = sqlPlugin;
 	}
+	
 	/**
 	 * Saves the list of users(serialize it first) into the db-only one blob/row
 	 */
@@ -71,6 +72,7 @@ public class SQLUsersDAO extends AModelDAO{
 		}
 	    return model;
 	}
+	
 	/**
 	 * Drop table, create empty table
 	 */
