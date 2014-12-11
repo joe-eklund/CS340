@@ -47,28 +47,34 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public List<Serializable> getAll(String type){
-		db.start();
-		DBCollection collection = db.getDB().getCollection("nonmoves");
-		
-		XStream xStream = new XStream();
-		
-		DBCursor cursor = collection.find();
-
-		if (cursor == null)
-			return null;
-		
-		List<Serializable> commands = new ArrayList<Serializable>();
-		
-		while(cursor.hasNext()) {
-			DBObject obj = cursor.next();
-			String xml = (String)obj.get(type);
-			commands.add((Serializable) xStream.fromXML(xml));
+		try {
+			db.start();
+			DBCollection collection = db.getDB().getCollection("nonmoves");
+			
+			XStream xStream = new XStream();
+			
+			DBCursor cursor = collection.find();
+	
+			if (cursor == null)
+				return null;
+			
+			List<Serializable> commands = new ArrayList<Serializable>();
+			
+			while(cursor.hasNext()) {
+				DBObject obj = cursor.next();
+				String xml = (String)obj.get(type);
+				commands.add((Serializable) xStream.fromXML(xml));
+			}
+			
+			
+			db.stop(true);
+			
+			return commands;
 		}
-		
-		
-		db.stop(true);
-		
-		return commands;
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**

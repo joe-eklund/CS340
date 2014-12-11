@@ -33,7 +33,7 @@ private NonSQLPlugin db;
 	public void add(Serializable command, int gameID){
 
 		db.start();
-		DBCollection collection = db.getDB().getCollection("nonmoves");
+		DBCollection collection = db.getDB().getCollection("moves");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(command);
 		
@@ -48,27 +48,34 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public List<Serializable> getAll(int gameID){
-		db.start();
-		DBCollection collection = db.getDB().getCollection("nonmoves");
-		
-		XStream xStream = new XStream();
-		
-		DBCursor cursor = collection.find();
+		try {
+			db.start();
+			DBCollection collection = db.getDB().getCollection("moves");
+			
+			XStream xStream = new XStream();
+			
+			DBCursor cursor = collection.find();
+			
 
-		if (cursor == null)
-			return null;
-		
-		List<Serializable> commands = new ArrayList<Serializable>();
-		
-		while(cursor.hasNext()) {
-			DBObject obj = cursor.next();
-			String xml = (String)obj.get(Integer.toString(gameID));
-			commands.add((Serializable) xStream.fromXML(xml));
+			if (cursor == null)
+				return null;
+			
+			List<Serializable> commands = new ArrayList<Serializable>();
+			
+			while(cursor.hasNext()) {
+				DBObject obj = cursor.next();
+				String xml = (String)obj.get(Integer.toString(gameID));
+				commands.add((Serializable) xStream.fromXML(xml));
+			}
+			
+			db.stop(true);
+			
+			return commands;
 		}
-		
-		db.stop(true);
-		
-		return commands;
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -78,7 +85,7 @@ private NonSQLPlugin db;
 	public void clear(){
 
 		db.start();
-		db.getDB().getCollection("nonmoves").drop();
+		db.getDB().getCollection("moves").drop();
 		db.stop(true);
 	}
 }

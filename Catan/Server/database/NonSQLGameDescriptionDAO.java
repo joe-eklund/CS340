@@ -36,21 +36,27 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public Serializable load(){
-		db.start();
-		DBCollection collection = db.getDB().getCollection("gamedescriptions");
-		
-		XStream xStream = new XStream();
-		
-		DBObject obj = collection.findOne();
-
-		if (obj == null)
+		try {
+			db.start();
+			DBCollection collection = db.getDB().getCollection("gamedescriptions");
+			
+			XStream xStream = new XStream();
+			
+			DBObject obj = collection.findOne();
+	
+			if (obj == null)
+				return null;
+			
+			String xml = (String)obj.get("blob");
+			Serializable xmlObj = (Serializable) xStream.fromXML(xml);
+			db.stop(true);
+			
+			return xmlObj;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
 			return null;
-		
-		String xml = (String)obj.get("blob");
-		Serializable xmlObj = (Serializable) xStream.fromXML(xml);
-		db.stop(true);
-		
-		return xmlObj;
+		}
 	}
 	/**
 	 * Drop table, create empty table

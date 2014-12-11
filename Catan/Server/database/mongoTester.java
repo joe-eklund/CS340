@@ -63,8 +63,16 @@ public class mongoTester {
 		if(temp2.size()!=0)
 			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(1));
 		
+		AMoveCommandDAO dao3=plugin.getMoveCommandDAO();
 		
+//		temp2=dao3.getAll(0);
 		
+		command = "Move command";
+		dao3.add(command, 0);
+		System.out.println("added!");
+		temp2=dao3.getAll(0);
+		if(temp2.size()!=0)
+			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));
 	}
 
 }
