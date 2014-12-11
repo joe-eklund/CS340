@@ -58,7 +58,8 @@ public class NonSQLPlugin implements IDBFactoryPlugin {
 
 	@Override
 	public void clearAllTables() {
-		// TODO Auto-generated method stub
+		mongo.dropDatabase("phase4");
+		
 		
 	}
 	

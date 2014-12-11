@@ -2,6 +2,10 @@ package database;
 
 import java.io.Serializable;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.thoughtworks.xstream.XStream;
+
 public class NonSQLUsersDAO extends AModelDAO{
 private NonSQLPlugin db;
 	
@@ -13,7 +17,15 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public void save(Serializable model){
-		//TODO save the model to database
+		DBCollection collection = db.getDB().getCollection("users");
+		XStream xStream = new XStream();
+		String xml = xStream.toXML(model);
+		
+		BasicDBObject dbObject = new BasicDBObject("users", xml);
+		
+		collection.insert(dbObject);
+		
+		db.closeDB();
 	}
 	
 	/**
