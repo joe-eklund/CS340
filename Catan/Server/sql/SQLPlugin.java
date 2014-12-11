@@ -144,21 +144,21 @@ public class SQLPlugin implements IDBFactoryPlugin{
 			String dropUsers="DROP TABLE Users";
 			String makeGameDescriptions="CREATE TABLE GameDescriptions " +
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
-					"descriptions BLOB NOT NULL)";
+					"descriptions TEXT NOT NULL)";
 			String makeGameModel="CREATE TABLE GameModel " +
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
-					"games BLOB NOT NULL)";
+					"games TEXT NOT NULL)";
 			String makeMoveCommand="CREATE TABLE MoveCommand " +
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
 					"game INTEGER NOT NULL," + 
-					"command BLOB NOT NULL)";
+					"command TEXT NOT NULL)";
 			String makeNonMoveCommand="CREATE TABLE NonMoveCommand " +
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
 					"type CHAR(4) NOT NULL," +// -- either 'game' for game descriptions command or 'user' user command\r\n 
-					"command BLOB NOT NULL)";
+					"command TEXT NOT NULL)";
 			String makeUsers="CREATE TABLE Users " +
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
-					"users BLOB NOT NULL)";
+					"users TEXT NOT NULL)";
 
 			stmt.addBatch(dropUsers);
 			stmt.addBatch(dropNonMoveCommand);

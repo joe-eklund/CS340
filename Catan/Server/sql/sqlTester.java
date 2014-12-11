@@ -20,10 +20,10 @@ public class sqlTester {
 		System.out.println("connection made-pre clear");
 		plugin.clearAllTables();
 		System.out.println("made db-pre save");
-		testUsers();
-		testNonMoveCommand();
+		//testUsers();
+		//testNonMoveCommand();
 		testGameDescription();
-		testGameModel();
+		//testGameModel();
 		plugin.stop(false);
 	}
 
