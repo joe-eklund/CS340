@@ -1,5 +1,6 @@
 package server.games;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,14 @@ public class GamesFacade extends AGamesFacade {
 	/**
 	 * 
 	 */
-	public GamesFacade(List<ServerModel> serverModels) {
+	public GamesFacade(List<ServerModel> serverModels, ArrayList<GameDescription> gameDescriptions) {
 		super(serverModels);
-		this.gameDescriptionsList = new ArrayList<GameDescription>();
+		this.gameDescriptionsList = gameDescriptions;
+	}
+
+	@Override
+	public Serializable getModel() {
+		return this.gameDescriptionsList;
 	}
 
 }

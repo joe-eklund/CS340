@@ -1,5 +1,7 @@
 package server.users;
 
+import java.io.Serializable;
+
 import shared.ServerMethodRequests.UserRequest;
 
 /**
@@ -21,4 +23,6 @@ public interface IUsersFacade {
 	 * @post 	int			-1 if invalid credentials; otherwise userID for validated user (userID >= 0)
 	 */
 	public int registerUser(UserRequest request);
+
+	public Serializable getModel();
 }

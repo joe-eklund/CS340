@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
@@ -19,7 +21,10 @@ import org.apache.commons.cli.ParseException;
 
 import proxy.TranslatorJSON;
 import server.commands.games.GamesCommandLog;
+import server.commands.games.IGamesCommand;
+import server.commands.moves.IMovesCommand;
 import server.commands.moves.MovesCommandLog;
+import server.commands.users.IUsersCommand;
 import server.commands.users.UsersCommandLog;
 import server.game.GameFacade;
 import server.game.IGameFacade;
@@ -29,13 +34,15 @@ import server.games.IGamesFacade;
 import server.moves.IMovesFacade;
 import server.moves.MovesFacade;
 import server.serverCommunicator.ServerCommunicator;
-import server.testPluginInterface.ITestPlugin;
+import server.users.IUser;
 import server.users.IUsersFacade;
 import server.users.UsersFacade;
 import server.users.UsersFacadeStub;
 import server.util.IUtilFacade;
 import server.util.UtilFacade;
+import shared.definitions.GameDescription;
 import shared.definitions.ServerModel;
+import database.IDBFactoryPlugin;
 
 
 public class Catan {
@@ -68,18 +75,73 @@ public class Catan {
 		Options options = new Options();
 		options.addOption("t", "test-data", false, "start server using testing stubs");
 		options.addOption("p", "port", true, "port on which server will listen");
+		options.addOption("delta", "delta db threshold", true, "the number of move commands (cumulative for all games) after which models are stored to specified db");
+		options.addOption("clear", "clear all db", false, "clears all persistence data in the databases");
 		for(String pluginFlag : plugins.keySet()) {
 			options.addOption("db", "database", true, "database plugin for " + pluginFlag);
 		}
 		
 		try {
+			CommandLine line = parser.parse(options, args);
 			
 			// serverModels will be shared by GamesFacade, GameFacade, and MovesFacade
-			ArrayList<ServerModel> serverModels = new ArrayList<ServerModel>();
+			ArrayList<ServerModel> serverModels = null;// new ArrayList<ServerModel>();
+			ArrayList<IUser> users = null;
+			ArrayList<GameDescription> gameDescriptions = null;
+			
+			// Load Plugin
+			IDBFactoryPlugin dbPlugin = null;
+			
+			if(line.hasOption("db")) {
+				String plugin = line.getOptionValue("db");
+				if(plugins.containsKey(plugin)) {
+					String[] pluginInfo = plugins.get(plugin);
+					File pluginFile = new File(pluginInfo[1]);
+					dbPlugin = loadPlugin(pluginFile, pluginInfo[2]);
+				}
+				else {
+					String defaultPlugin = (String) plugins.keySet().toArray()[0];
+					System.err.println("Error: invalid db option. Defaulting to " + defaultPlugin);
+					String[] pluginInfo = plugins.get(defaultPlugin);
+					File pluginFile = new File(pluginInfo[1]);
+					dbPlugin = loadPlugin(pluginFile, pluginInfo[2]);
+				}
+			}
+			
+			int threshold = 20;
+			if(line.hasOption("delta")) {
+				try {
+					threshold = Integer.parseInt(line.getOptionValue("p"));
+					if(threshold < 1) {
+						threshold = 20;
+						throw new NumberFormatException();
+					}
+				} catch (NumberFormatException e) {
+					System.err.println("Invalid input; delta must be a positive integer. Defaulting to 20.");
+				}
+			};
+			
+			if(line.hasOption("clear")) {
+				dbPlugin.start();
+				dbPlugin.clearAllTables();
+				dbPlugin.stop(true);
+			}
+			
+			// Load GameModels from DB
+			Serializable s = dbPlugin.getModelDAO("Game Model").load();
+			serverModels = (s == null) ? new ArrayList<ServerModel>() : (ArrayList<ServerModel>) s;
+			
+			// Load User from DB
+			Serializable u = dbPlugin.getModelDAO("Users").load();
+			users = (u == null) ? new ArrayList<IUser>() : (ArrayList<IUser>) u;
+			
+			// Load Game Descriptions from DB
+			Serializable d = dbPlugin.getModelDAO("Game Description").load();
+			gameDescriptions = (d == null) ? new ArrayList<GameDescription>() : (ArrayList<GameDescription>) d;
 			
 			TranslatorJSON translator = new TranslatorJSON();
-			IUsersFacade usersFacade = new UsersFacade();
-			IGamesFacade gamesFacade = new GamesFacade(serverModels);
+			IUsersFacade usersFacade = new UsersFacade(users);
+			IGamesFacade gamesFacade = new GamesFacade(serverModels, gameDescriptions);
 			IGameFacade gameFacade = new GameFacade(serverModels);
 			IMovesFacade movesFacade = new MovesFacade(serverModels);
 			IUtilFacade utilFacade = new UtilFacade();
@@ -89,35 +151,35 @@ public class Catan {
 			GamesCommandLog gamesLog = new GamesCommandLog();
 			MovesCommandLog movesLog = new MovesCommandLog();
 			
-			CommandLine line = parser.parse(options, args);
+			// Update Users with Deltas
+			List<Serializable> commands = dbPlugin.getNonMoveCommandDAO().getAll("user");
+			List<IUsersCommand> usersCommands = (ArrayList<IUsersCommand>) ((commands == null) ? new ArrayList<IUsersCommand>() : commands);
+			usersLog.storeAll(usersCommands);
+			usersLog.setFacade(usersFacade);
+			usersLog.executeAll();
 			
-			// Load Plugin
-			ITestPlugin p = null;
-			for(String pluginFlag : plugins.keySet()) {
-				if(line.hasOption(pluginFlag)) {
-					String[] pluginInfo = plugins.get(pluginFlag);
-					File pluginFile = new File(pluginInfo[1]);
-					p = loadPlugin(pluginFile, pluginInfo[2]);
-				}
-			}
+			// Update Game Descriptions with Deltas
+			commands = dbPlugin.getNonMoveCommandDAO().getAll("game");
+			List<IGamesCommand> gamesCommands = (ArrayList<IGamesCommand>) ((commands == null) ? new ArrayList<IGamesCommand>() : commands);
+			gamesLog.storeAll(gamesCommands);
+			gamesLog.SetFacade(gamesFacade);
+			gamesLog.executeAll();
 			
-			if(line.hasOption("db")) {
-				String plugin = line.getOptionValue("db");
-				if(plugins.containsKey(plugin)) {
-					String[] pluginInfo = plugins.get(plugin);
-					File pluginFile = new File(pluginInfo[1]);
-					p = loadPlugin(pluginFile, pluginInfo[2]);
-				}
-				else {
-					String defaultPlugin = (String) plugins.keySet().toArray()[0];
-					System.err.println("Error: invalid db option. Defaulting to " + defaultPlugin);
-					String[] pluginInfo = plugins.get(defaultPlugin);
-					File pluginFile = new File(pluginInfo[1]);
-					p = loadPlugin(pluginFile, pluginInfo[2]);
-				}
-				
-				p.sayHello();
+			// Update Game Models with Deltas
+			for(int i = 0; i < serverModels.size(); i++) {
+				commands = dbPlugin.getMoveCommandDAO().getAll(i);
+				List<IMovesCommand> moves = (ArrayList<IMovesCommand>) ((commands == null) ? new ArrayList<IMovesCommand>() : commands);
+				movesLog.storeAll(moves);
 			}
+			movesLog.setFacade(movesFacade);
+			movesLog.executeAll();
+			
+			gamesLog.setDBPlugin(dbPlugin);
+			usersLog.setDBPlugin(dbPlugin);
+			movesLog.setDBPlugin(dbPlugin);
+			movesLog.setGamesLog(gamesLog);
+			movesLog.setUsersLog(usersLog);
+			
 			
 			if(line.hasOption("t")) { // testing option ==> load server stubs
 				System.out.println("loading testing stubs");
@@ -173,9 +235,9 @@ public class Catan {
 		return registeredPlugins;
 	}
 	
-	private static ITestPlugin loadPlugin(File pluginFile, String className) {
+	private static IDBFactoryPlugin loadPlugin(File pluginFile, String className) {
 		System.out.println(pluginFile.getName());
-		ITestPlugin plugin = null;
+		IDBFactoryPlugin plugin = null;
 		try {
 			URL[] urls = new URL[] {pluginFile.toURI().toURL()};
 			ClassLoader loader = new URLClassLoader(urls);
@@ -184,7 +246,7 @@ public class Catan {
 			//System.out.println("server." + pluginFile.getName().replace(".jar", "") + "." + className);
 			//Class c = loader.loadClass("server.spanishPlugin.TestPluginSpanish");
 			Object pluginObject = c.newInstance();
-			plugin = (ITestPlugin) pluginObject;
+			plugin = (IDBFactoryPlugin) pluginObject;
 		} catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}

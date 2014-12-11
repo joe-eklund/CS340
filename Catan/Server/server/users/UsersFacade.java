@@ -1,5 +1,6 @@
 package server.users;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,12 @@ import java.util.ArrayList;
  */
 public class UsersFacade extends AUsersFacade {
 	
-	public UsersFacade() {
-		users = new ArrayList<IUser>();
+	public UsersFacade(ArrayList<IUser> users) {
+		this.users = users;
+	}
+
+	@Override
+	public Serializable getModel() {
+		return this.users;
 	}	
 }

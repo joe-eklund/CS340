@@ -1,5 +1,7 @@
 package server.moves;
 
+import java.io.Serializable;
+
 import client.exceptions.ClientModelException;
 import server.cookie.CookieParams;
 import shared.ServerMethodRequests.AcceptTradeRequest;
@@ -48,4 +50,5 @@ public interface IMovesFacade {
 	public ServerModel acceptTrade(AcceptTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel maritimeTrade(MaritimeTradeRequest request, CookieParams cookie) throws InvalidMovesRequest;
 	public ServerModel discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest;
+	public Serializable getModelsList();
 }

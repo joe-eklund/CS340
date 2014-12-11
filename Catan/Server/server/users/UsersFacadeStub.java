@@ -1,5 +1,6 @@
 package server.users;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UsersFacadeStub extends AUsersFacade{
@@ -12,5 +13,11 @@ public class UsersFacadeStub extends AUsersFacade{
 			add(new User("Sandy", "sandy"));
 			add(new User("Cathy", "cathy"));
 		}};
+	}
+
+	@Override
+	public Serializable getModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,5 +1,6 @@
 package server.moves;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -1045,5 +1046,10 @@ public class MovesFacade implements IMovesFacade {
 			game.getPlayers().get(owner).setBrick(game.getPlayers().get(owner).getBrick()+amount);
 			game.getBank().brick -= amount;
 		}
+	}
+
+	@Override
+	public Serializable getModelsList() {
+		return this.serverModels;
 	}
 }

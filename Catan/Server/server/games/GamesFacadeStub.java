@@ -1,5 +1,6 @@
 package server.games;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,5 +192,11 @@ public class GamesFacadeStub extends AGamesFacade {
 		} catch (InvalidGamesRequest e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Serializable getModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

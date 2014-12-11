@@ -1,5 +1,7 @@
 package server.moves;
 
+import java.io.Serializable;
+
 import server.cookie.CookieParams;
 import shared.ServerMethodRequests.AcceptTradeRequest;
 import shared.ServerMethodRequests.BuildCityRequest;
@@ -121,6 +123,12 @@ public class MovesFacadeStub implements IMovesFacade {
 
 	@Override
 	public ServerModel discardCards(DiscardCardsRequest request, CookieParams cookie) throws InvalidMovesRequest{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Serializable getModelsList() {
 		// TODO Auto-generated method stub
 		return null;
 	}

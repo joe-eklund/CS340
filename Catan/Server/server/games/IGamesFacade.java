@@ -1,6 +1,7 @@
 package server.games;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import shared.ServerMethodRequests.CreateGameRequest;
@@ -82,4 +83,6 @@ public interface IGamesFacade {
 	 * @return	Boolean value of whether or not the inputed id was a valid game id.
 	 */
 	public boolean validateGameID(int id);
+
+	public Serializable getModel();
 }
