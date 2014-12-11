@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,8 +46,8 @@ public class SQLGameModelDAO extends AModelDAO {
 	 * Loads the blob representing the list of game models
 	 */
 	@Override
-	public Serializable load(){
-		Serializable model=null;
+	public Object load(){
+		Object model=null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -61,7 +60,7 @@ public class SQLGameModelDAO extends AModelDAO {
 				byte[] st = (byte[]) rs.getObject(1);
 				ByteArrayInputStream baip = new ByteArrayInputStream(st);
 				ObjectInputStream ois = new ObjectInputStream(baip);
-				model = (Serializable)ois.readObject();
+				model = (Object)ois.readObject();
 			}
 			rs.close();
 			stmt.close();

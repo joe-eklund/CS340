@@ -1,6 +1,5 @@
 package database;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,13 +17,13 @@ public class MoveCommandDAO implements IMoveCommandDAO {
 	}
 
 	@Override
-	public void add(Serializable command, int gameID) {
+	public void add(Object command, int gameID) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<Serializable> getAll(int gameID) {
+	public List<Object> getAll(int gameID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
