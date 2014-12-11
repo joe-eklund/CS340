@@ -80,12 +80,15 @@ public class MovesCommandLog implements IMovesCommandLog {
 
 	@Override
 	public void storeAllAndClear() {
+		this.dbPlugin.start();
+		this.dbPlugin.clearAllTables();
+		this.dbPlugin.stop(true);
 		this.gamesLog.storeAllAndClear();
 		this.usersLog.storeAllAndClear();
 		this.dbPlugin.start();
 		this.dbPlugin.getModelDAO("Game Model").save(this.movesFacade.getModelsList());
 		this.dbPlugin.stop(true);
-		this.clear();
+		
 	}
 
 	@Override

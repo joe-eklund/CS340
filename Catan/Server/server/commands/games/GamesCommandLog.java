@@ -61,6 +61,9 @@ public class GamesCommandLog implements IGamesCommandLog {
 	public void storeAllAndClear() {
 		this.dbPlugin.start();
 		this.dbPlugin.getModelDAO("Game Description").save(this.games.getModel());
+		this.dbPlugin.stop(true);
+		
+		
 	}
 
 }

@@ -62,7 +62,7 @@ public class UsersCommandLog implements IUsersCommandLog {
 		this.dbPlugin.start();
 		this.dbPlugin.getModelDAO("Users").save(this.users.getModel());
 		this.dbPlugin.stop(true);
-		this.clear();
+		
 	}
 
 }
