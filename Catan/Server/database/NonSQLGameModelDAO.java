@@ -45,6 +45,9 @@ public class NonSQLGameModelDAO extends AModelDAO{
 		
 		DBObject obj = collection.findOne();
 
+		if (obj == null)
+			return null;
+		
 		String xml = (String)obj.get("blob");
 		Serializable xmlObj = (Serializable) xStream.fromXML(xml);
 		db.stop(true);
