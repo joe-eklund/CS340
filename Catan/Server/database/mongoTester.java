@@ -22,7 +22,7 @@ public class mongoTester {
 		System.out.println("saved-pre load");
 		Serializable temp=dao.load();
 		List<String> newList=(List<String>) temp;
-		System.out.println("post load, list-"+newList.size()+" "+newList.get(0));
+		System.out.println("post load, list-"+newList.size()+" "+newList.get(0)+" "+newList.get(1));
 		//Test nonMoveCommand
 		/*System.out.println("***testing nonMoveCommand***");
 		String type="User";

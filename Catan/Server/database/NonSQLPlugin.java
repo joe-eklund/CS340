@@ -1,5 +1,7 @@
 package database;
 
+import java.net.UnknownHostException;
+
 import com.mongodb.*;
 
 public class NonSQLPlugin implements IDBFactoryPlugin {
@@ -64,7 +66,17 @@ public class NonSQLPlugin implements IDBFactoryPlugin {
 	}
 	
 	public DB getDB() {
-		return mongo.getDB("phase4");
+		
+		Mongo mon = null;
+		try {
+			mon = new Mongo();
+		} catch (UnknownHostException e) {
+
+			e.printStackTrace();
+		}
+		
+		
+		return mon.getDB("phase4");
 	}
 	
 	public void closeDB() {
