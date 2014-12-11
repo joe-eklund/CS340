@@ -21,7 +21,7 @@ public class sqlTester {
 		plugin.clearAllTables();
 		System.out.println("made db-pre save");
 		//testUsers();
-		//testNonMoveCommand();
+		testNonMoveCommand();
 		testGameDescription();
 		//testGameModel();
 		plugin.stop(false);

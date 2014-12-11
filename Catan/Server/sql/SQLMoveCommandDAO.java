@@ -12,6 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import database.AMoveCommandDAO;
 
 public class SQLMoveCommandDAO extends AMoveCommandDAO {
@@ -28,21 +31,22 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 	@Override
 	public void add(Object command, int gameID){
 
+		XStream xStream = new XStream(new DomDriver());
 	    try {
+	    	String xml = xStream.toXML(command);
 			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into MoveCommand (game,command) values (?,?)");
-		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		    ObjectOutputStream oos = new ObjectOutputStream(baos);
 		    oos.writeObject(command);
 		    byte[] modelAsBytes = baos.toByteArray();
-			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
+			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);*/
 			pstmt.setLong(1, gameID);
-		    pstmt.setBinaryStream(2, bais, modelAsBytes.length);
+			pstmt.setString(2, xml);
+		    //pstmt.setBinaryStream(2, bais, modelAsBytes.length);
 		    pstmt.executeUpdate();
 		    db.getConnection().commit();
 		    pstmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -52,6 +56,7 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 	 */
 	@Override
 	public List<Object> getAll(int gameID){
+		XStream xStream = new XStream(new DomDriver());
 		List<Object> model=new ArrayList<Object>();
 		Object temp=null;
 		Statement stmt=null;
@@ -60,19 +65,17 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 			ResultSet rs = stmt.executeQuery("SELECT command FROM MoveCommand where game = " + gameID);
 		    db.getConnection().commit();
 			while (rs.next()) {
-				byte[] st = (byte[]) rs.getObject(1);
+				/*byte[] st = (byte[]) rs.getObject(1);
 				ByteArrayInputStream baip = new ByteArrayInputStream(st);
 				ObjectInputStream ois = new ObjectInputStream(baip);
 				temp = (Object) ois.readObject();
-				model.add(temp);
+				model.add(temp);*/
+				String xml = (String)rs.getString(1);
+				model.add((Object) xStream.fromXML(xml));
 			}
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	    return model;
