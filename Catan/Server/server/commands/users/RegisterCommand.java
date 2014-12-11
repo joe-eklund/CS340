@@ -12,6 +12,10 @@ public class RegisterCommand extends ACommand implements IUsersCommand{
 	private transient IUsersFacade executor;
 	private UserRequest request;
 	
+	public RegisterCommand() {
+		super("RegisterCommand");
+	}
+	
 	public RegisterCommand(IUsersFacade executor, UserRequest request) {
 		super("RegisterCommand");
 		this.executor = executor;

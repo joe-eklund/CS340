@@ -60,7 +60,7 @@ public class MovesCommandLog implements IMovesCommandLog {
 
 	@Override
 	public void storeAll(List<IMovesCommand> commands) {
-		_movesCommandLog = (ArrayList<IMovesCommand>) commands;
+		_movesCommandLog.addAll((ArrayList<IMovesCommand>) commands);
 	}
 
 	@Override
