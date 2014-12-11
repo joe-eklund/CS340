@@ -1,4 +1,4 @@
-package database;
+package sql;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,28 +13,30 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
+import database.AMoveCommandDAO;
+
+public class SQLMoveCommandDAO extends AMoveCommandDAO {
 
 	private SQLPlugin db;
 	
-	public SQLNonMoveCommandDAO(SQLPlugin sqlPlugin) {
+	public SQLMoveCommandDAO(SQLPlugin sqlPlugin) {
 		db = sqlPlugin;
 	}
 	
 	/**
-	 * Adds a row with the type and command which was processed
+	 * Adds a row with the gameId and command which was processed
 	 */
 	@Override
-	public void add(Serializable command, String type){
+	public void add(Serializable command, int gameID){
 
 	    try {
-			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into NonMoveCommand (type,command) values (?,?)");
+			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into MoveCommand (game,command) values (?,?)");
 		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		    ObjectOutputStream oos = new ObjectOutputStream(baos);
 		    oos.writeObject(command);
 		    byte[] modelAsBytes = baos.toByteArray();
 			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
-			pstmt.setString(1, type);
+			pstmt.setLong(1, gameID);
 		    pstmt.setBinaryStream(2, bais, modelAsBytes.length);
 		    pstmt.executeUpdate();
 		    db.getConnection().commit();
@@ -47,16 +49,16 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 	}
 	
 	/**
-	 * Loads the list of commands of type
+	 * Loads the list of commands from one game
 	 */
 	@Override
-	public List<Serializable> getAll(String type){
+	public List<Serializable> getAll(int gameID){
 		List<Serializable> model=new ArrayList<Serializable>();
 		Serializable temp=null;
 		Statement stmt=null;
 		try {
 			stmt = db.getConnection().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT command FROM NonMoveCommand where type = '" + type+"'");
+			ResultSet rs = stmt.executeQuery("SELECT command FROM MoveCommand where game = " + gameID);
 		    db.getConnection().commit();
 			while (rs.next()) {
 				byte[] st = (byte[]) rs.getObject(1);
@@ -83,21 +85,21 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 	@Override
 	public void clear(){
 
-		String dropNonMoveCommand="DROP TABLE NonMoveCommand";
-		String makeNonMoveCommand="CREATE TABLE NonMoveCommand " +
+		String dropMoveCommand="DROP TABLE MoveCommand";
+		String makeMoveCommand="CREATE TABLE MoveCommand " +
 				"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE," + 
-				"type CHAR(4) NOT NULL," + 
+				"game INTEGER NOT NULL," + 
 				"command BLOB NOT NULL)";
 		Statement stmt = null;
 		try {		
 			stmt = db.getConnection().createStatement();
-			stmt.addBatch(dropNonMoveCommand);
-			stmt.addBatch(makeNonMoveCommand);
+			stmt.addBatch(dropMoveCommand);
+			stmt.addBatch(makeMoveCommand);
 			stmt.executeBatch();
 		    db.getConnection().commit();
 		}
 		catch (SQLException e) {
-			System.out.println("Failed clearing NonMoveCommand table:");
+			System.out.println("Failed clearing MoveCommand table:");
 			e.printStackTrace();
 		}		
 		finally {

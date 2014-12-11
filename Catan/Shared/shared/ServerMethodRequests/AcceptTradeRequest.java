@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  *  A class for encapsulating AcceptTrade parameters
  *  
@@ -11,7 +13,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class AcceptTradeRequest {
+public class AcceptTradeRequest implements Serializable{
 	private String type;
 	private boolean willAccept;
 	private int playerIndex;

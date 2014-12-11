@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 import shared.definitions.ResourceHand;
 
 /**
@@ -13,7 +15,7 @@ import shared.definitions.ResourceHand;
  *    </ul>
  *
  */
-public class DiscardCardsRequest {
+public class DiscardCardsRequest implements Serializable{
 	private String type;
 	private ResourceHand discardedCards;
 	private int playerIndex;

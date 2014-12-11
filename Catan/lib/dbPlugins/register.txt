@@ -1,1 +1,2 @@
 nonsql nonsql.jar NonSQLPlugin
+sql sql.jar SQLPlugin

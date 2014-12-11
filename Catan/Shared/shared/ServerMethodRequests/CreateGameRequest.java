@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating CreateGame request parameters
  * 
@@ -12,7 +14,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class CreateGameRequest {
+public class CreateGameRequest implements Serializable{
 	private boolean randomTiles;
 	private boolean randomNumbers;
 	private boolean randomPorts;

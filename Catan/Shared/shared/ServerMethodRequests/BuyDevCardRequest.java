@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating BuyDevCard request parameters
  * 
@@ -10,7 +12,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class BuyDevCardRequest {
+public class BuyDevCardRequest implements Serializable{
 
 	private String type;
 	private int playerIndex;

@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating JoinGame request parameters
  * 
@@ -10,7 +12,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class JoinGameRequest {
+public class JoinGameRequest implements Serializable{
 	private int id;
 	private String color;
 	

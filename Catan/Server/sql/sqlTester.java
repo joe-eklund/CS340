@@ -1,8 +1,12 @@
-package database;
+package sql;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import database.AModelDAO;
+import database.ANonMoveCommandDAO;
+import database.IDBFactoryPlugin;
 
 public class sqlTester {
 

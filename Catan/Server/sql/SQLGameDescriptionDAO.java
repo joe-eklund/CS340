@@ -1,4 +1,4 @@
-package database;
+package sql;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import database.AModelDAO;
 
 public class SQLGameDescriptionDAO extends AModelDAO {
 

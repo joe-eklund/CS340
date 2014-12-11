@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 import shared.definitions.VertexLocationRequest;
 import shared.locations.VertexLocation;
 
@@ -14,7 +16,7 @@ import shared.locations.VertexLocation;
  *    </ul>
  *
  */
-public class BuildCityRequest {
+public class BuildCityRequest implements Serializable{
 	private String type;
 	private int playerIndex;
 	private VertexLocationRequest vertexLocation;

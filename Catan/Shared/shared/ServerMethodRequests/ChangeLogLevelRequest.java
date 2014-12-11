@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating ChangeLogLevel request parameters
  * 
@@ -9,7 +11,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class ChangeLogLevelRequest {
+public class ChangeLogLevelRequest implements Serializable{
 	private String logLevel;
 
 	/**

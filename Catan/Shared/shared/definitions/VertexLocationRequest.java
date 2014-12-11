@@ -1,8 +1,10 @@
 package shared.definitions;
 
+import java.io.Serializable;
+
 import shared.locations.VertexDirection;
 
-public class VertexLocationRequest {
+public class VertexLocationRequest implements Serializable{
 	private int x;
 	private int y;
 	private VertexDirection direction;

@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 import shared.definitions.RoadLocation;
 
 /**
@@ -14,7 +16,7 @@ import shared.definitions.RoadLocation;
  *    </ul>
  *
  */
-public class BuildRoadRequest {
+public class BuildRoadRequest implements Serializable{
 	private String type;
 	private int playerIndex;
 	private RoadLocation roadLocation;

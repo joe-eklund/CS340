@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating LoadGame request parameters
  *
@@ -9,7 +11,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class LoadGameRequest {
+public class LoadGameRequest implements Serializable{
 	private String name;
 	
 	/**

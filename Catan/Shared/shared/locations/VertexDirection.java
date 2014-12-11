@@ -1,5 +1,7 @@
 package shared.locations;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 
 import client.exceptions.ClientModelException;
@@ -9,7 +11,7 @@ import client.exceptions.ClientModelException;
  * <br><b>Domain:</b> West, NorthWEst, NorthEast, East, SouthEast, SouthWest
  *
  */
-public enum VertexDirection
+public enum VertexDirection implements Serializable
 {
 	@SerializedName("W")West, 
 	@SerializedName("NW")NorthWest, 

@@ -1,5 +1,7 @@
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 import shared.definitions.VertexLocationRequest;
 
 /**
@@ -14,7 +16,7 @@ import shared.definitions.VertexLocationRequest;
  *    </ul>
  *
  */
-public class BuildSettlementRequest {
+public class BuildSettlementRequest implements Serializable{
 	private String type;
 	private int playerIndex;
 	private VertexLocationRequest vertexLocation;

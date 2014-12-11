@@ -128,6 +128,7 @@ public class Catan {
 			}
 			
 			// Load GameModels from DB
+			dbPlugin.start();
 			Serializable s = dbPlugin.getModelDAO("Game Model").load();
 			serverModels = (s == null) ? new ArrayList<ServerModel>() : (ArrayList<ServerModel>) s;
 			
@@ -138,6 +139,8 @@ public class Catan {
 			// Load Game Descriptions from DB
 			Serializable d = dbPlugin.getModelDAO("Game Description").load();
 			gameDescriptions = (d == null) ? new ArrayList<GameDescription>() : (ArrayList<GameDescription>) d;
+			
+			dbPlugin.stop(true);
 			
 			TranslatorJSON translator = new TranslatorJSON();
 			IUsersFacade usersFacade = new UsersFacade(users);
@@ -152,25 +155,31 @@ public class Catan {
 			MovesCommandLog movesLog = new MovesCommandLog();
 			
 			// Update Users with Deltas
+			dbPlugin.start();
 			List<Serializable> commands = dbPlugin.getNonMoveCommandDAO().getAll("User");
+			dbPlugin.stop(true);
 			List<IUsersCommand> usersCommands = (ArrayList<IUsersCommand>) ((commands == null) ? new ArrayList<IUsersCommand>() : commands);
 			usersLog.storeAll(usersCommands);
 			usersLog.setFacade(usersFacade);
 			usersLog.executeAll();
 			
 			// Update Game Descriptions with Deltas
+			dbPlugin.start();
 			commands = dbPlugin.getNonMoveCommandDAO().getAll("Game");
+			dbPlugin.stop(true);
 			List<IGamesCommand> gamesCommands = (ArrayList<IGamesCommand>) ((commands == null) ? new ArrayList<IGamesCommand>() : commands);
 			gamesLog.storeAll(gamesCommands);
 			gamesLog.SetFacade(gamesFacade);
 			gamesLog.executeAll();
 			
 			// Update Game Models with Deltas
+			dbPlugin.start();
 			for(int i = 0; i < serverModels.size(); i++) {
 				commands = dbPlugin.getMoveCommandDAO().getAll(i);
 				List<IMovesCommand> moves = (ArrayList<IMovesCommand>) ((commands == null) ? new ArrayList<IMovesCommand>() : commands);
 				movesLog.storeAll(moves);
 			}
+			dbPlugin.stop(true);
 			movesLog.setFacade(movesFacade);
 			movesLog.executeAll();
 			

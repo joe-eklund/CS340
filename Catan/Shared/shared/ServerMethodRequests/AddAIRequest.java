@@ -3,6 +3,8 @@
  */
 package shared.ServerMethodRequests;
 
+import java.io.Serializable;
+
 /**
  * A class for encapsulating AddAI request parameters
  * 
@@ -12,7 +14,7 @@ package shared.ServerMethodRequests;
  *    </ul>
  *
  */
-public class AddAIRequest {
+public class AddAIRequest implements Serializable{
 	private String AIType;
 
 	/**
