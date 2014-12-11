@@ -20,7 +20,7 @@ private NonSQLPlugin db;
 	 * Saves the list of users(serialize it first) into the db-only one blob/row
 	 */
 	@Override
-	public void save(Serializable model){
+	public void save(Object model){
 		db.start();
 		DBCollection collection = db.getDB().getCollection("users");
 		XStream xStream = new XStream();

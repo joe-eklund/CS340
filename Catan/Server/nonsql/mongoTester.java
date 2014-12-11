@@ -26,7 +26,7 @@ public class mongoTester {
 		names.add("Fred");
 		AModelDAO dao = plugin.getModelDAO("Users");
 		
-		Serializable temp=dao.load();
+		Object temp=dao.load();
 		
 		
 		
@@ -43,7 +43,7 @@ public class mongoTester {
 		dao = plugin.getModelDAO("Game Model");
 		
 		dao.save((Serializable) models);
-		Serializable tempmodels = dao.load();
+		Object tempmodels = dao.load();
 		ArrayList<ServerModel> loadedModels = (ArrayList<ServerModel>) tempmodels;
 		
 		System.out.println(loadedModels.size());
@@ -56,7 +56,7 @@ public class mongoTester {
 		ANonMoveCommandDAO dao2=plugin.getNonMoveCommandDAO();
 		dao2.add(command, type);
 		System.out.println("added!");
-		List<Serializable> temp2=dao2.getAll(type);
+		List<Object> temp2=dao2.getAll(type);
 		if(temp2.size()!=0)
 			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));
 		

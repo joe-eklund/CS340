@@ -21,7 +21,7 @@ public class NonSQLGameModelDAO extends AModelDAO{
 	 * Saves the list of game models(serialize it first) into the db-only one blob/row
 	 */
 	@Override
-	public void save(Serializable model){
+	public void save(Object model){
 		db.start();
 		DBCollection collection = db.getDB().getCollection("games");
 		XStream xStream = new XStream();

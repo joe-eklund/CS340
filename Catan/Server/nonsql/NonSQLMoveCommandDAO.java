@@ -32,7 +32,7 @@ private NonSQLPlugin db;
 	 * Adds a row with the gameId and command which was processed
 	 */
 	@Override
-	public void add(Serializable command, int gameID){
+	public void add(Object command, int gameID){
 
 		db.start();
 		DBCollection collection = db.getDB().getCollection("moves");
@@ -49,7 +49,7 @@ private NonSQLPlugin db;
 	 * Loads the list of commands from one game
 	 */
 	@Override
-	public List<Serializable> getAll(int gameID){
+	public List<Object> getAll(int gameID){
 		try {
 			db.start();
 			DBCollection collection = db.getDB().getCollection("moves");
@@ -62,13 +62,13 @@ private NonSQLPlugin db;
 			if (cursor == null)
 				return null;
 			
-			List<Serializable> commands = new ArrayList<Serializable>();
+			List<Object> commands = new ArrayList<Object>();
 			
 			while(cursor.hasNext()) {
 				DBObject obj = cursor.next();
 				String xml = (String)obj.get(Integer.toString(gameID));
 				if (xml != null)
-					commands.add((Serializable) xStream.fromXML(xml));
+					commands.add((Object) xStream.fromXML(xml));
 			}
 			
 			db.stop(true);

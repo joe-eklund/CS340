@@ -32,7 +32,7 @@ private NonSQLPlugin db;
 	 * Adds a row with the type and command which was processed
 	 */
 	@Override
-	public void add(Serializable command, String type){
+	public void add(Object command, String type){
 		db.start();
 		DBCollection collection = db.getDB().getCollection("nonmoves");
 		XStream xStream = new XStream();
@@ -48,7 +48,7 @@ private NonSQLPlugin db;
 	 * Loads the list of commands of type
 	 */
 	@Override
-	public List<Serializable> getAll(String type){
+	public List<Object> getAll(String type){
 		try {
 			db.start();
 			DBCollection collection = db.getDB().getCollection("nonmoves");
@@ -60,13 +60,13 @@ private NonSQLPlugin db;
 			if (cursor == null)
 				return null;
 			
-			List<Serializable> commands = new ArrayList<Serializable>();
+			List<Object> commands = new ArrayList<Object>();
 			
 			while(cursor.hasNext()) {
 				DBObject obj = cursor.next();
 				String xml = (String)obj.get(type);
 				if (xml != null)
-					commands.add((Serializable) xStream.fromXML(xml));
+					commands.add((Object) xStream.fromXML(xml));
 			}
 			
 			
