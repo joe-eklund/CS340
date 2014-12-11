@@ -5,16 +5,11 @@ import java.net.UnknownHostException;
 import com.mongodb.*;
 
 public class NonSQLPlugin implements IDBFactoryPlugin {
-
+	
 	Mongo mongo;
 	
 	public NonSQLPlugin() {
-		try {
-			mongo = new Mongo();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	@Override
@@ -48,39 +43,31 @@ public class NonSQLPlugin implements IDBFactoryPlugin {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void stop(boolean success) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void clearAllTables() {
-		mongo.dropDatabase("phase4");
-		
-		
-	}
-	
-	public DB getDB() {
-		
-		Mongo mon = null;
 		try {
-			mon = new Mongo();
+			mongo = new Mongo();
 		} catch (UnknownHostException e) {
 
 			e.printStackTrace();
 		}
 		
-		
-		return mon.getDB("phase4");
 	}
-	
-	public void closeDB() {
+
+	@Override
+	public void stop(boolean success) {
+		
 		mongo.close();
 	}
 
+	@Override
+	public void clearAllTables() {
+		
+		mongo.dropDatabase("phase4");	
+	}
+	
+	public DB getDB() {
+		
+		return mongo.getDB("phase4");
+	}
+	
+	
 }

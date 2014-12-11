@@ -20,15 +20,17 @@ public class NonSQLGameModelDAO extends AModelDAO{
 	 */
 	@Override
 	public void save(Serializable model){
+		db.start();
 		DBCollection collection = db.getDB().getCollection("games");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(model);
 		
-		BasicDBObject dbObject = new BasicDBObject("models", xml);
+		BasicDBObject dbObject = new BasicDBObject("blob", xml);
+		
+		collection.drop();
 		
 		collection.insert(dbObject);
-		
-		db.closeDB();
+		db.stop(true);
 	}
 	
 	/**
@@ -36,14 +38,26 @@ public class NonSQLGameModelDAO extends AModelDAO{
 	 */
 	@Override
 	public Serializable load(){
+		db.start();
+		DBCollection collection = db.getDB().getCollection("games");
 		
-		return null;
+		XStream xStream = new XStream();
+		
+		DBObject obj = collection.findOne();
+
+		String xml = (String)obj.get("blob");
+		Serializable xmlObj = (Serializable) xStream.fromXML(xml);
+		db.stop(true);
+		
+		return xmlObj;
 	}
 	/**
 	 * Drop table, create empty table
 	 */
 	@Override
 	public void clear(){
-		//TODO clear all rows
+		db.start();
+		db.getDB().getCollection("games").drop();
+		db.stop(true);
 	}
 }

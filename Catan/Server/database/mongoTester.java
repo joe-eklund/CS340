@@ -23,16 +23,10 @@ public class mongoTester {
 		Serializable temp=dao.load();
 		List<String> newList=(List<String>) temp;
 		System.out.println("post load, list-"+newList.size()+" "+newList.get(0)+" "+newList.get(1));
-		//Test nonMoveCommand
-		/*System.out.println("***testing nonMoveCommand***");
-		String type="User";
-		String command="Test whatever";
-		ANonMoveCommandDAO dao2=plugin.getNonMoveCommandDAO();
-		dao2.add(command, type);
-		System.out.println("added!");
-		List<Serializable> temp2=dao2.getAll(type);
-		if(temp2.size()!=0)
-			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));*/
+		
+		for (int i = 0; i < 4; i++) {
+			
+		}
 	}
 
 }

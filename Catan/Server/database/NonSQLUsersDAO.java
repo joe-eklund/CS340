@@ -19,6 +19,7 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public void save(Serializable model){
+		db.start();
 		DBCollection collection = db.getDB().getCollection("users");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(model);
@@ -28,8 +29,8 @@ private NonSQLPlugin db;
 		collection.drop();
 		
 		collection.insert(dbObject);
+		db.stop(true);
 		
-		db.closeDB();
 	}
 	
 	/**
@@ -37,20 +38,16 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public Serializable load(){
+		db.start();
 		DBCollection collection = db.getDB().getCollection("users");
 		
 		XStream xStream = new XStream();
 		
 		DBObject obj = collection.findOne();
-//		try {
-//			   while(cursor.hasNext()) {
-//			       System.out.println(cursor.next());
-//			   }
-//			} finally {
-//			   cursor.close();
-//			}
+
 		String xml = (String)obj.get("blob");
 		Serializable xmlObj = (Serializable) xStream.fromXML(xml);
+		db.stop(true);
 		
 		return xmlObj;
 		
@@ -60,6 +57,8 @@ private NonSQLPlugin db;
 	 */
 	@Override
 	public void clear(){
-		//TODO clear all rows
+		db.start();
+		db.getDB().getCollection("users").drop();
+		db.stop(true);
 	}
 }
