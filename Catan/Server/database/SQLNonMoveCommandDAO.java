@@ -20,6 +20,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 	public SQLNonMoveCommandDAO(SQLPlugin sqlPlugin) {
 		db = sqlPlugin;
 	}
+	
 	/**
 	 * Adds a row with the type and command which was processed
 	 */
@@ -75,6 +76,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 		}
 	    return model;
 	}
+	
 	/**
 	 * Drop table, create empty table
 	 */

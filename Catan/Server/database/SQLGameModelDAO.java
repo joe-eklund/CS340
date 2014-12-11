@@ -1,5 +1,10 @@
 package database;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +23,22 @@ public class SQLGameModelDAO extends AModelDAO {
 	 */
 	@Override
 	public void save(Serializable model){
-		//TODO save the model to database
+		try {
+			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into GameModel (model) values (?)");
+		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    ObjectOutputStream oos = new ObjectOutputStream(baos);
+		    oos.writeObject(model);
+		    byte[] modelAsBytes = baos.toByteArray();
+			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
+		    pstmt.setBinaryStream(1, bais, modelAsBytes.length);
+		    pstmt.executeUpdate();
+		    db.getConnection().commit();
+		    pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -31,40 +51,53 @@ public class SQLGameModelDAO extends AModelDAO {
 		ResultSet rs = null;
 		try {
 			//TODO change query
-			String query = "select * from tableName";
+			String query = "select * from GameModel";
 			stmt = db.getConnection().prepareStatement(query);
-
 			rs = stmt.executeQuery();
-			//TODO get first-should only be one there
-			//TODO serialize blob to serializable object
-			
-			/*Do not do this, this is 240 example
-			 * while (rs.next()) {
-				int id = rs.getInt(1);
-				String name = rs.getString(2);
-				String phone = rs.getString(3);
-				String address = rs.getString(4);
-				String email = rs.getString(5);
-				String url = rs.getString(6);
-
-				result.add(new Contact(id, name, phone, address, email, url));
-			}*/
+			db.getConnection().commit();
+			while (rs.next()) {
+				byte[] st = (byte[]) rs.getObject(1);
+				ByteArrayInputStream baip = new ByteArrayInputStream(st);
+				ObjectInputStream ois = new ObjectInputStream(baip);
+				model = (Serializable)ois.readObject();
+			}
+			rs.close();
+			stmt.close();
 		}
 		catch (SQLException e) {
 			System.out.println("Failed DB load game model:"+e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}		
-		finally {
-			SQLPlugin.safeClose(rs);
-			SQLPlugin.safeClose(stmt);
-		}
+//		finally {
+//			SQLPlugin.safeClose(rs);
+//			SQLPlugin.safeClose(stmt);
+//		}
 		return model;
 	}
+	
 	/**
 	 * Drop table, create empty table
 	 */
 	@Override
 	public void clear(){
-		//TODO clear all rows
-	}
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			String query = "Delete from GameModel";
+			stmt = db.getConnection().prepareStatement(query);
 
+			rs = stmt.executeQuery();
+			//May want to do a check for proper result here. Test if all rows have been deleted.
+		}
+		catch (SQLException e) {
+			System.out.println("Failed DB clear game model table: "+e.getMessage());
+		}		
+		finally {
+			SQLPlugin.safeClose(rs);
+			SQLPlugin.safeClose(stmt);
+		}	
+	}
 }

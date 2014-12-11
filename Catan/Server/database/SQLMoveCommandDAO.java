@@ -20,6 +20,7 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 	public SQLMoveCommandDAO(SQLPlugin sqlPlugin) {
 		db = sqlPlugin;
 	}
+	
 	/**
 	 * Adds a row with the gameId and command which was processed
 	 */
@@ -75,6 +76,7 @@ public class SQLMoveCommandDAO extends AMoveCommandDAO {
 		}
 	    return model;
 	}
+	
 	/**
 	 * Drop table, create empty table
 	 */
