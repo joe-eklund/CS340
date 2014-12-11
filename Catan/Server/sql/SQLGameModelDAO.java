@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import database.AModelDAO;
 
 public class SQLGameModelDAO extends AModelDAO {
@@ -24,20 +27,24 @@ public class SQLGameModelDAO extends AModelDAO {
 	 */
 	@Override
 	public void save(Object model){
+		XStream xStream = new XStream(new DomDriver());
+
 		try {
+			String xml = xStream.toXML(model);
 			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into GameModel (games) values (?)");
-		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		    ObjectOutputStream oos = new ObjectOutputStream(baos);
-		    oos.writeObject(model);
-		    byte[] modelAsBytes = baos.toByteArray();
-			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
-		    pstmt.setBinaryStream(1, bais, modelAsBytes.length);
+			pstmt.setString(1, xml);	
+//			PreparedStatement pstmt = db.getConnection().prepareStatement("insert into GameModel (games) values (?)");
+//		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		    ObjectOutputStream oos = new ObjectOutputStream(baos);
+//		    oos.writeObject(model);
+//		    byte[] modelAsBytes = baos.toByteArray();
+//			ByteArrayInputStream bais = new ByteArrayInputStream(modelAsBytes);
+//		    pstmt.setBinaryStream(1, bais, modelAsBytes.length);
+		  
 		    pstmt.executeUpdate();
 		    db.getConnection().commit();
 		    pstmt.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -50,6 +57,7 @@ public class SQLGameModelDAO extends AModelDAO {
 		Object model=null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		XStream xStream = new XStream(new DomDriver());
 		try {
 			//TODO change query
 			String query = "select games from GameModel";
@@ -57,20 +65,18 @@ public class SQLGameModelDAO extends AModelDAO {
 			rs = stmt.executeQuery();
 			db.getConnection().commit();
 			while (rs.next()) {
-				byte[] st = (byte[]) rs.getObject(1);
-				ByteArrayInputStream baip = new ByteArrayInputStream(st);
-				ObjectInputStream ois = new ObjectInputStream(baip);
-				model = (Object)ois.readObject();
+//				byte[] st = (byte[]) rs.getObject(1);
+//				ByteArrayInputStream baip = new ByteArrayInputStream(st);
+//				ObjectInputStream ois = new ObjectInputStream(baip);
+				String xml = (String)rs.getString(1);
+				model = (Object) xStream.fromXML(xml);
+//				model = (Object)ois.readObject();
 			}
 			rs.close();
 			stmt.close();
 		}
 		catch (SQLException e) {
 			System.out.println("Failed DB load game model:"+e.getMessage());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}		
 //		finally {
 //			SQLPlugin.safeClose(rs);
