@@ -21,7 +21,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 		db = sqlPlugin;
 	}
 	/**
-	 * Adds a row with the type and what command was processed
+	 * Adds a row with the type and command which was processed
 	 */
 	@Override
 	public void add(Serializable command, String type){
@@ -45,7 +45,7 @@ public class SQLNonMoveCommandDAO extends ANonMoveCommandDAO {
 	}
 	
 	/**
-	 * Loads the blob representing the list of users
+	 * Loads the list of commands of type
 	 */
 	@Override
 	public List<Serializable> getAll(String type){

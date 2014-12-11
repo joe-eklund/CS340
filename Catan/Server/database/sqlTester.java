@@ -13,6 +13,7 @@ public class sqlTester {
 		System.out.println("connection made-pre clear");
 		plugin.clearAllTables();
 		System.out.println("made db-pre save");
+		//Test Users
 		List<String> names=new ArrayList<String>();
 		names.add("Bob");
 		names.add("Fred");
@@ -22,6 +23,7 @@ public class sqlTester {
 		Serializable temp=dao.load();
 		List<String> newList=(List<String>) temp;
 		System.out.println("post load, list-"+newList.size()+" "+newList.get(0));
+		//Test nonMoveCommand
 		System.out.println("***testing nonMoveCommand***");
 		String type="User";
 		String command="Test whatever";

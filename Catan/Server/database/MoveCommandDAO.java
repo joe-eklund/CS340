@@ -24,7 +24,7 @@ public class MoveCommandDAO implements IMoveCommandDAO {
 	}
 
 	@Override
-	public List<Object> getAll(int gameID) {
+	public List<Serializable> getAll(int gameID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
