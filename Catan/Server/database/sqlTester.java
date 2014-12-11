@@ -19,8 +19,9 @@ public class sqlTester {
 		System.out.println("made db-pre save");
 		testUsers();
 		testNonMoveCommand();
-//		testGameDescription();
-//		testGameModel();
+		testGameDescription();
+		testGameModel();
+		plugin.stop(false);
 	}
 
 	//Test Users
@@ -48,7 +49,6 @@ public class sqlTester {
 		List<Serializable> temp2=dao2.getAll(type);
 		if(temp2.size()!=0)
 			System.out.println("got:"+temp2.size()+" "+(String)temp2.get(0));
-		plugin.stop(false);
 		return true;
 	}
 	
@@ -62,7 +62,6 @@ public class sqlTester {
 		String result = (String) dao.load();
 		if(result!=null)
 			System.out.println("got:"+result);
-		plugin.stop(false);
 		return true;
 	}
 	
@@ -76,7 +75,6 @@ public class sqlTester {
 		String result = (String) dao.load();
 		if(result!=null)
 			System.out.println("got:"+result);
-		plugin.stop(false);
 		return true;
 	}
 }
